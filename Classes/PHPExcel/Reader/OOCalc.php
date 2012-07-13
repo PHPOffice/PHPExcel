@@ -597,6 +597,9 @@ class PHPExcel_Reader_OOCalc implements PHPExcel_Reader_IReader
 //										if ($hyperlink !== NULL) {
 //											echo 'Hyperlink is '.$hyperlink.'<br />';
 //										}
+									}else{
+										$type = PHPExcel_Cell_DataType::TYPE_NULL;
+										$dataValue = null;
 									}
 
 									if ($hasCalculatedValue) {

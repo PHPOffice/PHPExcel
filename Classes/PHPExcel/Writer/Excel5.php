@@ -274,6 +274,8 @@ class PHPExcel_Writer_Excel5 implements PHPExcel_Writer_IWriter
 	{
 		// 1-based index to BstoreContainer
 		$blipIndex = 0;
+		$lastReducedSpId = 0;
+		$lastSpId = 0;
 
 		foreach ($this->_phpExcel->getAllsheets() as $sheet) {
 			// sheet index

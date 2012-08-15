@@ -42,6 +42,14 @@ class PHPExcel_Cell
 	 */
 	private static $_valueBinder = NULL;
 
+
+	/**
+	*	Default range variable constant
+	*
+	*	@var	string
+	*/
+	const DEFAULT_RANGE = 'A1:A1';
+
 	/**
 	 *	Column of the cell
 	 *
@@ -602,7 +610,7 @@ class PHPExcel_Cell
 	{
 		// Ensure $pRange is a valid range		
 		if(empty($pRange)){
-			$pRange = 'A1:A1';
+			$pRange = self::DEFAULT_RANGE;
 		}
 
 		$exploded = explode(',', $pRange);
@@ -649,7 +657,7 @@ class PHPExcel_Cell
 	{
 		// Ensure $pRange is a valid range		
 		if(empty($pRange)){
-			$pRange = 'A1:A1';
+			$pRange = self::DEFAULT_RANGE;
 		}
 
 		// Uppercase coordinate
@@ -698,7 +706,7 @@ class PHPExcel_Cell
 	{
 		// Ensure $pRange is a valid range		
 		if(empty($pRange)){
-			$pRange = 'A1:A1';
+			$pRange = self::DEFAULT_VALUE;
 		}
 
 		// Uppercase coordinate

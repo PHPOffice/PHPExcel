@@ -2792,4 +2792,56 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
 			}
 		}
 	}
+
+	/**
+	 * copy cell's style to a range of cells
+	 *
+	 * Please note that this will overwrite existing cell styles for cells in range!
+	 *
+	 * @param	PHPExcel_Cell	$pCell	Cell whose style to be copied
+	 * @param	string			$pRange		Range of cells (i.e. "A1:B10"), or just one cell (i.e. "A1")
+	 * @throws	Exception
+	 * @return PHPExcel_Worksheet
+	 */
+	public function copyCellStyle(PHPExcel_Cell $pCell = null, $pRange = '')
+	{
+		$xfIndex = $pCell->getXfIndex();
+
+		// Uppercase coordinate
+		$pRange = strtoupper($pRange);
+
+		// Is it a cell range or a single cell?
+		$rangeA	= '';
+		$rangeB	= '';
+		if (strpos($pRange, ':') === false) {
+			$rangeA = $pRange;
+			$rangeB = $pRange;
+		} else {
+			list($rangeA, $rangeB) = explode(':', $pRange);
+		}
+
+		// Calculate range outer borders
+		$rangeStart = PHPExcel_Cell::coordinateFromString($rangeA);
+		$rangeEnd	= PHPExcel_Cell::coordinateFromString($rangeB);
+
+		// Translate column into index
+		$rangeStart[0]	= PHPExcel_Cell::columnIndexFromString($rangeStart[0]) - 1;
+		$rangeEnd[0]	= PHPExcel_Cell::columnIndexFromString($rangeEnd[0]) - 1;
+
+		// Make sure we can loop upwards on rows and columns
+		if ($rangeStart[0] > $rangeEnd[0] && $rangeStart[1] > $rangeEnd[1]) {
+			$tmp = $rangeStart;
+			$rangeStart = $rangeEnd;
+			$rangeEnd = $tmp;
+		}
+
+		// Loop through cells and apply styles
+		for ($col = $rangeStart[0]; $col <= $rangeEnd[0]; ++$col) {
+			for ($row = $rangeStart[1]; $row <= $rangeEnd[1]; ++$row) {
+				$this->getCell(PHPExcel_Cell::stringFromColumnIndex($col) . $row)->setXfIndex($xfIndex);
+			}
+		}
+
+		return $this;
+	}
 }

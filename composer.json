@@ -1,0 +1,30 @@
+{
+    "name": "phpoffice/phpexcel",
+    "description": "PHPExcel is a library that allow you to write to and read from different spreadsheet like Excel, Excel 2007, Libre/OpenOffice etc ...",
+    "keywords": ["office", "document", "spreadsheet", "excel"],
+    "license": "LGPL-2.1",
+    "homepage": "http://phpexcel.codeplex.com/",
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "Maarten Balliauw",
+            "email": "maarten@phpexcel.net",
+            "homepage": "http://blog.maartenballiauw.be",
+            "role": "Manager/Developer"
+        },
+        {
+            "name": "Mark Baker",
+            "role": "Developer"
+        },
+        {
+            "name": "Erik Tilt",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+
+    },
+    "autoload": {
+        "classmap": ["Classes/"]
+    }
+}

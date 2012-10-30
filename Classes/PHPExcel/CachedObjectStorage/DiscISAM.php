@@ -97,6 +97,10 @@ class PHPExcel_CachedObjectStorage_DiscISAM extends PHPExcel_CachedObjectStorage
 		$this->_currentObject = $cell;
 		$this->_currentCellIsDirty = true;
 
+		if (!isset($this->_cellCache[$pCoord])) {
+			$this->_cellCache[$pCoord] = null;
+		}
+
 		return $cell;
 	}	//	function addCacheData()
 

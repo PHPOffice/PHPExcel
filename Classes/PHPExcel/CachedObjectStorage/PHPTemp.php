@@ -89,6 +89,10 @@ class PHPExcel_CachedObjectStorage_PHPTemp extends PHPExcel_CachedObjectStorage_
 		$this->_currentObject = $cell;
 		$this->_currentCellIsDirty = true;
 
+		if (!isset($this->_cellCache[$pCoord])) {
+			$this->_cellCache[$pCoord] = null;
+		}
+
 		return $cell;
 	}	//	function addCacheData()
 

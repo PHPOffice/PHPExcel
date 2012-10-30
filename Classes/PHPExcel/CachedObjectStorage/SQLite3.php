@@ -179,6 +179,7 @@ class PHPExcel_CachedObjectStorage_SQLite3 extends PHPExcel_CachedObjectStorage_
 	 * @return	array of string
 	 */
 	public function getCellList() {
+		$this->_storeData();
 		$query = "SELECT id FROM kvp_".$this->_TableName;
 		$cellIdsResult = $this->_DBHandle->query($query);
 		if ($cellIdsResult === false)

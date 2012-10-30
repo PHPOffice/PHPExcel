@@ -201,6 +201,7 @@ class PHPExcel_CachedObjectStorage_SQLite3 extends PHPExcel_CachedObjectStorage_
 	 * @return	void
 	 */
 	public function copyCellCollection(PHPExcel_Worksheet $parent) {
+		$this->_storeData();
 		//	Get a new id for the new table name
 		$tableName = str_replace('.','_',$this->_getUniqueID());
 		if (!$this->_DBHandle->exec('CREATE TABLE kvp_'.$tableName.' (id VARCHAR(12) PRIMARY KEY, value BLOB)

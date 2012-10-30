@@ -70,10 +70,6 @@ class PHPExcel_CachedObjectStorage_MemorySerialized extends PHPExcel_CachedObjec
 		$this->_currentObject = $cell;
 		$this->_currentCellIsDirty = true;
 
-		if (!isset($this->_cellCache[$pCoord])) {
-			$this->_cellCache[$pCoord] = null;
-		}
-
 		return $cell;
 	}	//	function addCacheData()
 
@@ -106,6 +102,17 @@ class PHPExcel_CachedObjectStorage_MemorySerialized extends PHPExcel_CachedObjec
 		//	Return requested entry
 		return $this->_currentObject;
 	}	//	function getCacheData()
+
+
+	/**
+	 * Get a list of all cell addresses currently held in cache
+	 *
+	 * @return	array of string
+	 */
+	public function getCellList() {
+		$this->_storeData();
+		return parent::getCellList();
+	}
 
 
 	/**

@@ -265,17 +265,15 @@ class PHPExcel_Shared_Excel5
 
 		$width	  = $width  + $x1 -1;
 		$height	 = $height + $y1 -1;
-
+		
 		// Subtract the underlying cell widths to find the end cell of the image
-		while ($width >= self::sizeCol($sheet, PHPExcel_Cell::stringFromColumnIndex($col_end))) {
-			$width -= self::sizeCol($sheet, PHPExcel_Cell::stringFromColumnIndex($col_end));
-			++$col_end;
+		while ($width >= $colSize = self::sizeCol($sheet, PHPExcel_Cell::stringFromColumnIndex( $col_end++ ))) {
+			$width -= $colSize;
 		}
 
 		// Subtract the underlying cell heights to find the end cell of the image
-		while ($height >= self::sizeRow($sheet, $row_end + 1)) {
-			$height -= self::sizeRow($sheet, $row_end + 1);
-			++$row_end;
+		while ($height >= $rowSize = self::sizeRow($sheet, $row_end++ + 1)) {
+			$height -= $rowSize;
 		}
 
 		// Bitmap isn't allowed to start or finish in a hidden cell, i.e. a cell

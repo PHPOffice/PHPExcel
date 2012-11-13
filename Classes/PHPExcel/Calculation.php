@@ -1874,7 +1874,7 @@ class PHPExcel_Calculation {
 	/**
 	 * Set the locale code
 	 *
-     * @param string $locale
+	 * @param string $locale
 	 * @return boolean
 	 */
 	public function setLocale($locale='en_us') {

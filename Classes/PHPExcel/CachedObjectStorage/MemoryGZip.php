@@ -105,6 +105,17 @@ class PHPExcel_CachedObjectStorage_MemoryGZip extends PHPExcel_CachedObjectStora
 
 
 	/**
+	 * Get a list of all cell addresses currently held in cache
+	 *
+	 * @return	array of string
+	 */
+	public function getCellList() {
+		$this->_storeData();
+		return parent::getCellList();
+	}
+
+
+	/**
 	 * Clear the cell collection and disconnect from our parent
 	 *
 	 * @return	void

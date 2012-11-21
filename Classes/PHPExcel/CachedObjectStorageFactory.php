@@ -210,6 +210,12 @@ class PHPExcel_CachedObjectStorageFactory
 		return TRUE;
 	}	//	function initialize()
 
+	public static function finalize()
+	{
+		self::$_cacheStorageMethod = NULL;
+		self::$_cacheStorageClass = NULL;
+		self::$_storageMethodParameters = array();
+	}
 
 	/**
 	 * Initialise the cache storage

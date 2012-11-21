@@ -125,12 +125,24 @@ class PHPExcel_CachedObjectStorage_PHPTemp extends PHPExcel_CachedObjectStorage_
 
 
 	/**
+	 * Get a list of all cell addresses currently held in cache
+	 *
+	 * @return	array of string
+	 */
+	public function getCellList() {
+		$this->_storeData();
+		return parent::getCellList();
+	}
+
+
+	/**
 	 * Clone the cell collection
 	 *
 	 * @param	PHPExcel_Worksheet	$parent		The new worksheet
 	 * @return	void
 	 */
 	public function copyCellCollection(PHPExcel_Worksheet $parent) {
+		$this->_storeData();
 		parent::copyCellCollection($parent);
 		//	Open a new stream for the cell cache data
 		$newFileHandle = fopen('php://temp/maxmemory:'.$this->_memoryCacheSize,'a+');

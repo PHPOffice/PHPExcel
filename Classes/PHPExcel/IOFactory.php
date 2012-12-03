@@ -74,18 +74,18 @@ class PHPExcel_IOFactory
 		'CSV',
 	);
 
-    /**
-     *	Private constructor for PHPExcel_IOFactory
-     */
-    private function __construct() { }
+        /**
+         * Private constructor for PHPExcel_IOFactory
+         */
+        private function __construct() { }
 
-    /**
-     * Get search locations
-     *
+        /**
+         * Get search locations
+         *
 	 * @static
 	 * @access	public
-     * @return	array
-     */
+         * @return	array
+         */
 	public static function getSearchLocations() {
 		return self::$_searchLocations;
 	}	//	function getSearchLocations()

@@ -397,9 +397,11 @@ class PHPExcel_Style extends PHPExcel_Style_Supervisor implements PHPExcel_IComp
 
 				$workbook = $this->getActiveSheet()->getParent();
 				$xfHashes = array();
-				// compute hash codes once
-				foreach ($workbook->getCellXfCollection() as $cellXf) {
-					$xfHashes[$cellXf->getHashCode()] = $cellXf;
+				if (count($oldXfIndexes) > 1) {
+					// compute hash codes once
+					foreach ($workbook->getCellXfCollection() as $cellXf) {
+						$xfHashes[$cellXf->getHashCode()] = $cellXf;
+					}
 				}
 				// clone each of the affected styles, apply the style arrray, and add the new styles to the workbook
 				foreach ($oldXfIndexes as $oldXfIndex => $dummy) {
@@ -407,6 +409,12 @@ class PHPExcel_Style extends PHPExcel_Style_Supervisor implements PHPExcel_IComp
 					$newStyle = clone $style;
 					$newStyle->applyFromArray($pStyles);
 					$newHash = $newStyle->getHashCode();
+
+					if (count($oldXfIndexes) === 1) {
+						if ($existingStyle = $workbook->getCellXfByHashCode($newHash)) {
+							$xfHashes[$newHash] = $existingStyle;
+						}
+					}
 
 					if (isset($xfHashes[$newHash])) {
 						// there is already such cell Xf in our collection

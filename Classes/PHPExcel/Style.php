@@ -395,19 +395,26 @@ class PHPExcel_Style extends PHPExcel_Style_Supervisor implements PHPExcel_IComp
 						break;
 				}
 
-				// clone each of the affected styles, apply the style arrray, and add the new styles to the workbook
 				$workbook = $this->getActiveSheet()->getParent();
+				$xfHashes = array();
+				// compute hash codes once
+				foreach ($workbook->getCellXfCollection() as $cellXf) {
+					$xfHashes[$cellXf->getHashCode()] = $cellXf;
+				}
+				// clone each of the affected styles, apply the style arrray, and add the new styles to the workbook
 				foreach ($oldXfIndexes as $oldXfIndex => $dummy) {
 					$style = $workbook->getCellXfByIndex($oldXfIndex);
 					$newStyle = clone $style;
 					$newStyle->applyFromArray($pStyles);
+					$newHash = $newStyle->getHashCode();
 
-					if ($existingStyle = $workbook->getCellXfByHashCode($newStyle->getHashCode())) {
+					if (isset($xfHashes[$newHash])) {
 						// there is already such cell Xf in our collection
-						$newXfIndexes[$oldXfIndex] = $existingStyle->getIndex();
+						$newXfIndexes[$oldXfIndex] = $xfHashes[$newHash]->getIndex();
 					} else {
 						// we don't have such a cell Xf, need to add
 						$workbook->addCellXf($newStyle);
+						$xfHashes[$newHash] = $newStyle;
 						$newXfIndexes[$oldXfIndex] = $newStyle->getIndex();
 					}
 				}

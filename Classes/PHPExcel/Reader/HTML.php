@@ -201,7 +201,7 @@ class PHPExcel_Reader_HTML extends PHPExcel_Reader_Abstract implements PHPExcel_
 			//	Simple String content
 			if (trim($cellContent) > '') {
 				//	Only actually write it if there's content in the string
-//				echo 'FLUSH CELL: ' , $column , $row , ' => ' , $cellContent , '<br />';
+//echo 'FLUSH CELL: ' , $column , $row , ' => ' , $cellContent , PHP_EOL;
 				//	Write to worksheet to be done here...
 				//	... we return the cell so we can mess about with styles more easily
 				$cell = $sheet->setCellValue($column.$row,$cellContent,true);
@@ -215,6 +215,8 @@ class PHPExcel_Reader_HTML extends PHPExcel_Reader_Abstract implements PHPExcel_
 		$cellContent = (string) '';
 	}
 
+	private $_columnAdd = 1;
+
 	private function _processDomElement(DOMNode $element, $sheet, &$row, &$column, &$cellContent){
 		foreach($element->childNodes as $child){
 			if ($child instanceof DOMText) {
@@ -227,11 +229,11 @@ class PHPExcel_Reader_HTML extends PHPExcel_Reader_Abstract implements PHPExcel_
 					//	TODO
 				}
 			} elseif($child instanceof DOMElement) {
-//				echo '<b>DOM ELEMENT: </b>' , strtoupper($child->nodeName) , '<br />';
+//echo '**DOM ELEMENT:** ' , strtoupper($child->nodeName) , PHP_EOL;
 
 				$attributeArray = array();
 				foreach($child->attributes as $attribute) {
-//					echo '<b>ATTRIBUTE: </b>' , $attribute->name , ' => ' , $attribute->value , '<br />';
+//echo '**ATTRIBUTE:** ' , $attribute->name , ' => ' , $attribute->value , PHP_EOL;
 					$attributeArray[$attribute->name] = $attribute->value;
 				}
 
@@ -259,13 +261,13 @@ class PHPExcel_Reader_HTML extends PHPExcel_Reader_Abstract implements PHPExcel_
 					case 'em'    :
 					case 'strong':
 					case 'b'     :
-//						echo 'STYLING, SPAN OR DIV<br />';
+//echo 'STYLING, SPAN OR DIV', PHP_EOL;
 						if ($cellContent > '')
 							$cellContent .= ' ';
 						$this->_processDomElement($child,$sheet,$row,$column,$cellContent);
 						if ($cellContent > '')
 							$cellContent .= ' ';
-//						echo 'END OF STYLING, SPAN OR DIV<br />';
+//echo 'END OF STYLING, SPAN OR DIV', PHP_EOL;
 						break;
 					case 'hr' :
 						$this->_flushCell($sheet,$column,$row,$cellContent);
@@ -286,14 +288,14 @@ class PHPExcel_Reader_HTML extends PHPExcel_Reader_Abstract implements PHPExcel_
 							$this->_flushCell($sheet,$column,$row,$cellContent);
 							++$row;
 						}
-//						echo 'HARD LINE BREAK: ' , '<br />';
+//echo 'HARD LINE BREAK: ' , PHP_EOL;
 						break;
 					case 'a'  :
-//						echo 'START OF HYPERLINK: ' , '<br />';
+//echo 'START OF HYPERLINK: ' , PHP_EOL;
 						foreach($attributeArray as $attributeName => $attributeValue) {
 							switch($attributeName) {
 								case 'href':
-//									echo 'Link to ' , $attributeValue , '<br />';
+//echo 'Link to ' , $attributeValue , PHP_EOL;
 									$sheet->getCell($column.$row)->getHyperlink()->setUrl($attributeValue);
 									if (isset($this->_formats[$child->nodeName])) {
 										$sheet->getStyle($column.$row)->applyFromArray($this->_formats[$child->nodeName]);
@@ -303,7 +305,7 @@ class PHPExcel_Reader_HTML extends PHPExcel_Reader_Abstract implements PHPExcel_
 						}
 						$cellContent .= ' ';
 						$this->_processDomElement($child,$sheet,$row,$column,$cellContent);
-//						echo 'END OF HYPERLINK:' , '<br />';
+//echo 'END OF HYPERLINK:' , PHP_EOL;
 						break;
 					case 'h1' :
 					case 'h2' :
@@ -317,17 +319,17 @@ class PHPExcel_Reader_HTML extends PHPExcel_Reader_Abstract implements PHPExcel_
 						if ($this->_tableLevel > 0) {
 							//	If we're inside a table, replace with a \n
 							$cellContent .= "\n";
-//							echo 'LIST ENTRY: ' , '<br />';
+//echo 'LIST ENTRY: ' , PHP_EOL;
 							$this->_processDomElement($child,$sheet,$row,$column,$cellContent);
-//							echo 'END OF LIST ENTRY:' , '<br />';
+//echo 'END OF LIST ENTRY:' , PHP_EOL;
 						} else {
 							if ($cellContent > '') {
 								$this->_flushCell($sheet,$column,$row,$cellContent);
 								$row += 2;
 							}
-//							echo 'START OF PARAGRAPH: ' , '<br />';
+//echo 'START OF PARAGRAPH: ' , PHP_EOL;
 							$this->_processDomElement($child,$sheet,$row,$column,$cellContent);
-//							echo 'END OF PARAGRAPH:' , '<br />';
+//echo 'END OF PARAGRAPH:' , PHP_EOL;
 							$this->_flushCell($sheet,$column,$row,$cellContent);
 
 							if (isset($this->_formats[$child->nodeName])) {
@@ -342,17 +344,17 @@ class PHPExcel_Reader_HTML extends PHPExcel_Reader_Abstract implements PHPExcel_
 						if ($this->_tableLevel > 0) {
 							//	If we're inside a table, replace with a \n
 							$cellContent .= "\n";
-//							echo 'LIST ENTRY: ' , '<br />';
+//echo 'LIST ENTRY: ' , PHP_EOL;
 							$this->_processDomElement($child,$sheet,$row,$column,$cellContent);
-//							echo 'END OF LIST ENTRY:' , '<br />';
+//echo 'END OF LIST ENTRY:' , PHP_EOL;
 						} else {
 							if ($cellContent > '') {
 								$this->_flushCell($sheet,$column,$row,$cellContent);
 							}
 							++$row;
-//							echo 'LIST ENTRY: ' , '<br />';
+//echo 'LIST ENTRY: ' , PHP_EOL;
 							$this->_processDomElement($child,$sheet,$row,$column,$cellContent);
-//							echo 'END OF LIST ENTRY:' , '<br />';
+//echo 'END OF LIST ENTRY:' , PHP_EOL;
 							$this->_flushCell($sheet,$column,$row,$cellContent);
 							$column = 'A';
 						}
@@ -360,11 +362,11 @@ class PHPExcel_Reader_HTML extends PHPExcel_Reader_Abstract implements PHPExcel_
 					case 'table' :
 						$this->_flushCell($sheet,$column,$row,$cellContent);
 						$column = $this->_setTableStartColumn($column);
-//						echo 'START OF TABLE LEVEL ' , $this->_tableLevel , '<br />';
+//echo 'START OF TABLE LEVEL ' , $this->_tableLevel , PHP_EOL;
 						if ($this->_tableLevel > 1)
 							--$row;
 						$this->_processDomElement($child,$sheet,$row,$column,$cellContent);
-//						echo 'END OF TABLE LEVEL ' , $this->_tableLevel , '<br />';
+//echo 'END OF TABLE LEVEL ' , $this->_tableLevel , PHP_EOL;
 						$column = $this->_releaseTableStartColumn();
 						if ($this->_tableLevel > 1) {
 							++$column;
@@ -380,17 +382,25 @@ class PHPExcel_Reader_HTML extends PHPExcel_Reader_Abstract implements PHPExcel_
 						++$row;
 						$column = $this->_getTableStartColumn();
 						$cellContent = '';
-//						echo 'START OF TABLE ' , $this->_tableLevel , ' ROW<br />';
+//echo 'START OF TABLE ' , $this->_tableLevel , ' ROW', PHP_EOL;
 						$this->_processDomElement($child,$sheet,$row,$column,$cellContent);
-//						echo 'END OF TABLE ' , $this->_tableLevel , ' ROW<br />';
+//echo 'END OF TABLE ' , $this->_tableLevel , ' ROW', PHP_EOL;
 						break;
 					case 'th' :
 					case 'td' :
-//						echo 'START OF TABLE ' , $this->_tableLevel , ' CELL<br />';
+//echo 'START OF TABLE ' , $this->_tableLevel , ' CELL', PHP_EOL;
+						$this->_columnAdd = (isset($attributeArray['colspan'])) ? $attributeArray['colspan'] : 1;
+//echo 'COLUMN SPAN IS ',$this->_columnAdd,PHP_EOL;
 						$this->_processDomElement($child,$sheet,$row,$column,$cellContent);
-//						echo 'END OF TABLE ' , $this->_tableLevel , ' CELL<br />';
+//echo 'END OF TABLE ' , $this->_tableLevel , ' CELL', PHP_EOL;
 						$this->_flushCell($sheet,$column,$row,$cellContent);
-						++$column;
+						$startColumn = $column;
+						$endColumn = PHPExcel_Cell::stringFromColumnIndex(PHPExcel_Cell::columnIndexFromString($column) + $this->_columnAdd - 2);
+						$column = PHPExcel_Cell::stringFromColumnIndex(PHPExcel_Cell::columnIndexFromString($column) + $this->_columnAdd - 1);
+						if ($this->_columnAdd > 1) {
+//echo 'Merge Cells ',$startColumn.$row.':'.$endColumn.$row,PHP_EOL;
+							$sheet->mergeCells($startColumn.$row.':'.$endColumn.$row);
+						}
 						break;
 					case 'body' :
 						$row = 1;

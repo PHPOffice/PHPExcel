@@ -1452,13 +1452,13 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
 
 		// Add the style to the workbook if necessary
 		$workbook = $this->_parent;
-		if ($this->_parent->cellXfExists($pCellStyle)) {
+		if ($this->_parent->cellXfExists($style)) {
 			// there is already this cell Xf in our collection
-			$xfIndex = $pCellStyle->getIndex();
+			$xfIndex = $style->getIndex();
 		} else {
 			// we don't have such a cell Xf, need to add
-			$workbook->addCellXf($pCellStyle);
-			$xfIndex = $pCellStyle->getIndex();
+			$workbook->addCellXf($style);
+			$xfIndex = $style->getIndex();
 		}
 
 		// Uppercase coordinate

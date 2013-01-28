@@ -2274,7 +2274,7 @@ class PHPExcel_Calculation {
 
 		$wsTitle = "\x00Wrk";
 		if ($pCell !== NULL) {
-			$pCellParent = $pCell->getParent();
+			$pCellParent = $pCell->getWorksheet();
 			if ($pCellParent !== NULL) {
 				$wsTitle = $pCellParent->getTitle();
 			}
@@ -2627,7 +2627,7 @@ class PHPExcel_Calculation {
 
 		//	If we're using cell caching, then $pCell may well be flushed back to the cache (which detaches the parent worksheet),
 		//		so we store the parent worksheet so that we can re-attach it when necessary
-		$pCellParent = ($pCell !== NULL) ? $pCell->getParent() : NULL;
+		$pCellParent = ($pCell !== NULL) ? $pCell->getWorksheet() : NULL;
 
 		//	Binary Operators
 		//	These operators always work on two values
@@ -3011,7 +3011,7 @@ class PHPExcel_Calculation {
 
 		//	If we're using cell caching, then $pCell may well be flushed back to the cache (which detaches the parent worksheet),
 		//		so we store the parent worksheet so that we can re-attach it when necessary
-		$pCellParent = ($pCell !== NULL) ? $pCell->getParent() : null;
+		$pCellParent = ($pCell !== NULL) ? $pCell->getWorksheet() : null;
 		$stack = new PHPExcel_Calculation_Token_Stack;
 
 		//	Loop through each token in turn
@@ -3064,20 +3064,24 @@ class PHPExcel_Calculation {
 						if ($sheet1 == $sheet2) {
 							if ($operand1Data['reference'] === NULL) {
 								if ((trim($operand1Data['value']) != '') && (is_numeric($operand1Data['value']))) {
-									$operand1Data['reference'] = $pCell->getColumn().$operand1Data['value'];
+									$operand1Data['reference'] = $pCellParent->getCellCacheController()->getCurrentColumn() .
+									    $operand1Data['value'];
 								} elseif (trim($operand1Data['reference']) == '') {
-									$operand1Data['reference'] = $pCell->getCoordinate();
+									$operand1Data['reference'] = $pCellParent->getCellCacheController()->getCurrentAddress();
 								} else {
-									$operand1Data['reference'] = $operand1Data['value'].$pCell->getRow();
+									$operand1Data['reference'] = $operand1Data['value'] .
+									    $pCellParent->getCellCacheController()->getCurrentRow();
 								}
 							}
 							if ($operand2Data['reference'] === NULL) {
 								if ((trim($operand2Data['value']) != '') && (is_numeric($operand2Data['value']))) {
-									$operand2Data['reference'] = $pCell->getColumn().$operand2Data['value'];
+									$operand2Data['reference'] = $pCellParent->getCellCacheController()->getCurrentColumn() .
+									    $operand2Data['value'];
 								} elseif (trim($operand2Data['reference']) == '') {
-									$operand2Data['reference'] = $pCell->getCoordinate();
+									$operand2Data['reference'] = $pCellParent->getCellCacheController()->getCurrentAddress();
 								} else {
-									$operand2Data['reference'] = $operand2Data['value'].$pCell->getRow();
+									$operand2Data['reference'] = $operand2Data['value'] .
+									    $pCellParent->getCellCacheController()->getCurrentRow();
 								}
 							}
 
@@ -3245,7 +3249,7 @@ class PHPExcel_Calculation {
 							if ($pCellParent !== NULL) {
 								if ($pCellParent->getParent()->getSheetByName($matches[2])->cellExists($cellRef)) {
 									$cellValue = $this->extractCellRange($cellRef, $pCellParent->getParent()->getSheetByName($matches[2]), false);
-									$pCell->attach($pCellParent);
+									$pCell->attach($pCellParent->getCellCacheController());
 								} else {
 									$cellValue = null;
 								}
@@ -3259,7 +3263,7 @@ class PHPExcel_Calculation {
 							$this->_writeDebug('Evaluating Cell '.$cellRef.' in current worksheet');
 							if ($pCellParent->cellExists($cellRef)) {
 								$cellValue = $this->extractCellRange($cellRef, $pCellParent, false);
-								$pCell->attach($pCellParent);
+								$pCell->attach($pCellParent->getCellCacheController());
 							} else {
 								$cellValue = null;
 							}
@@ -3384,7 +3388,7 @@ class PHPExcel_Calculation {
 //					echo 'Named Range is '.$namedRange.'<br />';
 					$this->_writeDebug('Evaluating Named Range '.$namedRange);
 					$cellValue = $this->extractNamedRange($namedRange, ((null !== $pCell) ? $pCellParent : null), false);
-					$pCell->attach($pCellParent);
+					$pCell->attach($pCellParent->getCellCacheController());
 					$this->_writeDebug('Evaluation Result for named range '.$namedRange.' is '.$this->_showTypeDetails($cellValue));
 					$stack->push('Named Range',$cellValue,$namedRange);
 				} else {

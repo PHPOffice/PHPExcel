@@ -696,17 +696,18 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
 			// loop through all cells in the worksheet
 			foreach ($this->getCellCollection(false) as $cellID) {
 				$cell = $this->getCell($cellID);
-				if (isset($autoSizes[$cell->getColumn()])) {
+				if (isset($autoSizes[$this->_cellCollection->getCurrentColumn()])) {
 					// Determine width if cell does not participate in a merge
-					if (!isset($isMergeCell[$cell->getCoordinate()])) {
+					if (!isset($isMergeCell[$this->_cellCollection->getCurrentAddress()])) {
 						// Calculated value
-						$cellValue = $cell->getCalculatedValue();
-
 						// To formatted string
-						$cellValue = PHPExcel_Style_NumberFormat::toFormattedString($cellValue, $this->getParent()->getCellXfByIndex($cell->getXfIndex())->getNumberFormat()->getFormatCode());
+						$cellValue = PHPExcel_Style_NumberFormat::toFormattedString(
+							$cell->getCalculatedValue(),
+							$this->getParent()->getCellXfByIndex($cell->getXfIndex())->getNumberFormat()->getFormatCode()
+						);
 
-						$autoSizes[$cell->getColumn()] = max(
-							(float)$autoSizes[$cell->getColumn()],
+						$autoSizes[$this->_cellCollection->getCurrentColumn()] = max(
+							(float)$autoSizes[$this->_cellCollection->getCurrentColumn()],
 							(float)PHPExcel_Shared_Font::calculateColumnWidth(
 								$this->getParent()->getCellXfByIndex($cell->getXfIndex())->getFont(),
 								$cellValue,
@@ -1118,7 +1119,7 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
 			// Coordinates
 			$aCoordinates = PHPExcel_Cell::coordinateFromString($pCoordinate);
 
-			$cell = $this->_cellCollection->addCacheData($pCoordinate,new PHPExcel_Cell($aCoordinates[0], $aCoordinates[1], null, PHPExcel_Cell_DataType::TYPE_NULL, $this));
+			$cell = $this->_cellCollection->addCacheData($pCoordinate,new PHPExcel_Cell(NULL, PHPExcel_Cell_DataType::TYPE_NULL, $this));
 			$this->_cellCollectionIsSorted = false;
 
 			if (PHPExcel_Cell::columnIndexFromString($this->_cachedHighestColumn) < PHPExcel_Cell::columnIndexFromString($aCoordinates[0]))
@@ -1158,7 +1159,7 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
 		$coordinate = $columnLetter . $pRow;
 
 		if (!$this->_cellCollection->isDataSet($coordinate)) {
-			$cell = $this->_cellCollection->addCacheData($coordinate, new PHPExcel_Cell($columnLetter, $pRow, null, PHPExcel_Cell_DataType::TYPE_NULL, $this));
+			$cell = $this->_cellCollection->addCacheData($coordinate, new PHPExcel_Cell(NULL, PHPExcel_Cell_DataType::TYPE_NULL, $this));
 			$this->_cellCollectionIsSorted = false;
 
 			if (PHPExcel_Cell::columnIndexFromString($this->_cachedHighestColumn) < $pColumn)

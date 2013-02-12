@@ -35,7 +35,6 @@ if (ini_get('mbstring.func_overload') & 2) {
 }
 PHPExcel_Shared_String::buildCharacterSets();
 
-
 /**
  * PHPExcel_Autoloader
  *
@@ -49,7 +48,8 @@ class PHPExcel_Autoloader
      * Register the Autoloader with SPL
      *
      */
-    public static function Register() {
+    public static function Register()
+    {
         if (function_exists('__autoload')) {
             //    Register any existing autoloader function with SPL, so we don't get any clashes
             spl_autoload_register('__autoload');
@@ -62,9 +62,10 @@ class PHPExcel_Autoloader
     /**
      * Autoload a class identified by name
      *
-     * @param    string    $pClassName        Name of the object to load
+     * @param string $pClassName Name of the object to load
      */
-    public static function Load($pClassName){
+    public static function Load($pClassName)
+    {
         if ((class_exists($pClassName,FALSE)) || (strpos($pClassName, 'PHPExcel') !== 0)) {
             //    Either already loaded, or not a PHPExcel class request
             return FALSE;

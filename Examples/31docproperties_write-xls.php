@@ -37,10 +37,8 @@ date_default_timezone_set('Europe/London');
 /** Include PHPExcel */
 require_once '../Classes/PHPExcel.php';
 
-
 $inputFileType = 'Excel5';
 $inputFileName = 'templates/31docproperties.xls';
-
 
 echo date('H:i:s') , " Load Tests from $inputFileType file" , EOL;
 $callStartTime = microtime(true);
@@ -54,13 +52,11 @@ echo 'Call time to read Workbook was ' , sprintf('%.4f',$callTime) , " seconds" 
 // Echo memory usage
 echo date('H:i:s') , ' Current memory usage: ' , (memory_get_usage(true) / 1024 / 1024) , " MB" , EOL;
 
-
 echo date('H:i:s') , " Adjust properties" , EOL;
 $objPHPExcel->getProperties()->setTitle("Office 95 XLS Test Document")
-							 ->setSubject("Office 95 XLS Test Document")
-							 ->setDescription("Test XLS document, generated using PHPExcel")
-							 ->setKeywords("office 95 biff php");
-
+                             ->setSubject("Office 95 XLS Test Document")
+                             ->setDescription("Test XLS document, generated using PHPExcel")
+                             ->setKeywords("office 95 biff php");
 
 // Save Excel 95 file
 echo date('H:i:s') , " Write to Excel5 format" , EOL;
@@ -68,10 +64,8 @@ $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
 $objWriter->save(str_replace('.php', '.xls', __FILE__));
 echo date('H:i:s') , " File written to " , str_replace('.php', '.xls', pathinfo(__FILE__, PATHINFO_BASENAME)) , EOL;
 
-
 // Echo memory peak usage
 echo date('H:i:s') , " Peak memory usage: " . (memory_get_peak_usage(true) / 1024 / 1024) . " MB" , EOL;
-
 
 echo EOL;
 // Reread File
@@ -93,26 +87,24 @@ echo '    Subject - ' , $objPHPExcel->getProperties()->getSubject() , EOL;
 echo '    Description - ' , $objPHPExcel->getProperties()->getDescription() , EOL;
 echo '    Keywords: - ' , $objPHPExcel->getProperties()->getKeywords() , EOL;
 
-
 echo 'Extended (Application) Properties:' , EOL;
 echo '    Category - ' , $objPHPExcel->getProperties()->getCategory() , EOL;
 echo '    Company - ' , $objPHPExcel->getProperties()->getCompany() , EOL;
 echo '    Manager - ' , $objPHPExcel->getProperties()->getManager() , EOL;
 
-
 echo 'Custom Properties:' , EOL;
 $customProperties = $objPHPExcel->getProperties()->getCustomProperties();
-foreach($customProperties as $customProperty) {
-	$propertyValue = $objPHPExcel->getProperties()->getCustomPropertyValue($customProperty);
-	$propertyType = $objPHPExcel->getProperties()->getCustomPropertyType($customProperty);
-	echo '    ' , $customProperty , ' - (' , $propertyType , ') - ';
-	if ($propertyType == PHPExcel_DocumentProperties::PROPERTY_TYPE_DATE) {
-		echo date('d-M-Y H:i:s',$propertyValue) , EOL;
-	} elseif ($propertyType == PHPExcel_DocumentProperties::PROPERTY_TYPE_BOOLEAN) {
-		echo (($propertyValue) ? 'TRUE' : 'FALSE') , EOL;
-	} else {
-		echo $propertyValue , EOL;
-	}
+foreach ($customProperties as $customProperty) {
+    $propertyValue = $objPHPExcel->getProperties()->getCustomPropertyValue($customProperty);
+    $propertyType = $objPHPExcel->getProperties()->getCustomPropertyType($customProperty);
+    echo '    ' , $customProperty , ' - (' , $propertyType , ') - ';
+    if ($propertyType == PHPExcel_DocumentProperties::PROPERTY_TYPE_DATE) {
+        echo date('d-M-Y H:i:s',$propertyValue) , EOL;
+    } elseif ($propertyType == PHPExcel_DocumentProperties::PROPERTY_TYPE_BOOLEAN) {
+        echo (($propertyValue) ? 'TRUE' : 'FALSE') , EOL;
+    } else {
+        echo $propertyValue , EOL;
+    }
 }
 
 // Echo memory peak usage

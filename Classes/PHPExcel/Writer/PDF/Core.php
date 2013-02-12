@@ -25,7 +25,6 @@
  *  @version     ##VERSION##, ##DATE##
  */
 
-
 /**
  *  PHPExcel_Writer_PDF_Core
  *
@@ -63,13 +62,12 @@ abstract class PHPExcel_Writer_PDF_Core extends PHPExcel_Writer_HTML
      */
     protected $_paperSize    = NULL;
 
-
     /**
      * Temporary storage for Save Array Return type
      *
      * @var string
      */
-	private $_saveArrayReturnType;
+    private $_saveArrayReturnType;
 
     /**
      * Paper Sizes xRef List
@@ -245,6 +243,7 @@ abstract class PHPExcel_Writer_PDF_Core extends PHPExcel_Writer_HTML
     public function setFont($fontName)
     {
         $this->_font = $fontName;
+
         return $this;
     }
 
@@ -267,6 +266,7 @@ abstract class PHPExcel_Writer_PDF_Core extends PHPExcel_Writer_HTML
     public function setPaperSize($pValue = PHPExcel_Worksheet_PageSetup::PAPERSIZE_LETTER)
     {
         $this->_paperSize = $pValue;
+
         return $this;
     }
 
@@ -289,6 +289,7 @@ abstract class PHPExcel_Writer_PDF_Core extends PHPExcel_Writer_HTML
     public function setOrientation($pValue = PHPExcel_Worksheet_PageSetup::ORIENTATION_DEFAULT)
     {
         $this->_orientation = $pValue;
+
         return $this;
     }
 
@@ -316,6 +317,7 @@ abstract class PHPExcel_Writer_PDF_Core extends PHPExcel_Writer_HTML
         } else {
             throw new PHPExcel_Writer_Exception("Directory does not exist: $pValue");
         }
+
         return $this;
     }
 

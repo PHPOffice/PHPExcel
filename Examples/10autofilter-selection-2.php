@@ -36,7 +36,6 @@ define('EOL',(PHP_SAPI == 'cli') ? PHP_EOL : '<br />');
 /** Include PHPExcel */
 require_once '../Classes/PHPExcel.php';
 
-
 // Create new PHPExcel object
 echo date('H:i:s').' Create new PHPExcel object'.EOL;
 $objPHPExcel = new PHPExcel();
@@ -44,12 +43,12 @@ $objPHPExcel = new PHPExcel();
 // Set document properties
 echo date('H:i:s').' Set document properties'.EOL;
 $objPHPExcel->getProperties()->setCreator('Maarten Balliauw')
-							 ->setLastModifiedBy('Maarten Balliauw')
-							 ->setTitle('PHPExcel Test Document')
-							 ->setSubject('PHPExcel Test Document')
-							 ->setDescription('Test document for PHPExcel, generated using PHP classes.')
-							 ->setKeywords('office PHPExcel php')
-							 ->setCategory('Test result file');
+                             ->setLastModifiedBy('Maarten Balliauw')
+                             ->setTitle('PHPExcel Test Document')
+                             ->setSubject('PHPExcel Test Document')
+                             ->setDescription('Test document for PHPExcel, generated using PHP classes.')
+                             ->setKeywords('office PHPExcel php')
+                             ->setCategory('Test result file');
 
 // Create the worksheet
 echo date('H:i:s').' Add data'.EOL;
@@ -68,47 +67,46 @@ $endYear++;
 $years = range($startYear,$endYear);
 $periods = range(1,12);
 $countries = array(	'United States',	'UK',		'France',	'Germany',
-					'Italy',			'Spain',	'Portugal',	'Japan'
-				  );
+                    'Italy',			'Spain',	'Portugal',	'Japan'
+                  );
 
 $row = 2;
-foreach($years as $year) {
-	foreach($periods as $period) {
-		foreach($countries as $country) {
-			$endDays = date('t',mktime(0,0,0,$period,1,$year));
-			for($i = 1; $i <= $endDays; ++$i) {
-				$eDate = PHPExcel_Shared_Date::FormattedPHPToExcel(
-					$year,
-					$period,
-					$i
-				);
-				$value = rand(500,1000) * (1 + rand(-0.25,+0.25));
-				$salesValue = $invoiceValue = NULL;
-				$incomeOrExpenditure = rand(-1,1);
-				if ($incomeOrExpenditure == -1) {
-					$expenditure = rand(-500,-1000) * (1 + rand(-0.25,+0.25));
-					$income = NULL;
-				} elseif ($incomeOrExpenditure == 1) {
-					$expenditure = rand(-500,-1000) * (1 + rand(-0.25,+0.25));
-					$income = rand(500,1000) * (1 + rand(-0.25,+0.25));;
-				} else {
-					$expenditure = NULL;
-					$income = rand(500,1000) * (1 + rand(-0.25,+0.25));;
-				}
-				$dataArray = array(	$year,
-									$period,
-									$country,
-									$eDate,
-									$income,
-									$expenditure,
-								  );
-				$objPHPExcel->getActiveSheet()->fromArray($dataArray, NULL, 'A'.$row++);
-			}
-		}
-	}
+foreach ($years as $year) {
+    foreach ($periods as $period) {
+        foreach ($countries as $country) {
+            $endDays = date('t',mktime(0,0,0,$period,1,$year));
+            for ($i = 1; $i <= $endDays; ++$i) {
+                $eDate = PHPExcel_Shared_Date::FormattedPHPToExcel(
+                    $year,
+                    $period,
+                    $i
+                );
+                $value = rand(500,1000) * (1 + rand(-0.25,+0.25));
+                $salesValue = $invoiceValue = NULL;
+                $incomeOrExpenditure = rand(-1,1);
+                if ($incomeOrExpenditure == -1) {
+                    $expenditure = rand(-500,-1000) * (1 + rand(-0.25,+0.25));
+                    $income = NULL;
+                } elseif ($incomeOrExpenditure == 1) {
+                    $expenditure = rand(-500,-1000) * (1 + rand(-0.25,+0.25));
+                    $income = rand(500,1000) * (1 + rand(-0.25,+0.25));;
+                } else {
+                    $expenditure = NULL;
+                    $income = rand(500,1000) * (1 + rand(-0.25,+0.25));;
+                }
+                $dataArray = array(	$year,
+                                    $period,
+                                    $country,
+                                    $eDate,
+                                    $income,
+                                    $expenditure,
+                                  );
+                $objPHPExcel->getActiveSheet()->fromArray($dataArray, NULL, 'A'.$row++);
+            }
+        }
+    }
 }
 $row--;
-
 
 // Set styling
 echo date('H:i:s').' Set styling'.EOL;
@@ -120,8 +118,6 @@ $objPHPExcel->getActiveSheet()->getStyle('D2:D'.$row)->getNumberFormat()->setFor
 $objPHPExcel->getActiveSheet()->getStyle('E2:F'.$row)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_CURRENCY_USD_SIMPLE);
 $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth(14);
 $objPHPExcel->getActiveSheet()->freezePane('A2');
-
-
 
 // Set autofilter range
 echo date('H:i:s').' Set autofilter range'.EOL;
@@ -138,42 +134,40 @@ echo date('H:i:s').' Set active filters'.EOL;
 $autoFilter->getColumn('C')
     ->setFilterType(PHPExcel_Worksheet_AutoFilter_Column::AUTOFILTER_FILTERTYPE_FILTER)
     ->createRule()
-		->setRule(
-			PHPExcel_Worksheet_AutoFilter_Column_Rule::AUTOFILTER_COLUMN_RULE_EQUAL,
-			'Germany'
-		);
+        ->setRule(
+            PHPExcel_Worksheet_AutoFilter_Column_Rule::AUTOFILTER_COLUMN_RULE_EQUAL,
+            'Germany'
+        );
 // Filter the Date column on a filter value of the year to date
 $autoFilter->getColumn('D')
-	->setFilterType(PHPExcel_Worksheet_AutoFilter_Column::AUTOFILTER_FILTERTYPE_DYNAMICFILTER)
-	->createRule()
-		->setRule(
-			PHPExcel_Worksheet_AutoFilter_Column_Rule::AUTOFILTER_COLUMN_RULE_EQUAL,
-			NULL,
-			PHPExcel_Worksheet_AutoFilter_Column_Rule::AUTOFILTER_RULETYPE_DYNAMIC_YEARTODATE
-		)
-		->setRuleType(PHPExcel_Worksheet_AutoFilter_Column_Rule::AUTOFILTER_RULETYPE_DYNAMICFILTER);
+    ->setFilterType(PHPExcel_Worksheet_AutoFilter_Column::AUTOFILTER_FILTERTYPE_DYNAMICFILTER)
+    ->createRule()
+        ->setRule(
+            PHPExcel_Worksheet_AutoFilter_Column_Rule::AUTOFILTER_COLUMN_RULE_EQUAL,
+            NULL,
+            PHPExcel_Worksheet_AutoFilter_Column_Rule::AUTOFILTER_RULETYPE_DYNAMIC_YEARTODATE
+        )
+        ->setRuleType(PHPExcel_Worksheet_AutoFilter_Column_Rule::AUTOFILTER_RULETYPE_DYNAMICFILTER);
 // Display only sales values that are between 400 and 600
 $autoFilter->getColumn('E')
     ->setFilterType(PHPExcel_Worksheet_AutoFilter_Column::AUTOFILTER_FILTERTYPE_CUSTOMFILTER)
     ->createRule()
-		->setRule(
-			PHPExcel_Worksheet_AutoFilter_Column_Rule::AUTOFILTER_COLUMN_RULE_GREATERTHANOREQUAL,
-			400
-		)
-		->setRuleType(PHPExcel_Worksheet_AutoFilter_Column_Rule::AUTOFILTER_RULETYPE_CUSTOMFILTER);
+        ->setRule(
+            PHPExcel_Worksheet_AutoFilter_Column_Rule::AUTOFILTER_COLUMN_RULE_GREATERTHANOREQUAL,
+            400
+        )
+        ->setRuleType(PHPExcel_Worksheet_AutoFilter_Column_Rule::AUTOFILTER_RULETYPE_CUSTOMFILTER);
 $autoFilter->getColumn('E')
     ->setJoin(PHPExcel_Worksheet_AutoFilter_Column::AUTOFILTER_COLUMN_JOIN_AND)
     ->createRule()
-		->setRule(
-			PHPExcel_Worksheet_AutoFilter_Column_Rule::AUTOFILTER_COLUMN_RULE_LESSTHANOREQUAL,
-			600
-		)
-		->setRuleType(PHPExcel_Worksheet_AutoFilter_Column_Rule::AUTOFILTER_RULETYPE_CUSTOMFILTER);
-
+        ->setRule(
+            PHPExcel_Worksheet_AutoFilter_Column_Rule::AUTOFILTER_COLUMN_RULE_LESSTHANOREQUAL,
+            600
+        )
+        ->setRuleType(PHPExcel_Worksheet_AutoFilter_Column_Rule::AUTOFILTER_RULETYPE_CUSTOMFILTER);
 
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
 $objPHPExcel->setActiveSheetIndex(0);
-
 
 // Save Excel 2007 file
 echo date('H:i:s') , " Write to Excel2007 format" , EOL;
@@ -189,7 +183,6 @@ echo 'Call time to write Workbook was ' , sprintf('%.4f',$callTime) , " seconds"
 // Echo memory usage
 echo date('H:i:s') , ' Current memory usage: ' , (memory_get_usage(true) / 1024 / 1024) , " MB" , EOL;
 
-
 // Save Excel 95 file
 echo date('H:i:s') , " Write to Excel5 format" , EOL;
 $callStartTime = microtime(true);
@@ -203,7 +196,6 @@ echo date('H:i:s') , " File written to " , str_replace('.php', '.xls', pathinfo(
 echo 'Call time to write Workbook was ' , sprintf('%.4f',$callTime) , " seconds" , EOL;
 // Echo memory usage
 echo date('H:i:s') , ' Current memory usage: ' , (memory_get_usage(true) / 1024 / 1024) , " MB" , EOL;
-
 
 // Echo memory peak usage
 echo date('H:i:s').' Peak memory usage: '.(memory_get_peak_usage(true) / 1024 / 1024).' MB'.EOL;

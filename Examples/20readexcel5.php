@@ -38,9 +38,8 @@ date_default_timezone_set('Europe/London');
 /** Include PHPExcel_IOFactory */
 require_once '../Classes/PHPExcel/IOFactory.php';
 
-
 if (!file_exists("14excel5.xls")) {
-	exit("Please run 14excel5.php first.\n");
+    exit("Please run 14excel5.php first.\n");
 }
 
 echo date('H:i:s') , " Load workbook from Excel5 file" , EOL;
@@ -55,7 +54,6 @@ echo 'Call time to load Workbook was ' , sprintf('%.4f',$callTime) , " seconds" 
 // Echo memory usage
 echo date('H:i:s') , ' Current memory usage: ' , (memory_get_usage(true) / 1024 / 1024) , " MB" , EOL;
 
-
 // Save Excel 2007 file
 echo date('H:i:s') , " Write to Excel2007 format" , EOL;
 $callStartTime = microtime(true);
@@ -69,7 +67,6 @@ echo date('H:i:s') , " File written to " , str_replace('.php', '.xlsx', pathinfo
 echo 'Call time to write Workbook was ' , sprintf('%.4f',$callTime) , " seconds" , EOL;
 // Echo memory usage
 echo date('H:i:s') , ' Current memory usage: ' , (memory_get_usage(true) / 1024 / 1024) , " MB" , EOL;
-
 
 // Echo memory peak usage
 echo date('H:i:s') , " Peak memory usage: " , (memory_get_peak_usage(true) / 1024 / 1024) , " MB" , EOL;

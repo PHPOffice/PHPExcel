@@ -25,7 +25,6 @@ set_include_path(get_include_path() . PATH_SEPARATOR . '../../../Classes/');
 /** PHPExcel_IOFactory */
 include 'PHPExcel/IOFactory.php';
 
-
 $inputFileType = 'Excel5';
 //	$inputFileType = 'Excel2007';
 //	$inputFileType = 'Excel2003XML';
@@ -40,15 +39,13 @@ echo 'Loading Sheet "',$sheetname,'" only<br />';
 $objReader->setLoadSheetsOnly($sheetname);
 $objPHPExcel = $objReader->load($inputFileName);
 
-
 echo '<hr />';
 
 echo $objPHPExcel->getSheetCount(),' worksheet',(($objPHPExcel->getSheetCount() == 1) ? '' : 's'),' loaded<br /><br />';
 $loadedSheetNames = $objPHPExcel->getSheetNames();
-foreach($loadedSheetNames as $sheetIndex => $loadedSheetName) {
-	echo $sheetIndex,' -> ',$loadedSheetName,'<br />';
+foreach ($loadedSheetNames as $sheetIndex => $loadedSheetName) {
+    echo $sheetIndex,' -> ',$loadedSheetName,'<br />';
 }
-
 
 ?>
 <body>

@@ -5,7 +5,6 @@ set_time_limit(0);
 
 date_default_timezone_set('Europe/London');
 
-
 ?>
 <html>
 <head>
@@ -25,7 +24,6 @@ set_include_path(get_include_path() . PATH_SEPARATOR . '../../../../Classes/');
 
 /** Include PHPExcel */
 include 'PHPExcel.php';
-
 
 // Create new PHPExcel object
 $objPHPExcel = new PHPExcel();
@@ -54,18 +52,14 @@ $worksheet->setCellValue('B12', '=DVAR(A4:E10,"Yield",A1:A3)');
 $worksheet->setCellValue('A13', 'The estimated variance in height of Apple and Pear trees');
 $worksheet->setCellValue('B13', '=DVAR(A4:E10,2,A1:A3)');
 
-
 echo '<hr />';
-
 
 echo '<h4>Database</h4>';
 
 $databaseData = $worksheet->rangeToArray('A4:E10',null,true,true,true);
 var_dump($databaseData);
 
-
 echo '<hr />';
-
 
 // Test the formulae
 echo '<h4>Criteria</h4>';
@@ -83,7 +77,6 @@ var_dump($criteriaData);
 
 echo $worksheet->getCell("A13")->getValue() .'<br />';
 echo 'DVAR() Result is ' . $worksheet->getCell("B13")->getCalculatedValue();
-
 
 ?>
 <body>

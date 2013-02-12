@@ -37,19 +37,18 @@ date_default_timezone_set('Europe/London');
 /** Include PHPExcel */
 require_once '../Classes/PHPExcel.php';
 
-
 /*
 After doing some test, I've got these results benchmarked
 for writing to Excel2007:
 
-	Number of rows	Seconds to generate
-	200				3
-	500				4
-	1000			6
-	2000			12
-	4000			36
-	8000			64
-	15000			465
+    Number of rows	Seconds to generate
+    200				3
+    500				4
+    1000			6
+    2000			12
+    4000			36
+    8000			64
+    15000			465
 */
 
 // Create new PHPExcel object
@@ -59,12 +58,12 @@ $objPHPExcel = new PHPExcel();
 // Set document properties
 echo date('H:i:s') , " Set properties" , EOL;
 $objPHPExcel->getProperties()->setCreator("Maarten Balliauw")
-							 ->setLastModifiedBy("Maarten Balliauw")
-							 ->setTitle("Office 2007 XLSX Test Document")
-							 ->setSubject("Office 2007 XLSX Test Document")
-							 ->setDescription("Test document for Office 2007 XLSX, generated using PHP classes.")
-							 ->setKeywords("office 2007 openxml php")
-							 ->setCategory("Test result file");
+                             ->setLastModifiedBy("Maarten Balliauw")
+                             ->setTitle("Office 2007 XLSX Test Document")
+                             ->setSubject("Office 2007 XLSX Test Document")
+                             ->setDescription("Test document for Office 2007 XLSX, generated using PHP classes.")
+                             ->setKeywords("office 2007 openxml php")
+                             ->setCategory("Test result file");
 
 
 // Create a first sheet
@@ -101,11 +100,11 @@ $objPHPExcel->getActiveSheet()->getPageSetup()->setRowsToRepeatAtTopByStartAndEn
 
 // Add data
 for ($i = 2; $i <= 5000; $i++) {
-	$objPHPExcel->getActiveSheet()->setCellValue('A' . $i, "FName $i")
-	                              ->setCellValue('B' . $i, "LName $i")
-	                              ->setCellValue('C' . $i, "PhoneNo $i")
-	                              ->setCellValue('D' . $i, "FaxNo $i")
-	                              ->setCellValue('E' . $i, true);
+    $objPHPExcel->getActiveSheet()->setCellValue('A' . $i, "FName $i")
+                                  ->setCellValue('B' . $i, "LName $i")
+                                  ->setCellValue('C' . $i, "PhoneNo $i")
+                                  ->setCellValue('D' . $i, "FaxNo $i")
+                                  ->setCellValue('E' . $i, true);
 }
 
 

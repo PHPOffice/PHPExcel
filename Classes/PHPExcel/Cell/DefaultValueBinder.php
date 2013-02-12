@@ -25,7 +25,6 @@
  * @version    ##VERSION##, ##DATE##
  */
 
-
 /** PHPExcel root directory */
 if (!defined('PHPEXCEL_ROOT')) {
     /**
@@ -34,7 +33,6 @@ if (!defined('PHPEXCEL_ROOT')) {
     define('PHPEXCEL_ROOT', dirname(__FILE__) . '/../../');
     require(PHPEXCEL_ROOT . 'PHPExcel/Autoloader.php');
 }
-
 
 /**
  * PHPExcel_Cell_DefaultValueBinder
@@ -48,8 +46,8 @@ class PHPExcel_Cell_DefaultValueBinder implements PHPExcel_Cell_IValueBinder
     /**
      * Bind value to a cell
      *
-     * @param  PHPExcel_Cell  $cell   Cell to bind value to
-     * @param  mixed          $value  Value to bind in cell
+     * @param  PHPExcel_Cell $cell  Cell to bind value to
+     * @param  mixed         $value Value to bind in cell
      * @return boolean
      */
     public function bindValue(PHPExcel_Cell $cell, $value = null)
@@ -69,10 +67,11 @@ class PHPExcel_Cell_DefaultValueBinder implements PHPExcel_Cell_IValueBinder
     /**
      * DataType for value
      *
-     * @param   mixed  $pValue
-     * @return  string
+     * @param  mixed  $pValue
+     * @return string
      */
-    public static function dataTypeForValue($pValue = null) {
+    public static function dataTypeForValue($pValue = null)
+    {
         // Match the value against a few data types
         if (is_null($pValue)) {
             return PHPExcel_Cell_DataType::TYPE_NULL;

@@ -27,15 +27,14 @@
 
 /** Error reporting */
 error_reporting(E_ALL);
-ini_set('display_errors', TRUE); 
-ini_set('display_startup_errors', TRUE); 
+ini_set('display_errors', TRUE);
+ini_set('display_startup_errors', TRUE);
 date_default_timezone_set('Europe/London');
 
 define('EOL',(PHP_SAPI == 'cli') ? PHP_EOL : '<br />');
 
 /** Include PHPExcel */
 require_once '../Classes/PHPExcel.php';
-
 
 // Create new PHPExcel object
 echo date('H:i:s') , " Create new PHPExcel object" , EOL;
@@ -44,12 +43,12 @@ $objPHPExcel = new PHPExcel();
 // Set document properties
 echo date('H:i:s') , " Set document properties" , EOL;
 $objPHPExcel->getProperties()->setCreator("Maarten Balliauw")
-							 ->setLastModifiedBy("Maarten Balliauw")
-							 ->setTitle("Office 2007 XLSX Test Document")
-							 ->setSubject("Office 2007 XLSX Test Document")
-							 ->setDescription("Test document for Office 2007 XLSX, generated using PHP classes.")
-							 ->setKeywords("office 2007 openxml php")
-							 ->setCategory("Test result file");
+                             ->setLastModifiedBy("Maarten Balliauw")
+                             ->setTitle("Office 2007 XLSX Test Document")
+                             ->setSubject("Office 2007 XLSX Test Document")
+                             ->setDescription("Test document for Office 2007 XLSX, generated using PHP classes.")
+                             ->setKeywords("office 2007 openxml php")
+                             ->setCategory("Test result file");
 
 // Set default font
 echo date('H:i:s') , " Set default font" , EOL;
@@ -109,7 +108,6 @@ $objPHPExcel->getActiveSheet()->getStyle('C11')->getNumberFormat()->setFormatCod
 $objPHPExcel->getActiveSheet()->setCellValue('A12', 'NULL')
                               ->setCellValue('C12', NULL);
 
-
 $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
 
@@ -117,10 +115,8 @@ $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
 echo date('H:i:s') , " Rename worksheet" , EOL;
 $objPHPExcel->getActiveSheet()->setTitle('Datatypes');
 
-
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
 $objPHPExcel->setActiveSheetIndex(0);
-
 
 // Save Excel 2007 file
 echo date('H:i:s') , " Write to Excel2007 format" , EOL;
@@ -136,7 +132,6 @@ echo 'Call time to write Workbook was ' , sprintf('%.4f',$callTime) , " seconds"
 // Echo memory usage
 echo date('H:i:s') , ' Current memory usage: ' , (memory_get_usage(true) / 1024 / 1024) , " MB" , EOL;
 
-
 echo date('H:i:s') , " Reload workbook from saved file" , EOL;
 $callStartTime = microtime(true);
 
@@ -148,9 +143,7 @@ echo 'Call time to reload Workbook was ' , sprintf('%.4f',$callTime) , " seconds
 // Echo memory usage
 echo date('H:i:s') , ' Current memory usage: ' , (memory_get_usage(true) / 1024 / 1024) , " MB" , EOL;
 
-
 var_dump($objPHPExcel->getActiveSheet()->toArray());
-
 
 // Echo memory peak usage
 echo date('H:i:s') , " Peak memory usage: " , (memory_get_peak_usage(true) / 1024 / 1024) , " MB" , EOL;

@@ -25,7 +25,6 @@
  * @version    ##VERSION##, ##DATE##
  */
 
-
 /**
  * PHPExcel_Shared_Drawing
  *
@@ -35,149 +34,157 @@
  */
 class PHPExcel_Shared_Drawing
 {
-	/**
-	 * Convert pixels to EMU
-	 *
-	 * @param 	int $pValue	Value in pixels
-	 * @return 	int			Value in EMU
-	 */
-	public static function pixelsToEMU($pValue = 0) {
-		return round($pValue * 9525);
-	}
+    /**
+     * Convert pixels to EMU
+     *
+     * @param  int $pValue Value in pixels
+     * @return int Value in EMU
+     */
+    public static function pixelsToEMU($pValue = 0)
+    {
+        return round($pValue * 9525);
+    }
 
-	/**
-	 * Convert EMU to pixels
-	 *
-	 * @param 	int $pValue	Value in EMU
-	 * @return 	int			Value in pixels
-	 */
-	public static function EMUToPixels($pValue = 0) {
-		if ($pValue != 0) {
-			return round($pValue / 9525);
-		} else {
-			return 0;
-		}
-	}
+    /**
+     * Convert EMU to pixels
+     *
+     * @param  int $pValue Value in EMU
+     * @return int Value in pixels
+     */
+    public static function EMUToPixels($pValue = 0)
+    {
+        if ($pValue != 0) {
+            return round($pValue / 9525);
+        } else {
+            return 0;
+        }
+    }
 
-	/**
-	 * Convert pixels to column width. Exact algorithm not known.
-	 * By inspection of a real Excel file using Calibri 11, one finds 1000px ~ 142.85546875
-	 * This gives a conversion factor of 7. Also, we assume that pixels and font size are proportional.
-	 *
-	 * @param 	int $pValue	Value in pixels
-	 * @param 	PHPExcel_Style_Font $pDefaultFont	Default font of the workbook
-	 * @return 	int			Value in cell dimension
-	 */
-	public static function pixelsToCellDimension($pValue = 0, PHPExcel_Style_Font $pDefaultFont) {
-		// Font name and size
-		$name = $pDefaultFont->getName();
-		$size = $pDefaultFont->getSize();
+    /**
+     * Convert pixels to column width. Exact algorithm not known.
+     * By inspection of a real Excel file using Calibri 11, one finds 1000px ~ 142.85546875
+     * This gives a conversion factor of 7. Also, we assume that pixels and font size are proportional.
+     *
+     * @param  int                 $pValue       Value in pixels
+     * @param  PHPExcel_Style_Font $pDefaultFont Default font of the workbook
+     * @return int                 Value in cell dimension
+     */
+    public static function pixelsToCellDimension($pValue = 0, PHPExcel_Style_Font $pDefaultFont)
+    {
+        // Font name and size
+        $name = $pDefaultFont->getName();
+        $size = $pDefaultFont->getSize();
 
-		if (isset(PHPExcel_Shared_Font::$defaultColumnWidths[$name][$size])) {
-			// Exact width can be determined
-			$colWidth = $pValue
-				* PHPExcel_Shared_Font::$defaultColumnWidths[$name][$size]['width']
-				/ PHPExcel_Shared_Font::$defaultColumnWidths[$name][$size]['px'];
-		} else {
-			// We don't have data for this particular font and size, use approximation by
-			// extrapolating from Calibri 11
-			$colWidth = $pValue * 11
-				* PHPExcel_Shared_Font::$defaultColumnWidths['Calibri'][11]['width']
-				/ PHPExcel_Shared_Font::$defaultColumnWidths['Calibri'][11]['px'] / $size;
-		}
+        if (isset(PHPExcel_Shared_Font::$defaultColumnWidths[$name][$size])) {
+            // Exact width can be determined
+            $colWidth = $pValue
+                * PHPExcel_Shared_Font::$defaultColumnWidths[$name][$size]['width']
+                / PHPExcel_Shared_Font::$defaultColumnWidths[$name][$size]['px'];
+        } else {
+            // We don't have data for this particular font and size, use approximation by
+            // extrapolating from Calibri 11
+            $colWidth = $pValue * 11
+                * PHPExcel_Shared_Font::$defaultColumnWidths['Calibri'][11]['width']
+                / PHPExcel_Shared_Font::$defaultColumnWidths['Calibri'][11]['px'] / $size;
+        }
 
-		return $colWidth;
-	}
+        return $colWidth;
+    }
 
-	/**
-	 * Convert column width from (intrinsic) Excel units to pixels
-	 *
-	 * @param 	float	$pValue		Value in cell dimension
-	 * @param 	PHPExcel_Style_Font $pDefaultFont	Default font of the workbook
-	 * @return 	int		Value in pixels
-	 */
-	public static function cellDimensionToPixels($pValue = 0, PHPExcel_Style_Font $pDefaultFont) {
-		// Font name and size
-		$name = $pDefaultFont->getName();
-		$size = $pDefaultFont->getSize();
+    /**
+     * Convert column width from (intrinsic) Excel units to pixels
+     *
+     * @param  float               $pValue       Value in cell dimension
+     * @param  PHPExcel_Style_Font $pDefaultFont Default font of the workbook
+     * @return int                 Value in pixels
+     */
+    public static function cellDimensionToPixels($pValue = 0, PHPExcel_Style_Font $pDefaultFont)
+    {
+        // Font name and size
+        $name = $pDefaultFont->getName();
+        $size = $pDefaultFont->getSize();
 
-		if (isset(PHPExcel_Shared_Font::$defaultColumnWidths[$name][$size])) {
-			// Exact width can be determined
-			$colWidth = $pValue
-				* PHPExcel_Shared_Font::$defaultColumnWidths[$name][$size]['px']
-				/ PHPExcel_Shared_Font::$defaultColumnWidths[$name][$size]['width'];
+        if (isset(PHPExcel_Shared_Font::$defaultColumnWidths[$name][$size])) {
+            // Exact width can be determined
+            $colWidth = $pValue
+                * PHPExcel_Shared_Font::$defaultColumnWidths[$name][$size]['px']
+                / PHPExcel_Shared_Font::$defaultColumnWidths[$name][$size]['width'];
 
-		} else {
-			// We don't have data for this particular font and size, use approximation by
-			// extrapolating from Calibri 11
-			$colWidth = $pValue * $size
-				* PHPExcel_Shared_Font::$defaultColumnWidths['Calibri'][11]['px']
-				/ PHPExcel_Shared_Font::$defaultColumnWidths['Calibri'][11]['width'] / 11;
-		}
+        } else {
+            // We don't have data for this particular font and size, use approximation by
+            // extrapolating from Calibri 11
+            $colWidth = $pValue * $size
+                * PHPExcel_Shared_Font::$defaultColumnWidths['Calibri'][11]['px']
+                / PHPExcel_Shared_Font::$defaultColumnWidths['Calibri'][11]['width'] / 11;
+        }
 
-		// Round pixels to closest integer
-		$colWidth = (int) round($colWidth);
+        // Round pixels to closest integer
+        $colWidth = (int) round($colWidth);
 
-		return $colWidth;
-	}
+        return $colWidth;
+    }
 
-	/**
-	 * Convert pixels to points
-	 *
-	 * @param 	int $pValue	Value in pixels
-	 * @return 	int			Value in points
-	 */
-	public static function pixelsToPoints($pValue = 0) {
-		return $pValue * 0.67777777;
-	}
+    /**
+     * Convert pixels to points
+     *
+     * @param  int $pValue Value in pixels
+     * @return int Value in points
+     */
+    public static function pixelsToPoints($pValue = 0)
+    {
+        return $pValue * 0.67777777;
+    }
 
-	/**
-	 * Convert points to pixels
-	 *
-	 * @param 	int $pValue	Value in points
-	 * @return 	int			Value in pixels
-	 */
-	public static function pointsToPixels($pValue = 0) {
-		if ($pValue != 0) {
-			return (int) ceil($pValue * 1.333333333);
-		} else {
-			return 0;
-		}
-	}
+    /**
+     * Convert points to pixels
+     *
+     * @param  int $pValue Value in points
+     * @return int Value in pixels
+     */
+    public static function pointsToPixels($pValue = 0)
+    {
+        if ($pValue != 0) {
+            return (int) ceil($pValue * 1.333333333);
+        } else {
+            return 0;
+        }
+    }
 
-	/**
-	 * Convert degrees to angle
-	 *
-	 * @param 	int $pValue	Degrees
-	 * @return 	int			Angle
-	 */
-	public static function degreesToAngle($pValue = 0) {
-		return (int)round($pValue * 60000);
-	}
+    /**
+     * Convert degrees to angle
+     *
+     * @param  int $pValue Degrees
+     * @return int Angle
+     */
+    public static function degreesToAngle($pValue = 0)
+    {
+        return (int) round($pValue * 60000);
+    }
 
-	/**
-	 * Convert angle to degrees
-	 *
-	 * @param 	int $pValue	Angle
-	 * @return 	int			Degrees
-	 */
-	public static function angleToDegrees($pValue = 0) {
-		if ($pValue != 0) {
-			return round($pValue / 60000);
-		} else {
-			return 0;
-		}
-	}
+    /**
+     * Convert angle to degrees
+     *
+     * @param  int $pValue Angle
+     * @return int Degrees
+     */
+    public static function angleToDegrees($pValue = 0)
+    {
+        if ($pValue != 0) {
+            return round($pValue / 60000);
+        } else {
+            return 0;
+        }
+    }
 
-	/**
-	 * Create a new image from file. By alexander at alexauto dot nl
-	 *
-	 * @link http://www.php.net/manual/en/function.imagecreatefromwbmp.php#86214
-	 * @param string $filename Path to Windows DIB (BMP) image
-	 * @return resource
-	 */
-	public static function imagecreatefrombmp($p_sFile)
-	{
+    /**
+     * Create a new image from file. By alexander at alexauto dot nl
+     *
+     * @link http://www.php.net/manual/en/function.imagecreatefromwbmp.php#86214
+     * @param  string   $filename Path to Windows DIB (BMP) image
+     * @return resource
+     */
+    public static function imagecreatefrombmp($p_sFile)
+    {
         //    Load the image into a string
         $file    =    fopen($p_sFile,"rb");
         $read    =    fread($file,10);
@@ -190,8 +197,7 @@ class PHPExcel_Shared_Drawing
 
         //    Process the header
         //    Structure: http://www.fastgraph.com/help/bmp_header_format.html
-        if (substr($header,0,4)=="424d")
-        {
+        if (substr($header,0,4)=="424d") {
             //    Cut it in parts of 2 bytes
             $header_parts    =    str_split($header,2);
 
@@ -226,11 +232,9 @@ class PHPExcel_Shared_Drawing
 
         //    Using a for-loop with index-calculation instaid of str_split to avoid large memory consumption
         //    Calculate the next DWORD-position in the body
-        for ($i=0;$i<$body_size;$i+=3)
-        {
+        for ($i=0;$i<$body_size;$i+=3) {
             //    Calculate line-ending and padding
-            if ($x>=$width)
-            {
+            if ($x>=$width) {
                 //    If padding needed, ignore image-padding
                 //    Shift i to the ending of the current 32-bit-block
                 if ($usePadding)
@@ -267,6 +271,6 @@ class PHPExcel_Shared_Drawing
 
         //    Return image-object
         return $image;
-	}
+    }
 
 }

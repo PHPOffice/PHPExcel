@@ -25,7 +25,6 @@ set_include_path(get_include_path() . PATH_SEPARATOR . '../../../Classes/');
 /** PHPExcel_IOFactory */
 include 'PHPExcel/IOFactory.php';
 
-
 $inputFileType = 'Excel5';
 //	$inputFileType = 'Excel2007';
 //	$inputFileType = 'Excel2003XML';
@@ -34,22 +33,22 @@ $inputFileType = 'Excel5';
 $inputFileName = './sampleData/example1.xls';
 $sheetname = 'Data Sheet #3';
 
-
 class MyReadFilter implements PHPExcel_Reader_IReadFilter
 {
-	public function readCell($column, $row, $worksheetName = '') {
-		// Read rows 1 to 7 and columns A to E only
-		if ($row >= 1 && $row <= 7) {
-			if (in_array($column,range('A','E'))) {
-				return true;
-			}
-		}
-		return false;
-	}
+    public function readCell($column, $row, $worksheetName = '')
+    {
+        // Read rows 1 to 7 and columns A to E only
+        if ($row >= 1 && $row <= 7) {
+            if (in_array($column,range('A','E'))) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
 
 $filterSubset = new MyReadFilter();
-
 
 echo 'Loading file ',pathinfo($inputFileName,PATHINFO_BASENAME),' using IOFactory with a defined reader type of ',$inputFileType,'<br />';
 $objReader = PHPExcel_IOFactory::createReader($inputFileType);
@@ -59,12 +58,10 @@ echo 'Loading Sheet using filter<br />';
 $objReader->setReadFilter($filterSubset);
 $objPHPExcel = $objReader->load($inputFileName);
 
-
 echo '<hr />';
 
 $sheetData = $objPHPExcel->getActiveSheet()->toArray(null,true,true,true);
 var_dump($sheetData);
-
 
 ?>
 <body>

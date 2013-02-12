@@ -1,13 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?> 
+<?xml version="1.0" encoding="UTF-8"?>
 <phpunit bootstrap="./bootstrap.php"
     backupGlobals="true"
-    colors="true" 
-    convertErrorsToExceptions="true" 
-    convertNoticesToExceptions="true" 
-    convertWarningsToExceptions="true" 
-    processIsolation="false" 
-    syntaxCheck="true" 
-    verbose="true" 
+    colors="true"
+    convertErrorsToExceptions="true"
+    convertNoticesToExceptions="true"
+    convertWarningsToExceptions="true"
+    processIsolation="false"
+    syntaxCheck="true"
+    verbose="true"
     strict="true"
     stopOnError="false"
     stopOnFailure="false"
@@ -37,4 +37,4 @@
         <log type="metrics-xml" target="./metrics/metrics.xml"/>
         <log type="test-xml" target="./testResults/logfile.xml" logIncompleteSkipped="false"/>
     </logging>
-</phpunit> 
+</phpunit>

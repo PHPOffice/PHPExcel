@@ -34,11 +34,10 @@ define('EOL',(PHP_SAPI == 'cli') ? PHP_EOL : '<br />');
 
 date_default_timezone_set('Europe/London');
 
-include "05featuredemo.inc.php";
+include '05featuredemo.inc.php';
 
 /** PHPExcel_IOFactory */
 require_once '../Classes/PHPExcel/IOFactory.php';
-
 
 // Save Excel 95 file
 echo date('H:i:s') , " Write to Excel5 format" , EOL;
@@ -53,7 +52,6 @@ echo date('H:i:s') , " File written to " , str_replace('.php', '.xls', pathinfo(
 echo 'Call time to write Workbook was ' , sprintf('%.4f',$callTime) , " seconds" , EOL;
 // Echo memory usage
 echo date('H:i:s') , ' Current memory usage: ' , (memory_get_usage(true) / 1024 / 1024) , " MB" , EOL;
-
 
 // Echo memory peak usage
 echo date('H:i:s') , " Peak memory usage: " , (memory_get_peak_usage(true) / 1024 / 1024) , " MB" , EOL;

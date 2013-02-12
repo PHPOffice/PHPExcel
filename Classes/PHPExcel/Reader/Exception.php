@@ -25,7 +25,6 @@
  * @version	##VERSION##, ##DATE##
  */
 
-
 /**
  * PHPExcel_Reader_Exception
  *
@@ -33,20 +32,22 @@
  * @package    PHPExcel_Reader
  * @copyright  Copyright (c) 2006 - 2012 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Reader_Exception extends PHPExcel_Exception {
-	/**
-	 * Error handler callback
-	 *
-	 * @param mixed $code
-	 * @param mixed $string
-	 * @param mixed $file
-	 * @param mixed $line
-	 * @param mixed $context
-	 */
-	public static function errorHandlerCallback($code, $string, $file, $line, $context) {
-		$e = new self($string, $code);
-		$e->line = $line;
-		$e->file = $file;
-		throw $e;
-	}
+class PHPExcel_Reader_Exception extends PHPExcel_Exception
+{
+    /**
+     * Error handler callback
+     *
+     * @param mixed $code
+     * @param mixed $string
+     * @param mixed $file
+     * @param mixed $line
+     * @param mixed $context
+     */
+    public static function errorHandlerCallback($code, $string, $file, $line, $context)
+    {
+        $e = new self($string, $code);
+        $e->line = $line;
+        $e->file = $file;
+        throw $e;
+    }
 }

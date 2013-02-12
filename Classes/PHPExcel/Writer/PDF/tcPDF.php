@@ -25,7 +25,6 @@
  *  @version     ##VERSION##, ##DATE##
  */
 
-
 /**  Require tcPDF library */
 $pdfRendererClassFile = PHPExcel_Settings::getPdfRendererPath() . '/tcpdf.php';
 if (file_exists($pdfRendererClassFile)) {
@@ -99,7 +98,6 @@ class PHPExcel_Writer_PDF_tcPDF extends PHPExcel_Writer_PDF_Core implements PHPE
             $paperSize = self::$_paperSizes[$printPaperSize];
         }
 
-
         //  Create PDF
         $pdf = new TCPDF($orientation, 'pt', $paperSize);
         $pdf->setFontSubsetting(FALSE);
@@ -130,7 +128,7 @@ class PHPExcel_Writer_PDF_tcPDF extends PHPExcel_Writer_PDF_Core implements PHPE
         //  Write to file
         fwrite($fileHandle, $pdf->output($pFilename, 'S'));
 
-		parent::restoreStateAfterSave($fileHandle);
+        parent::restoreStateAfterSave($fileHandle);
     }
 
 }

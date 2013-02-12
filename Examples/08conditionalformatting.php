@@ -37,7 +37,6 @@ date_default_timezone_set('Europe/London');
 /** Include PHPExcel */
 require_once '../Classes/PHPExcel.php';
 
-
 // Create new PHPExcel object
 echo date('H:i:s') , " Create new PHPExcel object" , EOL;
 $objPHPExcel = new PHPExcel();
@@ -45,13 +44,12 @@ $objPHPExcel = new PHPExcel();
 // Set document properties
 echo date('H:i:s') , " Set document properties" , EOL;
 $objPHPExcel->getProperties()->setCreator("Maarten Balliauw")
-							 ->setLastModifiedBy("Maarten Balliauw")
-							 ->setTitle("Office 2007 XLSX Test Document")
-							 ->setSubject("Office 2007 XLSX Test Document")
-							 ->setDescription("Test document for Office 2007 XLSX, generated using PHP classes.")
-							 ->setKeywords("office 2007 openxml php")
-							 ->setCategory("Test result file");
-
+                             ->setLastModifiedBy("Maarten Balliauw")
+                             ->setTitle("Office 2007 XLSX Test Document")
+                             ->setSubject("Office 2007 XLSX Test Document")
+                             ->setDescription("Test document for Office 2007 XLSX, generated using PHP classes.")
+                             ->setKeywords("office 2007 openxml php")
+                             ->setCategory("Test result file");
 
 // Create a first sheet, representing sales data
 echo date('H:i:s') , " Add some data" , EOL;
@@ -77,12 +75,10 @@ $objPHPExcel->getActiveSheet()->setCellValue('A6', 'Found some money')
 $objPHPExcel->getActiveSheet()->setCellValue('A7', 'Total:')
                               ->setCellValue('B7', '=SUM(B2:B6)');
 
-
 // Set column widths
 echo date('H:i:s') , " Set column widths" , EOL;
 $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(30);
 $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(12);
-
 
 // Add conditional formatting
 echo date('H:i:s') , " Add conditional formatting" , EOL;
@@ -117,14 +113,12 @@ array_push($conditionalStyles, $objConditional2);
 array_push($conditionalStyles, $objConditional3);
 $objPHPExcel->getActiveSheet()->getStyle('B2')->setConditionalStyles($conditionalStyles);
 
-
 //	duplicate the conditional styles across a range of cells
 echo date('H:i:s') , " Duplicate the conditional formatting across a range of cells" , EOL;
 $objPHPExcel->getActiveSheet()->duplicateConditionalStyle(
-				$objPHPExcel->getActiveSheet()->getStyle('B2')->getConditionalStyles(),
-				'B3:B7'
-			  );
-
+                $objPHPExcel->getActiveSheet()->getStyle('B2')->getConditionalStyles(),
+                'B3:B7'
+              );
 
 // Set fonts
 echo date('H:i:s') , " Set fonts" , EOL;
@@ -133,27 +127,22 @@ $objPHPExcel->getActiveSheet()->getStyle('A1:B1')->getFont()->setBold(true);
 $objPHPExcel->getActiveSheet()->getStyle('A7:B7')->getFont()->setBold(true);
 //$objPHPExcel->getActiveSheet()->getStyle('B7')->getFont()->setBold(true);
 
-
 // Set header and footer. When no different headers for odd/even are used, odd header is assumed.
 echo date('H:i:s') , " Set header/footer" , EOL;
 $objPHPExcel->getActiveSheet()->getHeaderFooter()->setOddHeader('&L&BPersonal cash register&RPrinted on &D');
 $objPHPExcel->getActiveSheet()->getHeaderFooter()->setOddFooter('&L&B' . $objPHPExcel->getProperties()->getTitle() . '&RPage &P of &N');
-
 
 // Set page orientation and size
 echo date('H:i:s') , " Set page orientation and size" , EOL;
 $objPHPExcel->getActiveSheet()->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_PORTRAIT);
 $objPHPExcel->getActiveSheet()->getPageSetup()->setPaperSize(PHPExcel_Worksheet_PageSetup::PAPERSIZE_A4);
 
-
 // Rename worksheet
 echo date('H:i:s') , " Rename worksheet" , EOL;
 $objPHPExcel->getActiveSheet()->setTitle('Invoice');
 
-
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
 $objPHPExcel->setActiveSheetIndex(0);
-
 
 // Save Excel 2007 file
 echo date('H:i:s') , " Write to Excel2007 format" , EOL;
@@ -179,7 +168,6 @@ echo date('H:i:s') , " File written to " , str_replace('.php', '.xls', pathinfo(
 echo 'Call time to write Workbook was ' , sprintf('%.4f',$callTime) , " seconds" , EOL;
 // Echo memory usage
 echo date('H:i:s') , ' Current memory usage: ' , (memory_get_usage(true) / 1024 / 1024) , " MB" , EOL;
-
 
 // Echo memory peak usage
 echo date('H:i:s') , " Peak memory usage: " , (memory_get_peak_usage(true) / 1024 / 1024) , " MB" , EOL;

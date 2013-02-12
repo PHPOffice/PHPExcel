@@ -28,286 +28,285 @@
 defined('IDENTIFIER_OLE') ||
     define('IDENTIFIER_OLE', pack('CCCCCCCC', 0xd0, 0xcf, 0x11, 0xe0, 0xa1, 0xb1, 0x1a, 0xe1));
 
-class PHPExcel_Shared_OLERead {
-	private $data = '';
+class PHPExcel_Shared_OLERead
+{
+    private $data = '';
 
-	// OLE identifier
-	const IDENTIFIER_OLE = IDENTIFIER_OLE;
+    // OLE identifier
+    const IDENTIFIER_OLE = IDENTIFIER_OLE;
 
-	// Size of a sector = 512 bytes
-	const BIG_BLOCK_SIZE					= 0x200;
+    // Size of a sector = 512 bytes
+    const BIG_BLOCK_SIZE					= 0x200;
 
-	// Size of a short sector = 64 bytes
-	const SMALL_BLOCK_SIZE					= 0x40;
+    // Size of a short sector = 64 bytes
+    const SMALL_BLOCK_SIZE					= 0x40;
 
-	// Size of a directory entry always = 128 bytes
-	const PROPERTY_STORAGE_BLOCK_SIZE		= 0x80;
+    // Size of a directory entry always = 128 bytes
+    const PROPERTY_STORAGE_BLOCK_SIZE		= 0x80;
 
-	// Minimum size of a standard stream = 4096 bytes, streams smaller than this are stored as short streams
-	const SMALL_BLOCK_THRESHOLD				= 0x1000;
+    // Minimum size of a standard stream = 4096 bytes, streams smaller than this are stored as short streams
+    const SMALL_BLOCK_THRESHOLD				= 0x1000;
 
-	// header offsets
-	const NUM_BIG_BLOCK_DEPOT_BLOCKS_POS	= 0x2c;
-	const ROOT_START_BLOCK_POS				= 0x30;
-	const SMALL_BLOCK_DEPOT_BLOCK_POS		= 0x3c;
-	const EXTENSION_BLOCK_POS				= 0x44;
-	const NUM_EXTENSION_BLOCK_POS			= 0x48;
-	const BIG_BLOCK_DEPOT_BLOCKS_POS		= 0x4c;
+    // header offsets
+    const NUM_BIG_BLOCK_DEPOT_BLOCKS_POS	= 0x2c;
+    const ROOT_START_BLOCK_POS				= 0x30;
+    const SMALL_BLOCK_DEPOT_BLOCK_POS		= 0x3c;
+    const EXTENSION_BLOCK_POS				= 0x44;
+    const NUM_EXTENSION_BLOCK_POS			= 0x48;
+    const BIG_BLOCK_DEPOT_BLOCKS_POS		= 0x4c;
 
-	// property storage offsets (directory offsets)
-	const SIZE_OF_NAME_POS					= 0x40;
-	const TYPE_POS							= 0x42;
-	const START_BLOCK_POS					= 0x74;
-	const SIZE_POS							= 0x78;
+    // property storage offsets (directory offsets)
+    const SIZE_OF_NAME_POS					= 0x40;
+    const TYPE_POS							= 0x42;
+    const START_BLOCK_POS					= 0x74;
+    const SIZE_POS							= 0x78;
 
+    public $wrkbook						= null;
+    public $summaryInformation			= null;
+    public $documentSummaryInformation	= null;
 
+    /**
+     * Read the file
+     *
+     * @param $sFileName string Filename
+     * @throws PHPExcel_Reader_Exception
+     */
+    public function read($sFileName)
+    {
+        // Check if file exists and is readable
+        if (!is_readable($sFileName)) {
+            throw new PHPExcel_Reader_Exception("Could not open " . $sFileName . " for reading! File does not exist, or it is not readable.");
+        }
 
-	public $wrkbook						= null;
-	public $summaryInformation			= null;
-	public $documentSummaryInformation	= null;
+        // Get the file data
+        $this->data = file_get_contents($sFileName);
 
+        // Check OLE identifier
+        if (substr($this->data, 0, 8) != self::IDENTIFIER_OLE) {
+            throw new PHPExcel_Reader_Exception('The filename ' . $sFileName . ' is not recognised as an OLE file');
+        }
 
-	/**
-	 * Read the file
-	 *
-	 * @param $sFileName string Filename
-	 * @throws PHPExcel_Reader_Exception
-	 */
-	public function read($sFileName)
-	{
-		// Check if file exists and is readable
-		if(!is_readable($sFileName)) {
-			throw new PHPExcel_Reader_Exception("Could not open " . $sFileName . " for reading! File does not exist, or it is not readable.");
-		}
+        // Total number of sectors used for the SAT
+        $this->numBigBlockDepotBlocks = self::_GetInt4d($this->data, self::NUM_BIG_BLOCK_DEPOT_BLOCKS_POS);
 
-		// Get the file data
-		$this->data = file_get_contents($sFileName);
+        // SecID of the first sector of the directory stream
+        $this->rootStartBlock = self::_GetInt4d($this->data, self::ROOT_START_BLOCK_POS);
 
-		// Check OLE identifier
-		if (substr($this->data, 0, 8) != self::IDENTIFIER_OLE) {
-			throw new PHPExcel_Reader_Exception('The filename ' . $sFileName . ' is not recognised as an OLE file');
-		}
+        // SecID of the first sector of the SSAT (or -2 if not extant)
+        $this->sbdStartBlock = self::_GetInt4d($this->data, self::SMALL_BLOCK_DEPOT_BLOCK_POS);
 
-		// Total number of sectors used for the SAT
-		$this->numBigBlockDepotBlocks = self::_GetInt4d($this->data, self::NUM_BIG_BLOCK_DEPOT_BLOCKS_POS);
+        // SecID of the first sector of the MSAT (or -2 if no additional sectors are used)
+        $this->extensionBlock = self::_GetInt4d($this->data, self::EXTENSION_BLOCK_POS);
 
-		// SecID of the first sector of the directory stream
-		$this->rootStartBlock = self::_GetInt4d($this->data, self::ROOT_START_BLOCK_POS);
+        // Total number of sectors used by MSAT
+        $this->numExtensionBlocks = self::_GetInt4d($this->data, self::NUM_EXTENSION_BLOCK_POS);
 
-		// SecID of the first sector of the SSAT (or -2 if not extant)
-		$this->sbdStartBlock = self::_GetInt4d($this->data, self::SMALL_BLOCK_DEPOT_BLOCK_POS);
+        $bigBlockDepotBlocks = array();
+        $pos = self::BIG_BLOCK_DEPOT_BLOCKS_POS;
 
-		// SecID of the first sector of the MSAT (or -2 if no additional sectors are used)
-		$this->extensionBlock = self::_GetInt4d($this->data, self::EXTENSION_BLOCK_POS);
+        $bbdBlocks = $this->numBigBlockDepotBlocks;
 
-		// Total number of sectors used by MSAT
-		$this->numExtensionBlocks = self::_GetInt4d($this->data, self::NUM_EXTENSION_BLOCK_POS);
+        if ($this->numExtensionBlocks != 0) {
+            $bbdBlocks = (self::BIG_BLOCK_SIZE - self::BIG_BLOCK_DEPOT_BLOCKS_POS)/4;
+        }
 
-		$bigBlockDepotBlocks = array();
-		$pos = self::BIG_BLOCK_DEPOT_BLOCKS_POS;
+        for ($i = 0; $i < $bbdBlocks; ++$i) {
+              $bigBlockDepotBlocks[$i] = self::_GetInt4d($this->data, $pos);
+              $pos += 4;
+        }
 
-		$bbdBlocks = $this->numBigBlockDepotBlocks;
+        for ($j = 0; $j < $this->numExtensionBlocks; ++$j) {
+            $pos = ($this->extensionBlock + 1) * self::BIG_BLOCK_SIZE;
+            $blocksToRead = min($this->numBigBlockDepotBlocks - $bbdBlocks, self::BIG_BLOCK_SIZE / 4 - 1);
 
-		if ($this->numExtensionBlocks != 0) {
-			$bbdBlocks = (self::BIG_BLOCK_SIZE - self::BIG_BLOCK_DEPOT_BLOCKS_POS)/4;
-		}
+            for ($i = $bbdBlocks; $i < $bbdBlocks + $blocksToRead; ++$i) {
+                $bigBlockDepotBlocks[$i] = self::_GetInt4d($this->data, $pos);
+                $pos += 4;
+            }
 
-		for ($i = 0; $i < $bbdBlocks; ++$i) {
-			  $bigBlockDepotBlocks[$i] = self::_GetInt4d($this->data, $pos);
-			  $pos += 4;
-		}
+            $bbdBlocks += $blocksToRead;
+            if ($bbdBlocks < $this->numBigBlockDepotBlocks) {
+                $this->extensionBlock = self::_GetInt4d($this->data, $pos);
+            }
+        }
 
-		for ($j = 0; $j < $this->numExtensionBlocks; ++$j) {
-			$pos = ($this->extensionBlock + 1) * self::BIG_BLOCK_SIZE;
-			$blocksToRead = min($this->numBigBlockDepotBlocks - $bbdBlocks, self::BIG_BLOCK_SIZE / 4 - 1);
+        $pos = 0;
+        $this->bigBlockChain = '';
+        $bbs = self::BIG_BLOCK_SIZE / 4;
+        for ($i = 0; $i < $this->numBigBlockDepotBlocks; ++$i) {
+            $pos = ($bigBlockDepotBlocks[$i] + 1) * self::BIG_BLOCK_SIZE;
 
-			for ($i = $bbdBlocks; $i < $bbdBlocks + $blocksToRead; ++$i) {
-				$bigBlockDepotBlocks[$i] = self::_GetInt4d($this->data, $pos);
-				$pos += 4;
-			}
+            $this->bigBlockChain .= substr($this->data, $pos, 4*$bbs);
+            $pos += 4*$bbs;
+        }
 
-			$bbdBlocks += $blocksToRead;
-			if ($bbdBlocks < $this->numBigBlockDepotBlocks) {
-				$this->extensionBlock = self::_GetInt4d($this->data, $pos);
-			}
-		}
+        $pos = 0;
+        $sbdBlock = $this->sbdStartBlock;
+        $this->smallBlockChain = '';
+        while ($sbdBlock != -2) {
+            $pos = ($sbdBlock + 1) * self::BIG_BLOCK_SIZE;
 
-		$pos = 0;
-		$this->bigBlockChain = '';
-		$bbs = self::BIG_BLOCK_SIZE / 4;
-		for ($i = 0; $i < $this->numBigBlockDepotBlocks; ++$i) {
-			$pos = ($bigBlockDepotBlocks[$i] + 1) * self::BIG_BLOCK_SIZE;
+            $this->smallBlockChain .= substr($this->data, $pos, 4*$bbs);
+            $pos += 4*$bbs;
 
-			$this->bigBlockChain .= substr($this->data, $pos, 4*$bbs);
-			$pos += 4*$bbs;
-		}
+            $sbdBlock = self::_GetInt4d($this->bigBlockChain, $sbdBlock*4);
+        }
 
-		$pos = 0;
-		$sbdBlock = $this->sbdStartBlock;
-		$this->smallBlockChain = '';
-		while ($sbdBlock != -2) {
-			$pos = ($sbdBlock + 1) * self::BIG_BLOCK_SIZE;
+        // read the directory stream
+        $block = $this->rootStartBlock;
+        $this->entry = $this->_readData($block);
 
-			$this->smallBlockChain .= substr($this->data, $pos, 4*$bbs);
-			$pos += 4*$bbs;
+        $this->_readPropertySets();
+    }
 
-			$sbdBlock = self::_GetInt4d($this->bigBlockChain, $sbdBlock*4);
-		}
+    /**
+     * Extract binary stream data
+     *
+     * @return string
+     */
+    public function getStream($stream)
+    {
+        if ($stream === NULL) {
+            return null;
+        }
 
-		// read the directory stream
-		$block = $this->rootStartBlock;
-		$this->entry = $this->_readData($block);
+        $streamData = '';
 
-		$this->_readPropertySets();
-	}
+        if ($this->props[$stream]['size'] < self::SMALL_BLOCK_THRESHOLD) {
+            $rootdata = $this->_readData($this->props[$this->rootentry]['startBlock']);
 
-	/**
-	 * Extract binary stream data
-	 *
-	 * @return string
-	 */
-	public function getStream($stream)
-	{
-		if ($stream === NULL) {
-			return null;
-		}
+            $block = $this->props[$stream]['startBlock'];
 
-		$streamData = '';
+            while ($block != -2) {
+                  $pos = $block * self::SMALL_BLOCK_SIZE;
+                $streamData .= substr($rootdata, $pos, self::SMALL_BLOCK_SIZE);
 
-		if ($this->props[$stream]['size'] < self::SMALL_BLOCK_THRESHOLD) {
-			$rootdata = $this->_readData($this->props[$this->rootentry]['startBlock']);
+                $block = self::_GetInt4d($this->smallBlockChain, $block*4);
+            }
 
-			$block = $this->props[$stream]['startBlock'];
+            return $streamData;
+        } else {
+            $numBlocks = $this->props[$stream]['size'] / self::BIG_BLOCK_SIZE;
+            if ($this->props[$stream]['size'] % self::BIG_BLOCK_SIZE != 0) {
+                ++$numBlocks;
+            }
 
-			while ($block != -2) {
-	  			$pos = $block * self::SMALL_BLOCK_SIZE;
-				$streamData .= substr($rootdata, $pos, self::SMALL_BLOCK_SIZE);
+            if ($numBlocks == 0) return '';
 
-				$block = self::_GetInt4d($this->smallBlockChain, $block*4);
-			}
+            $block = $this->props[$stream]['startBlock'];
 
-			return $streamData;
-		} else {
-			$numBlocks = $this->props[$stream]['size'] / self::BIG_BLOCK_SIZE;
-			if ($this->props[$stream]['size'] % self::BIG_BLOCK_SIZE != 0) {
-				++$numBlocks;
-			}
+            while ($block != -2) {
+                $pos = ($block + 1) * self::BIG_BLOCK_SIZE;
+                $streamData .= substr($this->data, $pos, self::BIG_BLOCK_SIZE);
+                $block = self::_GetInt4d($this->bigBlockChain, $block*4);
+            }
 
-			if ($numBlocks == 0) return '';
+            return $streamData;
+        }
+    }
 
-			$block = $this->props[$stream]['startBlock'];
+    /**
+     * Read a standard stream (by joining sectors using information from SAT)
+     *
+     * @param  int    $bl Sector ID where the stream starts
+     * @return string Data for standard stream
+     */
+    private function _readData($bl)
+    {
+        $block = $bl;
+        $data = '';
 
-			while ($block != -2) {
-				$pos = ($block + 1) * self::BIG_BLOCK_SIZE;
-				$streamData .= substr($this->data, $pos, self::BIG_BLOCK_SIZE);
-				$block = self::_GetInt4d($this->bigBlockChain, $block*4);
-			}
+        while ($block != -2) {
+            $pos = ($block + 1) * self::BIG_BLOCK_SIZE;
+            $data .= substr($this->data, $pos, self::BIG_BLOCK_SIZE);
+            $block = self::_GetInt4d($this->bigBlockChain, $block*4);
+        }
 
-			return $streamData;
-		}
-	}
+        return $data;
+     }
 
-	/**
-	 * Read a standard stream (by joining sectors using information from SAT)
-	 *
-	 * @param int $bl Sector ID where the stream starts
-	 * @return string Data for standard stream
-	 */
-	private function _readData($bl)
-	{
-		$block = $bl;
-		$data = '';
+    /**
+     * Read entries in the directory stream.
+     */
+    private function _readPropertySets()
+    {
+        $offset = 0;
 
-		while ($block != -2)  {
-			$pos = ($block + 1) * self::BIG_BLOCK_SIZE;
-			$data .= substr($this->data, $pos, self::BIG_BLOCK_SIZE);
-			$block = self::_GetInt4d($this->bigBlockChain, $block*4);
-		}
-		return $data;
-	 }
+        // loop through entires, each entry is 128 bytes
+        $entryLen = strlen($this->entry);
+        while ($offset < $entryLen) {
+            // entry data (128 bytes)
+            $d = substr($this->entry, $offset, self::PROPERTY_STORAGE_BLOCK_SIZE);
 
-	/**
-	 * Read entries in the directory stream.
-	 */
-	private function _readPropertySets() {
-		$offset = 0;
+            // size in bytes of name
+            $nameSize = ord($d[self::SIZE_OF_NAME_POS]) | (ord($d[self::SIZE_OF_NAME_POS+1]) << 8);
 
-		// loop through entires, each entry is 128 bytes
-		$entryLen = strlen($this->entry);
-		while ($offset < $entryLen) {
-			// entry data (128 bytes)
-			$d = substr($this->entry, $offset, self::PROPERTY_STORAGE_BLOCK_SIZE);
+            // type of entry
+            $type = ord($d[self::TYPE_POS]);
 
-			// size in bytes of name
-			$nameSize = ord($d[self::SIZE_OF_NAME_POS]) | (ord($d[self::SIZE_OF_NAME_POS+1]) << 8);
+            // sectorID of first sector or short sector, if this entry refers to a stream (the case with workbook)
+            // sectorID of first sector of the short-stream container stream, if this entry is root entry
+            $startBlock = self::_GetInt4d($d, self::START_BLOCK_POS);
 
-			// type of entry
-			$type = ord($d[self::TYPE_POS]);
+            $size = self::_GetInt4d($d, self::SIZE_POS);
 
-			// sectorID of first sector or short sector, if this entry refers to a stream (the case with workbook)
-			// sectorID of first sector of the short-stream container stream, if this entry is root entry
-			$startBlock = self::_GetInt4d($d, self::START_BLOCK_POS);
+            $name = str_replace("\x00", "", substr($d,0,$nameSize));
 
-			$size = self::_GetInt4d($d, self::SIZE_POS);
+            $this->props[] = array (
+                'name' => $name,
+                'type' => $type,
+                'startBlock' => $startBlock,
+                'size' => $size);
 
-			$name = str_replace("\x00", "", substr($d,0,$nameSize));
+            // tmp helper to simplify checks
+            $upName = strtoupper($name);
 
+            // Workbook directory entry (BIFF5 uses Book, BIFF8 uses Workbook)
+            if (($upName === 'WORKBOOK') || ($upName === 'BOOK')) {
+                $this->wrkbook = count($this->props) - 1;
+            } elseif ($upName === 'ROOT ENTRY' || $upName === 'R') {
+                // Root entry
+                $this->rootentry = count($this->props) - 1;
+            }
 
-			$this->props[] = array (
-				'name' => $name,
-				'type' => $type,
-				'startBlock' => $startBlock,
-				'size' => $size);
-
-			// tmp helper to simplify checks
-			$upName = strtoupper($name);
-
-			// Workbook directory entry (BIFF5 uses Book, BIFF8 uses Workbook)
-			if (($upName === 'WORKBOOK') || ($upName === 'BOOK')) {
-				$this->wrkbook = count($this->props) - 1;
-			}
-			else if ( $upName === 'ROOT ENTRY' || $upName === 'R') {
-				// Root entry
-				$this->rootentry = count($this->props) - 1;
-			}
-
-			// Summary information
-			if ($name == chr(5) . 'SummaryInformation') {
+            // Summary information
+            if ($name == chr(5) . 'SummaryInformation') {
 //				echo 'Summary Information<br />';
-				$this->summaryInformation = count($this->props) - 1;
-			}
+                $this->summaryInformation = count($this->props) - 1;
+            }
 
-			// Additional Document Summary information
-			if ($name == chr(5) . 'DocumentSummaryInformation') {
+            // Additional Document Summary information
+            if ($name == chr(5) . 'DocumentSummaryInformation') {
 //				echo 'Document Summary Information<br />';
-				$this->documentSummaryInformation = count($this->props) - 1;
-			}
+                $this->documentSummaryInformation = count($this->props) - 1;
+            }
 
-			$offset += self::PROPERTY_STORAGE_BLOCK_SIZE;
-		}
+            $offset += self::PROPERTY_STORAGE_BLOCK_SIZE;
+        }
 
-	}
+    }
 
-	/**
-	 * Read 4 bytes of data at specified position
-	 *
-	 * @param string $data
-	 * @param int $pos
-	 * @return int
-	 */
-	private static function _GetInt4d($data, $pos)
-	{
-		// FIX: represent numbers correctly on 64-bit system
-		// http://sourceforge.net/tracker/index.php?func=detail&aid=1487372&group_id=99160&atid=623334
-		// Hacked by Andreas Rehm 2006 to ensure correct result of the <<24 block on 32 and 64bit systems
-		$_or_24 = ord($data[$pos + 3]);
-		if ($_or_24 >= 128) {
-			// negative number
-			$_ord_24 = -abs((256 - $_or_24) << 24);
-		} else {
-			$_ord_24 = ($_or_24 & 127) << 24;
-		}
-		return ord($data[$pos]) | (ord($data[$pos + 1]) << 8) | (ord($data[$pos + 2]) << 16) | $_ord_24;
-	}
+    /**
+     * Read 4 bytes of data at specified position
+     *
+     * @param  string $data
+     * @param  int    $pos
+     * @return int
+     */
+    private static function _GetInt4d($data, $pos)
+    {
+        // FIX: represent numbers correctly on 64-bit system
+        // http://sourceforge.net/tracker/index.php?func=detail&aid=1487372&group_id=99160&atid=623334
+        // Hacked by Andreas Rehm 2006 to ensure correct result of the <<24 block on 32 and 64bit systems
+        $_or_24 = ord($data[$pos + 3]);
+        if ($_or_24 >= 128) {
+            // negative number
+            $_ord_24 = -abs((256 - $_or_24) << 24);
+        } else {
+            $_ord_24 = ($_or_24 & 127) << 24;
+        }
+
+        return ord($data[$pos]) | (ord($data[$pos + 1]) << 8) | (ord($data[$pos + 2]) << 16) | $_ord_24;
+    }
 
 }

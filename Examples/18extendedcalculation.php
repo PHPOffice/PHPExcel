@@ -38,7 +38,6 @@ date_default_timezone_set('Europe/London');
 /** PHPExcel */
 require_once '../Classes/PHPExcel.php';
 
-
 // List functions
 echo date('H:i:s') . " List implemented functions\n";
 $objCalc = PHPExcel_Calculation::getInstance();
@@ -99,7 +98,6 @@ $objPHPExcel->getActiveSheet()->setCellValue('F14', '=COUNT(B2:C12)');
 // Calculated data
 echo date('H:i:s') . " Calculated data\n";
 echo 'Value of B14 [=COUNT(B2:B12)]: ' . $objPHPExcel->getActiveSheet()->getCell('B14')->getCalculatedValue() . "\r\n";
-
 
 // Echo memory peak usage
 echo date('H:i:s') . " Peak memory usage: " . (memory_get_peak_usage(true) / 1024 / 1024) . " MB\r\n";

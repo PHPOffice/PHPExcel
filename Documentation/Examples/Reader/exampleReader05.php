@@ -25,7 +25,6 @@ set_include_path(get_include_path() . PATH_SEPARATOR . '../../../Classes/');
 /** PHPExcel_IOFactory */
 include 'PHPExcel/IOFactory.php';
 
-
 $inputFileType = 'Excel5';
 //	$inputFileType = 'Excel2007';
 //	$inputFileType = 'Excel2003XML';
@@ -39,12 +38,10 @@ echo 'Turning Formatting off for Load<br />';
 $objReader->setReadDataOnly(true);
 $objPHPExcel = $objReader->load($inputFileName);
 
-
 echo '<hr />';
 
 $sheetData = $objPHPExcel->getActiveSheet()->toArray(null,true,true,true);
 var_dump($sheetData);
-
 
 ?>
 <body>

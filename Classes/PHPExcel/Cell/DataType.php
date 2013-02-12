@@ -25,7 +25,6 @@
  * @version    ##VERSION##, ##DATE##
  */
 
-
 /**
  * PHPExcel_Cell_DataType
  *
@@ -65,7 +64,8 @@ class PHPExcel_Cell_DataType
      *
      * @return array
      */
-    public static function getErrorCodes() {
+    public static function getErrorCodes()
+    {
         return self::$_errorCodes;
     }
 
@@ -73,10 +73,11 @@ class PHPExcel_Cell_DataType
      * DataType for value
      *
      * @deprecated  Replaced by PHPExcel_Cell_IValueBinder infrastructure, will be removed in version 1.8.0
-     * @param       mixed  $pValue
-     * @return      string
+     * @param  mixed  $pValue
+     * @return string
      */
-    public static function dataTypeForValue($pValue = null) {
+    public static function dataTypeForValue($pValue = null)
+    {
         return PHPExcel_Cell_DefaultValueBinder::dataTypeForValue($pValue);
     }
 
@@ -84,7 +85,7 @@ class PHPExcel_Cell_DataType
      * Check a string that it satisfies Excel requirements
      *
      * @param  mixed  Value to sanitize to an Excel string
-     * @return mixed  Sanitized value
+     * @return mixed Sanitized value
      */
     public static function checkString($pValue = null)
     {
@@ -106,7 +107,7 @@ class PHPExcel_Cell_DataType
      * Check a value that it is a valid error code
      *
      * @param  mixed   Value to sanitize to an Excel error code
-     * @return string  Sanitized value
+     * @return string Sanitized value
      */
     public static function checkErrorCode($pValue = null)
     {

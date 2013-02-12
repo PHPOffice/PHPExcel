@@ -25,7 +25,6 @@ set_include_path(get_include_path() . PATH_SEPARATOR . '../../../Classes/');
 /** PHPExcel_IOFactory */
 include 'PHPExcel/IOFactory.php';
 
-
 $inputFileName = './sampleData/example1.xls';
 
 $inputFileType = PHPExcel_IOFactory::identify($inputFileName);
@@ -35,12 +34,10 @@ echo 'Loading file ',pathinfo($inputFileName,PATHINFO_BASENAME),' using IOFactor
 $objReader = PHPExcel_IOFactory::createReader($inputFileType);
 $objPHPExcel = $objReader->load($inputFileName);
 
-
 echo '<hr />';
 
 $sheetData = $objPHPExcel->getActiveSheet()->toArray(null,true,true,true);
 var_dump($sheetData);
-
 
 ?>
 <body>

@@ -25,7 +25,6 @@
  * @version    ##VERSION##, ##DATE##
  */
 
-
 /**
  * PHPExcel_Style
  *
@@ -190,9 +189,9 @@ class PHPExcel_Style extends PHPExcel_Style_Supervisor implements PHPExcel_IComp
      * );
      * </code>
      *
-     * @param    array    $pStyles    Array containing style information
-     * @param     boolean        $pAdvanced    Advanced mode for setting borders.
-     * @throws    PHPExcel_Exception
+     * @param  array              $pStyles   Array containing style information
+     * @param  boolean            $pAdvanced Advanced mode for setting borders.
+     * @throws PHPExcel_Exception
      * @return PHPExcel_Style
      */
     public function applyFromArray($pStyles = null, $pAdvanced = true)
@@ -352,6 +351,7 @@ class PHPExcel_Style extends PHPExcel_Style_Supervisor implements PHPExcel_IComp
                             $this->getActiveSheet()->getStyle($range)->applyFromArray($regionStyles, false);
                         }
                     }
+
                     return $this;
                 }
 
@@ -360,7 +360,7 @@ class PHPExcel_Style extends PHPExcel_Style_Supervisor implements PHPExcel_IComp
                 // Selection type, inspect
                 if (preg_match('/^[A-Z]+1:[A-Z]+1048576$/', $pRange)) {
                     $selectionType = 'COLUMN';
-                } else if (preg_match('/^A[0-9]+:XFD[0-9]+$/', $pRange)) {
+                } elseif (preg_match('/^A[0-9]+:XFD[0-9]+$/', $pRange)) {
                     $selectionType = 'ROW';
                 } else {
                     $selectionType = 'CELL';
@@ -467,6 +467,7 @@ class PHPExcel_Style extends PHPExcel_Style_Supervisor implements PHPExcel_IComp
         } else {
             throw new PHPExcel_Exception("Invalid style array passed.");
         }
+
         return $this;
     }
 
@@ -493,12 +494,13 @@ class PHPExcel_Style extends PHPExcel_Style_Supervisor implements PHPExcel_IComp
     /**
      * Set font
      *
-     * @param PHPExcel_Style_Font $font
+     * @param  PHPExcel_Style_Font $font
      * @return PHPExcel_Style
      */
     public function setFont(PHPExcel_Style_Font $font)
     {
         $this->_font = $font;
+
         return $this;
     }
 
@@ -545,7 +547,7 @@ class PHPExcel_Style extends PHPExcel_Style_Supervisor implements PHPExcel_IComp
     /**
      * Set Conditional Styles. Only used on supervisor.
      *
-     * @param PHPExcel_Style_Conditional[] $pValue Array of condtional styles
+     * @param  PHPExcel_Style_Conditional[] $pValue Array of condtional styles
      * @return PHPExcel_Style
      */
     public function setConditionalStyles($pValue = null)
@@ -553,6 +555,7 @@ class PHPExcel_Style extends PHPExcel_Style_Supervisor implements PHPExcel_IComp
         if (is_array($pValue)) {
             $this->getActiveSheet()->setConditionalStyles($this->getSelectedCells(), $pValue);
         }
+
         return $this;
     }
 

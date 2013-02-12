@@ -5,7 +5,6 @@ set_time_limit(0);
 
 date_default_timezone_set('Europe/London');
 
-
 ?>
 <html>
 <head>
@@ -25,7 +24,6 @@ set_include_path(get_include_path() . PATH_SEPARATOR . '../../../../Classes/');
 
 /** Include PHPExcel */
 include 'PHPExcel.php';
-
 
 // Create new PHPExcel object
 $objPHPExcel = new PHPExcel();
@@ -51,18 +49,14 @@ $worksheet->fromArray( $database, NULL, 'A4' );
 $worksheet->setCellValue('A12', 'The height of the Apple tree between 10\' and 16\' tall');
 $worksheet->setCellValue('B12', '=DGET(A4:E10,"Height",A1:F2)');
 
-
 echo '<hr />';
-
 
 echo '<h4>Database</h4>';
 
 $databaseData = $worksheet->rangeToArray('A4:E10',null,true,true,true);
 var_dump($databaseData);
 
-
 echo '<hr />';
-
 
 // Test the formulae
 echo '<h4>Criteria</h4>';
@@ -79,7 +73,6 @@ var_dump($criteriaData);
 
 echo $worksheet->getCell("A13")->getValue() .'<br />';
 echo 'DMAX() Result is ' . $worksheet->getCell("B13")->getCalculatedValue();
-
 
 ?>
 <body>

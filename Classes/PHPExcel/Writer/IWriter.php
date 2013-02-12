@@ -25,7 +25,6 @@
  *  @version    ##VERSION##, ##DATE##
  */
 
-
 /**
  *  PHPExcel_Writer_IWriter
  *

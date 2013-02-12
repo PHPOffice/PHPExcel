@@ -10,7 +10,6 @@
 //Language constant
 define('JAMALANG', 'EN');
 
-
 //All errors may be defined by the following format:
 //define('ExceptionName', N);
 //$error['lang'][ExceptionName] = 'Error message';
@@ -67,16 +66,17 @@ $error['EN'][RowLengthException] = "All rows must have the same length.";
  *	Custom error handler
  *	@param int $num Error number
  */
-function JAMAError($errorNumber = null) {
-	global $error;
+function JAMAError($errorNumber = null)
+{
+    global $error;
 
-	if (isset($errorNumber)) {
-		if (isset($error[JAMALANG][$errorNumber])) {
-			return $error[JAMALANG][$errorNumber];
-		} else {
-			return $error['EN'][$errorNumber];
-		}
-	} else {
-		return ("Invalid argument to JAMAError()");
-	}
+    if (isset($errorNumber)) {
+        if (isset($error[JAMALANG][$errorNumber])) {
+            return $error[JAMALANG][$errorNumber];
+        } else {
+            return $error['EN'][$errorNumber];
+        }
+    } else {
+        return ("Invalid argument to JAMAError()");
+    }
 }

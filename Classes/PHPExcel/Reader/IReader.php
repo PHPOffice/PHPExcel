@@ -25,7 +25,6 @@
  * @version    ##VERSION##, ##DATE##
  */
 
-
 /**
  * PHPExcel_Reader_IReader
  *
@@ -35,19 +34,19 @@
  */
 interface PHPExcel_Reader_IReader
 {
-	/**
-	 * Can the current PHPExcel_Reader_IReader read the file?
-	 *
-	 * @param 	string 		$pFileName
-	 * @return 	boolean
-	 */
-	public function canRead($pFilename);
+    /**
+     * Can the current PHPExcel_Reader_IReader read the file?
+     *
+     * @param  string  $pFileName
+     * @return boolean
+     */
+    public function canRead($pFilename);
 
-	/**
-	 * Loads PHPExcel from file
-	 *
-	 * @param 	string 		$pFileName
-	 * @throws 	PHPExcel_Reader_Exception
-	 */
-	public function load($pFilename);
+    /**
+     * Loads PHPExcel from file
+     *
+     * @param  string                    $pFileName
+     * @throws PHPExcel_Reader_Exception
+     */
+    public function load($pFilename);
 }

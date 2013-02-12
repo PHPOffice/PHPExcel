@@ -38,12 +38,10 @@ for ($col = 0; $col < 50; $col++) {
 $d = microtime(true) - $t;
 echo date('H:i:s') , " Add data (end), time: " . round($d, 2) . " s", EOL;
 
-
 echo date('H:i:s') , " Write to Excel2007 format" , EOL;
 $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
 $objWriter->save(str_replace('.php', '.xlsx', __FILE__));
 echo date('H:i:s') , " File written to " , str_replace('.php', '.xlsx', pathinfo(__FILE__, PATHINFO_BASENAME)) , EOL;
-
 
 echo date('H:i:s') , " Peak memory usage: " , (memory_get_peak_usage(true) / 1024 / 1024) , " MB" , EOL;
 

@@ -37,7 +37,6 @@ date_default_timezone_set('Europe/London');
 /** Include PHPExcel */
 require_once '../Classes/PHPExcel.php';
 
-
 //	Change these values to select the PDF Rendering library that you wish to use
 //		and its directory location on your server
 //$rendererName = PHPExcel_Settings::PDF_RENDERER_TCPDF;
@@ -47,7 +46,6 @@ $rendererName = PHPExcel_Settings::PDF_RENDERER_DOMPDF;
 //$rendererLibrary = 'mPDF5.4';
 $rendererLibrary = 'domPDF0.6.0beta3';
 $rendererLibraryPath = '/php/libraries/PDF/' . $rendererLibrary;
-
 
 // Read from Excel2007 (.xlsx) template
 echo date('H:i:s') , " Load Excel2007 template file" , EOL;
@@ -77,23 +75,23 @@ echo date('H:i:s') , " File written to " , str_replace('.php', '.htm', pathinfo(
 // Export to PDF (.pdf)
 echo date('H:i:s') , " Write to PDF format" , EOL;
 try {
-	if (!PHPExcel_Settings::setPdfRenderer(
-		$rendererName,
-		$rendererLibraryPath
-	)) {
-		echo (
-			'NOTICE: Please set the $rendererName and $rendererLibraryPath values' .
-			EOL .
-			'at the top of this script as appropriate for your directory structure' .
-			EOL
-		);
-	} else {
-		$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'PDF');
-		$objWriter->save(str_replace('.php', '.pdf', __FILE__));
-		echo date('H:i:s') , " File written to " , str_replace('.php', '.pdf', pathinfo(__FILE__, PATHINFO_BASENAME)) , EOL;
-	}
+    if (!PHPExcel_Settings::setPdfRenderer(
+        $rendererName,
+        $rendererLibraryPath
+    )) {
+        echo (
+            'NOTICE: Please set the $rendererName and $rendererLibraryPath values' .
+            EOL .
+            'at the top of this script as appropriate for your directory structure' .
+            EOL
+        );
+    } else {
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'PDF');
+        $objWriter->save(str_replace('.php', '.pdf', __FILE__));
+        echo date('H:i:s') , " File written to " , str_replace('.php', '.pdf', pathinfo(__FILE__, PATHINFO_BASENAME)) , EOL;
+    }
 } catch (Exception $e) {
-	echo date('H:i:s') , ' EXCEPTION: ', $e->getMessage() , EOL;
+    echo date('H:i:s') , ' EXCEPTION: ', $e->getMessage() , EOL;
 }
 
 // Remove first two rows with field headers before exporting to CSV
@@ -112,7 +110,6 @@ echo date('H:i:s') , " Write to CSV format (with BOM)" , EOL;
 $objWriter->setUseBOM(true);
 $objWriter->save(str_replace('.php', '-bom.csv', __FILE__));
 echo date('H:i:s') , " File written to " , str_replace('.php', '-bom.csv', pathinfo(__FILE__, PATHINFO_BASENAME)) , EOL;
-
 
 // Echo memory peak usage
 echo date('H:i:s') , " Peak memory usage: " , (memory_get_peak_usage(true) / 1024 / 1024) , " MB" , EOL;

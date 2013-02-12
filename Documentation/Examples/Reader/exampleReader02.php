@@ -5,7 +5,6 @@ set_time_limit(0);
 
 date_default_timezone_set('Europe/London');
 
-
 /** Include path **/
 set_include_path(get_include_path() . PATH_SEPARATOR . '../../../Classes/');
 
@@ -38,12 +37,10 @@ $objReader = new PHPExcel_Reader_Excel5();
 //	$objReader = new PHPExcel_Reader_CSV();
 $objPHPExcel = $objReader->load($inputFileName);
 
-
 echo '<hr />';
 
 $sheetData = $objPHPExcel->getActiveSheet()->toArray(null,true,true,true);
 var_dump($sheetData);
-
 
 ?>
 <body>

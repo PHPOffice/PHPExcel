@@ -25,7 +25,6 @@ set_include_path(get_include_path() . PATH_SEPARATOR . '../../../Classes/');
 /** PHPExcel_IOFactory */
 include 'PHPExcel/IOFactory.php';
 
-
 $inputFileType = 'Excel2007';
 $inputFileName = './sampleData/example1.xlsx';
 
@@ -34,7 +33,6 @@ $objReader = PHPExcel_IOFactory::createReader($inputFileType);
 /**  Load $inputFileName to a PHPExcel Object  **/
 $objPHPExcel = $objReader->load($inputFileName);
 
-
 echo '<hr />';
 
 /**  Read an array list of any custom properties for this document  **/
@@ -42,38 +40,36 @@ $customPropertyList = $objPHPExcel->getProperties()->getCustomProperties();
 
 echo '<b>Custom Properties: </b><br />';
 /**  Loop through the list of custom properties  **/
-foreach($customPropertyList as $customPropertyName) {
-	echo '<b>',$customPropertyName,': </b>';
-	/**  Retrieve the property value  **/
-	$propertyValue = $objPHPExcel->getProperties()->getCustomPropertyValue($customPropertyName);
-	/**  Retrieve the property type  **/
-	$propertyType = $objPHPExcel->getProperties()->getCustomPropertyType($customPropertyName);
+foreach ($customPropertyList as $customPropertyName) {
+    echo '<b>',$customPropertyName,': </b>';
+    /**  Retrieve the property value  **/
+    $propertyValue = $objPHPExcel->getProperties()->getCustomPropertyValue($customPropertyName);
+    /**  Retrieve the property type  **/
+    $propertyType = $objPHPExcel->getProperties()->getCustomPropertyType($customPropertyName);
 
-	/**  Manipulate properties as appropriate for display purposes  **/
-	switch($propertyType) {
-		case 'i' :	//	integer
-			$propertyType = 'integer number';
-			break;
-		case 'f' :	//	float
-			$propertyType = 'floating point number';
-			break;
-		case 's' :	//	string
-			$propertyType = 'string';
-			break;
-		case 'd' :	//	date
-			$propertyValue = date('l, d<\s\up>S</\s\up> F Y g:i A',$propertyValue);
-			$propertyType = 'date';
-			break;
-		case 'b' :	//	boolean
-			$propertyValue = ($propertyValue) ? 'TRUE' : 'FALSE';
-			$propertyType = 'boolean';
-			break;
-	}
+    /**  Manipulate properties as appropriate for display purposes  **/
+    switch ($propertyType) {
+        case 'i' :	//	integer
+            $propertyType = 'integer number';
+            break;
+        case 'f' :	//	float
+            $propertyType = 'floating point number';
+            break;
+        case 's' :	//	string
+            $propertyType = 'string';
+            break;
+        case 'd' :	//	date
+            $propertyValue = date('l, d<\s\up>S</\s\up> F Y g:i A',$propertyValue);
+            $propertyType = 'date';
+            break;
+        case 'b' :	//	boolean
+            $propertyValue = ($propertyValue) ? 'TRUE' : 'FALSE';
+            $propertyType = 'boolean';
+            break;
+    }
 
-	echo $propertyValue,' (',$propertyType,')<br />';
+    echo $propertyValue,' (',$propertyType,')<br />';
 }
-
-
 
 ?>
 <body>

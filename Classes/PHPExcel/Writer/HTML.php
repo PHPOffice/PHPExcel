@@ -1231,15 +1231,8 @@ class PHPExcel_Writer_HTML extends PHPExcel_Writer_Abstract implements PHPExcel_
 					$rowSpan = $spans['rowspan'];
 					$colSpan = $spans['colspan'];
 					//Also apply style from last cell in merge to fix borders - relies on !important for non-none border declarations in _createCSSStyleBorder
-					if($colSpan>1) {
-						$endCellCoord = PHPExcel_Cell::stringFromColumnIndex($colNum+$colSpan-1) . ($pRow + 1);
-						$cssClass .= ' style' . $pSheet->getCell($endCellCoord)->getXfIndex();	
-					}
-					
-					if($rowSpan>1) {
-						$endCellCoord = PHPExcel_Cell::stringFromColumnIndex($colNum) . ($pRow + $rowSpan);
-						$cssClass .= ' style' . $pSheet->getCell($endCellCoord)->getXfIndex();	
-					}
+					$endCellCoord = PHPExcel_Cell::stringFromColumnIndex($colNum + $colSpan - 1) . ($pRow + $rowSpan);
+					$cssClass .= ' style' . $pSheet->getCell($endCellCoord)->getXfIndex();	
 				}
 
 				// Write

@@ -70,6 +70,41 @@ class PHPExcel_Chart_Layout
 	 */
 	private $_yPos		= NULL;
 
+    /**
+     * Enable manual 3D view settings for rotation and perspective
+     *
+     * @var boolean
+     */
+    private $_view3D    = false;
+
+    /**
+     * 3D X-Rotation
+     *
+     * @var float
+     */
+    private $_xRot		= 0;
+
+    /**
+     * 3D Y-Rotation
+     *
+     * @var float
+     */
+    private $_yRot		= 30;
+
+    /**
+     * Enable manual 3D view settings for rotation and perspective
+     *
+     * @var boolean
+     */
+    private $_rAngAx    = false;
+
+    /**
+     * 3D Perspective
+     *
+     * @var float
+     */
+    private $_perspective   = 30;
+
 	/**
 	 * width
 	 *
@@ -243,6 +278,104 @@ class PHPExcel_Chart_Layout
 	public function setYPosition($value) {
 		$this->_yPos = $value;
 	}
+
+    /**
+     * Get manual 3D view setting (enabled or disabled)
+     *
+     * @return boolean
+     */
+    public function getManual3dAlign() {
+        return $this->_view3D;
+    }
+
+    /**
+     * Enable/disable manual 3D view settings for rotation and perspective
+     *
+     * @param Manual 3D Alignmnet $value
+     */
+    public function setManual3dAlign($value) {
+        $this->_view3D = $value;
+    }
+
+    /**
+     * Get 3D X-Rotation
+     *
+     * @return float
+     */
+    public function getXRotation()
+    {
+        return $this->_xRot;
+    }
+
+    /**
+     * Set 3D X-Rotation
+     *
+     * @param float $value
+     */
+    public function setXRotation($value)
+    {
+        $this->_xRot = $value;
+    }
+
+    /**
+     * Get 3D Y-Rotation
+     *
+     * @return float
+     */
+    public function getYRotation()
+    {
+        return $this->_yRot;
+    }
+
+    /**
+     * Set 3D Y-Rotation
+     *
+     * @param float $value
+     */
+    public function setYRotation($value)
+    {
+        $this->_yRot = $value;
+    }
+
+    /**
+     * Get right angle axes setting
+     *
+     * @return boolean
+     */
+    public function getRightAngleAxes()
+    {
+        return $this->_rAngAx;
+    }
+
+    /**
+     * Set right angle axes setting
+     *
+     * @param boolean $value
+     */
+    public function setRightAngleAxes($value)
+    {
+        $this->_rAngAx = $value;
+    }
+
+    /**
+     * Get 3D Perspective
+     *
+     * @return float
+     */
+    public function getPerspective()
+    {
+        return $this->_perspective;
+    }
+
+    /**
+     * Set 3D Perspective
+     *
+     * @param float $value
+     */
+    public function setPerspective($value)
+    {
+        $this->_perspective = $value;
+    }
 
 	/**
 	 * Get Width

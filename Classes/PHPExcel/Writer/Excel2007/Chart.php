@@ -229,11 +229,30 @@ class PHPExcel_Writer_Excel2007_Chart extends PHPExcel_Writer_Excel2007_WriterPa
 			return;
 		}
 
+        $layout = $plotArea->getLayout();
+
+        if(!is_null($layout) &&
+            $layout->getManual3dAlign()) {
+
+            $objWriter->startElement('c:view3D');
+                $objWriter->startElement('c:rotX');
+                    $objWriter->writeAttribute('val', $layout->getXRotation());
+                $objWriter->endElement();
+                $objWriter->startElement('c:rotY');
+                    $objWriter->writeAttribute('val', $layout->getYRotation());
+                $objWriter->endElement();
+                $objWriter->startElement('c:rAngAx');
+                    $objWriter->writeAttribute('val', ($layout->getRightAngleAxes() ? '1' : '0'));
+                $objWriter->endElement();
+                $objWriter->startElement('c:perspective');
+                    $objWriter->writeAttribute('val', $layout->getPerspective());
+                $objWriter->endElement();
+            $objWriter->endElement();
+        }
+
 		$id1 = $id2 = 0;
 		$this->_seriesIndex = 0;
 		$objWriter->startElement('c:plotArea');
-
-			$layout = $plotArea->getLayout();
 
 			$this->_writeLayout($layout, $objWriter);
 

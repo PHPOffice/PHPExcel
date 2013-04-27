@@ -938,11 +938,8 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 										$objConditional->setStyle(clone $dxfs[intval($cfRule["dxfId"])]);
 										$conditionalStyles[] = $objConditional;
 									}
-
-									// Extract all cell references in $ref
-									$aReferences = PHPExcel_Cell::extractAllCellReferencesInRange($ref);
-									foreach ($aReferences as $reference) {
-										$docSheet->getStyle($reference)->setConditionalStyles($conditionalStyles);
+									foreach(explode(' ', $ref) as $single_ref){
+										docSheet->setConditionalStyles($single_ref, $conditionalStyles);
 									}
 								}
 							}

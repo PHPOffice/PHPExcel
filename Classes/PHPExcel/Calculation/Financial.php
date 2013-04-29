@@ -37,10 +37,14 @@ if (!defined('PHPEXCEL_ROOT')) {
 
 
 /** FINANCIAL_MAX_ITERATIONS */
-define('FINANCIAL_MAX_ITERATIONS', 128);
+if (!defined('FINANCIAL_MAX_ITERATIONS')) {
+	define('FINANCIAL_MAX_ITERATIONS', 128);
+}
 
 /** FINANCIAL_PRECISION */
-define('FINANCIAL_PRECISION', 1.0e-08);
+if (!defined('FINANCIAL_PRECISION')) {
+	define('FINANCIAL_PRECISION', 1.0e-08);
+}
 
 
 /**

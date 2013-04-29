@@ -481,9 +481,14 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExce
 					case 1: // GIF, not supported by BIFF8, we convert to PNG
 						$blipType = PHPExcel_Shared_Escher_DggContainer_BstoreContainer_BSE::BLIPTYPE_PNG;
 						ob_start();
-						if(extension_loaded('gd') && function_exists('gd_info'))
+						if(extension_loaded('gd'))
 						{
 							imagepng(imagecreatefromgif($filename));
+						}
+						else
+						{
+
+							throw new PHPExcel_Writer_Exception("Failed to create PNG file -- GD is not enabled.");
 						}
 						$blipData = ob_get_contents();
 						ob_end_clean();
@@ -502,9 +507,13 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExce
 					case 6: // Windows DIB (BMP), we convert to PNG
 						$blipType = PHPExcel_Shared_Escher_DggContainer_BstoreContainer_BSE::BLIPTYPE_PNG;
 						ob_start();
-						if(extension_loaded('gd') && function_exists('gd_info'))
+						if(extension_loaded('gd'))
 						{
-						imagepng(PHPExcel_Shared_Drawing::imagecreatefrombmp($filename));
+							imagepng(PHPExcel_Shared_Drawing::imagecreatefrombmp($filename));
+						}
+						else
+						{
+							throw new PHPExcel_Writer_Exception("Failed to create PNG file -- GD is not enabled.");
 						}
 						$blipData = ob_get_contents();
 						ob_end_clean();

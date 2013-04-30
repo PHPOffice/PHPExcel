@@ -908,7 +908,9 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 												(string)$cfRule["type"] == PHPExcel_Style_Conditional::CONDITION_NONE ||
 												(string)$cfRule["type"] == PHPExcel_Style_Conditional::CONDITION_CELLIS ||
 												(string)$cfRule["type"] == PHPExcel_Style_Conditional::CONDITION_CONTAINSTEXT ||
-												(string)$cfRule["type"] == PHPExcel_Style_Conditional::CONDITION_EXPRESSION
+												(string)$cfRule["type"] == PHPExcel_Style_Conditional::CONDITION_EXPRESSION ||
+												(string)$cfRule["type"] == PHPExcel_Style_Conditional::CONDITION_BLANK ||
+												(string)$cfRule["type"] == PHPExcel_Style_Conditional::CONDITION_NOTBLANK
 											) && isset($dxfs[intval($cfRule["dxfId"])])
 										) {
 											$conditionals[(string) $conditional["sqref"]][intval($cfRule["priority"])] = $cfRule;
@@ -917,12 +919,13 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 								}
 
 								foreach ($conditionals as $ref => $cfRules) {
-									ksort($cfRules);
 									$conditionalStyles = array();
 									foreach ($cfRules as $cfRule) {
 										$objConditional = new PHPExcel_Style_Conditional();
 										$objConditional->setConditionType((string)$cfRule["type"]);
 										$objConditional->setOperatorType((string)$cfRule["operator"]);
+
+										$objConditional->setStopIfTrue((string)$cfRule["stopIfTrue"]);
 
 										if ((string)$cfRule["text"] != '') {
 											$objConditional->setText((string)$cfRule["text"]);
@@ -938,9 +941,8 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 										$objConditional->setStyle(clone $dxfs[intval($cfRule["dxfId"])]);
 										$conditionalStyles[] = $objConditional;
 									}
-									foreach(explode(' ', $ref) as $single_ref){
-										docSheet->setConditionalStyles($single_ref, $conditionalStyles);
-									}
+
+									$docSheet->setConditionalStyles($ref, $conditionalStyles);
 								}
 							}
 

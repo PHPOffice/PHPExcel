@@ -40,6 +40,8 @@ class PHPExcel_Style_Conditional implements PHPExcel_IComparable
 	const CONDITION_CELLIS					= 'cellIs';
 	const CONDITION_CONTAINSTEXT			= 'containsText';
 	const CONDITION_EXPRESSION 				= 'expression';
+	const CONDITION_CONTAINSBLANKS 				= 'containsBlanks';
+	const CONDITION_NOTCONTAINSBLANKS			= 'notContainsBlanks';
 
 	/* Operator types */
 	const OPERATOR_NONE						= '';
@@ -54,6 +56,8 @@ class PHPExcel_Style_Conditional implements PHPExcel_IComparable
 	const OPERATOR_CONTAINSTEXT				= 'containsText';
 	const OPERATOR_NOTCONTAINS				= 'notContains';
 	const OPERATOR_BETWEEN					= 'between';
+
+	const STOP_IF_TRUE					= '1';
 
 	/**
 	 * Condition type
@@ -75,6 +79,13 @@ class PHPExcel_Style_Conditional implements PHPExcel_IComparable
 	 * @var string
 	 */
 	private $_text;
+
+	/**
+	 * Stop If True
+	 *
+	 * @var string
+	 */
+	private $_stopIfTrue = '';
 
 	/**
 	 * Condition
@@ -161,6 +172,31 @@ class PHPExcel_Style_Conditional implements PHPExcel_IComparable
     public function setText($value = null) {
            $this->_text = $value;
            return $this;
+    }
+
+    /**
+     * Get Stop If True
+     *
+     * @return string
+     */
+     public function getStopIfTrue() {
+     	 return $this->_stopIfTrue;
+     }
+
+    /**
+     * Set Stop If True
+     *
+     * @param string $pValue
+     * @return PHPExcel_Style_Conditional
+     */
+    public function setStopIfTrue($pValue = '') {
+    	if($pValue === PHPExcel_Style_Conditional::STOP_IF_TRUE){
+    	    $this->_stopIfTrue = $pValue;
+        } else{
+	    // treat all unknown as "unset"
+	    $this->_stopIfTrue = '';
+	}
+	return $this;
     }
 
     /**

@@ -124,8 +124,8 @@ class PHPExcel_Writer_CSV extends PHPExcel_Writer_Abstract implements PHPExcel_W
 		}
 
 		//	Identify the range that we need to extract from the worksheet
-		$maxCol = $sheet->getHighestColumn();
-		$maxRow = $sheet->getHighestRow();
+		$maxCol = $sheet->getHighestDataColumn();
+		$maxRow = $sheet->getHighestDataRow();
 
 		// Write rows to file
 		for($row = 1; $row <= $maxRow; ++$row) {
@@ -135,7 +135,7 @@ class PHPExcel_Writer_CSV extends PHPExcel_Writer_Abstract implements PHPExcel_W
 			$this->_writeLine($fileHandle, $cellsArray[0]);
 		}
 
-		// Close file
+		// Close files
 		fclose($fileHandle);
 
 		PHPExcel_Calculation::setArrayReturnType($saveArrayReturnType);

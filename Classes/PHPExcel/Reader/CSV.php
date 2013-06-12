@@ -191,7 +191,9 @@ class PHPExcel_Reader_CSV extends PHPExcel_Reader_Abstract implements PHPExcel_R
 		// Skip BOM, if any
 		$this->_skipBOM();
 
-		$escapeEnclosures = array( "\\" . $this->_enclosure, $this->_enclosure . $this->_enclosure );
+        if($this->_inputEncoding !== 'UTF-8'){
+            stream_filter_append($this->_fileHandle, 'convert.iconv.'.$this->_inputEncoding.'/UTF-8');
+        }
 
 		$worksheetInfo = array();
 		$worksheetInfo[0]['worksheetName'] = 'Worksheet';
@@ -255,6 +257,10 @@ class PHPExcel_Reader_CSV extends PHPExcel_Reader_Abstract implements PHPExcel_R
 		// Skip BOM, if any
 		$this->_skipBOM();
 
+        if($this->_inputEncoding !== 'UTF-8'){
+            stream_filter_append($this->_fileHandle, 'convert.iconv.'.$this->_inputEncoding.'/UTF-8');
+        }
+
 		// Create new PHPExcel object
 		while ($objPHPExcel->getSheetCount() <= $this->_sheetIndex) {
 			$objPHPExcel->createSheet();
@@ -278,11 +284,6 @@ class PHPExcel_Reader_CSV extends PHPExcel_Reader_Abstract implements PHPExcel_R
 				if ($rowDatum != '' && $this->_readFilter->readCell($columnLetter, $currentRow)) {
 					// Unescape enclosures
 					$rowDatum = str_replace($escapeEnclosures, $this->_enclosure, $rowDatum);
-
-					// Convert encoding if necessary
-					if ($this->_inputEncoding !== 'UTF-8') {
-						$rowDatum = PHPExcel_Shared_String::ConvertEncoding($rowDatum, 'UTF-8', $this->_inputEncoding);
-					}
 
 					// Set cell value
 					$sheet->getCell($columnLetter . $currentRow)->setValue($rowDatum);

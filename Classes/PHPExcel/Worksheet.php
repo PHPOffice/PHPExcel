@@ -1054,7 +1054,7 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
      */
     public function setCellValueByColumnAndRow($pColumn = 0, $pRow = 1, $pValue = null, $returnCell = false)
     {
-        $cell = $this->getCell(PHPExcel_Cell::stringFromColumnIndex($pColumn) . $pRow)->setValue($pValue);
+        $cell = $this->getCellByColumnAndRow($pColumn, $pRow)->setValue($pValue);
         return ($returnCell) ? $cell : $this;
     }
 
@@ -1086,7 +1086,7 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
      */
     public function setCellValueExplicitByColumnAndRow($pColumn = 0, $pRow = 1, $pValue = null, $pDataType = PHPExcel_Cell_DataType::TYPE_STRING, $returnCell = false)
     {
-        $cell = $this->getCell(PHPExcel_Cell::stringFromColumnIndex($pColumn) . $pRow)->setValueExplicit($pValue, $pDataType);
+        $cell = $this->getCellByColumnAndRow($pColumn, $pRow)->setValueExplicit($pValue, $pDataType);
         return ($returnCell) ? $cell : $this;
     }
 
@@ -1123,41 +1123,14 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
         // Uppercase coordinate
         $pCoordinate = strtoupper($pCoordinate);
 
-        if (strpos($pCoordinate,':') !== false || strpos($pCoordinate,',') !== false) {
+        if (strpos($pCoordinate, ':') !== false || strpos($pCoordinate, ',') !== false) {
             throw new PHPExcel_Exception('Cell coordinate can not be a range of cells.');
-        } elseif (strpos($pCoordinate,'$') !== false) {
+        } elseif (strpos($pCoordinate, '$') !== false) {
             throw new PHPExcel_Exception('Cell coordinate must not be absolute.');
-        } else {
-            // Create new cell object
-
-            // Coordinates
-            $aCoordinates = PHPExcel_Cell::coordinateFromString($pCoordinate);
-
-			$cell = $this->_cellCollection->addCacheData($pCoordinate,new PHPExcel_Cell(NULL, PHPExcel_Cell_DataType::TYPE_NULL, $this));
-            $this->_cellCollectionIsSorted = false;
-
-            if (PHPExcel_Cell::columnIndexFromString($this->_cachedHighestColumn) < PHPExcel_Cell::columnIndexFromString($aCoordinates[0]))
-                $this->_cachedHighestColumn = $aCoordinates[0];
-
-            $this->_cachedHighestRow = max($this->_cachedHighestRow,$aCoordinates[1]);
-
-            // Cell needs appropriate xfIndex
-            $rowDimensions    = $this->getRowDimensions();
-            $columnDimensions = $this->getColumnDimensions();
-
-            if ( isset($rowDimensions[$aCoordinates[1]]) && $rowDimensions[$aCoordinates[1]]->getXfIndex() !== null ) {
-                // then there is a row dimension with explicit style, assign it to the cell
-                $cell->setXfIndex($rowDimensions[$aCoordinates[1]]->getXfIndex());
-            } else if ( isset($columnDimensions[$aCoordinates[0]]) ) {
-                // then there is a column dimension, assign it to the cell
-                $cell->setXfIndex($columnDimensions[$aCoordinates[0]]->getXfIndex());
-            } else {
-                // set to default index
-                $cell->setXfIndex(0);
-            }
-
-            return $cell;
         }
+
+        // Create new cell object
+        return $this->_createNewCell($pCoordinate);
     }
 
     /**
@@ -1172,23 +1145,55 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
         $columnLetter = PHPExcel_Cell::stringFromColumnIndex($pColumn);
         $coordinate = $columnLetter . $pRow;
 
-        if (!$this->_cellCollection->isDataSet($coordinate)) {
-            $cell = $this->_cellCollection->addCacheData($coordinate, new PHPExcel_Cell(NULL, PHPExcel_Cell_DataType::TYPE_NULL, $this));
-            $this->_cellCollectionIsSorted = false;
-
-            if (PHPExcel_Cell::columnIndexFromString($this->_cachedHighestColumn) < $pColumn)
-                $this->_cachedHighestColumn = $columnLetter;
-
-            $this->_cachedHighestRow = max($this->_cachedHighestRow,$pRow);
-
-            return $cell;
+        if ($this->_cellCollection->isDataSet($coordinate)) {
+            return $this->_cellCollection->getCacheData($coordinate);
         }
 
-        return $this->_cellCollection->getCacheData($coordinate);
+		return $this->_createNewCell($coordinate);
     }
 
     /**
-     * Cell at a specific coordinate exists?
+     * Create a new cell at the specified coordinate
+     *
+     * @param string $pCoordinate    Coordinate of the cell
+     * @return PHPExcel_Cell Cell that was created
+     */
+	private function _createNewCell($pCoordinate)
+	{
+		$cell = $this->_cellCollection->addCacheData(
+			$pCoordinate,
+			new PHPExcel_Cell(
+				NULL, 
+				PHPExcel_Cell_DataType::TYPE_NULL, 
+				$this
+			)
+		);
+        $this->_cellCollectionIsSorted = false;
+
+        // Coordinates
+        $aCoordinates = PHPExcel_Cell::coordinateFromString($pCoordinate);
+        if (PHPExcel_Cell::columnIndexFromString($this->_cachedHighestColumn) < PHPExcel_Cell::columnIndexFromString($aCoordinates[0]))
+            $this->_cachedHighestColumn = $aCoordinates[0];
+        $this->_cachedHighestRow = max($this->_cachedHighestRow, $aCoordinates[1]);
+
+        // Cell needs appropriate xfIndex from dimensions records
+		//    but don't create dimension records if they don't already exist
+        $rowDimension    = $this->getRowDimension($aCoordinates[1], FALSE);
+        $columnDimension = $this->getColumnDimension($aCoordinates[0], FALSE);
+
+        if ($rowDimension !== NULL && $rowDimension->getXfIndex() > 0) {
+            // then there is a row dimension with explicit style, assign it to the cell
+            $cell->setXfIndex($rowDimension->getXfIndex());
+        } elseif ($columnDimension !== NULL && $columnDimension->getXfIndex() > 0) {
+            // then there is a column dimension, assign it to the cell
+            $cell->setXfIndex($columnDimension->getXfIndex());
+        }
+
+        return $cell;
+	}
+	
+    /**
+     * Does the cell at a specific coordinate exist?
      *
      * @param string $pCoordinate  Coordinate of the cell
      * @throws PHPExcel_Exception
@@ -1253,13 +1258,15 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
      * @param int $pRow Numeric index of the row
      * @return PHPExcel_Worksheet_RowDimension
      */
-    public function getRowDimension($pRow = 1)
+    public function getRowDimension($pRow = 1, $create = TRUE)
     {
         // Found
         $found = null;
 
         // Get row dimension
         if (!isset($this->_rowDimensions[$pRow])) {
+			if (!$create)
+				return NULL;
             $this->_rowDimensions[$pRow] = new PHPExcel_Worksheet_RowDimension($pRow);
 
             $this->_cachedHighestRow = max($this->_cachedHighestRow,$pRow);
@@ -1273,13 +1280,15 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
      * @param string $pColumn String index of the column
      * @return PHPExcel_Worksheet_ColumnDimension
      */
-    public function getColumnDimension($pColumn = 'A')
+    public function getColumnDimension($pColumn = 'A', $create = TRUE)
     {
         // Uppercase coordinate
         $pColumn = strtoupper($pColumn);
 
         // Fetch dimensions
         if (!isset($this->_columnDimensions[$pColumn])) {
+			if (!$create)
+				return NULL;
             $this->_columnDimensions[$pColumn] = new PHPExcel_Worksheet_ColumnDimension($pColumn);
 
             if (PHPExcel_Cell::columnIndexFromString($this->_cachedHighestColumn) < PHPExcel_Cell::columnIndexFromString($pColumn))

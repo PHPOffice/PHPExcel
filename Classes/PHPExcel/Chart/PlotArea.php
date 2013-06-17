@@ -116,6 +116,21 @@ class PHPExcel_Chart_PlotArea
 		$this->_plotSeries = $plotSeries;
 	}
 
+	/**
+	 * Return the first plot categories found among all plot series
+	 * 
+	 * @return PHPExcel_Chart_DataSeriesValues
+	 */
+	public function getPlotCategories() {
+		foreach($this->_plotSeries as $plot)
+		{
+			$cat = $plot->getPlotCategories();
+			if (isset($cat[0]) && $cat[0] !== null) {
+				return $cat[0];
+			}
+		}
+	}
+
 	public function refresh(PHPExcel_Worksheet $worksheet) {
 	    foreach($this->_plotSeries as $plotSeries) {
 			$plotSeries->refresh($worksheet);

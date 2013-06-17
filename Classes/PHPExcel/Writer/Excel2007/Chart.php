@@ -496,6 +496,14 @@ class PHPExcel_Writer_Excel2007_Chart extends PHPExcel_Writer_Excel2007_WriterPa
 					$objWriter->endElement();
 			}
 
+			$plotCategories = $plotArea->getPlotCategories();
+			if ($plotCategories !== null && $plotCategories->getTickLabelSkip() !== null)
+			{
+				$objWriter->startElement('c:tickLblSkip');
+					$objWriter->writeAttribute('val', $plotCategories->getTickLabelSkip());
+				$objWriter->endElement();
+			}
+
 			$objWriter->startElement('c:auto');
 				$objWriter->writeAttribute('val', 1);
 			$objWriter->endElement();

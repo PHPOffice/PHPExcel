@@ -87,6 +87,13 @@ class PHPExcel_Chart_DataSeriesValues
 	private $_dataValues = array();
 
 	/**
+	 * Tick Label Skip (when this dataseries is used as a category axis in chart)
+	 * 
+	 * @var int
+	 */
+	private $_tickLabelSkip = null;
+
+	/**
 	 * Create a new PHPExcel_Chart_DataSeriesValues object
 	 */
 	public function __construct($dataType = self::DATASERIES_TYPE_NUMBER, $dataSource = null, $formatCode = null, $pointCount = 0, $dataValues = array(), $marker = null)
@@ -97,6 +104,25 @@ class PHPExcel_Chart_DataSeriesValues
 		$this->_pointCount = $pointCount;
 		$this->_dataValues = $dataValues;
 		$this->_marker = $marker;
+	}
+
+	/**
+	 * Get Tick Label Skip (when dataseries is used as a category axis in chart)
+	 * 
+	 * @return	int
+	 */
+	public function getTickLabelSkip() {
+		return $this->_tickLabelSkip;
+	}
+
+	/**
+	 * Set Tick Label Skip (when dataseries is used as a category axis in chart)
+	 * 
+	 * @param int $tickLabelSkip
+	 */
+	public function setTickLabelSkip($tickLabelSkip = null)
+	{
+		$this->_tickLabelSkip = $tickLabelSkip;
 	}
 
 	/**

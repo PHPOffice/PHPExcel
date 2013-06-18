@@ -126,19 +126,19 @@ class PHPExcel_Reader_HTML extends PHPExcel_Reader_Abstract implements PHPExcel_
 	}
 
 	/**
-	 * Loads PHPExcel from file
+	 * Loads PHPExcel from file or from HTML Data
 	 *
-	 * @param 	string 		$pFilename
+	 * @param 	string 		$pHtmlData
 	 * @return 	PHPExcel
 	 * @throws 	PHPExcel_Reader_Exception
 	 */
-	public function load($pFilename)
+	public function load($pHtmlData)
 	{
 		// Create new PHPExcel
 		$objPHPExcel = new PHPExcel();
 
 		// Load into this instance
-		return $this->loadIntoExisting($pFilename, $objPHPExcel);
+		return $this->loadIntoExisting($pHtmlData, $objPHPExcel);
 	}
 
 	/**
@@ -397,23 +397,28 @@ class PHPExcel_Reader_HTML extends PHPExcel_Reader_Abstract implements PHPExcel_
 	}
 
 	/**
-	 * Loads PHPExcel from file into PHPExcel instance
+	 * Loads PHPExcel from file or from HTML data into PHPExcel instance
 	 *
 	 * @param 	string 		$pFilename
 	 * @param	PHPExcel	$objPHPExcel
 	 * @return 	PHPExcel
 	 * @throws 	PHPExcel_Reader_Exception
 	 */
-	public function loadIntoExisting($pFilename, PHPExcel $objPHPExcel)
+	public function loadIntoExisting($pHtmlData, PHPExcel $objPHPExcel)
 	{
-		// Open file to validate
-		$this->_openFile($pFilename);
-		if (!$this->_isValidFormat()) {
+		$isHtmlFile = FALSE;
+		if(is_file($pHtmlData)){
+			$isHtmlFile = TRUE;
+			// Open file to validate
+			$this->_openFile($pHtmlData);
+			if (!$this->_isValidFormat()) {
+				fclose ($this->_fileHandle);
+				throw new PHPExcel_Reader_Exception($pHtmlData . " is an Invalid HTML file.");
+			}
+			//	Close after validating
 			fclose ($this->_fileHandle);
-			throw new PHPExcel_Reader_Exception($pFilename . " is an Invalid HTML file.");
 		}
-		//	Close after validating
-		fclose ($this->_fileHandle);
+		
 
 		// Create new PHPExcel
 		while ($objPHPExcel->getSheetCount() <= $this->_sheetIndex) {
@@ -424,14 +429,18 @@ class PHPExcel_Reader_HTML extends PHPExcel_Reader_Abstract implements PHPExcel_
 		//	Create a new DOM object
 		$dom = new domDocument;
 		//	Reload the HTML file into the DOM object
-		$loaded = $dom->loadHTMLFile($pFilename);
+		if($isHtmlFile){
+			$loaded = $dom->loadHTMLFile($pHtmlData);
+		}else{
+			$loaded = $dom->loadHTML($pHtmlData);
+		}
+		
 		if ($loaded === FALSE) {
-			throw new PHPExcel_Reader_Exception('Failed to load ',$pFilename,' as a DOM Document');
+			throw new PHPExcel_Reader_Exception('Failed to load ',$pHtmlData,' as a DOM Document');
 		}
 
 		//	Discard white space
 		$dom->preserveWhiteSpace = false;
-
 
 		$row = 0;
 		$column = 'A';

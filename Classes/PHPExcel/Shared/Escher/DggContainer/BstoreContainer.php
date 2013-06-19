@@ -19,20 +19,23 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Shared_Escher
+ * @package    PHPExcel\Shared_Escher
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
 
+
+namespace PHPExcel;
+
 /**
- * PHPExcel_Shared_Escher_DggContainer_BstoreContainer
+ * PHPExcel\Shared_Escher_DggContainer_BstoreContainer
  *
  * @category   PHPExcel
- * @package    PHPExcel_Shared_Escher
+ * @package    PHPExcel\Shared_Escher
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Shared_Escher_DggContainer_BstoreContainer
+class Shared_Escher_DggContainer_BstoreContainer
 {
 	/**
 	 * BLIP Store Entries. Each of them holds one BLIP (Big Large Image or Picture)
@@ -44,7 +47,7 @@ class PHPExcel_Shared_Escher_DggContainer_BstoreContainer
 	/**
 	 * Add a BLIP Store Entry
 	 *
-	 * @param PHPExcel_Shared_Escher_DggContainer_BstoreContainer_BSE $BSE
+	 * @param PHPExcel\Shared_Escher_DggContainer_BstoreContainer_BSE $BSE
 	 */
 	public function addBSE($BSE)
 	{
@@ -55,7 +58,7 @@ class PHPExcel_Shared_Escher_DggContainer_BstoreContainer
 	/**
 	 * Get the collection of BLIP Store Entries
 	 *
-	 * @return PHPExcel_Shared_Escher_DggContainer_BstoreContainer_BSE[]
+	 * @return PHPExcel\Shared_Escher_DggContainer_BstoreContainer_BSE[]
 	 */
 	public function getBSECollection()
 	{

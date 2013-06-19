@@ -19,21 +19,23 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Writer_Excel5
+ * @package    PHPExcel\Writer_Excel5
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license	http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version	##VERSION##, ##DATE##
  */
 
 
+namespace PHPExcel;
+
 /**
- * PHPExcel_Writer_Excel5
+ * PHPExcel\Writer_Excel5
  *
  * @category   PHPExcel
- * @package    PHPExcel_Writer_Excel5
+ * @package    PHPExcel\Writer_Excel5
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExcel_Writer_IWriter
+class Writer_Excel5 extends Writer_Abstract implements Writer_IWriter
 {
 	/**
 	 * PHPExcel object
@@ -73,7 +75,7 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExce
 	/**
 	 * Formula parser
 	 *
-	 * @var PHPExcel_Writer_Excel5_Parser
+	 * @var PHPExcel\Writer_Excel5_Parser
 	 */
 	private $_parser;
 
@@ -99,48 +101,48 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExce
 	private $_documentSummaryInformation;
 
 	/**
-	 * Create a new PHPExcel_Writer_Excel5
+	 * Create a new PHPExcel\Writer_Excel5
 	 *
-	 * @param	PHPExcel	$phpExcel	PHPExcel object
+	 * @param	PHPExcel\Workbook	$phpExcel	PHPExcel object
 	 */
-	public function __construct(PHPExcel $phpExcel) {
-		$this->_phpExcel	= $phpExcel;
+	public function __construct(Workbook $phpExcel) {
+		$this->_phpExcel = $phpExcel;
 
-		$this->_parser		= new PHPExcel_Writer_Excel5_Parser();
+		$this->_parser = new Writer_Excel5_Parser();
 	}
 
 	/**
 	 * Save PHPExcel to file
 	 *
 	 * @param	string		$pFilename
-	 * @throws	PHPExcel_Writer_Exception
+	 * @throws	PHPExcel\Writer_Exception
 	 */
 	public function save($pFilename = null) {
 
 		// garbage collect
 		$this->_phpExcel->garbageCollect();
 
-		$saveDebugLog = PHPExcel_Calculation::getInstance($this->_phpExcel)->getDebugLog()->getWriteDebugLog();
-		PHPExcel_Calculation::getInstance($this->_phpExcel)->getDebugLog()->setWriteDebugLog(FALSE);
-		$saveDateReturnType = PHPExcel_Calculation_Functions::getReturnDateType();
-		PHPExcel_Calculation_Functions::setReturnDateType(PHPExcel_Calculation_Functions::RETURNDATE_EXCEL);
+		$saveDebugLog = Calculation::getInstance($this->_phpExcel)->getDebugLog()->getWriteDebugLog();
+		Calculation::getInstance($this->_phpExcel)->getDebugLog()->setWriteDebugLog(FALSE);
+		$saveDateReturnType = Calculation_Functions::getReturnDateType();
+		Calculation_Functions::setReturnDateType(Calculation_Functions::RETURNDATE_EXCEL);
 
 		// initialize colors array
 		$this->_colors          = array();
 
 		// Initialise workbook writer
-		$this->_writerWorkbook = new PHPExcel_Writer_Excel5_Workbook($this->_phpExcel,
-																	 $this->_str_total, $this->_str_unique, $this->_str_table,
-																	 $this->_colors, $this->_parser);
+		$this->_writerWorkbook = new Writer_Excel5_Workbook($this->_phpExcel,
+															 $this->_str_total, $this->_str_unique, $this->_str_table,
+															 $this->_colors, $this->_parser);
 
 		// Initialise worksheet writers
 		$countSheets = $this->_phpExcel->getSheetCount();
 		for ($i = 0; $i < $countSheets; ++$i) {
-			$this->_writerWorksheets[$i] = new PHPExcel_Writer_Excel5_Worksheet($this->_str_total, $this->_str_unique,
-																			   $this->_str_table, $this->_colors,
-																			   $this->_parser,
-																			   $this->_preCalculateFormulas,
-																			   $this->_phpExcel->getSheet($i));
+			$this->_writerWorksheets[$i] = new Writer_Excel5_Worksheet($this->_str_total, $this->_str_unique,
+																	   $this->_str_table, $this->_colors,
+																	   $this->_parser,
+																	   $this->_preCalculateFormulas,
+																	   $this->_phpExcel->getSheet($i));
 		}
 
 		// build Escher objects. Escher objects for workbooks needs to be build before Escher object for workbook.
@@ -164,10 +166,10 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExce
 			foreach ($this->_writerWorksheets[$i]->_phpSheet->getCellCollection() as $cellID) {
 				$cell = $this->_writerWorksheets[$i]->_phpSheet->getCell($cellID);
 				$cVal = $cell->getValue();
-				if ($cVal instanceof PHPExcel_RichText) {
+				if ($cVal instanceof RichText) {
 					$elements = $cVal->getRichTextElements();
 					foreach ($elements as $element) {
-						if ($element instanceof PHPExcel_RichText_Run) {
+						if ($element instanceof RichText_Run) {
 							$font = $element->getFont();
 							$this->_writerWorksheets[$i]->_fntHashIndex[$font->getHashCode()] = $this->_writerWorkbook->_addFont($font);
 						}
@@ -178,7 +180,7 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExce
 
 		// initialize OLE file
 		$workbookStreamName = 'Workbook';
-		$OLE = new PHPExcel_Shared_OLE_PPS_File(PHPExcel_Shared_OLE::Asc2Ucs($workbookStreamName));
+		$OLE = new Shared_OLE_PPS_File(Shared_OLE::Asc2Ucs($workbookStreamName));
 
 		// Write the worksheet streams before the global workbook stream,
 		// because the byte sizes of these are needed in the global workbook stream
@@ -199,14 +201,14 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExce
 		$this->_documentSummaryInformation = $this->_writeDocumentSummaryInformation();
 		// initialize OLE Document Summary Information
 		if(isset($this->_documentSummaryInformation) && !empty($this->_documentSummaryInformation)){
-			$OLE_DocumentSummaryInformation = new PHPExcel_Shared_OLE_PPS_File(PHPExcel_Shared_OLE::Asc2Ucs(chr(5) . 'DocumentSummaryInformation'));
+			$OLE_DocumentSummaryInformation = new Shared_OLE_PPS_File(Shared_OLE::Asc2Ucs(chr(5) . 'DocumentSummaryInformation'));
 			$OLE_DocumentSummaryInformation->append($this->_documentSummaryInformation);
 		}
 
 		$this->_summaryInformation = $this->_writeSummaryInformation();
 		// initialize OLE Summary Information
 		if(isset($this->_summaryInformation) && !empty($this->_summaryInformation)){
-		  $OLE_SummaryInformation = new PHPExcel_Shared_OLE_PPS_File(PHPExcel_Shared_OLE::Asc2Ucs(chr(5) . 'SummaryInformation'));
+		  $OLE_SummaryInformation = new Shared_OLE_PPS_File(Shared_OLE::Asc2Ucs(chr(5) . 'SummaryInformation'));
 		  $OLE_SummaryInformation->append($this->_summaryInformation);
 		}
 
@@ -221,12 +223,12 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExce
 			$arrRootData[] = $OLE_DocumentSummaryInformation;
 		}
 
-		$root = new PHPExcel_Shared_OLE_PPS_Root(time(), time(), $arrRootData);
+		$root = new Shared_OLE_PPS_Root(time(), time(), $arrRootData);
 		// save the OLE file
 		$res = $root->save($pFilename);
 
-		PHPExcel_Calculation_Functions::setReturnDateType($saveDateReturnType);
-		PHPExcel_Calculation::getInstance($this->_phpExcel)->getDebugLog()->setWriteDebugLog($saveDebugLog);
+		Calculation_Functions::setReturnDateType($saveDateReturnType);
+		Calculation::getInstance($this->_phpExcel)->getDebugLog()->setWriteDebugLog($saveDebugLog);
 	}
 
 	/**
@@ -234,8 +236,8 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExce
 	 *
 	 * @deprecated
 	 * @param	string	$pValue		Temporary storage directory
-	 * @throws	PHPExcel_Writer_Exception	when directory does not exist
-	 * @return PHPExcel_Writer_Excel5
+	 * @throws	PHPExcel\Writer_Exception	when directory does not exist
+	 * @return PHPExcel\Writer_Excel5
 	 */
 	public function setTempDir($pValue = '') {
 		return $this;
@@ -265,10 +267,10 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExce
 			}
 
 			// create intermediate Escher object
-			$escher = new PHPExcel_Shared_Escher();
+			$escher = new Shared_Escher();
 
 			// dgContainer
-			$dgContainer = new PHPExcel_Shared_Escher_DgContainer();
+			$dgContainer = new Shared_Escher_DgContainer();
 
 			// set the drawing index (we use sheet index + 1)
 			$dgId = $sheet->getParent()->getIndex($sheet) + 1;
@@ -276,11 +278,11 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExce
 			$escher->setDgContainer($dgContainer);
 
 			// spgrContainer
-			$spgrContainer = new PHPExcel_Shared_Escher_DgContainer_SpgrContainer();
+			$spgrContainer = new Shared_Escher_DgContainer_SpgrContainer();
 			$dgContainer->setSpgrContainer($spgrContainer);
 
 			// add one shape which is the group shape
-			$spContainer = new PHPExcel_Shared_Escher_DgContainer_SpgrContainer_SpContainer();
+			$spContainer = new Shared_Escher_DgContainer_SpgrContainer_SpContainer();
 			$spContainer->setSpgr(true);
 			$spContainer->setSpType(0);
 			$spContainer->setSpId(($sheet->getParent()->getIndex($sheet) + 1) << 10);
@@ -296,7 +298,7 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExce
 				++$countShapes[$sheetIndex];
 
 				// add the shape
-				$spContainer = new PHPExcel_Shared_Escher_DgContainer_SpgrContainer_SpContainer();
+				$spContainer = new Shared_Escher_DgContainer_SpgrContainer_SpContainer();
 
 				// set the shape type
 				$spContainer->setSpType(0x004B);
@@ -325,7 +327,7 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExce
 				$width = $drawing->getWidth();
 				$height = $drawing->getHeight();
 
-				$twoAnchor = PHPExcel_Shared_Excel5::oneAnchor2twoAnchor($sheet, $coordinates, $offsetX, $offsetY, $width, $height);
+				$twoAnchor = Shared_Excel5::oneAnchor2twoAnchor($sheet, $coordinates, $offsetX, $offsetY, $width, $height);
 
 				$spContainer->setStartCoordinates($twoAnchor['startCoordinates']);
 				$spContainer->setStartOffsetX($twoAnchor['startOffsetX']);
@@ -339,7 +341,7 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExce
 
 			// AutoFilters
 			if(!empty($filterRange)){
-				$rangeBounds = PHPExcel_Cell::rangeBoundaries($filterRange);
+				$rangeBounds = Cell::rangeBoundaries($filterRange);
 				$iNumColStart = $rangeBounds[0][0];
 				$iNumColEnd = $rangeBounds[1][0];
 
@@ -348,14 +350,14 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExce
 					++$countShapes[$sheetIndex];
 
 					// create an Drawing Object for the dropdown
-					$oDrawing  = new PHPExcel_Worksheet_BaseDrawing();
+					$oDrawing  = new Worksheet_BaseDrawing();
 					// get the coordinates of drawing
-					$cDrawing   = PHPExcel_Cell::stringFromColumnIndex($iInc - 1) . $rangeBounds[0][1];
+					$cDrawing   = Cell::stringFromColumnIndex($iInc - 1) . $rangeBounds[0][1];
 					$oDrawing->setCoordinates($cDrawing);
 					$oDrawing->setWorksheet($sheet);
 
 					// add the shape
-					$spContainer = new PHPExcel_Shared_Escher_DgContainer_SpgrContainer_SpContainer();
+					$spContainer = new Shared_Escher_DgContainer_SpgrContainer_SpContainer();
 					// set the shape type
 					$spContainer->setSpType(0x00C9);
 					// set the shape flag
@@ -380,7 +382,7 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExce
 					$spContainer->setOPT(0x03BF, 0x000A0000); // Group Shape -> fPrint
 
 					// set coordinates and offsets, client anchor
-					$endCoordinates = PHPExcel_Cell::stringFromColumnIndex(PHPExcel_Cell::stringFromColumnIndex($iInc - 1));
+					$endCoordinates = Cell::stringFromColumnIndex(Cell::stringFromColumnIndex($iInc - 1));
 					$endCoordinates .= $rangeBounds[0][1] + 1;
 
 					$spContainer->setStartCoordinates($cDrawing);
@@ -428,10 +430,10 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExce
 		}
 
 		// if we reach here, then there are drawings in the workbook
-		$escher = new PHPExcel_Shared_Escher();
+		$escher = new Shared_Escher();
 
 		// dggContainer
-		$dggContainer = new PHPExcel_Shared_Escher_DggContainer();
+		$dggContainer = new Shared_Escher_DggContainer();
 		$escher->setDggContainer($dggContainer);
 
 		// set IDCLs (identifier clusters)
@@ -464,13 +466,13 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExce
 		$dggContainer->setCSpSaved($totalCountShapes + $countDrawings); // total number of shapes incl. one group shapes per drawing
 
 		// bstoreContainer
-		$bstoreContainer = new PHPExcel_Shared_Escher_DggContainer_BstoreContainer();
+		$bstoreContainer = new Shared_Escher_DggContainer_BstoreContainer();
 		$dggContainer->setBstoreContainer($bstoreContainer);
 
 		// the BSE's (all the images)
 		foreach ($this->_phpExcel->getAllsheets() as $sheet) {
 			foreach ($sheet->getDrawingCollection() as $drawing) {
-				if ($drawing instanceof PHPExcel_Worksheet_Drawing) {
+				if ($drawing instanceof Worksheet_Drawing) {
 
 					$filename = $drawing->getPath();
 
@@ -479,7 +481,7 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExce
 					switch ($imageFormat) {
 
 					case 1: // GIF, not supported by BIFF8, we convert to PNG
-						$blipType = PHPExcel_Shared_Escher_DggContainer_BstoreContainer_BSE::BLIPTYPE_PNG;
+						$blipType = Shared_Escher_DggContainer_BstoreContainer_BSE::BLIPTYPE_PNG;
 						ob_start();
 						imagepng(imagecreatefromgif($filename));
 						$blipData = ob_get_contents();
@@ -487,19 +489,19 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExce
 						break;
 
 					case 2: // JPEG
-						$blipType = PHPExcel_Shared_Escher_DggContainer_BstoreContainer_BSE::BLIPTYPE_JPEG;
+						$blipType = Shared_Escher_DggContainer_BstoreContainer_BSE::BLIPTYPE_JPEG;
 						$blipData = file_get_contents($filename);
 						break;
 
 					case 3: // PNG
-						$blipType = PHPExcel_Shared_Escher_DggContainer_BstoreContainer_BSE::BLIPTYPE_PNG;
+						$blipType = Shared_Escher_DggContainer_BstoreContainer_BSE::BLIPTYPE_PNG;
 						$blipData = file_get_contents($filename);
 						break;
 
 					case 6: // Windows DIB (BMP), we convert to PNG
-						$blipType = PHPExcel_Shared_Escher_DggContainer_BstoreContainer_BSE::BLIPTYPE_PNG;
+						$blipType = Shared_Escher_DggContainer_BstoreContainer_BSE::BLIPTYPE_PNG;
 						ob_start();
-						imagepng(PHPExcel_Shared_Drawing::imagecreatefrombmp($filename));
+						imagepng(Shared_Drawing::imagecreatefrombmp($filename));
 						$blipData = ob_get_contents();
 						ob_end_clean();
 						break;
@@ -508,28 +510,28 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExce
 
 					}
 
-					$blip = new PHPExcel_Shared_Escher_DggContainer_BstoreContainer_BSE_Blip();
+					$blip = new Shared_Escher_DggContainer_BstoreContainer_BSE_Blip();
 					$blip->setData($blipData);
 
-					$BSE = new PHPExcel_Shared_Escher_DggContainer_BstoreContainer_BSE();
+					$BSE = new Shared_Escher_DggContainer_BstoreContainer_BSE();
 					$BSE->setBlipType($blipType);
 					$BSE->setBlip($blip);
 
 					$bstoreContainer->addBSE($BSE);
 
-				} else if ($drawing instanceof PHPExcel_Worksheet_MemoryDrawing) {
+				} else if ($drawing instanceof Worksheet_MemoryDrawing) {
 
 					switch ($drawing->getRenderingFunction()) {
 
-					case PHPExcel_Worksheet_MemoryDrawing::RENDERING_JPEG:
-						$blipType = PHPExcel_Shared_Escher_DggContainer_BstoreContainer_BSE::BLIPTYPE_JPEG;
+					case Worksheet_MemoryDrawing::RENDERING_JPEG:
+						$blipType = Shared_Escher_DggContainer_BstoreContainer_BSE::BLIPTYPE_JPEG;
 						$renderingFunction = 'imagejpeg';
 						break;
 
-					case PHPExcel_Worksheet_MemoryDrawing::RENDERING_GIF:
-					case PHPExcel_Worksheet_MemoryDrawing::RENDERING_PNG:
-					case PHPExcel_Worksheet_MemoryDrawing::RENDERING_DEFAULT:
-						$blipType = PHPExcel_Shared_Escher_DggContainer_BstoreContainer_BSE::BLIPTYPE_PNG;
+					case Worksheet_MemoryDrawing::RENDERING_GIF:
+					case Worksheet_MemoryDrawing::RENDERING_PNG:
+					case Worksheet_MemoryDrawing::RENDERING_DEFAULT:
+						$blipType = Shared_Escher_DggContainer_BstoreContainer_BSE::BLIPTYPE_PNG;
 						$renderingFunction = 'imagepng';
 						break;
 
@@ -540,10 +542,10 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExce
 					$blipData = ob_get_contents();
 					ob_end_clean();
 
-					$blip = new PHPExcel_Shared_Escher_DggContainer_BstoreContainer_BSE_Blip();
+					$blip = new Shared_Escher_DggContainer_BstoreContainer_BSE_Blip();
 					$blip->setData($blipData);
 
-					$BSE = new PHPExcel_Shared_Escher_DggContainer_BstoreContainer_BSE();
+					$BSE = new Shared_Escher_DggContainer_BstoreContainer_BSE();
 					$BSE->setBlipType($blipType);
 					$BSE->setBlip($blip);
 
@@ -853,7 +855,7 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExce
 			$dataSection[] = array('summary'=> array('pack' => 'V', 'data' => 0x0C),
 								   'offset' => array('pack' => 'V'),
 								   'type' 	=> array('pack' => 'V', 'data' => 0x40), // Filetime (64-bit value representing the number of 100-nanosecond intervals since January 1, 1601)
-								   'data'	=> array('data' => PHPExcel_Shared_OLE::LocalDate2OLE($dataProp)));
+								   'data'	=> array('data' => Shared_OLE::LocalDate2OLE($dataProp)));
 			$dataSection_NumProps++;
 		}
 		//	Modified Date/Time
@@ -862,7 +864,7 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExce
 			$dataSection[] = array('summary'=> array('pack' => 'V', 'data' => 0x0D),
 								   'offset' => array('pack' => 'V'),
 								   'type' 	=> array('pack' => 'V', 'data' => 0x40), // Filetime (64-bit value representing the number of 100-nanosecond intervals since January 1, 1601)
-								   'data'	=> array('data' => PHPExcel_Shared_OLE::LocalDate2OLE($dataProp)));
+								   'data'	=> array('data' => Shared_OLE::LocalDate2OLE($dataProp)));
 			$dataSection_NumProps++;
 		}
 		//	Security

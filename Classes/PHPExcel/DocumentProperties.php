@@ -26,14 +26,16 @@
  */
 
 
+namespace PHPExcel;
+
 /**
- * PHPExcel_DocumentProperties
+ * PHPExcel\DocumentProperties
  *
  * @category    PHPExcel
  * @package        PHPExcel
  * @copyright    Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_DocumentProperties
+class DocumentProperties
 {
     /** constants */
     const PROPERTY_TYPE_BOOLEAN	= 'b';
@@ -129,7 +131,7 @@ class PHPExcel_DocumentProperties
 
 
     /**
-     * Create a new PHPExcel_DocumentProperties
+     * Create a new PHPExcel\DocumentProperties
      */
     public function __construct()
     {
@@ -152,7 +154,7 @@ class PHPExcel_DocumentProperties
      * Set Creator
      *
      * @param string $pValue
-     * @return PHPExcel_DocumentProperties
+     * @return PHPExcel\DocumentProperties
      */
     public function setCreator($pValue = '') {
         $this->_creator = $pValue;
@@ -172,7 +174,7 @@ class PHPExcel_DocumentProperties
      * Set Last Modified By
      *
      * @param string $pValue
-     * @return PHPExcel_DocumentProperties
+     * @return PHPExcel\DocumentProperties
      */
     public function setLastModifiedBy($pValue = '') {
         $this->_lastModifiedBy = $pValue;
@@ -192,7 +194,7 @@ class PHPExcel_DocumentProperties
      * Set Created
      *
      * @param datetime $pValue
-     * @return PHPExcel_DocumentProperties
+     * @return PHPExcel\DocumentProperties
      */
     public function setCreated($pValue = null) {
         if ($pValue === NULL) {
@@ -222,7 +224,7 @@ class PHPExcel_DocumentProperties
      * Set Modified
      *
      * @param datetime $pValue
-     * @return PHPExcel_DocumentProperties
+     * @return PHPExcel\DocumentProperties
      */
     public function setModified($pValue = null) {
         if ($pValue === NULL) {
@@ -252,7 +254,7 @@ class PHPExcel_DocumentProperties
      * Set Title
      *
      * @param string $pValue
-     * @return PHPExcel_DocumentProperties
+     * @return PHPExcel\DocumentProperties
      */
     public function setTitle($pValue = '') {
         $this->_title = $pValue;
@@ -272,7 +274,7 @@ class PHPExcel_DocumentProperties
      * Set Description
      *
      * @param string $pValue
-     * @return PHPExcel_DocumentProperties
+     * @return PHPExcel\DocumentProperties
      */
     public function setDescription($pValue = '') {
         $this->_description = $pValue;
@@ -292,7 +294,7 @@ class PHPExcel_DocumentProperties
      * Set Subject
      *
      * @param string $pValue
-     * @return PHPExcel_DocumentProperties
+     * @return PHPExcel\DocumentProperties
      */
     public function setSubject($pValue = '') {
         $this->_subject = $pValue;
@@ -312,7 +314,7 @@ class PHPExcel_DocumentProperties
      * Set Keywords
      *
      * @param string $pValue
-     * @return PHPExcel_DocumentProperties
+     * @return PHPExcel\DocumentProperties
      */
     public function setKeywords($pValue = '') {
         $this->_keywords = $pValue;
@@ -332,7 +334,7 @@ class PHPExcel_DocumentProperties
      * Set Category
      *
      * @param string $pValue
-     * @return PHPExcel_DocumentProperties
+     * @return PHPExcel\DocumentProperties
      */
     public function setCategory($pValue = '') {
         $this->_category = $pValue;
@@ -352,7 +354,7 @@ class PHPExcel_DocumentProperties
      * Set Company
      *
      * @param string $pValue
-     * @return PHPExcel_DocumentProperties
+     * @return PHPExcel\DocumentProperties
      */
     public function setCompany($pValue = '') {
         $this->_company = $pValue;
@@ -372,7 +374,7 @@ class PHPExcel_DocumentProperties
      * Set Manager
      *
      * @param string $pValue
-     * @return PHPExcel_DocumentProperties
+     * @return PHPExcel\DocumentProperties
      */
     public function setManager($pValue = '') {
         $this->_manager = $pValue;
@@ -435,7 +437,7 @@ class PHPExcel_DocumentProperties
      *   's' : String
      *   'd' : Date/Time
      *   'b' : Boolean
-     * @return PHPExcel_DocumentProperties
+     * @return PHPExcel\DocumentProperties
      */
     public function setCustomProperty($propertyName,$propertyValue='',$propertyType=NULL) {
         if (($propertyType === NULL) || (!in_array($propertyType,array(self::PROPERTY_TYPE_INTEGER,

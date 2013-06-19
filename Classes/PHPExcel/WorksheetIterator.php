@@ -26,8 +26,10 @@
  */
 
 
+namespace PHPExcel;
+
 /**
- * PHPExcel_WorksheetIterator
+ * PHPExcel\WorksheetIterator
  *
  * Used to iterate worksheets in PHPExcel
  *
@@ -35,7 +37,7 @@
  * @package    PHPExcel
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_WorksheetIterator implements Iterator
+class WorksheetIterator implements \Iterator
 {
     /**
      * Spreadsheet to iterate
@@ -56,7 +58,7 @@ class PHPExcel_WorksheetIterator implements Iterator
      *
      * @param PHPExcel         $subject
      */
-    public function __construct(PHPExcel $subject = null)
+    public function __construct(Workbook $subject = null)
     {
         // Set subject
         $this->_subject = $subject;
@@ -79,9 +81,9 @@ class PHPExcel_WorksheetIterator implements Iterator
     }
 
     /**
-     * Current PHPExcel_Worksheet
+     * Current PHPExcel\Worksheet
      *
-     * @return PHPExcel_Worksheet
+     * @return PHPExcel\Worksheet
      */
     public function current()
     {
@@ -107,7 +109,7 @@ class PHPExcel_WorksheetIterator implements Iterator
     }
 
     /**
-     * More PHPExcel_Worksheet instances available?
+     * More PHPExcel\Worksheet instances available?
      *
      * @return boolean
      */

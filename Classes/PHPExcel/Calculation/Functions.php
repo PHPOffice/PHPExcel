@@ -19,22 +19,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *
  * @category	PHPExcel
- * @package		PHPExcel_Calculation
+ * @package		PHPExcel\Calculation
  * @copyright	Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license		http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version		##VERSION##, ##DATE##
  */
 
-
-/** PHPExcel root directory */
-if (!defined('PHPEXCEL_ROOT')) {
-	/**
-	 * @ignore
-	 */
-	define('PHPEXCEL_ROOT', dirname(__FILE__) . '/../../');
-	require(PHPEXCEL_ROOT . 'PHPExcel/Autoloader.php');
-}
-
+namespace PHPExcel;
 
 /** MAX_VALUE */
 define('MAX_VALUE', 1.2e308);
@@ -50,13 +41,13 @@ define('PRECISION', 8.88E-016);
 
 
 /**
- * PHPExcel_Calculation_Functions
+ * PHPExcel\Calculation_Functions
  *
  * @category	PHPExcel
- * @package		PHPExcel_Calculation
+ * @package		PHPExcel\Calculation
  * @copyright	Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Calculation_Functions {
+class Calculation_Functions {
 
 	/** constants */
 	const COMPATIBILITY_EXCEL		= 'Excel';
@@ -108,9 +99,9 @@ class PHPExcel_Calculation_Functions {
 	 * @category Function Configuration
 	 * @param	 string		$compatibilityMode		Compatibility Mode
 	 *												Permitted values are:
-	 *													PHPExcel_Calculation_Functions::COMPATIBILITY_EXCEL			'Excel'
-	 *													PHPExcel_Calculation_Functions::COMPATIBILITY_GNUMERIC		'Gnumeric'
-	 *													PHPExcel_Calculation_Functions::COMPATIBILITY_OPENOFFICE	'OpenOfficeCalc'
+	 *													PHPExcel\Calculation_Functions::COMPATIBILITY_EXCEL			'Excel'
+	 *													PHPExcel\Calculation_Functions::COMPATIBILITY_GNUMERIC		'Gnumeric'
+	 *													PHPExcel\Calculation_Functions::COMPATIBILITY_OPENOFFICE	'OpenOfficeCalc'
 	 * @return	 boolean	(Success or Failure)
 	 */
 	public static function setCompatibilityMode($compatibilityMode) {
@@ -131,9 +122,9 @@ class PHPExcel_Calculation_Functions {
 	 * @category Function Configuration
 	 * @return	 string		Compatibility Mode
 	 *							Possible Return values are:
-	 *								PHPExcel_Calculation_Functions::COMPATIBILITY_EXCEL			'Excel'
-	 *								PHPExcel_Calculation_Functions::COMPATIBILITY_GNUMERIC		'Gnumeric'
-	 *								PHPExcel_Calculation_Functions::COMPATIBILITY_OPENOFFICE	'OpenOfficeCalc'
+	 *								PHPExcel\Calculation_Functions::COMPATIBILITY_EXCEL			'Excel'
+	 *								PHPExcel\Calculation_Functions::COMPATIBILITY_GNUMERIC		'Gnumeric'
+	 *								PHPExcel\Calculation_Functions::COMPATIBILITY_OPENOFFICE	'OpenOfficeCalc'
 	 */
 	public static function getCompatibilityMode() {
 		return self::$compatibilityMode;
@@ -147,9 +138,9 @@ class PHPExcel_Calculation_Functions {
 	 * @category Function Configuration
 	 * @param	 string	$returnDateType			Return Date Format
 	 *												Permitted values are:
-	 *													PHPExcel_Calculation_Functions::RETURNDATE_PHP_NUMERIC		'P'
-	 *													PHPExcel_Calculation_Functions::RETURNDATE_PHP_OBJECT		'O'
-	 *													PHPExcel_Calculation_Functions::RETURNDATE_EXCEL			'E'
+	 *													PHPExcel\Calculation_Functions::RETURNDATE_PHP_NUMERIC		'P'
+	 *													PHPExcel\Calculation_Functions::RETURNDATE_PHP_OBJECT		'O'
+	 *													PHPExcel\Calculation_Functions::RETURNDATE_EXCEL			'E'
 	 * @return	 boolean							Success or failure
 	 */
 	public static function setReturnDateType($returnDateType) {
@@ -170,9 +161,9 @@ class PHPExcel_Calculation_Functions {
 	 * @category Function Configuration
 	 * @return	 string		Return Date Format
 	 *							Possible Return values are:
-	 *								PHPExcel_Calculation_Functions::RETURNDATE_PHP_NUMERIC		'P'
-	 *								PHPExcel_Calculation_Functions::RETURNDATE_PHP_OBJECT		'O'
-	 *								PHPExcel_Calculation_Functions::RETURNDATE_EXCEL			'E'
+	 *								PHPExcel\Calculation_Functions::RETURNDATE_PHP_NUMERIC		'P'
+	 *								PHPExcel\Calculation_Functions::RETURNDATE_PHP_OBJECT		'O'
+	 *								PHPExcel\Calculation_Functions::RETURNDATE_EXCEL			'E'
 	 */
 	public static function getReturnDateType() {
 		return self::$ReturnDateType;
@@ -307,16 +298,16 @@ class PHPExcel_Calculation_Functions {
 
 
 	public static function _ifCondition($condition) {
-		$condition	= PHPExcel_Calculation_Functions::flattenSingleValue($condition);
+		$condition	= Calculation_Functions::flattenSingleValue($condition);
 		if (!isset($condition{0}))
 			$condition = '=""';
 		if (!in_array($condition{0},array('>', '<', '='))) {
-			if (!is_numeric($condition)) { $condition = PHPExcel_Calculation::_wrapResult(strtoupper($condition)); }
+			if (!is_numeric($condition)) { $condition = Calculation::_wrapResult(strtoupper($condition)); }
 			return '='.$condition;
 		} else {
 			preg_match('/([<>=]+)(.*)/',$condition,$matches);
 			list(,$operator,$operand) = $matches;
-			if (!is_numeric($operand)) { $operand = PHPExcel_Calculation::_wrapResult(strtoupper($operand)); }
+			if (!is_numeric($operand)) { $operand = Calculation::_wrapResult(strtoupper($operand)); }
 			return $operator.$operand;
 		}
 	}	//	function _ifCondition()
@@ -663,7 +654,7 @@ class PHPExcel_Calculation_Functions {
 		return $value;
 	}	//	function flattenSingleValue()
 
-}	//	class PHPExcel_Calculation_Functions
+}
 
 
 //

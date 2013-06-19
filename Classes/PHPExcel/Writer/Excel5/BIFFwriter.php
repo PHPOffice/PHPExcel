@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Writer_Excel5
+ * @package    PHPExcel\Writer_Excel5
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
@@ -60,14 +60,16 @@
 // */
 
 
+namespace PHPExcel;
+
 /**
- * PHPExcel_Writer_Excel5_BIFFwriter
+ * PHPExcel\Writer_Excel5_BIFFwriter
  *
  * @category   PHPExcel
- * @package    PHPExcel_Writer_Excel5
+ * @package    PHPExcel\Writer_Excel5
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Writer_Excel5_BIFFwriter
+class Writer_Excel5_BIFFwriter
 {
 	/**
 	 * The byte order of this architecture. 0 => little endian, 1 => big endian
@@ -122,7 +124,7 @@ class PHPExcel_Writer_Excel5_BIFFwriter
 				$byte_order = 1;    // Big Endian
 			} else {
 				// Give up. I'll fix this in a later version.
-				throw new PHPExcel_Writer_Exception("Required floating point format not supported on this platform.");
+				throw new Writer_Exception("Required floating point format not supported on this platform.");
 			}
 			self::$_byte_order = $byte_order;
 		}

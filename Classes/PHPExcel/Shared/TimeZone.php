@@ -20,21 +20,23 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package	PHPExcel_Shared
+ * @package	PHPExcel\Shared
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license	http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version	##VERSION##, ##DATE##
  */
 
 
+namespace PHPExcel;
+
 /**
- * PHPExcel_Shared_TimeZone
+ * PHPExcel\Shared_TimeZone
  *
  * @category   PHPExcel
- * @package	PHPExcel_Shared
+ * @package	PHPExcel\Shared
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Shared_TimeZone
+class Shared_TimeZone
 {
 	/*
 	 * Default Timezone used for date/time conversions
@@ -112,12 +114,12 @@ class PHPExcel_Shared_TimeZone
 	 *	@param		string	 			$timezone		The timezone for finding the adjustment to UST
 	 *	@param		integer	 			$timestamp		PHP date/time value
 	 *	@return	 	integer				Number of seconds for timezone adjustment
-	 *	@throws		PHPExcel_Exception
+	 *	@throws		PHPExcel\Exception
 	 */
 	public static function getTimeZoneAdjustment($timezone, $timestamp) {
 		if ($timezone !== NULL) {
 			if (!self::_validateTimezone($timezone)) {
-				throw new PHPExcel_Exception("Invalid timezone " . $timezone);
+				throw new Exception("Invalid timezone " . $timezone);
 			}
 		} else {
 			$timezone = self::$_timezone;

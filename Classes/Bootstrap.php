@@ -2,6 +2,8 @@
 /**
  * PHPExcel
  *
+ * Copyright (c) 2006 - 2013 PHPExcel
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -17,50 +19,30 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel\RichText
+ * @package    PHPExcel
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
- * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
+ * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
 
-
 namespace PHPExcel;
-
-/**
- * PHPExcel\RichText_ITextElement
- *
- * @category   PHPExcel
- * @package    PHPExcel\RichText
- * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
- */
-interface RichText_ITextElement
-{
-	/**
-	 * Get text
-	 *
-	 * @return string	Text
-	 */
-	public function getText();
-
-	/**
-	 * Set text
-	 *
-	 * @param 	$pText string	Text
-	 * @return PHPExcel\RichText_ITextElement
-	 */
-	public function setText($pText = '');
-
-	/**
-	 * Get font
-	 *
-	 * @return PHPExcel\Style_Font
-	 */
-	public function getFont();
-
-	/**
-	 * Get hash code
-	 *
-	 * @return string	Hash code
-	 */
-	public function getHashCode();
+ 
+/** PHPOffice root directory */
+if (!defined('PHPEXCEL_ROOT')) {
+    define('PHPEXCEL_ROOT', dirname(__FILE__) . '/');
 }
+
+include PHPEXCEL_ROOT . 'Autoloader.php';
+
+$autoloader = new Autoloader('PHPExcel', PHPEXCEL_ROOT);
+$autoloader->register();
+
+// As we always try to run the autoloader before anything else, we can use it to do a few
+//    simple checks and initialisations
+// check mbstring.func_overload
+if (ini_get('mbstring.func_overload') & 2) {
+    throw new Exception('Multibyte function overloading in PHP must be disabled for string functions (2).');
+}
+Shared_String::buildCharacterSets();
+
+

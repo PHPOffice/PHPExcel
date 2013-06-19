@@ -20,21 +20,23 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_CachedObjectStorage
+ * @package    PHPExcel\CachedObjectStorage
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
 
 
+namespace PHPExcel;
+ 
 /**
- * PHPExcel_CachedObjectStorageFactory
+ * PHPExcel\CachedObjectStorageFactory
  *
  * @category    PHPExcel
- * @package        PHPExcel_CachedObjectStorage
- * @copyright    Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @package     PHPExcel\CachedObjectStorage
+ * @copyright   Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_CachedObjectStorageFactory
+class CachedObjectStorageFactory
 {
     const cache_in_memory               = 'Memory';
     const cache_in_memory_gzip          = 'MemoryGZip';
@@ -139,7 +141,7 @@ class PHPExcel_CachedObjectStorageFactory
     /**
      * Return the current cache storage class
      *
-     * @return PHPExcel_CachedObjectStorage_ICache|NULL
+     * @return PHPExcel\CachedObjectStorage_ICache|NULL
      **/
     public static function getCacheStorageClass()
     {
@@ -167,7 +169,7 @@ class PHPExcel_CachedObjectStorageFactory
     {
         $activeMethods = array();
         foreach(self::$_storageMethods as $storageMethod) {
-            $cacheStorageClass = 'PHPExcel_CachedObjectStorage_' . $storageMethod;
+            $cacheStorageClass = 'PHPExcel\CachedObjectStorage_' . $storageMethod;
             if (call_user_func(array($cacheStorageClass, 'cacheMethodIsAvailable'))) {
                 $activeMethods[] = $storageMethod;
             }
@@ -190,9 +192,10 @@ class PHPExcel_CachedObjectStorageFactory
             return FALSE;
         }
 
-        $cacheStorageClass = 'PHPExcel_CachedObjectStorage_'.$method;
-        if (!call_user_func(array( $cacheStorageClass,
-                                   'cacheMethodIsAvailable'))) {
+        $cacheStorageClass = __NAMESPACE__ . '\CachedObjectStorage_'.$method;
+        if (!call_user_func(
+            array($cacheStorageClass, 'cacheMethodIsAvailable')
+            )) {
             return FALSE;
         }
 
@@ -204,7 +207,7 @@ class PHPExcel_CachedObjectStorageFactory
         }
 
         if (self::$_cacheStorageMethod === NULL) {
-            self::$_cacheStorageClass = 'PHPExcel_CachedObjectStorage_' . $method;
+            self::$_cacheStorageClass = 'CachedObjectStorage_' . $method;
             self::$_cacheStorageMethod = $method;
         }
         return TRUE;
@@ -214,20 +217,21 @@ class PHPExcel_CachedObjectStorageFactory
     /**
      * Initialise the cache storage
      *
-     * @param    PHPExcel_Worksheet     $parent        Enable cell caching for this worksheet
-     * @return    PHPExcel_CachedObjectStorage_ICache
+     * @param    PHPExcel\Worksheet     $parent        Enable cell caching for this worksheet
+     * @return    PHPExcel\CachedObjectStorage_ICache
      **/
-    public static function getInstance(PHPExcel_Worksheet $parent)
+    public static function getInstance(Worksheet $parent)
     {
         $cacheMethodIsAvailable = TRUE;
         if (self::$_cacheStorageMethod === NULL) {
             $cacheMethodIsAvailable = self::initialize();
         }
 
+        $cacheStorageClass = __NAMESPACE__ . '\\' . self::$_cacheStorageClass;
         if ($cacheMethodIsAvailable) {
-            $instance = new self::$_cacheStorageClass( $parent,
-                                                       self::$_storageMethodParameters[self::$_cacheStorageMethod]
-                                                     );
+            $instance = new $cacheStorageClass( $parent,
+                self::$_storageMethodParameters[self::$_cacheStorageMethod]
+            );
             if ($instance !== NULL) {
                 return $instance;
             }

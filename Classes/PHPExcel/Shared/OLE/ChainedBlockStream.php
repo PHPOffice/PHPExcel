@@ -19,23 +19,26 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Shared_OLE
+ * @package    PHPExcel\Shared_OLE
  * @copyright  Copyright (c) 2006 - 2007 Christian Schmidt
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version ##VERSION##, ##DATE##
  */
 
+
+namespace PHPExcel;
+
 /**
- * PHPExcel_Shared_OLE_ChainedBlockStream
+ * PHPExcel\Shared_OLE_ChainedBlockStream
  *
  * Stream wrapper for reading data stored in an OLE file. Implements methods
  * for PHP's stream_wrapper_register(). For creating streams using this
- * wrapper, use PHPExcel_Shared_OLE_PPS_File::getStream().
+ * wrapper, use PHPExcel\Shared_OLE_PPS_File::getStream().
  *
  * @category   PHPExcel
- * @package    PHPExcel_Shared_OLE
+ * @package    PHPExcel\Shared_OLE
  */
-class PHPExcel_Shared_OLE_ChainedBlockStream
+class Shared_OLE_ChainedBlockStream
 {
 	/**
 	 * The OLE container of the file that is being read.

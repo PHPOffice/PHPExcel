@@ -20,14 +20,16 @@
 // $Id: PPS.php,v 1.7 2007/02/13 21:00:42 schmidt Exp $
 
 
+namespace PHPExcel;
+
 /**
 * Class for creating PPS's for OLE containers
 *
 * @author   Xavier Noguer <xnoguer@php.net>
 * @category PHPExcel
-* @package  PHPExcel_Shared_OLE
+* @package  PHPExcel\Shared_OLE
 */
-class PHPExcel_Shared_OLE_PPS
+class Shared_OLE_PPS
 {
 	/**
 	* The PPS index
@@ -182,8 +184,8 @@ class PHPExcel_Shared_OLE_PPS
 			  . "\xc0\x00\x00\x00"                  // 92
 			  . "\x00\x00\x00\x46"                  // 96 // Seems to be ok only for Root
 			  . "\x00\x00\x00\x00"                  // 100
-			  . PHPExcel_Shared_OLE::LocalDate2OLE($this->Time1st)       // 108
-			  . PHPExcel_Shared_OLE::LocalDate2OLE($this->Time2nd)       // 116
+			  . Shared_OLE::LocalDate2OLE($this->Time1st)       // 108
+			  . Shared_OLE::LocalDate2OLE($this->Time2nd)       // 116
 			  . pack("V", isset($this->_StartBlock)?
 						$this->_StartBlock:0)        // 120
 			  . pack("V", $this->Size)               // 124

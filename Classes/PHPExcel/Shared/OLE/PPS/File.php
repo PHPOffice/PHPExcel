@@ -20,14 +20,16 @@
 // $Id: File.php,v 1.11 2007/02/13 21:00:42 schmidt Exp $
 
 
+namespace PHPExcel;
+
 /**
 * Class for creating File PPS's for OLE containers
 *
 * @author   Xavier Noguer <xnoguer@php.net>
 * @category PHPExcel
-* @package  PHPExcel_Shared_OLE
+* @package  PHPExcel\Shared_OLE
 */
-class PHPExcel_Shared_OLE_PPS_File extends PHPExcel_Shared_OLE_PPS
+class Shared_OLE_PPS_File extends Shared_OLE_PPS
 	{
 	/**
 	* The constructor
@@ -41,7 +43,7 @@ class PHPExcel_Shared_OLE_PPS_File extends PHPExcel_Shared_OLE_PPS
 		parent::__construct(
 			null,
 			$name,
-			PHPExcel_Shared_OLE::OLE_PPS_TYPE_FILE,
+			Shared_OLE::OLE_PPS_TYPE_FILE,
 			null,
 			null,
 			null,

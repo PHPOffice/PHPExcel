@@ -19,28 +19,30 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Worksheet
+ * @package    PHPExcel\Worksheet
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
 
 
+namespace PHPExcel;
+
 /**
- * PHPExcel_Worksheet_CellIterator
+ * PHPExcel\Worksheet_CellIterator
  *
- * Used to iterate rows in a PHPExcel_Worksheet
+ * Used to iterate rows in a PHPExcel\Worksheet
  *
  * @category   PHPExcel
- * @package    PHPExcel_Worksheet
+ * @package    PHPExcel\Worksheet
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Worksheet_CellIterator implements Iterator
+class Worksheet_CellIterator implements \Iterator
 {
 	/**
-	 * PHPExcel_Worksheet to iterate
+	 * PHPExcel\Worksheet to iterate
 	 *
-	 * @var PHPExcel_Worksheet
+	 * @var PHPExcel\Worksheet
 	 */
 	private $_subject;
 
@@ -68,10 +70,10 @@ class PHPExcel_Worksheet_CellIterator implements Iterator
 	/**
 	 * Create a new cell iterator
 	 *
-	 * @param PHPExcel_Worksheet 		$subject
+	 * @param PHPExcel\Worksheet 		$subject
 	 * @param int						$rowIndex
 	 */
-	public function __construct(PHPExcel_Worksheet $subject = null, $rowIndex = 1) {
+	public function __construct(Worksheet $subject = null, $rowIndex = 1) {
 		// Set subject and row index
 		$this->_subject 	= $subject;
 		$this->_rowIndex 	= $rowIndex;
@@ -92,9 +94,9 @@ class PHPExcel_Worksheet_CellIterator implements Iterator
     }
 
     /**
-     * Current PHPExcel_Cell
+     * Current PHPExcel\Cell
      *
-     * @return PHPExcel_Cell
+     * @return PHPExcel\Cell
      */
     public function current() {
 		return $this->_subject->getCellByColumnAndRow($this->_position, $this->_rowIndex);
@@ -117,7 +119,7 @@ class PHPExcel_Worksheet_CellIterator implements Iterator
     }
 
     /**
-     * Are there any more PHPExcel_Cell instances available?
+     * Are there any more PHPExcel\Cell instances available?
      *
      * @return boolean
      */
@@ -125,7 +127,7 @@ class PHPExcel_Worksheet_CellIterator implements Iterator
         // columnIndexFromString() returns an index based at one,
         // treat it as a count when comparing it to the base zero
         // position.
-        $columnCount = PHPExcel_Cell::columnIndexFromString($this->_subject->getHighestColumn());
+        $columnCount = Cell::columnIndexFromString($this->_subject->getHighestColumn());
 
         if ($this->_onlyExistingCells) {
             // If we aren't looking at an existing cell, either

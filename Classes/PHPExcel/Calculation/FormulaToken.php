@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Calculation
+ * @package    PHPExcel\Calculation
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
@@ -50,14 +50,16 @@ PARTLY BASED ON:
 */
 
 
+namespace PHPExcel;
+
 /**
- * PHPExcel_Calculation_FormulaToken
+ * PHPExcel\Calculation_FormulaToken
  *
  * @category   PHPExcel
- * @package    PHPExcel_Calculation
+ * @package    PHPExcel\Calculation
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Calculation_FormulaToken {
+class Calculation_FormulaToken {
 	/* Token types */
 	const TOKEN_TYPE_NOOP					= 'Noop';
 	const TOKEN_TYPE_OPERAND				= 'Operand';
@@ -106,13 +108,13 @@ class PHPExcel_Calculation_FormulaToken {
 	private $_tokenSubType;
 
     /**
-     * Create a new PHPExcel_Calculation_FormulaToken
+     * Create a new PHPExcel\Calculation_FormulaToken
      *
      * @param string	$pValue
      * @param string	$pTokenType 	Token type (represented by TOKEN_TYPE_*)
      * @param string	$pTokenSubType 	Token Subtype (represented by TOKEN_SUBTYPE_*)
      */
-    public function __construct($pValue, $pTokenType = PHPExcel_Calculation_FormulaToken::TOKEN_TYPE_UNKNOWN, $pTokenSubType = PHPExcel_Calculation_FormulaToken::TOKEN_SUBTYPE_NOTHING)
+    public function __construct($pValue, $pTokenType = Calculation_FormulaToken::TOKEN_TYPE_UNKNOWN, $pTokenSubType = Calculation_FormulaToken::TOKEN_SUBTYPE_NOTHING)
     {
     	// Initialise values
     	$this->_value				= $pValue;
@@ -152,7 +154,7 @@ class PHPExcel_Calculation_FormulaToken {
      *
      * @param string	$value
      */
-    public function setTokenType($value = PHPExcel_Calculation_FormulaToken::TOKEN_TYPE_UNKNOWN) {
+    public function setTokenType($value = Calculation_FormulaToken::TOKEN_TYPE_UNKNOWN) {
     	$this->_tokenType = $value;
     }
 
@@ -170,7 +172,7 @@ class PHPExcel_Calculation_FormulaToken {
      *
      * @param string	$value
      */
-    public function setTokenSubType($value = PHPExcel_Calculation_FormulaToken::TOKEN_SUBTYPE_NOTHING) {
+    public function setTokenSubType($value = Calculation_FormulaToken::TOKEN_SUBTYPE_NOTHING) {
     	$this->_tokenSubType = $value;
     }
 }

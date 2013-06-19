@@ -26,6 +26,8 @@
  */
 
 
+namespace PHPExcel;
+
 /**
  * PHPExcel_Worksheet_PageMargins
  *
@@ -33,7 +35,7 @@
  * @package    PHPExcel_Worksheet
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Worksheet_PageMargins
+class Worksheet_PageMargins
 {
 	/**
 	 * Left

@@ -24,14 +24,16 @@
  */
 
 
+namespace PHPExcel;
+ 
 /**
- * PHPExcel_IComparable
+ * PHPExcel\IComparable
  *
  * @category   PHPExcel
  * @package    PHPExcel
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-interface PHPExcel_IComparable
+interface IComparable
 {
 	/**
 	 * Get hash code

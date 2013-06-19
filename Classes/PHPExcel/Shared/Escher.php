@@ -19,39 +19,42 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Shared_Escher
+ * @package    PHPExcel\Shared_Escher
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
 
+
+namespace PHPExcel;
+
 /**
- * PHPExcel_Shared_Escher
+ * PHPExcel\Shared_Escher
  *
  * @category   PHPExcel
- * @package    PHPExcel_Shared_Escher
+ * @package    PHPExcel\Shared_Escher
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Shared_Escher
+class Shared_Escher
 {
 	/**
 	 * Drawing Group Container
 	 *
-	 * @var PHPExcel_Shared_Escher_DggContainer
+	 * @var PHPExcel\Shared_Escher_DggContainer
 	 */
 	private $_dggContainer;
 
 	/**
 	 * Drawing Container
 	 *
-	 * @var PHPExcel_Shared_Escher_DgContainer
+	 * @var PHPExcel\Shared_Escher_DgContainer
 	 */
 	private $_dgContainer;
 
 	/**
 	 * Get Drawing Group Container
 	 *
-	 * @return PHPExcel_Shared_Escher_DgContainer
+	 * @return PHPExcel\Shared_Escher_DgContainer
 	 */
 	public function getDggContainer()
 	{
@@ -61,7 +64,7 @@ class PHPExcel_Shared_Escher
 	/**
 	 * Set Drawing Group Container
 	 *
-	 * @param PHPExcel_Shared_Escher_DggContainer $dggContainer
+	 * @param PHPExcel\Shared_Escher_DggContainer $dggContainer
 	 */
 	public function setDggContainer($dggContainer)
 	{
@@ -71,7 +74,7 @@ class PHPExcel_Shared_Escher
 	/**
 	 * Get Drawing Container
 	 *
-	 * @return PHPExcel_Shared_Escher_DgContainer
+	 * @return PHPExcel\Shared_Escher_DgContainer
 	 */
 	public function getDgContainer()
 	{
@@ -81,7 +84,7 @@ class PHPExcel_Shared_Escher
 	/**
 	 * Set Drawing Container
 	 *
-	 * @param PHPExcel_Shared_Escher_DgContainer $dgContainer
+	 * @param PHPExcel\Shared_Escher_DgContainer $dgContainer
 	 */
 	public function setDgContainer($dgContainer)
 	{

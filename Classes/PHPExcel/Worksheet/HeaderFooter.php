@@ -26,6 +26,8 @@
  */
 
 
+namespace PHPExcel;
+
 /**
  * PHPExcel_Worksheet_HeaderFooter
  *
@@ -93,7 +95,7 @@
  * @package    PHPExcel_Worksheet
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Worksheet_HeaderFooter
+class Worksheet_HeaderFooter
 {
 	/* Header/footer image location */
 	const IMAGE_HEADER_LEFT							= 'LH';

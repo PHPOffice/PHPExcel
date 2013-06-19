@@ -19,28 +19,30 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Worksheet
+ * @package    PHPExcel\Worksheet
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
 
 
+namespace PHPExcel;
+
 /**
- * PHPExcel_Worksheet_Row
+ * PHPExcel\Worksheet_Row
  *
- * Represents a row in PHPExcel_Worksheet, used by PHPExcel_Worksheet_RowIterator
+ * Represents a row in PHPExcel\Worksheet, used by PHPExcel\Worksheet_RowIterator
  *
  * @category   PHPExcel
- * @package    PHPExcel_Worksheet
+ * @package    PHPExcel\Worksheet
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Worksheet_Row
+class Worksheet_Row
 {
 	/**
-	 * PHPExcel_Worksheet
+	 * PHPExcel\Worksheet
 	 *
-	 * @var PHPExcel_Worksheet
+	 * @var PHPExcel\Worksheet
 	 */
 	private $_parent;
 
@@ -54,10 +56,10 @@ class PHPExcel_Worksheet_Row
 	/**
 	 * Create a new row
 	 *
-	 * @param PHPExcel_Worksheet 		$parent
+	 * @param PHPExcel\Worksheet 		$parent
 	 * @param int						$rowIndex
 	 */
-	public function __construct(PHPExcel_Worksheet $parent = null, $rowIndex = 1) {
+	public function __construct(Worksheet $parent = null, $rowIndex = 1) {
 		// Set parent and row index
 		$this->_parent 		= $parent;
 		$this->_rowIndex 	= $rowIndex;
@@ -82,9 +84,9 @@ class PHPExcel_Worksheet_Row
 	/**
 	 * Get cell iterator
 	 *
-	 * @return PHPExcel_Worksheet_CellIterator
+	 * @return PHPExcel\Worksheet_CellIterator
 	 */
 	public function getCellIterator() {
-		return new PHPExcel_Worksheet_CellIterator($this->_parent, $this->_rowIndex);
+		return new Worksheet_CellIterator($this->_parent, $this->_rowIndex);
 	}
 }

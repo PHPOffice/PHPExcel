@@ -26,14 +26,16 @@
  */
 
 
+namespace PHPExcel;
+
 /**
- * PHPExcel_HashTable
+ * PHPExcel\HashTable
  *
  * @category   PHPExcel
  * @package	PHPExcel
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_HashTable
+class HashTable
 {
 	/**
 	 * HashTable elements
@@ -50,10 +52,10 @@ class PHPExcel_HashTable
 	public $_keyMap = array();
 
 	/**
-	 * Create a new PHPExcel_HashTable
+	 * Create a new PHPExcel\HashTable
 	 *
-	 * @param	PHPExcel_IComparable[] $pSource	Optional source array to create HashTable from
-	 * @throws	PHPExcel_Exception
+	 * @param	PHPExcel\IComparable[] $pSource	Optional source array to create HashTable from
+	 * @throws	PHPExcel\Exception
 	 */
 	public function __construct($pSource = null)
 	{
@@ -66,15 +68,15 @@ class PHPExcel_HashTable
 	/**
 	 * Add HashTable items from source
 	 *
-	 * @param	PHPExcel_IComparable[] $pSource	Source array to create HashTable from
-	 * @throws	PHPExcel_Exception
+	 * @param	PHPExcel\IComparable[] $pSource	Source array to create HashTable from
+	 * @throws	PHPExcel\Exception
 	 */
 	public function addFromSource($pSource = null) {
 		// Check if an array was passed
 		if ($pSource == null) {
 			return;
 		} else if (!is_array($pSource)) {
-			throw new PHPExcel_Exception('Invalid array parameter passed.');
+			throw new Exception('Invalid array parameter passed.');
 		}
 
 		foreach ($pSource as $item) {
@@ -85,10 +87,10 @@ class PHPExcel_HashTable
 	/**
 	 * Add HashTable item
 	 *
-	 * @param	PHPExcel_IComparable $pSource	Item to add
-	 * @throws	PHPExcel_Exception
+	 * @param	PHPExcel\IComparable $pSource	Item to add
+	 * @throws	PHPExcel\Exception
 	 */
-	public function add(PHPExcel_IComparable $pSource = null) {
+	public function add(IComparable $pSource = null) {
 		$hash = $pSource->getHashCode();
 		if (!isset($this->_items[$hash])) {
 			$this->_items[$hash] = $pSource;
@@ -99,10 +101,10 @@ class PHPExcel_HashTable
 	/**
 	 * Remove HashTable item
 	 *
-	 * @param	PHPExcel_IComparable $pSource	Item to remove
-	 * @throws	PHPExcel_Exception
+	 * @param	PHPExcel\IComparable $pSource	Item to remove
+	 * @throws	PHPExcel\Exception
 	 */
-	public function remove(PHPExcel_IComparable $pSource = null) {
+	public function remove(IComparable $pSource = null) {
 		$hash = $pSource->getHashCode();
 		if (isset($this->_items[$hash])) {
 			unset($this->_items[$hash]);
@@ -153,7 +155,7 @@ class PHPExcel_HashTable
 	 * Get by index
 	 *
 	 * @param	int	$pIndex
-	 * @return	PHPExcel_IComparable
+	 * @return	PHPExcel\IComparable
 	 *
 	 */
 	public function getByIndex($pIndex = 0) {
@@ -168,7 +170,7 @@ class PHPExcel_HashTable
 	 * Get by hashcode
 	 *
 	 * @param	string	$pHashCode
-	 * @return	PHPExcel_IComparable
+	 * @return	PHPExcel\IComparable
 	 *
 	 */
 	public function getByHashCode($pHashCode = '') {
@@ -182,7 +184,7 @@ class PHPExcel_HashTable
 	/**
 	 * HashTable to array
 	 *
-	 * @return PHPExcel_IComparable[]
+	 * @return PHPExcel\IComparable[]
 	 */
 	public function toArray() {
 		return $this->_items;

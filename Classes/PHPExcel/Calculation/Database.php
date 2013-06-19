@@ -19,31 +19,23 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *
  * @category	PHPExcel
- * @package		PHPExcel_Calculation
+ * @package		PHPExcel\Calculation
  * @copyright	Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license		http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version		##VERSION##, ##DATE##
  */
 
 
-/** PHPExcel root directory */
-if (!defined('PHPEXCEL_ROOT')) {
-	/**
-	 * @ignore
-	 */
-	define('PHPEXCEL_ROOT', dirname(__FILE__) . '/../../');
-	require(PHPEXCEL_ROOT . 'PHPExcel/Autoloader.php');
-}
-
+namespace PHPExcel;
 
 /**
- * PHPExcel_Calculation_Database
+ * PHPExcel\Calculation_Database
  *
  * @category	PHPExcel
- * @package		PHPExcel_Calculation
+ * @package		PHPExcel\Calculation
  * @copyright	Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Calculation_Database {
+class Calculation_Database {
 
 
 	/**
@@ -65,7 +57,7 @@ class PHPExcel_Calculation_Database {
 	 *
 	 */
 	private static function __fieldExtract($database,$field) {
-		$field = strtoupper(PHPExcel_Calculation_Functions::flattenSingleValue($field));
+		$field = strtoupper(Calculation_Functions::flattenSingleValue($field));
 		$fieldNames = array_map('strtoupper',array_shift($database));
 
 		if (is_numeric($field)) {
@@ -107,7 +99,7 @@ class PHPExcel_Calculation_Database {
 			$testConditionCount = 0;
 			foreach($criteria as $row => $criterion) {
 				if ($criterion[$key] > '') {
-					$testCondition[] = '[:'.$criteriaName.']'.PHPExcel_Calculation_Functions::_ifCondition($criterion[$key]);
+					$testCondition[] = '[:'.$criteriaName.']'.Calculation_Functions::_ifCondition($criterion[$key]);
 					$testConditionCount++;
 				}
 			}
@@ -134,12 +126,12 @@ class PHPExcel_Calculation_Database {
 				$k = array_search($criteriaName,$fieldNames);
 				if (isset($dataValues[$k])) {
 					$dataValue = $dataValues[$k];
-					$dataValue = (is_string($dataValue)) ? PHPExcel_Calculation::_wrapResult(strtoupper($dataValue)) : $dataValue;
+					$dataValue = (is_string($dataValue)) ? Calculation::_wrapResult(strtoupper($dataValue)) : $dataValue;
 					$testConditionList = str_replace('[:'.$criteriaName.']',$dataValue,$testConditionList);
 				}
 			}
 			//	evaluate the criteria against the row data
-			$result = PHPExcel_Calculation::getInstance()->_calculateFormulaValue('='.$testConditionList);
+			$result = Calculation::getInstance()->_calculateFormulaValue('='.$testConditionList);
 			//	If the row failed to meet the criteria, remove it from the database
 			if (!$result) {
 				unset($database[$dataRow]);
@@ -191,7 +183,7 @@ class PHPExcel_Calculation_Database {
 		}
 
 		// Return
-		return PHPExcel_Calculation_Statistical::AVERAGE($colData);
+		return Calculation_Statistical::AVERAGE($colData);
 	}	//	function DAVERAGE()
 
 
@@ -244,7 +236,7 @@ class PHPExcel_Calculation_Database {
 		}
 
 		// Return
-		return PHPExcel_Calculation_Statistical::COUNT($colData);
+		return Calculation_Statistical::COUNT($colData);
 	}	//	function DCOUNT()
 
 
@@ -293,7 +285,7 @@ class PHPExcel_Calculation_Database {
 		}
 
 		// Return
-		return PHPExcel_Calculation_Statistical::COUNTA($colData);
+		return Calculation_Statistical::COUNTA($colData);
 	}	//	function DCOUNTA()
 
 
@@ -341,7 +333,7 @@ class PHPExcel_Calculation_Database {
 
 		// Return
 		if (count($colData) > 1) {
-			return PHPExcel_Calculation_Functions::NaN();
+			return Calculation_Functions::NaN();
 		}
 
 		return $colData[0];
@@ -391,7 +383,7 @@ class PHPExcel_Calculation_Database {
 		}
 
 		// Return
-		return PHPExcel_Calculation_Statistical::MAX($colData);
+		return Calculation_Statistical::MAX($colData);
 	}	//	function DMAX()
 
 
@@ -438,7 +430,7 @@ class PHPExcel_Calculation_Database {
 		}
 
 		// Return
-		return PHPExcel_Calculation_Statistical::MIN($colData);
+		return Calculation_Statistical::MIN($colData);
 	}	//	function DMIN()
 
 
@@ -484,7 +476,7 @@ class PHPExcel_Calculation_Database {
 		}
 
 		// Return
-		return PHPExcel_Calculation_MathTrig::PRODUCT($colData);
+		return Calculation_MathTrig::PRODUCT($colData);
 	}	//	function DPRODUCT()
 
 
@@ -531,7 +523,7 @@ class PHPExcel_Calculation_Database {
 		}
 
 		// Return
-		return PHPExcel_Calculation_Statistical::STDEV($colData);
+		return Calculation_Statistical::STDEV($colData);
 	}	//	function DSTDEV()
 
 
@@ -578,7 +570,7 @@ class PHPExcel_Calculation_Database {
 		}
 
 		// Return
-		return PHPExcel_Calculation_Statistical::STDEVP($colData);
+		return Calculation_Statistical::STDEVP($colData);
 	}	//	function DSTDEVP()
 
 
@@ -624,7 +616,7 @@ class PHPExcel_Calculation_Database {
 		}
 
 		// Return
-		return PHPExcel_Calculation_MathTrig::SUM($colData);
+		return Calculation_MathTrig::SUM($colData);
 	}	//	function DSUM()
 
 
@@ -671,7 +663,7 @@ class PHPExcel_Calculation_Database {
 		}
 
 		// Return
-		return PHPExcel_Calculation_Statistical::VARFunc($colData);
+		return Calculation_Statistical::VARFunc($colData);
 	}	//	function DVAR()
 
 
@@ -718,8 +710,8 @@ class PHPExcel_Calculation_Database {
 		}
 
 		// Return
-		return PHPExcel_Calculation_Statistical::VARP($colData);
+		return Calculation_Statistical::VARP($colData);
 	}	//	function DVARP()
 
 
-}	//	class PHPExcel_Calculation_Database
+}

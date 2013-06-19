@@ -19,63 +19,55 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Cell
+ * @package    PHPExcel\Cell
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
 
 
-/** PHPExcel root directory */
-if (!defined('PHPEXCEL_ROOT')) {
-    /**
-     * @ignore
-     */
-    define('PHPEXCEL_ROOT', dirname(__FILE__) . '/../../');
-    require(PHPEXCEL_ROOT . 'PHPExcel/Autoloader.php');
-}
-
+namespace PHPExcel;
 
 /**
- * PHPExcel_Cell_AdvancedValueBinder
+ * PHPExcel\Cell_AdvancedValueBinder
  *
  * @category   PHPExcel
- * @package    PHPExcel_Cell
+ * @package    PHPExcel\Cell
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Cell_AdvancedValueBinder extends PHPExcel_Cell_DefaultValueBinder implements PHPExcel_Cell_IValueBinder
+class Cell_AdvancedValueBinder extends Cell_DefaultValueBinder implements Cell_IValueBinder
 {
     /**
      * Bind value to a cell
      *
-     * @param  PHPExcel_Cell  $cell  Cell to bind value to
+     * @param  PHPExcel\Cell  $cell  Cell to bind value to
      * @param  mixed $value          Value to bind in cell
      * @return boolean
      */
-    public function bindValue(PHPExcel_Cell $cell, $value = null)
+    public function bindValue(Cell $cell, $value = null)
     {
         // sanitize UTF-8 strings
         if (is_string($value)) {
-            $value = PHPExcel_Shared_String::SanitizeUTF8($value);
+            $value = Shared_String::SanitizeUTF8($value);
         }
 
         // Find out data type
         $dataType = parent::dataTypeForValue($value);
 
         // Style logic - strings
-        if ($dataType === PHPExcel_Cell_DataType::TYPE_STRING && !$value instanceof PHPExcel_RichText) {
+        if ($dataType === Cell_DataType::TYPE_STRING && !$value instanceof RichText) {
             //    Test for booleans using locale-setting
-            if ($value == PHPExcel_Calculation::getTRUE()) {
-                $cell->setValueExplicit( TRUE, PHPExcel_Cell_DataType::TYPE_BOOL);
+            if ($value == Calculation::getTRUE()) {
+                $cell->setValueExplicit( TRUE, Cell_DataType::TYPE_BOOL);
                 return true;
-            } elseif($value == PHPExcel_Calculation::getFALSE()) {
-                $cell->setValueExplicit( FALSE, PHPExcel_Cell_DataType::TYPE_BOOL);
+            } elseif($value == Calculation::getFALSE()) {
+                $cell->setValueExplicit( FALSE, Cell_DataType::TYPE_BOOL);
                 return true;
             }
 
             // Check for number in scientific format
-            if (preg_match('/^'.PHPExcel_Calculation::CALCULATION_REGEXP_NUMBER.'$/', $value)) {
-                $cell->setValueExplicit( (float) $value, PHPExcel_Cell_DataType::TYPE_NUMERIC);
+            if (preg_match('/^'.Calculation::CALCULATION_REGEXP_NUMBER.'$/', $value)) {
+                $cell->setValueExplicit( (float) $value, Cell_DataType::TYPE_NUMERIC);
                 return true;
             }
 
@@ -84,7 +76,7 @@ class PHPExcel_Cell_AdvancedValueBinder extends PHPExcel_Cell_DefaultValueBinder
                 // Convert value to number
                 $value = $matches[2] / $matches[3];
                 if ($matches[1] == '-') $value = 0 - $value;
-                $cell->setValueExplicit( (float) $value, PHPExcel_Cell_DataType::TYPE_NUMERIC);
+                $cell->setValueExplicit( (float) $value, Cell_DataType::TYPE_NUMERIC);
                 // Set style
                 $cell->getWorksheet()->getStyle( $cell->getCoordinate() )
                     ->getNumberFormat()->setFormatCode( '??/??' );
@@ -93,7 +85,7 @@ class PHPExcel_Cell_AdvancedValueBinder extends PHPExcel_Cell_DefaultValueBinder
                 // Convert value to number
                 $value = $matches[2] + ($matches[3] / $matches[4]);
                 if ($matches[1] == '-') $value = 0 - $value;
-                $cell->setValueExplicit( (float) $value, PHPExcel_Cell_DataType::TYPE_NUMERIC);
+                $cell->setValueExplicit( (float) $value, Cell_DataType::TYPE_NUMERIC);
                 // Set style
                 $cell->getWorksheet()->getStyle( $cell->getCoordinate() )
                     ->getNumberFormat()->setFormatCode( '# ??/??' );
@@ -104,34 +96,34 @@ class PHPExcel_Cell_AdvancedValueBinder extends PHPExcel_Cell_DefaultValueBinder
             if (preg_match('/^\-?[0-9]*\.?[0-9]*\s?\%$/', $value)) {
                 // Convert value to number
                 $value = (float) str_replace('%', '', $value) / 100;
-                $cell->setValueExplicit( $value, PHPExcel_Cell_DataType::TYPE_NUMERIC);
+                $cell->setValueExplicit( $value, Cell_DataType::TYPE_NUMERIC);
                 // Set style
                 $cell->getWorksheet()->getStyle( $cell->getCoordinate() )
-                    ->getNumberFormat()->setFormatCode( PHPExcel_Style_NumberFormat::FORMAT_PERCENTAGE_00 );
+                    ->getNumberFormat()->setFormatCode( Style_NumberFormat::FORMAT_PERCENTAGE_00 );
                 return true;
             }
 
             // Check for currency
-            $currencyCode = PHPExcel_Shared_String::getCurrencyCode();
-            $decimalSeparator = PHPExcel_Shared_String::getDecimalSeparator();
-            $thousandsSeparator = PHPExcel_Shared_String::getThousandsSeparator();
+            $currencyCode = Shared_String::getCurrencyCode();
+            $decimalSeparator = Shared_String::getDecimalSeparator();
+            $thousandsSeparator = Shared_String::getThousandsSeparator();
             if (preg_match('/^'.preg_quote($currencyCode).' *(\d{1,3}('.preg_quote($thousandsSeparator).'\d{3})*|(\d+))('.preg_quote($decimalSeparator).'\d{2})?$/', $value)) {
                 // Convert value to number
                 $value = (float) trim(str_replace(array($currencyCode, $thousandsSeparator, $decimalSeparator), array('', '', '.'), $value));
-                $cell->setValueExplicit( $value, PHPExcel_Cell_DataType::TYPE_NUMERIC);
+                $cell->setValueExplicit( $value, Cell_DataType::TYPE_NUMERIC);
                 // Set style
                 $cell->getWorksheet()->getStyle( $cell->getCoordinate() )
                     ->getNumberFormat()->setFormatCode(
-                        str_replace('$', $currencyCode, PHPExcel_Style_NumberFormat::FORMAT_CURRENCY_USD_SIMPLE )
+                        str_replace('$', $currencyCode, Style_NumberFormat::FORMAT_CURRENCY_USD_SIMPLE )
                     );
                 return true;
             } elseif (preg_match('/^\$ *(\d{1,3}(\,\d{3})*|(\d+))(\.\d{2})?$/', $value)) {
                 // Convert value to number
                 $value = (float) trim(str_replace(array('$',','), '', $value));
-                $cell->setValueExplicit( $value, PHPExcel_Cell_DataType::TYPE_NUMERIC);
+                $cell->setValueExplicit( $value, Cell_DataType::TYPE_NUMERIC);
                 // Set style
                 $cell->getWorksheet()->getStyle( $cell->getCoordinate() )
-                    ->getNumberFormat()->setFormatCode( PHPExcel_Style_NumberFormat::FORMAT_CURRENCY_USD_SIMPLE );
+                    ->getNumberFormat()->setFormatCode( Style_NumberFormat::FORMAT_CURRENCY_USD_SIMPLE );
                 return true;
             }
 
@@ -140,10 +132,10 @@ class PHPExcel_Cell_AdvancedValueBinder extends PHPExcel_Cell_DefaultValueBinder
                 // Convert value to number
                 list($h, $m) = explode(':', $value);
                 $days = $h / 24 + $m / 1440;
-                $cell->setValueExplicit($days, PHPExcel_Cell_DataType::TYPE_NUMERIC);
+                $cell->setValueExplicit($days, Cell_DataType::TYPE_NUMERIC);
                 // Set style
                 $cell->getWorksheet()->getStyle( $cell->getCoordinate() )
-                    ->getNumberFormat()->setFormatCode( PHPExcel_Style_NumberFormat::FORMAT_DATE_TIME3 );
+                    ->getNumberFormat()->setFormatCode( Style_NumberFormat::FORMAT_DATE_TIME3 );
                 return true;
             }
 
@@ -153,17 +145,17 @@ class PHPExcel_Cell_AdvancedValueBinder extends PHPExcel_Cell_DefaultValueBinder
                 list($h, $m, $s) = explode(':', $value);
                 $days = $h / 24 + $m / 1440 + $s / 86400;
                 // Convert value to number
-                $cell->setValueExplicit($days, PHPExcel_Cell_DataType::TYPE_NUMERIC);
+                $cell->setValueExplicit($days, Cell_DataType::TYPE_NUMERIC);
                 // Set style
                 $cell->getWorksheet()->getStyle( $cell->getCoordinate() )
-                    ->getNumberFormat()->setFormatCode( PHPExcel_Style_NumberFormat::FORMAT_DATE_TIME4 );
+                    ->getNumberFormat()->setFormatCode( Style_NumberFormat::FORMAT_DATE_TIME4 );
                 return true;
             }
 
             // Check for datetime, e.g. '2008-12-31', '2008-12-31 15:59', '2008-12-31 15:59:10'
-            if (($d = PHPExcel_Shared_Date::stringToExcel($value)) !== false) {
+            if (($d = Shared_Date::stringToExcel($value)) !== false) {
                 // Convert value to number
-                $cell->setValueExplicit($d, PHPExcel_Cell_DataType::TYPE_NUMERIC);
+                $cell->setValueExplicit($d, Cell_DataType::TYPE_NUMERIC);
                 // Determine style. Either there is a time part or not. Look for ':'
                 if (strpos($value, ':') !== false) {
                     $formatCode = 'yyyy-mm-dd h:mm';
@@ -177,8 +169,8 @@ class PHPExcel_Cell_AdvancedValueBinder extends PHPExcel_Cell_DefaultValueBinder
 
             // Check for newline character "\n"
             if (strpos($value, "\n") !== FALSE) {
-                $value = PHPExcel_Shared_String::SanitizeUTF8($value);
-                $cell->setValueExplicit($value, PHPExcel_Cell_DataType::TYPE_STRING);
+                $value = Shared_String::SanitizeUTF8($value);
+                $cell->setValueExplicit($value, Cell_DataType::TYPE_STRING);
                 // Set style
                 $cell->getWorksheet()->getStyle( $cell->getCoordinate() )
                     ->getAlignment()->setWrapText(TRUE);

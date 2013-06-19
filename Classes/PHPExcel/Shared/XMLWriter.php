@@ -19,29 +19,27 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package	PHPExcel_Shared
+ * @package	PHPExcel\Shared
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license	http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version	##VERSION##, ##DATE##
  */
 
-if (!defined('DATE_W3C')) {
+
+namespace PHPExcel;
+ 
+ if (!defined('DATE_W3C')) {
   define('DATE_W3C', 'Y-m-d\TH:i:sP');
 }
 
-if (!defined('DEBUGMODE_ENABLED')) {
-  define('DEBUGMODE_ENABLED', false);
-}
-
-
 /**
- * PHPExcel_Shared_XMLWriter
+ * PHPExcel\Shared_XMLWriter
  *
  * @category   PHPExcel
- * @package	PHPExcel_Shared
+ * @package	PHPExcel\Shared
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Shared_XMLWriter extends XMLWriter {
+class Shared_XMLWriter extends \XMLWriter {
 	/** Temporary storage method */
 	const STORAGE_MEMORY	= 1;
 	const STORAGE_DISK		= 2;
@@ -54,7 +52,7 @@ class PHPExcel_Shared_XMLWriter extends XMLWriter {
 	private $_tempFileName = '';
 
 	/**
-	 * Create a new PHPExcel_Shared_XMLWriter instance
+	 * Create a new PHPExcel\Shared_XMLWriter instance
 	 *
 	 * @param int		$pTemporaryStorage			Temporary storage location
 	 * @param string	$pTemporaryStorageFolder	Temporary storage folder
@@ -66,7 +64,7 @@ class PHPExcel_Shared_XMLWriter extends XMLWriter {
 		} else {
 			// Create temporary filename
 			if ($pTemporaryStorageFolder === NULL)
-				$pTemporaryStorageFolder = PHPExcel_Shared_File::sys_get_temp_dir();
+				$pTemporaryStorageFolder = Shared_File::sys_get_temp_dir();
 			$this->_tempFileName = @tempnam($pTemporaryStorageFolder, 'xml');
 
 			// Open storage
@@ -74,11 +72,6 @@ class PHPExcel_Shared_XMLWriter extends XMLWriter {
 				// Fallback to memory...
 				$this->openMemory();
 			}
-		}
-
-		// Set default values
-		if (DEBUGMODE_ENABLED) {
-			$this->setIndent(true);
 		}
 	}
 

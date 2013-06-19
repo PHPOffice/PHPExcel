@@ -19,21 +19,23 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category	PHPExcel
- * @package		PHPExcel_Chart
+ * @package		PHPExcel\Chart
  * @copyright	Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license		http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version		##VERSION##, ##DATE##
  */
 
 
+namespace PHPExcel;
+
 /**
- * PHPExcel_Chart_Layout
+ * PHPExcel\Chart_Layout
  *
  * @category	PHPExcel
- * @package		PHPExcel_Chart
+ * @package		PHPExcel\Chart
  * @copyright	Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Chart_Layout
+class Chart_Layout
 {
 	/**
 	 * layoutTarget
@@ -141,7 +143,7 @@ class PHPExcel_Chart_Layout
 
 
 	/**
-	 * Create a new PHPExcel_Chart_Layout
+	 * Create a new PHPExcel\Chart_Layout
 	 */
 	public function __construct($layout=array())
 	{

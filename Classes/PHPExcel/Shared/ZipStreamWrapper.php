@@ -19,21 +19,23 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Shared
+ * @package    PHPExcel\Shared
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
 
 
+namespace PHPExcel;
+
 /**
- * PHPExcel_Shared_ZipStreamWrapper
+ * PHPExcel\Shared_ZipStreamWrapper
  *
  * @category   PHPExcel
- * @package    PHPExcel_Shared
+ * @package    PHPExcel\Shared
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Shared_ZipStreamWrapper {
+class Shared_ZipStreamWrapper {
 	/**
 	 * Internal ZipAcrhive
 	 *
@@ -82,7 +84,7 @@ class PHPExcel_Shared_ZipStreamWrapper {
     public function stream_open($path, $mode, $options, &$opened_path) {
         // Check for mode
         if ($mode{0} != 'r') {
-            throw new PHPExcel_Reader_Exception('Mode ' . $mode . ' is not supported. Only read mode is supported.');
+            throw new Reader_Exception('Mode ' . $mode . ' is not supported. Only read mode is supported.');
         }
 
 		$pos = strrpos($path, '#');

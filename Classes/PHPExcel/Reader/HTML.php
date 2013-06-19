@@ -19,30 +19,23 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Reader
+ * @package    PHPExcel\Reader
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
 
 
-/** PHPExcel root directory */
-if (!defined('PHPEXCEL_ROOT')) {
-	/**
-	 * @ignore
-	 */
-	define('PHPEXCEL_ROOT', dirname(__FILE__) . '/../../');
-	require(PHPEXCEL_ROOT . 'PHPExcel/Autoloader.php');
-}
+namespace PHPExcel;
 
 /**
- * PHPExcel_Reader_HTML
+ * PHPExcel\Reader_HTML
  *
  * @category   PHPExcel
- * @package    PHPExcel_Reader
+ * @package    PHPExcel\Reader
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Reader_HTML extends PHPExcel_Reader_Abstract implements PHPExcel_Reader_IReader
+class Reader_HTML extends Reader_Abstract implements Reader_IReader
 {
 	/**
 	 * Input encoding
@@ -88,12 +81,12 @@ class PHPExcel_Reader_HTML extends PHPExcel_Reader_Abstract implements PHPExcel_
 															 ),
 											),	//	Bold, 7.5pt
 							   'a'  => array( 'font' => array( 'underline' => true,
-															   'color' => array( 'argb' => PHPExcel_Style_Color::COLOR_BLUE,
+															   'color' => array( 'argb' => Style_Color::COLOR_BLUE,
 															                   ),
 															 ),
 											),	//	Blue underlined
-							   'hr' => array( 'borders' => array( 'bottom' => array( 'style' => PHPExcel_Style_Border::BORDER_THIN,
-																					 'color' => array( PHPExcel_Style_Color::COLOR_BLACK,
+							   'hr' => array( 'borders' => array( 'bottom' => array( 'style' => Style_Border::BORDER_THIN,
+																					 'color' => array( Style_Color::COLOR_BLACK,
 																					                 ),
 																				   ),
 																),
@@ -102,10 +95,10 @@ class PHPExcel_Reader_HTML extends PHPExcel_Reader_Abstract implements PHPExcel_
 
 
 	/**
-	 * Create a new PHPExcel_Reader_HTML
+	 * Create a new PHPExcel\Reader_HTML
 	 */
 	public function __construct() {
-		$this->_readFilter 	= new PHPExcel_Reader_DefaultReadFilter();
+		$this->_readFilter 	= new Reader_DefaultReadFilter();
 	}
 
 	/**
@@ -130,12 +123,12 @@ class PHPExcel_Reader_HTML extends PHPExcel_Reader_Abstract implements PHPExcel_
 	 *
 	 * @param 	string 		$pFilename
 	 * @return 	PHPExcel
-	 * @throws 	PHPExcel_Reader_Exception
+	 * @throws 	PHPExcel\Reader_Exception
 	 */
 	public function load($pFilename)
 	{
-		// Create new PHPExcel
-		$objPHPExcel = new PHPExcel();
+		// Create new PHPExcel Workbook
+		$objPHPExcel = new Workbook();
 
 		// Load into this instance
 		return $this->loadIntoExisting($pFilename, $objPHPExcel);
@@ -402,7 +395,7 @@ class PHPExcel_Reader_HTML extends PHPExcel_Reader_Abstract implements PHPExcel_
 	 * @param 	string 		$pFilename
 	 * @param	PHPExcel	$objPHPExcel
 	 * @return 	PHPExcel
-	 * @throws 	PHPExcel_Reader_Exception
+	 * @throws 	PHPExcel\Reader_Exception
 	 */
 	public function loadIntoExisting($pFilename, PHPExcel $objPHPExcel)
 	{
@@ -410,7 +403,7 @@ class PHPExcel_Reader_HTML extends PHPExcel_Reader_Abstract implements PHPExcel_
 		$this->_openFile($pFilename);
 		if (!$this->_isValidFormat()) {
 			fclose ($this->_fileHandle);
-			throw new PHPExcel_Reader_Exception($pFilename . " is an Invalid HTML file.");
+			throw new Reader_Exception($pFilename . " is an Invalid HTML file.");
 		}
 		//	Close after validating
 		fclose ($this->_fileHandle);
@@ -426,7 +419,7 @@ class PHPExcel_Reader_HTML extends PHPExcel_Reader_Abstract implements PHPExcel_
 		//	Reload the HTML file into the DOM object
 		$loaded = $dom->loadHTMLFile($pFilename);
 		if ($loaded === FALSE) {
-			throw new PHPExcel_Reader_Exception('Failed to load ',$pFilename,' as a DOM Document');
+			throw new Reader_Exception('Failed to load ',$pFilename,' as a DOM Document');
 		}
 
 		//	Discard white space
@@ -458,7 +451,7 @@ class PHPExcel_Reader_HTML extends PHPExcel_Reader_Abstract implements PHPExcel_
 	 * Set sheet index
 	 *
 	 * @param	int		$pValue		Sheet index
-	 * @return PHPExcel_Reader_HTML
+	 * @return PHPExcel\Reader_HTML
 	 */
 	public function setSheetIndex($pValue = 0) {
 		$this->_sheetIndex = $pValue;

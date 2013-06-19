@@ -19,28 +19,30 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package	PHPExcel_Worksheet
+ * @package	PHPExcel\Worksheet
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license	http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version	##VERSION##, ##DATE##
  */
 
 
+namespace PHPExcel;
+
 /**
- * PHPExcel_Worksheet_RowIterator
+ * PHPExcel\Worksheet_RowIterator
  *
- * Used to iterate rows in a PHPExcel_Worksheet
+ * Used to iterate rows in a PHPExcel\Worksheet
  *
  * @category   PHPExcel
- * @package	PHPExcel_Worksheet
+ * @package	PHPExcel\Worksheet
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Worksheet_RowIterator implements Iterator
+class Worksheet_RowIterator implements \Iterator
 {
 	/**
-	 * PHPExcel_Worksheet to iterate
+	 * PHPExcel\Worksheet to iterate
 	 *
-	 * @var PHPExcel_Worksheet
+	 * @var PHPExcel\Worksheet
 	 */
 	private $_subject;
 
@@ -62,10 +64,10 @@ class PHPExcel_Worksheet_RowIterator implements Iterator
 	/**
 	 * Create a new row iterator
 	 *
-	 * @param	PHPExcel_Worksheet	$subject	The worksheet to iterate over
+	 * @param	PHPExcel\Worksheet	$subject	The worksheet to iterate over
 	 * @param	integer				$startRow	The row number at which to start iterating
 	 */
-	public function __construct(PHPExcel_Worksheet $subject = null, $startRow = 1) {
+	public function __construct(Worksheet $subject = null, $startRow = 1) {
 		// Set subject
 		$this->_subject = $subject;
 		$this->resetStart($startRow);
@@ -107,10 +109,10 @@ class PHPExcel_Worksheet_RowIterator implements Iterator
 	/**
 	 * Return the current row in this worksheet
 	 *
-	 * @return PHPExcel_Worksheet_Row
+	 * @return PHPExcel\Worksheet_Row
 	 */
 	public function current() {
-		return new PHPExcel_Worksheet_Row($this->_subject, $this->_position);
+		return new Worksheet_Row($this->_subject, $this->_position);
 	}
 
 	/**

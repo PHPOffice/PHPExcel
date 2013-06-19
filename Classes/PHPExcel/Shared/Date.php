@@ -20,21 +20,23 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package	PHPExcel_Shared
+ * @package	PHPExcel\Shared
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license	http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version	##VERSION##, ##DATE##
  */
 
 
+namespace PHPExcel;
+
 /**
- * PHPExcel_Shared_Date
+ * PHPExcel\Shared_Date
  *
  * @category   PHPExcel
- * @package	PHPExcel_Shared
+ * @package	PHPExcel\Shared
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Shared_Date
+class Shared_Date
 {
 	/** constants */
 	const CALENDAR_WINDOWS_1900 = 1900;		//	Base date of 1st Jan 1900 = 1.0
@@ -143,7 +145,7 @@ class PHPExcel_Shared_Date
 		}
 
 		$timezoneAdjustment = ($adjustToTimezone) ?
-		    PHPExcel_Shared_TimeZone::getTimezoneAdjustment($timezone, $returnValue) :
+		    Shared_TimeZone::getTimezoneAdjustment($timezone, $returnValue) :
 		    0;
 
 		// Return
@@ -248,10 +250,10 @@ class PHPExcel_Shared_Date
 	/**
 	 * Is a given cell a date/time?
 	 *
-	 * @param	 PHPExcel_Cell	$pCell
+	 * @param	 PHPExcel\Cell	$pCell
 	 * @return	 boolean
 	 */
-	public static function isDateTime(PHPExcel_Cell $pCell) {
+	public static function isDateTime(Cell $pCell) {
 		return self::isDateTimeFormat(
 			$pCell->getWorksheet()->getStyle(
 				$pCell->getCoordinate()
@@ -263,10 +265,10 @@ class PHPExcel_Shared_Date
 	/**
 	 * Is a given number format a date/time?
 	 *
-	 * @param	 PHPExcel_Style_NumberFormat	$pFormat
+	 * @param	 Style_NumberFormat	$pFormat
 	 * @return	 boolean
 	 */
-	public static function isDateTimeFormat(PHPExcel_Style_NumberFormat $pFormat) {
+	public static function isDateTimeFormat(Style_NumberFormat $pFormat) {
 		return self::isDateTimeFormatCode($pFormat->getFormatCode());
 	}	//	function isDateTimeFormat()
 
@@ -283,31 +285,31 @@ class PHPExcel_Shared_Date
 		// Switch on formatcode
 		switch ($pFormatCode) {
 			//	General contains an epoch letter 'e', so we trap for it explicitly here
-			case PHPExcel_Style_NumberFormat::FORMAT_GENERAL:
+			case Style_NumberFormat::FORMAT_GENERAL:
 				return FALSE;
 			//	Explicitly defined date formats
-			case PHPExcel_Style_NumberFormat::FORMAT_DATE_YYYYMMDD:
-			case PHPExcel_Style_NumberFormat::FORMAT_DATE_YYYYMMDD2:
-			case PHPExcel_Style_NumberFormat::FORMAT_DATE_DDMMYYYY:
-			case PHPExcel_Style_NumberFormat::FORMAT_DATE_DMYSLASH:
-			case PHPExcel_Style_NumberFormat::FORMAT_DATE_DMYMINUS:
-			case PHPExcel_Style_NumberFormat::FORMAT_DATE_DMMINUS:
-			case PHPExcel_Style_NumberFormat::FORMAT_DATE_MYMINUS:
-			case PHPExcel_Style_NumberFormat::FORMAT_DATE_DATETIME:
-			case PHPExcel_Style_NumberFormat::FORMAT_DATE_TIME1:
-			case PHPExcel_Style_NumberFormat::FORMAT_DATE_TIME2:
-			case PHPExcel_Style_NumberFormat::FORMAT_DATE_TIME3:
-			case PHPExcel_Style_NumberFormat::FORMAT_DATE_TIME4:
-			case PHPExcel_Style_NumberFormat::FORMAT_DATE_TIME5:
-			case PHPExcel_Style_NumberFormat::FORMAT_DATE_TIME6:
-			case PHPExcel_Style_NumberFormat::FORMAT_DATE_TIME7:
-			case PHPExcel_Style_NumberFormat::FORMAT_DATE_TIME8:
-			case PHPExcel_Style_NumberFormat::FORMAT_DATE_YYYYMMDDSLASH:
-			case PHPExcel_Style_NumberFormat::FORMAT_DATE_XLSX14:
-			case PHPExcel_Style_NumberFormat::FORMAT_DATE_XLSX15:
-			case PHPExcel_Style_NumberFormat::FORMAT_DATE_XLSX16:
-			case PHPExcel_Style_NumberFormat::FORMAT_DATE_XLSX17:
-			case PHPExcel_Style_NumberFormat::FORMAT_DATE_XLSX22:
+			case Style_NumberFormat::FORMAT_DATE_YYYYMMDD:
+			case Style_NumberFormat::FORMAT_DATE_YYYYMMDD2:
+			case Style_NumberFormat::FORMAT_DATE_DDMMYYYY:
+			case Style_NumberFormat::FORMAT_DATE_DMYSLASH:
+			case Style_NumberFormat::FORMAT_DATE_DMYMINUS:
+			case Style_NumberFormat::FORMAT_DATE_DMMINUS:
+			case Style_NumberFormat::FORMAT_DATE_MYMINUS:
+			case Style_NumberFormat::FORMAT_DATE_DATETIME:
+			case Style_NumberFormat::FORMAT_DATE_TIME1:
+			case Style_NumberFormat::FORMAT_DATE_TIME2:
+			case Style_NumberFormat::FORMAT_DATE_TIME3:
+			case Style_NumberFormat::FORMAT_DATE_TIME4:
+			case Style_NumberFormat::FORMAT_DATE_TIME5:
+			case Style_NumberFormat::FORMAT_DATE_TIME6:
+			case Style_NumberFormat::FORMAT_DATE_TIME7:
+			case Style_NumberFormat::FORMAT_DATE_TIME8:
+			case Style_NumberFormat::FORMAT_DATE_YYYYMMDDSLASH:
+			case Style_NumberFormat::FORMAT_DATE_XLSX14:
+			case Style_NumberFormat::FORMAT_DATE_XLSX15:
+			case Style_NumberFormat::FORMAT_DATE_XLSX16:
+			case Style_NumberFormat::FORMAT_DATE_XLSX17:
+			case Style_NumberFormat::FORMAT_DATE_XLSX22:
 				return TRUE;
 		}
 
@@ -350,14 +352,14 @@ class PHPExcel_Shared_Date
 		if (!preg_match('/^(\d{1,4}[ \.\/\-][A-Z]{3,9}([ \.\/\-]\d{1,4})?|[A-Z]{3,9}[ \.\/\-]\d{1,4}([ \.\/\-]\d{1,4})?|\d{1,4}[ \.\/\-]\d{1,4}([ \.\/\-]\d{1,4})?)( \d{1,2}:\d{1,2}(:\d{1,2})?)?$/iu', $dateValue))
 			return FALSE;
 
-		$dateValueNew = PHPExcel_Calculation_DateTime::DATEVALUE($dateValue);
+		$dateValueNew = Calculation_DateTime::DATEVALUE($dateValue);
 
-		if ($dateValueNew === PHPExcel_Calculation_Functions::VALUE()) {
+		if ($dateValueNew === Calculation_Functions::VALUE()) {
 			return FALSE;
 		} else {
 			if (strpos($dateValue, ':') !== FALSE) {
-				$timeValue = PHPExcel_Calculation_DateTime::TIMEVALUE($dateValue);
-				if ($timeValue === PHPExcel_Calculation_Functions::VALUE()) {
+				$timeValue = Calculation_DateTime::TIMEVALUE($dateValue);
+				if ($timeValue === Calculation_Functions::VALUE()) {
 					return FALSE;
 				}
 				$dateValueNew += $timeValue;

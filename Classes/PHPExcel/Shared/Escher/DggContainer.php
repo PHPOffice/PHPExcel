@@ -19,20 +19,23 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Shared_Escher
+ * @package    PHPExcel\Shared_Escher
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
 
+
+namespace PHPExcel;
+
 /**
- * PHPExcel_Shared_Escher_DggContainer
+ * PHPExcel\Shared_Escher_DggContainer
  *
  * @category   PHPExcel
- * @package    PHPExcel_Shared_Escher
+ * @package    PHPExcel\Shared_Escher
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Shared_Escher_DggContainer
+class Shared_Escher_DggContainer
 {
 	/**
 	 * Maximum shape index of all shapes in all drawings increased by one
@@ -58,7 +61,7 @@ class PHPExcel_Shared_Escher_DggContainer
 	/**
 	 * BLIP Store Container
 	 *
-	 * @var PHPExcel_Shared_Escher_DggContainer_BstoreContainer
+	 * @var PHPExcel\Shared_Escher_DggContainer_BstoreContainer
 	 */
 	private $_bstoreContainer;
 
@@ -139,7 +142,7 @@ class PHPExcel_Shared_Escher_DggContainer
 	/**
 	 * Get BLIP Store Container
 	 *
-	 * @return PHPExcel_Shared_Escher_DggContainer_BstoreContainer
+	 * @return PHPExcel\Shared_Escher_DggContainer_BstoreContainer
 	 */
 	public function getBstoreContainer()
 	{
@@ -149,7 +152,7 @@ class PHPExcel_Shared_Escher_DggContainer
 	/**
 	 * Set BLIP Store Container
 	 *
-	 * @param PHPExcel_Shared_Escher_DggContainer_BstoreContainer $bstoreContainer
+	 * @param PHPExcel\Shared_Escher_DggContainer_BstoreContainer $bstoreContainer
 	 */
 	public function setBstoreContainer($bstoreContainer)
 	{

@@ -19,21 +19,23 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category	PHPExcel
- * @package		PHPExcel_Worksheet
+ * @package		PHPExcel\Worksheet
  * @copyright	Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license		http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version		##VERSION##, ##DATE##
  */
 
 
+namespace PHPExcel;
+
 /**
- * PHPExcel_Worksheet_AutoFilter_Column
+ * PHPExcel\Worksheet_AutoFilter_Column
  *
  * @category	PHPExcel
- * @package		PHPExcel_Worksheet
+ * @package		PHPExcel\Worksheet
  * @copyright	Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Worksheet_AutoFilter_Column
+class Worksheet_AutoFilter_Column
 {
 	const AUTOFILTER_FILTERTYPE_FILTER			= 'filters';
 	const AUTOFILTER_FILTERTYPE_CUSTOMFILTER	= 'customFilters';
@@ -77,7 +79,7 @@ class PHPExcel_Worksheet_AutoFilter_Column
 	/**
 	 * Autofilter
 	 *
-	 * @var PHPExcel_Worksheet_AutoFilter
+	 * @var PHPExcel\Worksheet_AutoFilter
 	 */
 	private $_parent = NULL;
 
@@ -109,7 +111,7 @@ class PHPExcel_Worksheet_AutoFilter_Column
 	/**
 	 * Autofilter Column Rules
 	 *
-	 * @var array of PHPExcel_Worksheet_AutoFilter_Column_Rule
+	 * @var array of PHPExcel\Worksheet_AutoFilter_Column_Rule
 	 */
 	private $_ruleset = array();
 
@@ -123,12 +125,12 @@ class PHPExcel_Worksheet_AutoFilter_Column
 
 
 	/**
-	 * Create a new PHPExcel_Worksheet_AutoFilter_Column
+	 * Create a new PHPExcel\Worksheet_AutoFilter_Column
 	 *
 	 *	@param	string		                   $pColumn		Column (e.g. A)
-	 *	@param	PHPExcel_Worksheet_AutoFilter  $pParent		Autofilter for this column
+	 *	@param	PHPExcel\Worksheet_AutoFilter  $pParent		Autofilter for this column
 	 */
-	public function __construct($pColumn, PHPExcel_Worksheet_AutoFilter $pParent = NULL)
+	public function __construct($pColumn, Worksheet_AutoFilter $pParent = NULL)
 	{
 		$this->_columnIndex = $pColumn;
 		$this->_parent = $pParent;
@@ -147,8 +149,8 @@ class PHPExcel_Worksheet_AutoFilter_Column
 	 *	Set AutoFilter Column Index
 	 *
 	 *	@param	string		$pColumn		Column (e.g. A)
-	 *	@throws	PHPExcel_Exception
-	 *	@return PHPExcel_Worksheet_AutoFilter_Column
+	 *	@throws	PHPExcel\Exception
+	 *	@return PHPExcel\Worksheet_AutoFilter_Column
 	 */
 	public function setColumnIndex($pColumn) {
 		// Uppercase coordinate
@@ -165,7 +167,7 @@ class PHPExcel_Worksheet_AutoFilter_Column
 	/**
 	 * Get this Column's AutoFilter Parent
 	 *
-	 * @return PHPExcel_Worksheet_AutoFilter
+	 * @return PHPExcel\Worksheet_AutoFilter
 	 */
 	public function getParent() {
 		return $this->_parent;
@@ -174,10 +176,10 @@ class PHPExcel_Worksheet_AutoFilter_Column
 	/**
 	 * Set this Column's AutoFilter Parent
 	 *
-	 * @param PHPExcel_Worksheet_AutoFilter
-	 * @return PHPExcel_Worksheet_AutoFilter_Column
+	 * @param PHPExcel\Worksheet_AutoFilter
+	 * @return PHPExcel\Worksheet_AutoFilter_Column
 	 */
-	public function setParent(PHPExcel_Worksheet_AutoFilter $pParent = NULL) {
+	public function setParent(PHPExcel\Worksheet_AutoFilter $pParent = NULL) {
 		$this->_parent = $pParent;
 
 		return $this;
@@ -196,12 +198,12 @@ class PHPExcel_Worksheet_AutoFilter_Column
 	 *	Set AutoFilter Type
 	 *
 	 *	@param	string		$pFilterType
-	 *	@throws	PHPExcel_Exception
-	 *	@return PHPExcel_Worksheet_AutoFilter_Column
+	 *	@throws	PHPExcel\Exception
+	 *	@return PHPExcel\Worksheet_AutoFilter_Column
 	 */
 	public function setFilterType($pFilterType = self::AUTOFILTER_FILTERTYPE_FILTER) {
 		if (!in_array($pFilterType,self::$_filterTypes)) {
-			throw new PHPExcel_Exception('Invalid filter type for column AutoFilter.');
+			throw new Exception('Invalid filter type for column AutoFilter.');
 		}
 
 		$this->_filterType = $pFilterType;
@@ -222,14 +224,14 @@ class PHPExcel_Worksheet_AutoFilter_Column
 	 *	Set AutoFilter Multiple Rules And/Or
 	 *
 	 *	@param	string		$pJoin		And/Or
-	 *	@throws	PHPExcel_Exception
-	 *	@return PHPExcel_Worksheet_AutoFilter_Column
+	 *	@throws	PHPExcel\Exception
+	 *	@return PHPExcel\Worksheet_AutoFilter_Column
 	 */
 	public function setJoin($pJoin = self::AUTOFILTER_COLUMN_JOIN_OR) {
 		// Lowercase And/Or
 		$pJoin = strtolower($pJoin);
 		if (!in_array($pJoin,self::$_ruleJoins)) {
-			throw new PHPExcel_Exception('Invalid rule connection for column AutoFilter.');
+			throw new Exception('Invalid rule connection for column AutoFilter.');
 		}
 
 		$this->_join = $pJoin;
@@ -241,8 +243,8 @@ class PHPExcel_Worksheet_AutoFilter_Column
 	 *	Set AutoFilter Attributes
 	 *
 	 *	@param	string[]		$pAttributes
-	 *	@throws	PHPExcel_Exception
-	 *	@return PHPExcel_Worksheet_AutoFilter_Column
+	 *	@throws	PHPExcel\Exception
+	 *	@return PHPExcel\Worksheet_AutoFilter_Column
 	 */
 	public function setAttributes($pAttributes = array()) {
 		$this->_attributes = $pAttributes;
@@ -255,8 +257,8 @@ class PHPExcel_Worksheet_AutoFilter_Column
 	 *
 	 *	@param	string		$pName		Attribute Name
 	 *	@param	string		$pValue		Attribute Value
-	 *	@throws	PHPExcel_Exception
-	 *	@return PHPExcel_Worksheet_AutoFilter_Column
+	 *	@throws	PHPExcel\Exception
+	 *	@return PHPExcel\Worksheet_AutoFilter_Column
 	 */
 	public function setAttribute($pName, $pValue) {
 		$this->_attributes[$pName] = $pValue;
@@ -288,8 +290,8 @@ class PHPExcel_Worksheet_AutoFilter_Column
 	/**
 	 * Get all AutoFilter Column Rules
 	 *
-	 * @throws	PHPExcel_Exception
-	 * @return array of PHPExcel_Worksheet_AutoFilter_Column_Rule
+	 * @throws	PHPExcel\Exception
+	 * @return array of PHPExcel\Worksheet_AutoFilter_Column_Rule
 	 */
 	public function getRules() {
 		return $this->_ruleset;
@@ -299,11 +301,11 @@ class PHPExcel_Worksheet_AutoFilter_Column
 	 * Get a specified AutoFilter Column Rule
 	 *
 	 * @param	integer	$pIndex		Rule index in the ruleset array
-	 * @return	PHPExcel_Worksheet_AutoFilter_Column_Rule
+	 * @return	PHPExcel\Worksheet_AutoFilter_Column_Rule
 	 */
 	public function getRule($pIndex) {
 		if (!isset($this->_ruleset[$pIndex])) {
-			$this->_ruleset[$pIndex] = new PHPExcel_Worksheet_AutoFilter_Column_Rule($this);
+			$this->_ruleset[$pIndex] = new Worksheet_AutoFilter_Column_Rule($this);
 		}
 		return $this->_ruleset[$pIndex];
 	}
@@ -311,10 +313,10 @@ class PHPExcel_Worksheet_AutoFilter_Column
 	/**
 	 * Create a new AutoFilter Column Rule in the ruleset
 	 *
-	 * @return	PHPExcel_Worksheet_AutoFilter_Column_Rule
+	 * @return	PHPExcel\Worksheet_AutoFilter_Column_Rule
 	 */
 	public function createRule() {
-		$this->_ruleset[] = new PHPExcel_Worksheet_AutoFilter_Column_Rule($this);
+		$this->_ruleset[] = new Worksheet_AutoFilter_Column_Rule($this);
 
 		return end($this->_ruleset);
 	}
@@ -322,11 +324,11 @@ class PHPExcel_Worksheet_AutoFilter_Column
 	/**
 	 * Add a new AutoFilter Column Rule to the ruleset
 	 *
-	 * @param	PHPExcel_Worksheet_AutoFilter_Column_Rule	$pRule
+	 * @param	PHPExcel\Worksheet_AutoFilter_Column_Rule	$pRule
 	 * @param	boolean	$returnRule 	Flag indicating whether the rule object or the column object should be returned
-	 * @return	PHPExcel_Worksheet_AutoFilter_Column|PHPExcel_Worksheet_AutoFilter_Column_Rule
+	 * @return	PHPExcel\Worksheet_AutoFilter_Column|PHPExcel\Worksheet_AutoFilter_Column_Rule
 	 */
-	public function addRule(PHPExcel_Worksheet_AutoFilter_Column_Rule $pRule, $returnRule=TRUE) {
+	public function addRule(Worksheet_AutoFilter_Column_Rule $pRule, $returnRule=TRUE) {
 		$pRule->setParent($this);
 		$this->_ruleset[] = $pRule;
 
@@ -338,7 +340,7 @@ class PHPExcel_Worksheet_AutoFilter_Column
 	 *	If the number of rules is reduced to 1, then we reset And/Or logic to Or
 	 *
 	 * @param	integer	$pIndex		Rule index in the ruleset array
-	 * @return	PHPExcel_Worksheet_AutoFilter_Column
+	 * @return	PHPExcel\Worksheet_AutoFilter_Column
 	 */
 	public function deleteRule($pIndex) {
 		if (isset($this->_ruleset[$pIndex])) {
@@ -355,7 +357,7 @@ class PHPExcel_Worksheet_AutoFilter_Column
 	/**
 	 * Delete all AutoFilter Column Rules
 	 *
-	 * @return	PHPExcel_Worksheet_AutoFilter_Column
+	 * @return	PHPExcel\Worksheet_AutoFilter_Column
 	 */
 	public function clearRules() {
 		$this->_ruleset = array();
@@ -378,7 +380,7 @@ class PHPExcel_Worksheet_AutoFilter_Column
 					$this->$key = clone $value;
 				}
 			} elseif ((is_array($value)) && ($key == '_ruleset')) {
-				//	The columns array of PHPExcel_Worksheet_AutoFilter objects
+				//	The columns array of PHPExcel\Worksheet_AutoFilter objects
 				$this->$key = array();
 				foreach ($value as $k => $v) {
 					$this->$key[$k] = clone $v;

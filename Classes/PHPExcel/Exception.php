@@ -26,14 +26,16 @@
  */
 
 
+namespace PHPExcel;
+
 /**
- * PHPExcel_Exception
+ * PHPExcel\Exception
  *
  * @category   PHPExcel
  * @package    PHPExcel
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Exception extends Exception {
+class Exception extends \Exception {
     /**
      * Error handler callback
      *

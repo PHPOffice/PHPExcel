@@ -19,21 +19,23 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Writer_Excel5
+ * @package    PHPExcel\Writer_Excel5
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
 
 
+namespace PHPExcel;
+
 /**
- * PHPExcel_Shared_Escher_DggContainer_BstoreContainer
+ * PHPExcel\Shared_Escher_DggContainer_BstoreContainer
  *
  * @category   PHPExcel
- * @package    PHPExcel_Writer_Excel5
+ * @package    PHPExcel\Writer_Excel5
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Writer_Excel5_Escher
+class Writer_Excel5_Escher
 {
 	/**
 	 * The object we are writing
@@ -79,19 +81,19 @@ class PHPExcel_Writer_Excel5_Escher
 
 		switch (get_class($this->_object)) {
 
-		case 'PHPExcel_Shared_Escher':
+		case __NAMESPACE__ . '\Shared_Escher':
 			if ($dggContainer = $this->_object->getDggContainer()) {
-				$writer = new PHPExcel_Writer_Excel5_Escher($dggContainer);
+				$writer = new Writer_Excel5_Escher($dggContainer);
 				$this->_data = $writer->close();
 			} else if ($dgContainer = $this->_object->getDgContainer()) {
-				$writer = new PHPExcel_Writer_Excel5_Escher($dgContainer);
+				$writer = new Writer_Excel5_Escher($dgContainer);
 				$this->_data = $writer->close();
 				$this->_spOffsets = $writer->getSpOffsets();
 				$this->_spTypes = $writer->getSpTypes();
 			}
 			break;
 
-		case 'PHPExcel_Shared_Escher_DggContainer':
+		case __NAMESPACE__ . '\Shared_Escher_DggContainer':
 			// this is a container record
 
 			// initialize
@@ -126,7 +128,7 @@ class PHPExcel_Writer_Excel5_Escher
 
 			// write the bstoreContainer
 			if ($bstoreContainer = $this->_object->getBstoreContainer()) {
-				$writer = new PHPExcel_Writer_Excel5_Escher($bstoreContainer);
+				$writer = new Writer_Excel5_Escher($bstoreContainer);
 				$innerData .= $writer->close();
 			}
 
@@ -144,7 +146,7 @@ class PHPExcel_Writer_Excel5_Escher
 			$this->_data = $header . $innerData;
 			break;
 
-		case 'PHPExcel_Shared_Escher_DggContainer_BstoreContainer':
+		case __NAMESPACE__ . '\Shared_Escher_DggContainer_BstoreContainer':
 			// this is a container record
 
 			// initialize
@@ -153,7 +155,7 @@ class PHPExcel_Writer_Excel5_Escher
 			// treat the inner data
 			if ($BSECollection = $this->_object->getBSECollection()) {
 				foreach ($BSECollection as $BSE) {
-					$writer = new PHPExcel_Writer_Excel5_Escher($BSE);
+					$writer = new Writer_Excel5_Escher($BSE);
 					$innerData .= $writer->close();
 				}
 			}
@@ -172,7 +174,7 @@ class PHPExcel_Writer_Excel5_Escher
 			$this->_data = $header . $innerData;
 			break;
 
-		case 'PHPExcel_Shared_Escher_DggContainer_BstoreContainer_BSE':
+		case __NAMESPACE__ . '\Shared_Escher_DggContainer_BstoreContainer_BSE':
 			// this is a semi-container record
 
 			// initialize
@@ -180,7 +182,7 @@ class PHPExcel_Writer_Excel5_Escher
 
 			// here we treat the inner data
 			if ($blip = $this->_object->getBlip()) {
-				$writer = new PHPExcel_Writer_Excel5_Escher($blip);
+				$writer = new Writer_Excel5_Escher($blip);
 				$innerData .= $writer->close();
 			}
 
@@ -222,13 +224,13 @@ class PHPExcel_Writer_Excel5_Escher
 			$this->_data .= $data;
 			break;
 
-		case 'PHPExcel_Shared_Escher_DggContainer_BstoreContainer_BSE_Blip':
+		case __NAMESPACE__ . '\Shared_Escher_DggContainer_BstoreContainer_BSE_Blip':
 			// this is an atom record
 
 			// write the record
 			switch ($this->_object->getParent()->getBlipType()) {
 
-			case PHPExcel_Shared_Escher_DggContainer_BstoreContainer_BSE::BLIPTYPE_JPEG:
+			case Shared_Escher_DggContainer_BstoreContainer_BSE::BLIPTYPE_JPEG:
 				// initialize
 				$innerData = '';
 
@@ -255,7 +257,7 @@ class PHPExcel_Writer_Excel5_Escher
 				$this->_data .= $innerData;
 				break;
 
-			case PHPExcel_Shared_Escher_DggContainer_BstoreContainer_BSE::BLIPTYPE_PNG:
+			case Shared_Escher_DggContainer_BstoreContainer_BSE::BLIPTYPE_PNG:
 				// initialize
 				$innerData = '';
 
@@ -285,7 +287,7 @@ class PHPExcel_Writer_Excel5_Escher
 			}
 			break;
 
-		case 'PHPExcel_Shared_Escher_DgContainer':
+		case __NAMESPACE__ . '\Shared_Escher_DgContainer':
 			// this is a container record
 
 			// initialize
@@ -309,7 +311,7 @@ class PHPExcel_Writer_Excel5_Escher
 
 			// write the spgrContainer
 			if ($spgrContainer = $this->_object->getSpgrContainer()) {
-				$writer = new PHPExcel_Writer_Excel5_Escher($spgrContainer);
+				$writer = new Writer_Excel5_Escher($spgrContainer);
 				$innerData .= $writer->close();
 
 				// get the shape offsets relative to the spgrContainer record
@@ -339,7 +341,7 @@ class PHPExcel_Writer_Excel5_Escher
 			$this->_data = $header . $innerData;
 			break;
 
-		case 'PHPExcel_Shared_Escher_DgContainer_SpgrContainer':
+		case __NAMESPACE__ . '\Shared_Escher_DgContainer_SpgrContainer':
 			// this is a container record
 
 			// initialize
@@ -352,7 +354,7 @@ class PHPExcel_Writer_Excel5_Escher
 
 			// treat the inner data
 			foreach ($this->_object->getChildren() as $spContainer) {
-				$writer = new PHPExcel_Writer_Excel5_Escher($spContainer);
+				$writer = new Writer_Excel5_Escher($spContainer);
 				$spData = $writer->close();
 				$innerData .= $spData;
 
@@ -379,7 +381,7 @@ class PHPExcel_Writer_Excel5_Escher
 			$this->_spTypes = $spTypes;
 			break;
 
-		case 'PHPExcel_Shared_Escher_DgContainer_SpgrContainer_SpContainer':
+		case __NAMESPACE__ . '\Shared_Escher_DgContainer_SpgrContainer_SpContainer':
 			// initialize
 			$data = '';
 
@@ -443,8 +445,8 @@ class PHPExcel_Writer_Excel5_Escher
 				$recType		= 0xF010;
 
 				// start coordinates
-				list($column, $row) = PHPExcel_Cell::coordinateFromString($this->_object->getStartCoordinates());
-				$c1 = PHPExcel_Cell::columnIndexFromString($column) - 1;
+				list($column, $row) = Cell::coordinateFromString($this->_object->getStartCoordinates());
+				$c1 = Cell::columnIndexFromString($column) - 1;
 				$r1 = $row - 1;
 
 				// start offsetX
@@ -454,8 +456,8 @@ class PHPExcel_Writer_Excel5_Escher
 				$startOffsetY = $this->_object->getStartOffsetY();
 
 				// end coordinates
-				list($column, $row) = PHPExcel_Cell::coordinateFromString($this->_object->getEndCoordinates());
-				$c2 = PHPExcel_Cell::columnIndexFromString($column) - 1;
+				list($column, $row) = Cell::coordinateFromString($this->_object->getEndCoordinates());
+				$c2 = Cell::columnIndexFromString($column) - 1;
 				$r2 = $row - 1;
 
 				// end offsetX

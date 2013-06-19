@@ -19,24 +19,26 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Reader
+ * @package    PHPExcel\Reader
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
 
 
+namespace PHPExcel;
+
 /**
- * PHPExcel_Reader_IReader
+ * PHPExcel\Reader_IReader
  *
  * @category   PHPExcel
- * @package    PHPExcel_Reader
+ * @package    PHPExcel\Reader
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-interface PHPExcel_Reader_IReader
+interface Reader_IReader
 {
 	/**
-	 * Can the current PHPExcel_Reader_IReader read the file?
+	 * Can the current PHPExcel\Reader_IReader read the file?
 	 *
 	 * @param 	string 		$pFilename
 	 * @return 	boolean
@@ -47,7 +49,7 @@ interface PHPExcel_Reader_IReader
 	 * Loads PHPExcel from file
 	 *
 	 * @param 	string 		$pFilename
-	 * @throws 	PHPExcel_Reader_Exception
+	 * @throws 	PHPExcel\Reader_Exception
 	 */
 	public function load($pFilename);
 }

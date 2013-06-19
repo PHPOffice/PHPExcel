@@ -19,26 +19,29 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Shared_ZipArchive
+ * @package    PHPExcel\Shared_ZipArchive
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
 
-if (!defined('PCLZIP_TEMPORARY_DIR')) {
-	define('PCLZIP_TEMPORARY_DIR', PHPExcel_Shared_File::sys_get_temp_dir());
+
+namespace PHPExcel;
+ 
+ if (!defined('PCLZIP_TEMPORARY_DIR')) {
+	define('PCLZIP_TEMPORARY_DIR', Shared_File::sys_get_temp_dir());
 }
 require_once PHPEXCEL_ROOT . 'PHPExcel/Shared/PCLZip/pclzip.lib.php';
 
 
 /**
- * PHPExcel_Shared_ZipArchive
+ * PHPExcel\Shared_ZipArchive
  *
  * @category   PHPExcel
- * @package    PHPExcel_Shared_ZipArchive
+ * @package    PHPExcel\Shared_ZipArchive
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Shared_ZipArchive
+class Shared_ZipArchive
 {
 
 	/**	constants */
@@ -69,7 +72,7 @@ class PHPExcel_Shared_ZipArchive
      */
 	public function open($fileName)
 	{
-		$this->_tempDir = PHPExcel_Shared_File::sys_get_temp_dir();
+		$this->_tempDir = Shared_File::sys_get_temp_dir();
 
 		$this->_zip = new PclZip($fileName);
 
@@ -105,7 +108,7 @@ class PHPExcel_Shared_ZipArchive
 								PCLZIP_OPT_ADD_PATH, $filenameParts["dirname"]
 							   );
 		if ($res == 0) {
-			throw new PHPExcel_Writer_Exception("Error zipping files : " . $this->_zip->errorInfo(true));
+			throw new Writer_Exception("Error zipping files : " . $this->_zip->errorInfo(true));
 		}
 
 		unlink($this->_tempDir.'/'.$filenameParts["basename"]);

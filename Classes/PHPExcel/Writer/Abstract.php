@@ -19,21 +19,23 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Writer
+ * @package    PHPExcel\Writer
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
 
 
+namespace PHPExcel;
+
 /**
- * PHPExcel_Writer_Abstract
+ * PHPExcel\Writer_Abstract
  *
  * @category   PHPExcel
- * @package    PHPExcel_Writer
+ * @package    PHPExcel\Writer
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-abstract class PHPExcel_Writer_Abstract implements PHPExcel_Writer_IWriter
+abstract class Writer_Abstract implements Writer_IWriter
 {
 	/**
 	 * Write charts that are defined in the workbook?
@@ -83,7 +85,7 @@ abstract class PHPExcel_Writer_Abstract implements PHPExcel_Writer_IWriter
 	 *		Set to false (the default) to ignore charts.
 	 *
 	 * @param	boolean	$pValue
-	 * @return	PHPExcel_Writer_IWriter
+	 * @return	PHPExcel\Writer_IWriter
 	 */
 	public function setIncludeCharts($pValue = FALSE) {
 		$this->_includeCharts = (boolean) $pValue;
@@ -110,7 +112,7 @@ abstract class PHPExcel_Writer_Abstract implements PHPExcel_Writer_IWriter
 	 *		Set to false to prevent precalculation of formulae on save.
      *
      * @param boolean $pValue	Pre-Calculate Formulas?
-	 * @return	PHPExcel_Writer_IWriter
+	 * @return	PHPExcel\Writer_IWriter
      */
     public function setPreCalculateFormulas($pValue = TRUE) {
     	$this->_preCalculateFormulas = (boolean) $pValue;
@@ -131,8 +133,8 @@ abstract class PHPExcel_Writer_Abstract implements PHPExcel_Writer_IWriter
 	 *
 	 * @param 	boolean 	$pValue
 	 * @param	string		$pDirectory		Disk caching directory
-	 * @throws	PHPExcel_Writer_Exception	when directory does not exist
-	 * @return PHPExcel_Writer_Excel2007
+	 * @throws	PHPExcel\Writer_Exception	when directory does not exist
+	 * @return PHPExcel\Writer_Excel2007
 	 */
 	public function setUseDiskCaching($pValue = FALSE, $pDirectory = NULL) {
 		$this->_useDiskCaching = $pValue;
@@ -141,7 +143,7 @@ abstract class PHPExcel_Writer_Abstract implements PHPExcel_Writer_IWriter
     		if (is_dir($pDirectory)) {
     			$this->_diskCachingDirectory = $pDirectory;
     		} else {
-    			throw new PHPExcel_Writer_Exception("Directory does not exist: $pDirectory");
+    			throw new Writer_Exception("Directory does not exist: $pDirectory");
     		}
 		}
 		return $this;

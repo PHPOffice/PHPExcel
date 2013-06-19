@@ -19,28 +19,30 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_CachedObjectStorage
+ * @package    PHPExcel\CachedObjectStorage
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
 
 
+namespace PHPExcel;
+
 /**
- * PHPExcel_CachedObjectStorage_MemorySerialized
+ * PHPExcel\CachedObjectStorage_MemorySerialized
  *
  * @category   PHPExcel
- * @package    PHPExcel_CachedObjectStorage
+ * @package    PHPExcel\CachedObjectStorage
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_CachedObjectStorage_MemorySerialized extends PHPExcel_CachedObjectStorage_CacheBase implements PHPExcel_CachedObjectStorage_ICache {
+class CachedObjectStorage_MemorySerialized extends CachedObjectStorage_CacheBase implements CachedObjectStorage_ICache {
 
     /**
      * Store cell data in cache for the current cell object if it's "dirty",
      *     and the 'nullify' the current cell object
      *
 	 * @return	void
-     * @throws	PHPExcel_Exception
+     * @throws	PHPExcel\Exception
      */
 	protected function _storeData() {
 		if ($this->_currentCellIsDirty) {
@@ -57,11 +59,11 @@ class PHPExcel_CachedObjectStorage_MemorySerialized extends PHPExcel_CachedObjec
      * Add or Update a cell in cache identified by coordinate address
      *
      * @param	string			$pCoord		Coordinate address of the cell to update
-     * @param	PHPExcel_Cell	$cell		Cell to update
+     * @param	PHPExcel\Cell	$cell		Cell to update
 	 * @return	void
-     * @throws	PHPExcel_Exception
+     * @throws	PHPExcel\Exception
      */
-	public function addCacheData($pCoord, PHPExcel_Cell $cell) {
+	public function addCacheData($pCoord, Cell $cell) {
 		if (($pCoord !== $this->_currentObjectID) && ($this->_currentObjectID !== null)) {
 			$this->_storeData();
 		}
@@ -78,8 +80,8 @@ class PHPExcel_CachedObjectStorage_MemorySerialized extends PHPExcel_CachedObjec
      * Get cell at a specific coordinate
      *
      * @param 	string 			$pCoord		Coordinate of the cell
-     * @throws 	PHPExcel_Exception
-     * @return 	PHPExcel_Cell 	Cell that was found, or null if not found
+     * @throws 	PHPExcel\Exception
+     * @return 	PHPExcel\Cell 	Cell that was found, or null if not found
      */
 	public function getCacheData($pCoord) {
 		if ($pCoord === $this->_currentObjectID) {

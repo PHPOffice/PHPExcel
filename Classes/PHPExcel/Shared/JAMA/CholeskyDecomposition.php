@@ -73,7 +73,7 @@ class CholeskyDecomposition {
 				}
 			}
 		} else {
-			throw new PHPExcel_Calculation_Exception(JAMAError(ArgumentTypeException));
+			throw new PHPExcel\Calculation_Exception(JAMAError(ArgumentTypeException));
 		}
 	}	//	function __construct()
 
@@ -136,13 +136,13 @@ class CholeskyDecomposition {
 
 					return new Matrix($X, $this->m, $nx);
 				} else {
-					throw new PHPExcel_Calculation_Exception(JAMAError(MatrixSPDException));
+					throw new PHPExcel\Calculation_Exception(JAMAError(MatrixSPDException));
 				}
 			} else {
-				throw new PHPExcel_Calculation_Exception(JAMAError(MatrixDimensionException));
+				throw new PHPExcel\Calculation_Exception(JAMAError(MatrixDimensionException));
 			}
 		} else {
-			throw new PHPExcel_Calculation_Exception(JAMAError(ArgumentTypeException));
+			throw new PHPExcel\Calculation_Exception(JAMAError(ArgumentTypeException));
 		}
 	}	//	function solve()
 

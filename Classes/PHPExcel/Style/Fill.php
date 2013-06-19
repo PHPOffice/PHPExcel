@@ -26,6 +26,8 @@
  */
 
 
+namespace PHPExcel;
+
 /**
  * PHPExcel_Style_Fill
  *
@@ -33,7 +35,7 @@
  * @package	PHPExcel_Style
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Style_Fill extends PHPExcel_Style_Supervisor implements PHPExcel_IComparable
+class Style_Fill extends Style_Supervisor implements IComparable
 {
 	/* Fill types */
 	const FILL_NONE							= 'none';
@@ -63,7 +65,7 @@ class PHPExcel_Style_Fill extends PHPExcel_Style_Supervisor implements PHPExcel_
 	 *
 	 * @var string
 	 */
-	protected $_fillType	= PHPExcel_Style_Fill::FILL_NONE;
+	protected $_fillType	= Style_Fill::FILL_NONE;
 
 	/**
 	 * Rotation
@@ -105,8 +107,8 @@ class PHPExcel_Style_Fill extends PHPExcel_Style_Supervisor implements PHPExcel_
 		if ($isConditional) {
 			$this->_fillType = NULL;
 		}
-		$this->_startColor			= new PHPExcel_Style_Color(PHPExcel_Style_Color::COLOR_WHITE, $isSupervisor, $isConditional);
-		$this->_endColor			= new PHPExcel_Style_Color(PHPExcel_Style_Color::COLOR_BLACK, $isSupervisor, $isConditional);
+		$this->_startColor			= new Style_Color(Style_Color::COLOR_WHITE, $isSupervisor, $isConditional);
+		$this->_endColor			= new Style_Color(Style_Color::COLOR_BLACK, $isSupervisor, $isConditional);
 
 		// bind parent if we are a supervisor
 		if ($isSupervisor) {
@@ -204,7 +206,7 @@ class PHPExcel_Style_Fill extends PHPExcel_Style_Supervisor implements PHPExcel_
 	 * @param string $pValue	PHPExcel_Style_Fill fill type
 	 * @return PHPExcel_Style_Fill
 	 */
-	public function setFillType($pValue = PHPExcel_Style_Fill::FILL_NONE) {
+	public function setFillType($pValue = Style_Fill::FILL_NONE) {
 		if ($this->_isSupervisor) {
 			$styleArray = $this->getStyleArray(array('type' => $pValue));
 			$this->getActiveSheet()->getStyle($this->getSelectedCells())->applyFromArray($styleArray);

@@ -17,21 +17,23 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_RichText
+ * @package    PHPExcel\RichText
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
 
 
+namespace PHPExcel;
+
 /**
- * PHPExcel_RichText_TextElement
+ * PHPExcel\RichText_TextElement
  *
  * @category   PHPExcel
- * @package    PHPExcel_RichText
+ * @package    PHPExcel\RichText
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_RichText_TextElement implements PHPExcel_RichText_ITextElement
+class RichText_TextElement implements RichText_ITextElement
 {
 	/**
 	 * Text
@@ -41,7 +43,7 @@ class PHPExcel_RichText_TextElement implements PHPExcel_RichText_ITextElement
 	private $_text;
 
     /**
-     * Create a new PHPExcel_RichText_TextElement instance
+     * Create a new PHPExcel\RichText_TextElement instance
      *
      * @param 	string		$pText		Text
      */
@@ -64,7 +66,7 @@ class PHPExcel_RichText_TextElement implements PHPExcel_RichText_ITextElement
 	 * Set text
 	 *
 	 * @param 	$pText string	Text
-	 * @return PHPExcel_RichText_ITextElement
+	 * @return PHPExcel\RichText_ITextElement
 	 */
 	public function setText($pText = '') {
 		$this->_text = $pText;
@@ -74,7 +76,7 @@ class PHPExcel_RichText_TextElement implements PHPExcel_RichText_ITextElement
 	/**
 	 * Get font
 	 *
-	 * @return PHPExcel_Style_Font
+	 * @return PHPExcel\Style_Font
 	 */
 	public function getFont() {
 		return null;

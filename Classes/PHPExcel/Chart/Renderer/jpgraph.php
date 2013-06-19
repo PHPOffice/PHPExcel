@@ -20,24 +20,25 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category	PHPExcel
- * @package		PHPExcel_Chart_Renderer
+ * @package		PHPExcel\Chart_Renderer
  * @copyright	Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license		http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version		##VERSION##, ##DATE##
  */
 
+namespace PHPExcel;
 
-require_once(PHPExcel_Settings::getChartRendererPath().'/jpgraph.php');
+require_once(Settings::getChartRendererPath() . '/jpgraph.php');
 
 
 /**
- * PHPExcel_Chart_Renderer_jpgraph
+ * PHPExcel\Chart_Renderer_jpgraph
  *
  * @category	PHPExcel
- * @package		PHPExcel_Chart_Renderer
+ * @package		PHPExcel\Chart_Renderer
  * @copyright	Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Chart_Renderer_jpgraph
+class Chart_Renderer_jpgraph
 {
 	private static $_width	= 640;
 
@@ -117,7 +118,7 @@ class PHPExcel_Chart_Renderer_jpgraph
 			} else {
 				//	Format labels according to any formatting code
 				if (!is_null($datasetLabelFormatCode)) {
-					$datasetLabels[$i] = PHPExcel_Style_NumberFormat::toFormattedString($datasetLabel,$datasetLabelFormatCode);
+					$datasetLabels[$i] = Style_NumberFormat::toFormattedString($datasetLabel,$datasetLabelFormatCode);
 				}
 			}
 			++$testCurrentIndex;
@@ -826,12 +827,12 @@ class PHPExcel_Chart_Renderer_jpgraph
 
 
 	/**
-	 * Create a new PHPExcel_Chart_Renderer_jpgraph
+	 * Create a new PHPExcel\Chart_Renderer_jpgraph
 	 */
-	public function __construct(PHPExcel_Chart $chart)
+	public function __construct(Chart $chart)
 	{
 		$this->_graph	= null;
 		$this->_chart	= $chart;
 	}	//	function __construct()
 
-}	//	PHPExcel_Chart_Renderer_jpgraph
+}

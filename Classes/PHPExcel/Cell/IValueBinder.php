@@ -19,28 +19,30 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Cell
+ * @package    PHPExcel\Cell
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
 
 
+namespace PHPExcel;
+
 /**
- * PHPExcel_Cell_IValueBinder
+ * PHPExcel\Cell_IValueBinder
  *
  * @category   PHPExcel
- * @package    PHPExcel_Cell
+ * @package    PHPExcel\Cell
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-interface PHPExcel_Cell_IValueBinder
+interface Cell_IValueBinder
 {
     /**
      * Bind value to a cell
      *
-     * @param  PHPExcel_Cell $cell    Cell to bind value to
+     * @param  PHPExcel\Cell $cell    Cell to bind value to
      * @param  mixed $value           Value to bind in cell
      * @return boolean
      */
-    public function bindValue(PHPExcel_Cell $cell, $value = NULL);
+    public function bindValue(Cell $cell, $value = NULL);
 }

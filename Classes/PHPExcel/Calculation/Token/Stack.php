@@ -19,21 +19,23 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Calculation
+ * @package    PHPExcel\Calculation
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license	http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version	##VERSION##, ##DATE##
  */
 
 
+namespace PHPExcel;
+
 /**
- * PHPExcel_Calculation_Token_Stack
+ * PHPExcel\Calculation_Token_Stack
  *
- * @category	PHPExcel_Calculation_Token_Stack
- * @package		PHPExcel_Calculation
+ * @category	PHPExcel\Calculation_Token_Stack
+ * @package		PHPExcel\Calculation
  * @copyright	Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Calculation_Token_Stack {
+class Calculation_Token_Stack {
 
 	/**
 	 *  The parser stack for formulae
@@ -72,7 +74,7 @@ class PHPExcel_Calculation_Token_Stack {
 											   'reference'	=> $reference
 											  );
 		if ($type == 'Function') {
-			$localeFunction = PHPExcel_Calculation::_localeFunc($value);
+			$localeFunction = Calculation::_localeFunc($value);
 			if ($localeFunction != $value) {
 				$this->_stack[($this->_count - 1)]['localeValue'] = $localeFunction;
 			}
@@ -112,4 +114,4 @@ class PHPExcel_Calculation_Token_Stack {
 		$this->_count = 0;
 	}
 
-}	//	class PHPExcel_Calculation_Token_Stack
+}

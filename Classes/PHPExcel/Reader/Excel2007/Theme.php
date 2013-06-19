@@ -19,21 +19,23 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Reader_Excel2007
+ * @package    PHPExcel\Reader_Excel2007
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
 
 
+namespace PHPExcel;
+
 /**
- * PHPExcel_Reader_Excel2007_Theme
+ * PHPExcel\Reader_Excel2007_Theme
  *
  * @category   PHPExcel
- * @package    PHPExcel_Reader_Excel2007
+ * @package    PHPExcel\Reader_Excel2007
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Reader_Excel2007_Theme
+class Reader_Excel2007_Theme
 {
 	/**
 	 * Theme Name
@@ -66,7 +68,7 @@ class PHPExcel_Reader_Excel2007_Theme
 
 
     /**
-     * Create a new PHPExcel_Theme
+     * Create a new PHPExcel\Theme
 	 *
      */
     public function __construct($themeName,$colourSchemeName,$colourMap)

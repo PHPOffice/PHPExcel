@@ -19,21 +19,23 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package	PHPExcel_Style
+ * @package	PHPExcel\Style
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license	http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version	##VERSION##, ##DATE##
  */
 
 
+namespace PHPExcel;
+
 /**
- * PHPExcel_Style_Alignment
+ * PHPExcel\Style_Alignment
  *
  * @category   PHPExcel
- * @package	PHPExcel_Style
+ * @package	PHPExcel\Style
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Style_Alignment extends PHPExcel_Style_Supervisor implements PHPExcel_IComparable
+class Style_Alignment extends Style_Supervisor implements IComparable
 {
 	/* Horizontal alignment styles */
 	const HORIZONTAL_GENERAL				= 'general';
@@ -54,14 +56,14 @@ class PHPExcel_Style_Alignment extends PHPExcel_Style_Supervisor implements PHPE
 	 *
 	 * @var string
 	 */
-	protected $_horizontal	= PHPExcel_Style_Alignment::HORIZONTAL_GENERAL;
+	protected $_horizontal	= Style_Alignment::HORIZONTAL_GENERAL;
 
 	/**
 	 * Vertical
 	 *
 	 * @var string
 	 */
-	protected $_vertical		= PHPExcel_Style_Alignment::VERTICAL_BOTTOM;
+	protected $_vertical		= Style_Alignment::VERTICAL_BOTTOM;
 
 	/**
 	 * Text rotation
@@ -92,7 +94,7 @@ class PHPExcel_Style_Alignment extends PHPExcel_Style_Supervisor implements PHPE
 	protected $_indent		= 0;
 
 	/**
-	 * Create a new PHPExcel_Style_Alignment
+	 * Create a new PHPExcel\Style_Alignment
 	 *
 	 * @param	boolean	$isSupervisor	Flag indicating if this is a supervisor or not
 	 *									Leave this value at default unless you understand exactly what
@@ -117,7 +119,7 @@ class PHPExcel_Style_Alignment extends PHPExcel_Style_Supervisor implements PHPE
 	 * Get the shared style component for the currently active cell in currently active sheet.
 	 * Only used for style supervisor
 	 *
-	 * @return PHPExcel_Style_Alignment
+	 * @return PHPExcel\Style_Alignment
 	 */
 	public function getSharedComponent()
 	{
@@ -141,8 +143,8 @@ class PHPExcel_Style_Alignment extends PHPExcel_Style_Supervisor implements PHPE
 	 * <code>
 	 * $objPHPExcel->getActiveSheet()->getStyle('B2')->getAlignment()->applyFromArray(
 	 *		array(
-	 *			'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
-	 *			'vertical'   => PHPExcel_Style_Alignment::VERTICAL_CENTER,
+	 *			'horizontal' => PHPExcel\Style_Alignment::HORIZONTAL_CENTER,
+	 *			'vertical'   => PHPExcel\Style_Alignment::VERTICAL_CENTER,
 	 *			'rotation'   => 0,
 	 *			'wrap'			=> TRUE
 	 *		)
@@ -150,8 +152,8 @@ class PHPExcel_Style_Alignment extends PHPExcel_Style_Supervisor implements PHPE
 	 * </code>
 	 *
 	 * @param	array	$pStyles	Array containing style information
-	 * @throws	PHPExcel_Exception
-	 * @return PHPExcel_Style_Alignment
+	 * @throws	PHPExcel\Exception
+	 * @return PHPExcel\Style_Alignment
 	 */
 	public function applyFromArray($pStyles = NULL) {
 		if (is_array($pStyles)) {
@@ -179,7 +181,7 @@ class PHPExcel_Style_Alignment extends PHPExcel_Style_Supervisor implements PHPE
 				}
 			}
 		} else {
-			throw new PHPExcel_Exception("Invalid style array passed.");
+			throw new Exception("Invalid style array passed.");
 		}
 		return $this;
 	}
@@ -200,11 +202,11 @@ class PHPExcel_Style_Alignment extends PHPExcel_Style_Supervisor implements PHPE
 	 * Set Horizontal
 	 *
 	 * @param string $pValue
-	 * @return PHPExcel_Style_Alignment
+	 * @return PHPExcel\Style_Alignment
 	 */
-	public function setHorizontal($pValue = PHPExcel_Style_Alignment::HORIZONTAL_GENERAL) {
+	public function setHorizontal($pValue = Style_Alignment::HORIZONTAL_GENERAL) {
 		if ($pValue == '') {
-			$pValue = PHPExcel_Style_Alignment::HORIZONTAL_GENERAL;
+			$pValue = Style_Alignment::HORIZONTAL_GENERAL;
 		}
 
 		if ($this->_isSupervisor) {
@@ -233,11 +235,11 @@ class PHPExcel_Style_Alignment extends PHPExcel_Style_Supervisor implements PHPE
 	 * Set Vertical
 	 *
 	 * @param string $pValue
-	 * @return PHPExcel_Style_Alignment
+	 * @return PHPExcel\Style_Alignment
 	 */
-	public function setVertical($pValue = PHPExcel_Style_Alignment::VERTICAL_BOTTOM) {
+	public function setVertical($pValue = Style_Alignment::VERTICAL_BOTTOM) {
 		if ($pValue == '') {
-			$pValue = PHPExcel_Style_Alignment::VERTICAL_BOTTOM;
+			$pValue = Style_Alignment::VERTICAL_BOTTOM;
 		}
 
 		if ($this->_isSupervisor) {
@@ -265,8 +267,8 @@ class PHPExcel_Style_Alignment extends PHPExcel_Style_Supervisor implements PHPE
 	 * Set TextRotation
 	 *
 	 * @param int $pValue
-	 * @throws PHPExcel_Exception
-	 * @return PHPExcel_Style_Alignment
+	 * @throws PHPExcel\Exception
+	 * @return PHPExcel\Style_Alignment
 	 */
 	public function setTextRotation($pValue = 0) {
 		// Excel2007 value 255 => PHPExcel value -165
@@ -283,7 +285,7 @@ class PHPExcel_Style_Alignment extends PHPExcel_Style_Supervisor implements PHPE
 				$this->_textRotation = $pValue;
 			}
 		} else {
-			throw new PHPExcel_Exception("Text rotation should be a value between -90 and 90.");
+			throw new Exception("Text rotation should be a value between -90 and 90.");
 		}
 
 		return $this;
@@ -305,7 +307,7 @@ class PHPExcel_Style_Alignment extends PHPExcel_Style_Supervisor implements PHPE
 	 * Set Wrap Text
 	 *
 	 * @param boolean $pValue
-	 * @return PHPExcel_Style_Alignment
+	 * @return PHPExcel\Style_Alignment
 	 */
 	public function setWrapText($pValue = FALSE) {
 		if ($pValue == '') {
@@ -336,7 +338,7 @@ class PHPExcel_Style_Alignment extends PHPExcel_Style_Supervisor implements PHPE
 	 * Set Shrink to fit
 	 *
 	 * @param boolean $pValue
-	 * @return PHPExcel_Style_Alignment
+	 * @return PHPExcel\Style_Alignment
 	 */
 	public function setShrinkToFit($pValue = FALSE) {
 		if ($pValue == '') {
@@ -367,7 +369,7 @@ class PHPExcel_Style_Alignment extends PHPExcel_Style_Supervisor implements PHPE
 	 * Set indent
 	 *
 	 * @param int $pValue
-	 * @return PHPExcel_Style_Alignment
+	 * @return PHPExcel\Style_Alignment
 	 */
 	public function setIndent($pValue = 0) {
 		if ($pValue > 0) {

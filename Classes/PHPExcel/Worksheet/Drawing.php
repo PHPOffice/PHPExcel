@@ -19,21 +19,23 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Worksheet_Drawing
+ * @package    PHPExcel\Worksheet_Drawing
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
 
 
+namespace PHPExcel;
+
 /**
- * PHPExcel_Worksheet_Drawing
+ * PHPExcel\Worksheet_Drawing
  *
  * @category   PHPExcel
- * @package    PHPExcel_Worksheet_Drawing
+ * @package    PHPExcel\Worksheet_Drawing
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Worksheet_Drawing extends PHPExcel_Worksheet_BaseDrawing implements PHPExcel_IComparable
+class Worksheet_Drawing extends Worksheet_BaseDrawing implements IComparable
 {
 	/**
 	 * Path
@@ -43,7 +45,7 @@ class PHPExcel_Worksheet_Drawing extends PHPExcel_Worksheet_BaseDrawing implemen
 	private $_path;
 
     /**
-     * Create a new PHPExcel_Worksheet_Drawing
+     * Create a new PHPExcel\Worksheet_Drawing
      */
     public function __construct()
     {
@@ -98,8 +100,8 @@ class PHPExcel_Worksheet_Drawing extends PHPExcel_Worksheet_BaseDrawing implemen
      *
      * @param 	string 		$pValue			File path
      * @param 	boolean		$pVerifyFile	Verify file
-     * @throws 	PHPExcel_Exception
-     * @return PHPExcel_Worksheet_Drawing
+     * @throws 	PHPExcel\Exception
+     * @return PHPExcel\Worksheet_Drawing
      */
     public function setPath($pValue = '', $pVerifyFile = true) {
     	if ($pVerifyFile) {
@@ -111,7 +113,7 @@ class PHPExcel_Worksheet_Drawing extends PHPExcel_Worksheet_BaseDrawing implemen
 	    			list($this->_width, $this->_height) = getimagesize($pValue);
 	    		}
 	    	} else {
-	    		throw new PHPExcel_Exception("File $pValue not found!");
+	    		throw new Exception("File $pValue not found!");
 	    	}
     	} else {
     		$this->_path = $pValue;

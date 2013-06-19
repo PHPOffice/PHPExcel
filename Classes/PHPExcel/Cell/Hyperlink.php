@@ -19,21 +19,23 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Cell
+ * @package    PHPExcel\Cell
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
 
 
+namespace PHPExcel;
+
 /**
- * PHPExcel_Cell_Hyperlink
+ * PHPExcel\Cell_Hyperlink
  *
  * @category   PHPExcel
- * @package    PHPExcel_Cell
+ * @package    PHPExcel\Cell
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Cell_Hyperlink
+class Cell_Hyperlink
 {
     /**
      * URL to link the cell to
@@ -50,7 +52,7 @@ class PHPExcel_Cell_Hyperlink
     private $_tooltip;
 
     /**
-     * Create a new PHPExcel_Cell_Hyperlink
+     * Create a new PHPExcel\Cell_Hyperlink
      *
      * @param  string  $pUrl      Url to link the cell to
      * @param  string  $pTooltip  Tooltip to display on the hyperlink
@@ -75,7 +77,7 @@ class PHPExcel_Cell_Hyperlink
      * Set URL
      *
      * @param  string    $value
-     * @return PHPExcel_Cell_Hyperlink
+     * @return PHPExcel\Cell_Hyperlink
      */
     public function setUrl($value = '') {
         $this->_url = $value;
@@ -95,7 +97,7 @@ class PHPExcel_Cell_Hyperlink
      * Set tooltip
      *
      * @param  string    $value
-     * @return PHPExcel_Cell_Hyperlink
+     * @return PHPExcel\Cell_Hyperlink
      */
     public function setTooltip($value = '') {
         $this->_tooltip = $value;

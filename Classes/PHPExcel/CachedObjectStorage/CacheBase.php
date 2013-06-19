@@ -19,33 +19,35 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_CachedObjectStorage
+ * @package    PHPExcel\CachedObjectStorage
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
 
 
+namespace PHPExcel;
+ 
 /**
- * PHPExcel_CachedObjectStorage_CacheBase
+ * PHPExcel\CachedObjectStorage_CacheBase
  *
  * @category   PHPExcel
- * @package    PHPExcel_CachedObjectStorage
+ * @package    PHPExcel\CachedObjectStorage
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-abstract class PHPExcel_CachedObjectStorage_CacheBase {
+abstract class CachedObjectStorage_CacheBase {
 
 	/**
 	 * Parent worksheet
 	 *
-	 * @var PHPExcel_Worksheet
+	 * @var PHPExcel\Worksheet
 	 */
 	protected $_parent;
 
 	/**
 	 * The currently active Cell
 	 *
-	 * @var PHPExcel_Cell
+	 * @var PHPExcel\Cell
 	 */
 	protected $_currentObject = null;
 
@@ -76,11 +78,11 @@ abstract class PHPExcel_CachedObjectStorage_CacheBase {
 	/**
 	 * Initialise this new cell collection
 	 *
-	 * @param	PHPExcel_Worksheet	$parent		The worksheet for this cell collection
+	 * @param	PHPExcel\Worksheet	$parent		The worksheet for this cell collection
 	 */
-	public function __construct(PHPExcel_Worksheet $parent) {
+	public function __construct(Worksheet $parent) {
 		//	Set our parent worksheet.
-		//	This is maintained within the cache controller to facilitate re-attaching it to PHPExcel_Cell objects when
+		//	This is maintained within the cache controller to facilitate re-attaching it to PHPExcel\Cell objects when
 		//		they are woken from a serialized state
 		$this->_parent = $parent;
 	}	//	function __construct()
@@ -89,7 +91,7 @@ abstract class PHPExcel_CachedObjectStorage_CacheBase {
 	/**
 	 * Return the parent worksheet for this cell collection
 	 *
-	 * @return	PHPExcel_Worksheet
+	 * @return	PHPExcel\Worksheet
 	 */
 	public function getParent()
 	{
@@ -97,7 +99,7 @@ abstract class PHPExcel_CachedObjectStorage_CacheBase {
 	}
 
 	/**
-	 * Is a value set in the current PHPExcel_CachedObjectStorage_ICache for an indexed cell?
+	 * Is a value set in the current PHPExcel\CachedObjectStorage_ICache for an indexed cell?
 	 *
 	 * @param	string		$pCoord		Coordinate address of the cell to check
 	 * @return	boolean
@@ -135,11 +137,11 @@ abstract class PHPExcel_CachedObjectStorage_CacheBase {
     /**
      * Add or Update a cell in cache
      *
-     * @param	PHPExcel_Cell	$cell		Cell to update
+     * @param	PHPExcel\Cell	$cell		Cell to update
 	 * @return	void
-     * @throws	PHPExcel_Exception
+     * @throws	PHPExcel\Exception
      */
-	public function updateCacheData(PHPExcel_Cell $cell) {
+	public function updateCacheData(Cell $cell) {
 		return $this->addCacheData($cell->getCoordinate(),$cell);
 	}	//	function updateCacheData()
 
@@ -148,7 +150,7 @@ abstract class PHPExcel_CachedObjectStorage_CacheBase {
      * Delete a cell in cache identified by coordinate address
      *
      * @param	string			$pCoord		Coordinate address of the cell to delete
-     * @throws	PHPExcel_Exception
+     * @throws	PHPExcel\Exception
      */
 	public function deleteCacheData($pCoord) {
 		if ($pCoord === $this->_currentObjectID) {
@@ -291,10 +293,10 @@ abstract class PHPExcel_CachedObjectStorage_CacheBase {
 	/**
 	 * Clone the cell collection
 	 *
-	 * @param	PHPExcel_Worksheet	$parent		The new worksheet
+	 * @param	PHPExcel\Worksheet	$parent		The new worksheet
 	 * @return	void
 	 */
-	public function copyCellCollection(PHPExcel_Worksheet $parent) {
+	public function copyCellCollection(Worksheet $parent) {
 		$this->_currentCellIsDirty;
         $this->_storeData();
 

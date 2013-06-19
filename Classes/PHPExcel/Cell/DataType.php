@@ -19,21 +19,23 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Cell
+ * @package    PHPExcel\Cell
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
 
 
+namespace PHPExcel;
+
 /**
- * PHPExcel_Cell_DataType
+ * PHPExcel\Cell_DataType
  *
  * @category   PHPExcel
- * @package    PHPExcel_Cell
+ * @package    PHPExcel\Cell
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Cell_DataType
+class Cell_DataType
 {
     /* Data types */
     const TYPE_STRING2  = 'str';
@@ -72,12 +74,12 @@ class PHPExcel_Cell_DataType
     /**
      * DataType for value
      *
-     * @deprecated  Replaced by PHPExcel_Cell_IValueBinder infrastructure, will be removed in version 1.8.0
+     * @deprecated  Replaced by PHPExcel\Cell_IValueBinder infrastructure, will be removed in version 1.8.0
      * @param       mixed  $pValue
      * @return      string
      */
     public static function dataTypeForValue($pValue = null) {
-        return PHPExcel_Cell_DefaultValueBinder::dataTypeForValue($pValue);
+        return Cell_DefaultValueBinder::dataTypeForValue($pValue);
     }
 
     /**
@@ -88,13 +90,13 @@ class PHPExcel_Cell_DataType
      */
     public static function checkString($pValue = null)
     {
-        if ($pValue instanceof PHPExcel_RichText) {
+        if ($pValue instanceof RichText) {
             // TODO: Sanitize Rich-Text string (max. character count is 32,767)
             return $pValue;
         }
 
         // string must never be longer than 32,767 characters, truncate if necessary
-        $pValue = PHPExcel_Shared_String::Substring($pValue, 0, 32767);
+        $pValue = Shared_String::Substring($pValue, 0, 32767);
 
         // we require that newline is represented as "\n" in core, not as "\r\n" or "\r"
         $pValue = str_replace(array("\r\n", "\r"), "\n", $pValue);

@@ -19,16 +19,19 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Shared
+ * @package    PHPExcel\Shared
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
 
+ 
+namespace PHPExcel;
+
 defined('IDENTIFIER_OLE') ||
     define('IDENTIFIER_OLE', pack('CCCCCCCC', 0xd0, 0xcf, 0x11, 0xe0, 0xa1, 0xb1, 0x1a, 0xe1));
 
-class PHPExcel_Shared_OLERead {
+class Shared_OLERead {
 	private $data = '';
 
 	// OLE identifier
@@ -71,13 +74,13 @@ class PHPExcel_Shared_OLERead {
 	 * Read the file
 	 *
 	 * @param $sFileName string Filename
-	 * @throws PHPExcel_Reader_Exception
+	 * @throws PHPExcel\Reader_Exception
 	 */
 	public function read($sFileName)
 	{
 		// Check if file exists and is readable
 		if(!is_readable($sFileName)) {
-			throw new PHPExcel_Reader_Exception("Could not open " . $sFileName . " for reading! File does not exist, or it is not readable.");
+			throw new Reader_Exception("Could not open " . $sFileName . " for reading! File does not exist, or it is not readable.");
 		}
 
 		// Get the file identifier
@@ -86,7 +89,7 @@ class PHPExcel_Shared_OLERead {
 
 		// Check OLE identifier
 		if ($this->data != self::IDENTIFIER_OLE) {
-			throw new PHPExcel_Reader_Exception('The filename ' . $sFileName . ' is not recognised as an OLE file');
+			throw new Reader_Exception('The filename ' . $sFileName . ' is not recognised as an OLE file');
 		}
 
 		// Get the file data

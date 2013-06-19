@@ -26,6 +26,8 @@
  */
 
 
+namespace PHPExcel;
+
 /**
  * PHPExcel_Style_NumberFormat
  *
@@ -33,7 +35,7 @@
  * @package	PHPExcel_Style
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Style_NumberFormat extends PHPExcel_Style_Supervisor implements PHPExcel_IComparable
+class Style_NumberFormat extends Style_Supervisor implements IComparable
 {
 	/* Pre-defined formats */
 	const FORMAT_GENERAL					= 'General';
@@ -94,7 +96,7 @@ class PHPExcel_Style_NumberFormat extends PHPExcel_Style_Supervisor implements P
 	 *
 	 * @var string
 	 */
-	protected $_formatCode	=	PHPExcel_Style_NumberFormat::FORMAT_GENERAL;
+	protected $_formatCode	=	Style_NumberFormat::FORMAT_GENERAL;
 
 	/**
 	 * Built-in format Code
@@ -199,10 +201,10 @@ class PHPExcel_Style_NumberFormat extends PHPExcel_Style_Supervisor implements P
 	 * @param string $pValue
 	 * @return PHPExcel_Style_NumberFormat
 	 */
-	public function setFormatCode($pValue = PHPExcel_Style_NumberFormat::FORMAT_GENERAL)
+	public function setFormatCode($pValue = Style_NumberFormat::FORMAT_GENERAL)
 	{
 		if ($pValue == '') {
-			$pValue = PHPExcel_Style_NumberFormat::FORMAT_GENERAL;
+			$pValue = Style_NumberFormat::FORMAT_GENERAL;
 		}
 		if ($this->_isSupervisor) {
 			$styleArray = $this->getStyleArray(array('code' => $pValue));

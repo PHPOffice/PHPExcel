@@ -26,6 +26,8 @@
  */
 
 
+namespace PHPExcel;
+
 /**
  * PHPExcel_Style_Conditional
  *
@@ -33,7 +35,7 @@
  * @package    PHPExcel_Style
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Style_Conditional implements PHPExcel_IComparable
+class Style_Conditional implements IComparable
 {
 	/* Condition types */
 	const CONDITION_NONE					= 'none';
@@ -96,11 +98,11 @@ class PHPExcel_Style_Conditional implements PHPExcel_IComparable
     public function __construct()
     {
     	// Initialise values
-    	$this->_conditionType		= PHPExcel_Style_Conditional::CONDITION_NONE;
-    	$this->_operatorType		= PHPExcel_Style_Conditional::OPERATOR_NONE;
+    	$this->_conditionType		= Style_Conditional::CONDITION_NONE;
+    	$this->_operatorType		= Style_Conditional::OPERATOR_NONE;
     	$this->_text    			= null;
     	$this->_condition			= array();
-    	$this->_style				= new PHPExcel_Style(FALSE, TRUE);
+    	$this->_style				= new Style(FALSE, TRUE);
     }
 
     /**
@@ -118,7 +120,7 @@ class PHPExcel_Style_Conditional implements PHPExcel_IComparable
      * @param string $pValue	PHPExcel_Style_Conditional condition type
      * @return PHPExcel_Style_Conditional
      */
-    public function setConditionType($pValue = PHPExcel_Style_Conditional::CONDITION_NONE) {
+    public function setConditionType($pValue = Style_Conditional::CONDITION_NONE) {
     	$this->_conditionType = $pValue;
     	return $this;
     }
@@ -138,7 +140,7 @@ class PHPExcel_Style_Conditional implements PHPExcel_IComparable
      * @param string $pValue	PHPExcel_Style_Conditional operator type
      * @return PHPExcel_Style_Conditional
      */
-    public function setOperatorType($pValue = PHPExcel_Style_Conditional::OPERATOR_NONE) {
+    public function setOperatorType($pValue = Style_Conditional::OPERATOR_NONE) {
     	$this->_operatorType = $pValue;
     	return $this;
     }
@@ -241,7 +243,7 @@ class PHPExcel_Style_Conditional implements PHPExcel_IComparable
      * @throws 	PHPExcel_Exception
      * @return PHPExcel_Style_Conditional
      */
-    public function setStyle(PHPExcel_Style $pValue = null) {
+    public function setStyle(Style $pValue = null) {
    		$this->_style = $pValue;
    		return $this;
     }

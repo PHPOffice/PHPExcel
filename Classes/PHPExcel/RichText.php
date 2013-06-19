@@ -19,36 +19,38 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_RichText
+ * @package    PHPExcel\RichText
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
 
 
+namespace PHPExcel;
+
 /**
- * PHPExcel_RichText
+ * PHPExcel\RichText
  *
  * @category   PHPExcel
- * @package    PHPExcel_RichText
+ * @package    PHPExcel\RichText
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_RichText implements PHPExcel_IComparable
+class RichText implements IComparable
 {
     /**
      * Rich text elements
      *
-     * @var PHPExcel_RichText_ITextElement[]
+     * @var PHPExcel\RichText_ITextElement[]
      */
     private $_richTextElements;
 
     /**
-     * Create a new PHPExcel_RichText instance
+     * Create a new PHPExcel\RichText instance
      *
-     * @param PHPExcel_Cell $pCell
-     * @throws PHPExcel_Exception
+     * @param PHPExcel\Cell $pCell
+     * @throws PHPExcel\Exception
      */
-    public function __construct(PHPExcel_Cell $pCell = null)
+    public function __construct(Cell $pCell = null)
     {
         // Initialise variables
         $this->_richTextElements = array();
@@ -57,24 +59,24 @@ class PHPExcel_RichText implements PHPExcel_IComparable
         if ($pCell !== NULL) {
             // Add cell text and style
             if ($pCell->getValue() != "") {
-                $objRun = new PHPExcel_RichText_Run($pCell->getValue());
+                $objRun = new RichText_Run($pCell->getValue());
                 $objRun->setFont(clone $pCell->getParent()->getStyle($pCell->getCoordinate())->getFont());
                 $this->addText($objRun);
             }
 
             // Set parent value
-            $pCell->setValueExplicit($this, PHPExcel_Cell_DataType::TYPE_STRING);
+            $pCell->setValueExplicit($this, Cell_DataType::TYPE_STRING);
         }
     }
 
     /**
      * Add text
      *
-     * @param PHPExcel_RichText_ITextElement $pText Rich text element
-     * @throws PHPExcel_Exception
-     * @return PHPExcel_RichText
+     * @param PHPExcel\RichText_ITextElement $pText Rich text element
+     * @throws PHPExcel\Exception
+     * @return PHPExcel\RichText
      */
-    public function addText(PHPExcel_RichText_ITextElement $pText = null)
+    public function addText(RichText_ITextElement $pText = null)
     {
         $this->_richTextElements[] = $pText;
         return $this;
@@ -84,12 +86,12 @@ class PHPExcel_RichText implements PHPExcel_IComparable
      * Create text
      *
      * @param string $pText Text
-     * @return PHPExcel_RichText_TextElement
-     * @throws PHPExcel_Exception
+     * @return PHPExcel\RichText_TextElement
+     * @throws PHPExcel\Exception
      */
     public function createText($pText = '')
     {
-        $objText = new PHPExcel_RichText_TextElement($pText);
+        $objText = new RichText_TextElement($pText);
         $this->addText($objText);
         return $objText;
     }
@@ -98,12 +100,12 @@ class PHPExcel_RichText implements PHPExcel_IComparable
      * Create text run
      *
      * @param string $pText Text
-     * @return PHPExcel_RichText_Run
-     * @throws PHPExcel_Exception
+     * @return PHPExcel\RichText_Run
+     * @throws PHPExcel\Exception
      */
     public function createTextRun($pText = '')
     {
-        $objText = new PHPExcel_RichText_Run($pText);
+        $objText = new RichText_Run($pText);
         $this->addText($objText);
         return $objText;
     }
@@ -118,7 +120,7 @@ class PHPExcel_RichText implements PHPExcel_IComparable
         // Return value
         $returnValue = '';
 
-        // Loop through all PHPExcel_RichText_ITextElement
+        // Loop through all PHPExcel\RichText_ITextElement
         foreach ($this->_richTextElements as $text) {
             $returnValue .= $text->getText();
         }
@@ -140,7 +142,7 @@ class PHPExcel_RichText implements PHPExcel_IComparable
     /**
      * Get Rich Text elements
      *
-     * @return PHPExcel_RichText_ITextElement[]
+     * @return PHPExcel\RichText_ITextElement[]
      */
     public function getRichTextElements()
     {
@@ -150,16 +152,16 @@ class PHPExcel_RichText implements PHPExcel_IComparable
     /**
      * Set Rich Text elements
      *
-     * @param PHPExcel_RichText_ITextElement[] $pElements Array of elements
-     * @throws PHPExcel_Exception
-     * @return PHPExcel_RichText
+     * @param PHPExcel\RichText_ITextElement[] $pElements Array of elements
+     * @throws PHPExcel\Exception
+     * @return PHPExcel\RichText
      */
     public function setRichTextElements($pElements = null)
     {
         if (is_array($pElements)) {
             $this->_richTextElements = $pElements;
         } else {
-            throw new PHPExcel_Exception("Invalid PHPExcel_RichText_ITextElement[] array passed.");
+            throw new Exception("Invalid PHPExcel\RichText_ITextElement[] array passed.");
         }
         return $this;
     }

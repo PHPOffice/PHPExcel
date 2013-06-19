@@ -19,29 +19,31 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Writer_Excel2007
+ * @package    PHPExcel\Writer_Excel2007
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
 
 
+namespace PHPExcel;
+
 /**
- * PHPExcel_Writer_Excel2007_StringTable
+ * PHPExcel\Writer_Excel2007_StringTable
  *
  * @category   PHPExcel
- * @package    PHPExcel_Writer_Excel2007
+ * @package    PHPExcel\Writer_Excel2007
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Writer_Excel2007_StringTable extends PHPExcel_Writer_Excel2007_WriterPart
+class Writer_Excel2007_StringTable extends Writer_Excel2007_WriterPart
 {
 	/**
 	 * Create worksheet stringtable
 	 *
-	 * @param 	PHPExcel_Worksheet 	$pSheet				Worksheet
+	 * @param 	PHPExcel\Worksheet 	$pSheet				Worksheet
 	 * @param 	string[] 				$pExistingTable 	Existing table to eventually merge with
 	 * @return 	string[] 				String table for worksheet
-	 * @throws 	PHPExcel_Writer_Exception
+	 * @throws 	PHPExcel\Writer_Exception
 	 */
 	public function createStringTable($pSheet = null, $pExistingTable = null)
 	{
@@ -67,10 +69,10 @@ class PHPExcel_Writer_Excel2007_StringTable extends PHPExcel_Writer_Excel2007_Wr
 					($cellValue !== NULL) &&
 					$cellValue !== '' &&
 					!isset($aFlippedStringTable[$cellValue]) &&
-					($cell->getDataType() == PHPExcel_Cell_DataType::TYPE_STRING || $cell->getDataType() == PHPExcel_Cell_DataType::TYPE_STRING2 || $cell->getDataType() == PHPExcel_Cell_DataType::TYPE_NULL)) {
+					($cell->getDataType() == Cell_DataType::TYPE_STRING || $cell->getDataType() == Cell_DataType::TYPE_STRING2 || $cell->getDataType() == Cell_DataType::TYPE_NULL)) {
 						$aStringTable[] = $cellValue;
 						$aFlippedStringTable[$cellValue] = true;
-				} elseif ($cellValue instanceof PHPExcel_RichText &&
+				} elseif ($cellValue instanceof RichText &&
 						  ($cellValue !== NULL) &&
 						  !isset($aFlippedStringTable[$cellValue->getHashCode()])) {
 								$aStringTable[] = $cellValue;
@@ -81,7 +83,7 @@ class PHPExcel_Writer_Excel2007_StringTable extends PHPExcel_Writer_Excel2007_Wr
 	        // Return
 	        return $aStringTable;
 		} else {
-			throw new PHPExcel_Writer_Exception("Invalid PHPExcel_Worksheet object passed.");
+			throw new Writer_Exception("Invalid PHPExcel\Worksheet object passed.");
 		}
 	}
 
@@ -90,7 +92,7 @@ class PHPExcel_Writer_Excel2007_StringTable extends PHPExcel_Writer_Excel2007_Wr
 	 *
 	 * @param 	string[] 	$pStringTable
 	 * @return 	string 		XML Output
-	 * @throws 	PHPExcel_Writer_Exception
+	 * @throws 	PHPExcel\Writer_Exception
 	 */
 	public function writeStringTable($pStringTable = null)
 	{
@@ -98,9 +100,9 @@ class PHPExcel_Writer_Excel2007_StringTable extends PHPExcel_Writer_Excel2007_Wr
 			// Create XML writer
 			$objWriter = null;
 			if ($this->getParentWriter()->getUseDiskCaching()) {
-				$objWriter = new PHPExcel_Shared_XMLWriter(PHPExcel_Shared_XMLWriter::STORAGE_DISK, $this->getParentWriter()->getDiskCachingDirectory());
+				$objWriter = new Shared_XMLWriter(Shared_XMLWriter::STORAGE_DISK, $this->getParentWriter()->getDiskCachingDirectory());
 			} else {
-				$objWriter = new PHPExcel_Shared_XMLWriter(PHPExcel_Shared_XMLWriter::STORAGE_MEMORY);
+				$objWriter = new Shared_XMLWriter(Shared_XMLWriter::STORAGE_MEMORY);
 			}
 
 			// XML header
@@ -115,15 +117,15 @@ class PHPExcel_Writer_Excel2007_StringTable extends PHPExcel_Writer_Excel2007_Wr
 				foreach ($pStringTable as $textElement) {
 					$objWriter->startElement('si');
 
-						if (! $textElement instanceof PHPExcel_RichText) {
-							$textToWrite = PHPExcel_Shared_String::ControlCharacterPHP2OOXML( $textElement );
+						if (! $textElement instanceof RichText) {
+							$textToWrite = Shared_String::ControlCharacterPHP2OOXML( $textElement );
 							$objWriter->startElement('t');
 							if ($textToWrite !== trim($textToWrite)) {
 								$objWriter->writeAttribute('xml:space', 'preserve');
 							}
 							$objWriter->writeRawData($textToWrite);
 							$objWriter->endElement();
-						} else if ($textElement instanceof PHPExcel_RichText) {
+						} else if ($textElement instanceof RichText) {
 							$this->writeRichText($objWriter, $textElement);
 						}
 
@@ -135,19 +137,19 @@ class PHPExcel_Writer_Excel2007_StringTable extends PHPExcel_Writer_Excel2007_Wr
 			// Return
 			return $objWriter->getData();
 		} else {
-			throw new PHPExcel_Writer_Exception("Invalid string table array passed.");
+			throw new Writer_Exception("Invalid string table array passed.");
 		}
 	}
 
 	/**
 	 * Write Rich Text
 	 *
-	 * @param 	PHPExcel_Shared_XMLWriter	$objWriter 		XML Writer
-	 * @param 	PHPExcel_RichText			$pRichText		Rich text
+	 * @param 	PHPExcel\Shared_XMLWriter	$objWriter 		XML Writer
+	 * @param 	PHPExcel\RichText			$pRichText		Rich text
 	 * @param 	string						$prefix			Optional Namespace prefix
-	 * @throws 	PHPExcel_Writer_Exception
+	 * @throws 	PHPExcel\Writer_Exception
 	 */
-	public function writeRichText(PHPExcel_Shared_XMLWriter $objWriter = null, PHPExcel_RichText $pRichText = null, $prefix=NULL)
+	public function writeRichText(Shared_XMLWriter $objWriter = null, RichText $pRichText = null, $prefix=NULL)
 	{
 		if ($prefix !== NULL)
 			$prefix .= ':';
@@ -158,7 +160,7 @@ class PHPExcel_Writer_Excel2007_StringTable extends PHPExcel_Writer_Excel2007_Wr
 			$objWriter->startElement($prefix.'r');
 
 				// rPr
-				if ($element instanceof PHPExcel_RichText_Run) {
+				if ($element instanceof RichText_Run) {
 					// rPr
 					$objWriter->startElement($prefix.'rPr');
 
@@ -214,7 +216,7 @@ class PHPExcel_Writer_Excel2007_StringTable extends PHPExcel_Writer_Excel2007_Wr
 				// t
 				$objWriter->startElement($prefix.'t');
 				$objWriter->writeAttribute('xml:space', 'preserve');
-				$objWriter->writeRawData(PHPExcel_Shared_String::ControlCharacterPHP2OOXML( $element->getText() ));
+				$objWriter->writeRawData(Shared_String::ControlCharacterPHP2OOXML( $element->getText() ));
 				$objWriter->endElement();
 
 			$objWriter->endElement();
@@ -224,16 +226,16 @@ class PHPExcel_Writer_Excel2007_StringTable extends PHPExcel_Writer_Excel2007_Wr
 	/**
 	 * Write Rich Text
 	 *
-	 * @param 	PHPExcel_Shared_XMLWriter	$objWriter 		XML Writer
-	 * @param 	string|PHPExcel_RichText	$pRichText		text string or Rich text
+	 * @param 	PHPExcel\Shared_XMLWriter	$objWriter 		XML Writer
+	 * @param 	string|PHPExcel\RichText	$pRichText		text string or Rich text
 	 * @param 	string						$prefix			Optional Namespace prefix
-	 * @throws 	PHPExcel_Writer_Exception
+	 * @throws 	PHPExcel\Writer_Exception
 	 */
-	public function writeRichTextForCharts(PHPExcel_Shared_XMLWriter $objWriter = null, $pRichText = null, $prefix=NULL)
+	public function writeRichTextForCharts(Shared_XMLWriter $objWriter = null, $pRichText = null, $prefix=NULL)
 	{
-		if (!$pRichText instanceof PHPExcel_RichText) {
+		if (!$pRichText instanceof RichText) {
 			$textRun = $pRichText;
-			$pRichText = new PHPExcel_RichText();
+			$pRichText = new RichText();
 			$pRichText->createTextRun($textRun);
 		}
 
@@ -287,7 +289,7 @@ class PHPExcel_Writer_Excel2007_StringTable extends PHPExcel_Writer_Excel2007_Wr
 				// t
 				$objWriter->startElement($prefix.'t');
 //					$objWriter->writeAttribute('xml:space', 'preserve');	//	Excel2010 accepts, Excel2007 complains
-					$objWriter->writeRawData(PHPExcel_Shared_String::ControlCharacterPHP2OOXML( $element->getText() ));
+					$objWriter->writeRawData(Shared_String::ControlCharacterPHP2OOXML( $element->getText() ));
 				$objWriter->endElement();
 
 			$objWriter->endElement();
@@ -306,9 +308,9 @@ class PHPExcel_Writer_Excel2007_StringTable extends PHPExcel_Writer_Excel2007_Wr
 
 		// Loop through stringtable and add flipped items to $returnValue
 		foreach ($stringTable as $key => $value) {
-			if (! $value instanceof PHPExcel_RichText) {
+			if (! $value instanceof RichText) {
 				$returnValue[$value] = $key;
-			} else if ($value instanceof PHPExcel_RichText) {
+			} else if ($value instanceof RichText) {
 				$returnValue[$value->getHashCode()] = $key;
 			}
 		}

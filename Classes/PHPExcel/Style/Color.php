@@ -26,14 +26,16 @@
  */
 
 
+namespace PHPExcel;
+
 /**
- * PHPExcel_Style_Color
+ * PHPExcel\Style_Color
  *
  * @category   PHPExcel
  * @package	PHPExcel_Style
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Style_Color extends PHPExcel_Style_Supervisor implements PHPExcel_IComparable
+class Style_Color extends Style_Supervisor implements IComparable
 {
 	/* Colors */
 	const COLOR_BLACK						= 'FF000000';

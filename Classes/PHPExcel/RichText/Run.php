@@ -17,31 +17,33 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_RichText
+ * @package    PHPExcel\RichText
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
 
 
+namespace PHPExcel;
+
 /**
- * PHPExcel_RichText_Run
+ * PHPExcel\RichText_Run
  *
  * @category   PHPExcel
- * @package    PHPExcel_RichText
+ * @package    PHPExcel\RichText
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_RichText_Run extends PHPExcel_RichText_TextElement implements PHPExcel_RichText_ITextElement
+class RichText_Run extends RichText_TextElement implements RichText_ITextElement
 {
 	/**
 	 * Font
 	 *
-	 * @var PHPExcel_Style_Font
+	 * @var PHPExcel\Style_Font
 	 */
 	private $_font;
 
     /**
-     * Create a new PHPExcel_RichText_Run instance
+     * Create a new PHPExcel\RichText_Run instance
      *
      * @param 	string		$pText		Text
      */
@@ -49,13 +51,13 @@ class PHPExcel_RichText_Run extends PHPExcel_RichText_TextElement implements PHP
     {
     	// Initialise variables
     	$this->setText($pText);
-    	$this->_font = new PHPExcel_Style_Font();
+    	$this->_font = new Style_Font();
     }
 
 	/**
 	 * Get font
 	 *
-	 * @return PHPExcel_Style_Font
+	 * @return PHPExcel\Style_Font
 	 */
 	public function getFont() {
 		return $this->_font;
@@ -64,11 +66,11 @@ class PHPExcel_RichText_Run extends PHPExcel_RichText_TextElement implements PHP
 	/**
 	 * Set font
 	 *
-	 * @param	PHPExcel_Style_Font		$pFont		Font
-	 * @throws 	PHPExcel_Exception
-	 * @return PHPExcel_RichText_ITextElement
+	 * @param	PHPExcel\Style_Font		$pFont		Font
+	 * @throws 	PHPExcel\Exception
+	 * @return PHPExcel\RichText_ITextElement
 	 */
-	public function setFont(PHPExcel_Style_Font $pFont = null) {
+	public function setFont(Style_Font $pFont = null) {
 		$this->_font = $pFont;
 		return $this;
 	}

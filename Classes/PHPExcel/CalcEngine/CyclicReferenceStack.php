@@ -19,21 +19,23 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Calculation
+ * @package    PHPExcel\Calculation
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license	http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version	##VERSION##, ##DATE##
  */
 
 
+namespace PHPExcel;
+ 
 /**
- * PHPExcel_CalcEngine_CyclicReferenceStack
+ * PHPExcel\CalcEngine_CyclicReferenceStack
  *
- * @category	PHPExcel_CalcEngine_CyclicReferenceStack
- * @package		PHPExcel_Calculation
+ * @category	PHPExcel\CalcEngine_CyclicReferenceStack
+ * @package		PHPExcel\Calculation
  * @copyright	Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_CalcEngine_CyclicReferenceStack {
+class CalcEngine_CyclicReferenceStack {
 
 	/**
 	 *  The call stack for calculated cells
@@ -95,4 +97,4 @@ class PHPExcel_CalcEngine_CyclicReferenceStack {
 		return $this->_stack;
 	}
 
-}	//	class PHPExcel_CalcEngine_CyclicReferenceStack
+}

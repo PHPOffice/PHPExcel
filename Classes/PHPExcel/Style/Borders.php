@@ -26,6 +26,8 @@
  */
 
 
+namespace PHPExcel;
+
 /**
  * PHPExcel_Style_Borders
  *
@@ -33,7 +35,7 @@
  * @package    PHPExcel_Style
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Style_Borders extends PHPExcel_Style_Supervisor implements PHPExcel_IComparable
+class Style_Borders extends Style_Supervisor implements IComparable
 {
 	/* Diagonal directions */
 	const DIAGONAL_NONE		= 0;
@@ -134,21 +136,21 @@ class PHPExcel_Style_Borders extends PHPExcel_Style_Supervisor implements PHPExc
 		parent::__construct($isSupervisor);
 
     	// Initialise values
-    	$this->_left				= new PHPExcel_Style_Border($isSupervisor, $isConditional);
-    	$this->_right				= new PHPExcel_Style_Border($isSupervisor, $isConditional);
-    	$this->_top					= new PHPExcel_Style_Border($isSupervisor, $isConditional);
-    	$this->_bottom				= new PHPExcel_Style_Border($isSupervisor, $isConditional);
-    	$this->_diagonal			= new PHPExcel_Style_Border($isSupervisor, $isConditional);
-		$this->_diagonalDirection	= PHPExcel_Style_Borders::DIAGONAL_NONE;
+    	$this->_left				= new Style_Border($isSupervisor, $isConditional);
+    	$this->_right				= new Style_Border($isSupervisor, $isConditional);
+    	$this->_top					= new Style_Border($isSupervisor, $isConditional);
+    	$this->_bottom				= new Style_Border($isSupervisor, $isConditional);
+    	$this->_diagonal			= new Style_Border($isSupervisor, $isConditional);
+		$this->_diagonalDirection	= Style_Borders::DIAGONAL_NONE;
 
 		// Specially for supervisor
 		if ($isSupervisor) {
 			// Initialize pseudo-borders
-			$this->_allBorders			= new PHPExcel_Style_Border(TRUE);
-			$this->_outline				= new PHPExcel_Style_Border(TRUE);
-			$this->_inside				= new PHPExcel_Style_Border(TRUE);
-			$this->_vertical			= new PHPExcel_Style_Border(TRUE);
-			$this->_horizontal			= new PHPExcel_Style_Border(TRUE);
+			$this->_allBorders			= new Style_Border(TRUE);
+			$this->_outline				= new Style_Border(TRUE);
+			$this->_inside				= new Style_Border(TRUE);
+			$this->_vertical			= new Style_Border(TRUE);
+			$this->_horizontal			= new Style_Border(TRUE);
 
 			// bind parent if we are a supervisor
 			$this->_left->bindParent($this, '_left');
@@ -388,9 +390,9 @@ class PHPExcel_Style_Borders extends PHPExcel_Style_Supervisor implements PHPExc
      * @param int $pValue
      * @return PHPExcel_Style_Borders
      */
-    public function setDiagonalDirection($pValue = PHPExcel_Style_Borders::DIAGONAL_NONE) {
+    public function setDiagonalDirection($pValue = Style_Borders::DIAGONAL_NONE) {
         if ($pValue == '') {
-    		$pValue = PHPExcel_Style_Borders::DIAGONAL_NONE;
+    		$pValue = Style_Borders::DIAGONAL_NONE;
     	}
 		if ($this->_isSupervisor) {
 			$styleArray = $this->getStyleArray(array('diagonaldirection' => $pValue));

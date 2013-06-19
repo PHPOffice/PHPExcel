@@ -26,6 +26,8 @@
  */
 
 
+namespace PHPExcel;
+
 /**
  * PHPExcel_Worksheet_PageSetup
  *
@@ -104,7 +106,7 @@
  * @package    PHPExcel_Worksheet
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Worksheet_PageSetup
+class Worksheet_PageSetup
 {
 	/* Paper size */
 	const PAPERSIZE_LETTER							= 1;
@@ -189,14 +191,14 @@ class PHPExcel_Worksheet_PageSetup
 	 *
 	 * @var int
 	 */
-	private $_paperSize		= PHPExcel_Worksheet_PageSetup::PAPERSIZE_LETTER;
+	private $_paperSize		= Worksheet_PageSetup::PAPERSIZE_LETTER;
 
 	/**
 	 * Orientation
 	 *
 	 * @var string
 	 */
-	private $_orientation	= PHPExcel_Worksheet_PageSetup::ORIENTATION_DEFAULT;
+	private $_orientation	= Worksheet_PageSetup::ORIENTATION_DEFAULT;
 
 	/**
 	 * Scale (Print Scale)

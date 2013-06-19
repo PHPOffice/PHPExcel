@@ -19,21 +19,23 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Writer_Excel5
+ * @package    PHPExcel\Writer_Excel5
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
 
 
+namespace PHPExcel;
+
 /**
- * PHPExcel_Writer_Excel5_Font
+ * PHPExcel\Writer_Excel5_Font
  *
  * @category   PHPExcel
- * @package    PHPExcel_Writer_Excel5
+ * @package    PHPExcel\Writer_Excel5
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Writer_Excel5_Font
+class Writer_Excel5_Font
 {
 	/**
 	 * Color index
@@ -45,16 +47,16 @@ class PHPExcel_Writer_Excel5_Font
 	/**
 	 * Font
 	 *
-	 * @var PHPExcel_Style_Font
+	 * @var PHPExcel\Style_Font
 	 */
 	private $_font;
 
 	/**
 	 * Constructor
 	 *
-	 * @param PHPExcel_Style_Font $font
+	 * @param PHPExcel\Style_Font $font
 	 */
-	public function __construct(PHPExcel_Style_Font $font = null)
+	public function __construct(Style_Font $font = null)
 	{
 		$this->_colorIndex = 0x7FFF;
 		$this->_font = $font;
@@ -89,7 +91,7 @@ class PHPExcel_Writer_Excel5_Font
 			$sss = 0;
 		}
 		$bFamily = 0; // Font family
-		$bCharSet = PHPExcel_Shared_Font::getCharsetFromFontName($this->_font->getName()); // Character set
+		$bCharSet = Shared_Font::getCharsetFromFontName($this->_font->getName()); // Character set
 
 		$record = 0x31;		// Record identifier
 		$reserved = 0x00;	// Reserved
@@ -118,7 +120,7 @@ class PHPExcel_Writer_Excel5_Font
 			$bCharSet,
 			$reserved
 		);
-		$data .= PHPExcel_Shared_String::UTF8toBIFF8UnicodeShort($this->_font->getName());
+		$data .= Shared_String::UTF8toBIFF8UnicodeShort($this->_font->getName());
 
 		$length = strlen($data);
 		$header = pack("vv", $record, $length);
@@ -144,11 +146,11 @@ class PHPExcel_Writer_Excel5_Font
 	 * @static	array of int
 	 *
 	 */
-	private static $_mapUnderline = array(	PHPExcel_Style_Font::UNDERLINE_NONE					=> 0x00,
-											PHPExcel_Style_Font::UNDERLINE_SINGLE				=> 0x01,
-											PHPExcel_Style_Font::UNDERLINE_DOUBLE				=> 0x02,
-											PHPExcel_Style_Font::UNDERLINE_SINGLEACCOUNTING		=> 0x21,
-											PHPExcel_Style_Font::UNDERLINE_DOUBLEACCOUNTING		=> 0x22,
+	private static $_mapUnderline = array(	Style_Font::UNDERLINE_NONE				=> 0x00,
+											Style_Font::UNDERLINE_SINGLE			=> 0x01,
+											Style_Font::UNDERLINE_DOUBLE			=> 0x02,
+											Style_Font::UNDERLINE_SINGLEACCOUNTING	=> 0x21,
+											Style_Font::UNDERLINE_DOUBLEACCOUNTING	=> 0x22,
 										 );
 	/**
 	 * Map underline

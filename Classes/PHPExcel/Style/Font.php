@@ -26,14 +26,16 @@
  */
 
 
+namespace PHPExcel;
+
 /**
- * PHPExcel_Style_Font
+ * PHPExcel\Style\Font
  *
  * @category   PHPExcel
  * @package	PHPExcel_Style
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Style_Font extends PHPExcel_Style_Supervisor implements PHPExcel_IComparable
+class Style_Font extends Style_Supervisor implements IComparable
 {
 	/* Underline types */
 	const UNDERLINE_NONE					= 'none';
@@ -130,9 +132,9 @@ class PHPExcel_Style_Font extends PHPExcel_Style_Supervisor implements PHPExcel_
 			$this->_subScript		= NULL;
 			$this->_underline		= NULL;
 			$this->_strikethrough	= NULL;
-			$this->_color			= new PHPExcel_Style_Color(PHPExcel_Style_Color::COLOR_BLACK, $isSupervisor, $isConditional);
+			$this->_color			= new Style_Color(Style_Color::COLOR_BLACK, $isSupervisor, $isConditional);
 		} else {
-			$this->_color	= new PHPExcel_Style_Color(PHPExcel_Style_Color::COLOR_BLACK, $isSupervisor);
+			$this->_color	= new Style_Color(Style_Color::COLOR_BLACK, $isSupervisor);
 		}
 		// bind parent if we are a supervisor
 		if ($isSupervisor) {

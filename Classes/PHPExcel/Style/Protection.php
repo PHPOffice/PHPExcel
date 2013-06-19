@@ -26,6 +26,8 @@
  */
 
 
+namespace PHPExcel;
+
 /**
  * PHPExcel_Style_Protection
  *
@@ -33,7 +35,7 @@
  * @package    PHPExcel_Style
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Style_Protection extends PHPExcel_Style_Supervisor implements PHPExcel_IComparable
+class Style_Protection extends Style_Supervisor implements IComparable
 {
 	/** Protection styles */
 	const PROTECTION_INHERIT		= 'inherit';
@@ -127,7 +129,7 @@ class PHPExcel_Style_Protection extends PHPExcel_Style_Supervisor implements PHP
 				}
 			}
 		} else {
-			throw new PHPExcel_Exception("Invalid style array passed.");
+			throw new Exception("Invalid style array passed.");
 		}
 		return $this;
 	}

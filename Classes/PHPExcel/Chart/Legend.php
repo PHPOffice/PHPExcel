@@ -19,21 +19,23 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category	PHPExcel
- * @package		PHPExcel_Chart
+ * @package		PHPExcel\Chart
  * @copyright	Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license		http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version		##VERSION##, ##DATE##
  */
 
 
+namespace PHPExcel;
+
 /**
- * PHPExcel_Chart_Legend
+ * PHPExcel\Chart_Legend
  *
  * @category	PHPExcel
- * @package		PHPExcel_Chart
+ * @package		PHPExcel\Chart
  * @copyright	Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Chart_Legend
+class Chart_Legend
 {
 	/** Legend positions */
 	const xlLegendPositionBottom	= -4107;	//	Below the chart.
@@ -74,15 +76,15 @@ class PHPExcel_Chart_Legend
 	/**
 	 * Legend Layout
 	 *
-	 * @var	PHPExcel_Chart_Layout
+	 * @var	PHPExcel\Chart_Layout
 	 */
 	private $_layout = NULL;
 
 
 	/**
-	 *	Create a new PHPExcel_Chart_Legend
+	 *	Create a new PHPExcel\Chart_Legend
 	 */
-	public function __construct($position = self::POSITION_RIGHT, PHPExcel_Chart_Layout $layout = NULL, $overlay = FALSE)
+	public function __construct($position = self::POSITION_RIGHT, Chart_Layout $layout = NULL, $overlay = FALSE)
 	{
 		$this->setPosition($position);
 		$this->_layout = $layout;
@@ -162,7 +164,7 @@ class PHPExcel_Chart_Legend
 	/**
 	 * Get Layout
 	 *
-	 * @return PHPExcel_Chart_Layout
+	 * @return PHPExcel\Chart_Layout
 	 */
 	public function getLayout() {
 		return $this->_layout;

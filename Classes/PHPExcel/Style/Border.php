@@ -26,6 +26,8 @@
  */
 
 
+namespace PHPExcel;
+
 /**
  * PHPExcel_Style_Border
  *
@@ -33,7 +35,7 @@
  * @package	PHPExcel_Style
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Style_Border extends PHPExcel_Style_Supervisor implements PHPExcel_IComparable
+class Style_Border extends Style_Supervisor implements IComparable
 {
 	/* Border style */
 	const BORDER_NONE				= 'none';
@@ -56,7 +58,7 @@ class PHPExcel_Style_Border extends PHPExcel_Style_Supervisor implements PHPExce
 	 *
 	 * @var string
 	 */
-	protected $_borderStyle	= PHPExcel_Style_Border::BORDER_NONE;
+	protected $_borderStyle	= Style_Border::BORDER_NONE;
 
 	/**
 	 * Border color
@@ -88,7 +90,7 @@ class PHPExcel_Style_Border extends PHPExcel_Style_Supervisor implements PHPExce
 		parent::__construct($isSupervisor);
 
 		// Initialise values
-		$this->_color	= new PHPExcel_Style_Color(PHPExcel_Style_Color::COLOR_BLACK, $isSupervisor);
+		$this->_color	= new Style_Color(Style_Color::COLOR_BLACK, $isSupervisor);
 
 		// bind parent if we are a supervisor
 		if ($isSupervisor) {
@@ -125,7 +127,7 @@ class PHPExcel_Style_Border extends PHPExcel_Style_Supervisor implements PHPExce
 			case '_inside':
 			case '_outline':
 			case '_vertical':
-				throw new PHPExcel_Exception('Cannot get shared component for a pseudo-border.');
+				throw new Exception('Cannot get shared component for a pseudo-border.');
 				break;
 			case '_bottom':
 				return $this->_parent->getSharedComponent()->getBottom();		break;

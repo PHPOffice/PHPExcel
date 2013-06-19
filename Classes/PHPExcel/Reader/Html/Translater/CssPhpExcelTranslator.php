@@ -1,4 +1,14 @@
 <?php
+
+/**
+ * Translate css to array for phpExcel style
+ * Everybody style shuld be in $dictionnary and call function returning array for PhpExcel
+ * 
+ * @category    PHPExcel
+ * @package     PHPExcel_Reader
+ * @author      Le Coq Francis (cifren)
+ * 
+ */
 require_once '../Parser/CssParser.php';
 require_once 'StylePhpExcel.php';
 
@@ -13,19 +23,19 @@ class CssPhpExcelTranslator
     );
 
     /**
-     * 
-     * @param string $strCss
+     *
+     * @param  string                                                                                  $strCss
      * @return \Fuller\ReportBundle\Templating\Generator\PhpExcel\Reader\Html\Translator\StylePhpExcel
      */
     public function translate($strCss)
-    {        
+    {
         $strCss = "element.style { $strCss }";
-        
+
         $css = new CssParser();
         $css->ParseStr($strCss);
 
         $arr = $css->css;
-        
+
         $styleAry = array();
         $stylePhpExcel = new StylePhpExcel();
         foreach ($arr['element.style'] as $key => $rule) {
@@ -124,8 +134,8 @@ class CssPhpExcelTranslator
     protected function textIndent($rule)
     {
         $phpExcelStyleArray = array();
-        $phpExcelStyleArray['alignment']['indent'] = (int)$rule/9;
-        
+        $phpExcelStyleArray['alignment']['indent'] = (int) $rule / 9;
+
         return $phpExcelStyleArray;
     }
 

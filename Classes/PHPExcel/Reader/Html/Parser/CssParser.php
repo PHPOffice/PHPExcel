@@ -1,18 +1,21 @@
 <?php
+
 /**
- * @author     By Thomas Björk
+ * Parse Css to array
+ * 
+ * @author     Thomas Björk
  * @category   PHPExcel
  * @package    PHPExcel_Reader
  * @version    ##VERSION##, ##DATE##
  * @source     http://www.phpclasses.org/browse/file/4684.html
  */
-class cssparser
+class CssParser
 {
 
-    var $css;
-    var $html;
+    public $css;
+    public $html;
 
-    function cssparser($html = true)
+    public function cssparser($html = true)
     {
         // Register "destructor"
         register_shutdown_function(array(&$this, "finalize"));
@@ -20,12 +23,12 @@ class cssparser
         $this->Clear();
     }
 
-    function finalize()
+    public function finalize()
     {
         unset($this->css);
     }
 
-    function Clear()
+    public function Clear()
     {
         unset($this->css);
         $this->css = array();
@@ -101,12 +104,12 @@ class cssparser
         }
     }
 
-    function SetHTML($html)
+    public function SetHTML($html)
     {
         $this->html = ($html != false);
     }
 
-    function Add($key, $codestr)
+    public function Add($key, $codestr)
     {
         $key = strtolower($key);
         $codestr = strtolower($codestr);
@@ -116,14 +119,14 @@ class cssparser
         preg_match('/[^;]*:"[^"]*[;]*[^"]*"*/', $codestr, $match);
         $codestr = preg_replace('/[^;]*:"[^"]*[;]*[^"]*"*/', '', $codestr);
         $codestr = preg_replace('/;{2}/', '', $codestr);
-        
+
         $codes = explode(";", $codestr);
         $codes = array_merge($codes, $match);
-        
+
         if (count($codes) > 0) {
             foreach ($codes as $code) {
                 $code = trim($code);
-                if(count($explode = explode(":", $code)) != 2){
+                if (count($explode = explode(":", $code)) != 2) {
                     continue;
                 }
                 list($codekey, $codevalue) = $explode;
@@ -135,7 +138,7 @@ class cssparser
         }
     }
 
-    function Get($key, $property)
+    public function Get($key, $property)
     {
         $key = strtolower($key);
         $property = strtolower($property);
@@ -171,10 +174,11 @@ class cssparser
                 }
             }
         }
+
         return $result;
     }
 
-    function GetSection($key)
+    public function GetSection($key)
     {
         $key = strtolower($key);
 
@@ -209,24 +213,25 @@ class cssparser
                 }
             }
         }
+
         return $result;
     }
 
-    function ParseStr($str)
+    public function ParseStr($str)
     {
         $this->Clear();
         // Remove comments
         $str = preg_replace("/\/\*(.*)?\*\//Usi", "", $str);
-        
+
         // Parse this damn csscode
         $parts = explode("}", $str);
-        
+
         if (count($parts) > 0) {
             foreach ($parts as $part) {
-                if(count($explode = explode("{", $part)) != 2){
+                if (count($explode = explode("{", $part)) != 2) {
                     continue;
                 }
-                
+
                 list($keystr, $codestr) = $explode;
                 $keys = explode(",", trim($keystr));
                 if (count($keys) > 0) {
@@ -244,7 +249,7 @@ class cssparser
         return (count($this->css) > 0);
     }
 
-    function Parse($filename)
+    public function Parse($filename)
     {
         $this->Clear();
         if (file_exists($filename)) {
@@ -254,7 +259,7 @@ class cssparser
         }
     }
 
-    function GetCSS()
+    public function GetCSS()
     {
         $result = "";
         foreach ($this->css as $key => $values) {
@@ -264,9 +269,8 @@ class cssparser
             }
             $result .= "}\n\n";
         }
+
         return $result;
     }
 
 }
-
-?>

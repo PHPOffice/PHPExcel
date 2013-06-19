@@ -8,6 +8,7 @@ class StylePhpExcel
     public function setStyle(array $styleAry)
     {
         $this->style = $styleAry;
+
         return $this;
     }
 

@@ -35,7 +35,7 @@ if (!defined('PHPEXCEL_ROOT')) {
 }
 
 require_once 'Translator/CssPhpExcelTranslator.php';
-    
+
 /**
  * PHPExcel_Reader_HTML
  *
@@ -138,9 +138,9 @@ class PHPExcel_Reader_HTML extends PHPExcel_Reader_Abstract implements PHPExcel_
     /**
      * Loads PHPExcel from file
      *
-     * @param 	string 		$pFilename
-     * @return 	PHPExcel
-     * @throws 	PHPExcel_Reader_Exception
+     * @param  string                    $pFilename
+     * @return PHPExcel
+     * @throws PHPExcel_Reader_Exception
      */
     public function load($pFilename)
     {
@@ -159,6 +159,7 @@ class PHPExcel_Reader_HTML extends PHPExcel_Reader_Abstract implements PHPExcel_
     public function setInputEncoding($pValue = 'ANSI')
     {
         $this->_inputEncoding = $pValue;
+
         return $this;
     }
 
@@ -195,6 +196,7 @@ class PHPExcel_Reader_HTML extends PHPExcel_Reader_Abstract implements PHPExcel_
     protected function _releaseTableStartColumn()
     {
         --$this->_tableLevel;
+
         return array_pop($this->_nestedColumn);
     }
 
@@ -454,10 +456,10 @@ class PHPExcel_Reader_HTML extends PHPExcel_Reader_Abstract implements PHPExcel_
     /**
      * Loads PHPExcel from file into PHPExcel instance
      *
-     * @param 	string 		$pFilename
-     * @param	PHPExcel	$objPHPExcel
-     * @return 	PHPExcel
-     * @throws 	PHPExcel_Reader_Exception
+     * @param  string                    $pFilename
+     * @param  PHPExcel                  $objPHPExcel
+     * @return PHPExcel
+     * @throws PHPExcel_Reader_Exception
      */
     public function loadIntoExisting($pFilename, PHPExcel $objPHPExcel)
     {
@@ -486,7 +488,6 @@ class PHPExcel_Reader_HTML extends PHPExcel_Reader_Abstract implements PHPExcel_
 
         //	Discard white space
         $dom->preserveWhiteSpace = false;
-
 
         $row = 0;
         $column = 'A';
@@ -529,12 +530,13 @@ class PHPExcel_Reader_HTML extends PHPExcel_Reader_Abstract implements PHPExcel_
     /**
      * Set sheet index
      *
-     * @param	int		$pValue		Sheet index
+     * @param  int                  $pValue Sheet index
      * @return PHPExcel_Reader_HTML
      */
     public function setSheetIndex($pValue = 0)
     {
         $this->_sheetIndex = $pValue;
+
         return $this;
     }
 

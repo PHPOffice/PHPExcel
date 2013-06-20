@@ -68,13 +68,13 @@ class Reader_OOCalc extends Reader_Abstract implements Reader_IReader
 		}
 
 		// Check if zip class exists
-		if (!class_exists('ZipArchive',FALSE)) {
+		if (!class_exists('\ZipArchive',FALSE)) {
 			throw new Reader_Exception("ZipArchive library is not enabled");
 		}
 
         $mimeType = 'UNKNOWN';
 		// Load file
-		$zip = new ZipArchive;
+		$zip = new \ZipArchive;
 		if ($zip->open($pFilename) === true) {
 			// check if it is an OOXML archive
 			$stat = $zip->statName('mimetype');
@@ -117,7 +117,7 @@ class Reader_OOCalc extends Reader_Abstract implements Reader_IReader
 			throw new Reader_Exception("Could not open " . $pFilename . " for reading! File does not exist.");
 		}
 
-		$zip = new ZipArchive;
+		$zip = new \ZipArchive;
 		if (!$zip->open($pFilename)) {
 			throw new Reader_Exception("Could not open " . $pFilename . " for reading! Error opening file.");
 		}
@@ -169,7 +169,7 @@ class Reader_OOCalc extends Reader_Abstract implements Reader_IReader
 
 		$worksheetInfo = array();
 
-		$zip = new ZipArchive;
+		$zip = new \ZipArchive;
 		if (!$zip->open($pFilename)) {
 			throw new Reader_Exception("Could not open " . $pFilename . " for reading! Error opening file.");
 		}
@@ -324,7 +324,7 @@ class Reader_OOCalc extends Reader_Abstract implements Reader_IReader
 		$timezoneObj = new DateTimeZone('Europe/London');
 		$GMT = new DateTimeZone('UTC');
 
-		$zip = new ZipArchive;
+		$zip = new \ZipArchive;
 		if (!$zip->open($pFilename)) {
 			throw new Reader_Exception("Could not open " . $pFilename . " for reading! Error opening file.");
 		}

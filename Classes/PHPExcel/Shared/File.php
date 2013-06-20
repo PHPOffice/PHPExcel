@@ -81,7 +81,7 @@ class Shared_File
 			$zipFile 		= substr($pFilename, 6, strpos($pFilename, '#') - 6);
 			$archiveFile 	= substr($pFilename, strpos($pFilename, '#') + 1);
 
-			$zip = new ZipArchive();
+			$zip = new \ZipArchive();
 			if ($zip->open($zipFile) === true) {
 				$returnValue = ($zip->getFromName($archiveFile) !== false);
 				$zip->close();

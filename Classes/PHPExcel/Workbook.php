@@ -41,70 +41,70 @@ class Workbook
      *
      * @var string
      */
-    private $_uniqueID;
+    protected $_uniqueID;
 
     /**
      * Document properties
      *
      * @var PHPExcel\DocumentProperties
      */
-    private $_properties;
+    protected $_properties;
 
     /**
      * Document security
      *
      * @var PHPExcel\DocumentSecurity
      */
-    private $_security;
+    protected $_security;
 
     /**
      * Collection of Worksheet objects
      *
      * @var PHPExcel\Worksheet[]
      */
-    private $_workSheetCollection = array();
+    protected $_workSheetCollection = array();
 
     /**
 	 * Calculation Engine
 	 *
 	 * @var PHPExcel\Calculation
 	 */
-	private $_calculationEngine = NULL;
+	protected $_calculationEngine = NULL;
 
     /**
      * Active sheet index
      *
      * @var int
      */
-    private $_activeSheetIndex = 0;
+    protected $_activeSheetIndex = 0;
 
     /**
      * Named ranges
      *
      * @var PHPExcel\NamedRange[]
      */
-    private $_namedRanges = array();
+    protected $_namedRanges = array();
 
     /**
      * CellXf supervisor
      *
      * @var PHPExcel\Style
      */
-    private $_cellXfSupervisor;
+    protected $_cellXfSupervisor;
 
     /**
      * CellXf collection
      *
      * @var PHPExcel\Style[]
      */
-    private $_cellXfCollection = array();
+    protected $_cellXfCollection = array();
 
     /**
      * CellStyleXf collection
      *
      * @var PHPExcel\Style[]
      */
-    private $_cellStyleXfCollection = array();
+    protected $_cellStyleXfCollection = array();
 
     /**
      * Create a new PHPExcel with one Worksheet

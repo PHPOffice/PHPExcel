@@ -56,14 +56,14 @@ class CachedObjectStorageFactory
      *
      * @var string
      */
-    private static $_cacheStorageMethod = NULL;
+    protected static $_cacheStorageMethod = NULL;
 
     /**
      * Name of the class used for cell cacheing
      *
      * @var string
      */
-    private static $_cacheStorageClass = NULL;
+    protected static $_cacheStorageClass = NULL;
 
 
     /**
@@ -71,7 +71,7 @@ class CachedObjectStorageFactory
      *
      * @var string[]
      */
-    private static $_storageMethods = array(
+    protected static $_storageMethods = array(
         self::cache_in_memory,
         self::cache_in_memory_gzip,
         self::cache_in_memory_serialized,
@@ -91,31 +91,35 @@ class CachedObjectStorageFactory
      *
      * @var array of mixed array
      */
-    private static $_storageMethodDefaultParameters = array(
-        self::cache_in_memory               => array(
-                                                    ),
-        self::cache_in_memory_gzip          => array(
-                                                    ),
-        self::cache_in_memory_serialized    => array(
-                                                    ),
-        self::cache_igbinary                => array(
-                                                    ),
-        self::cache_to_phpTemp              => array( 'memoryCacheSize' => '1MB'
-                                                    ),
-        self::cache_to_discISAM             => array( 'dir'             => NULL
-                                                    ),
-        self::cache_to_apc                  => array( 'cacheTime'       => 600
-                                                    ),
-        self::cache_to_memcache             => array( 'memcacheServer'  => 'localhost',
-                                                      'memcachePort'    => 11211,
-                                                      'cacheTime'       => 600
-                                                    ),
-        self::cache_to_wincache             => array( 'cacheTime'       => 600
-                                                    ),
-        self::cache_to_sqlite               => array(
-                                                    ),
-        self::cache_to_sqlite3              => array(
-                                                    ),
+    protected static $_storageMethodDefaultParameters = array(
+        self::cache_in_memory => array(
+        ),
+        self::cache_in_memory_gzip => array(
+        ),
+        self::cache_in_memory_serialized => array(
+        ),
+        self::cache_igbinary => array(
+        ),
+        self::cache_to_phpTemp => array( 'memoryCacheSize' => '1MB'
+        ),
+        self::cache_to_discISAM => array(
+		    'dir'             => NULL
+        ),
+        self::cache_to_apc => array(
+		    'cacheTime' => 600
+        ),
+        self::cache_to_memcache => array(
+		    'memcacheServer' => 'localhost',
+            'memcachePort' => 11211,
+            'cacheTime' => 600
+        ),
+        self::cache_to_wincache => array(
+		    'cacheTime' => 600
+        ),
+        self::cache_to_sqlite => array(
+        ),
+        self::cache_to_sqlite3 => array(
+        ),
     );
 
 
@@ -124,7 +128,7 @@ class CachedObjectStorageFactory
      *
      * @var array of mixed array
      */
-    private static $_storageMethodParameters = array();
+    protected static $_storageMethodParameters = array();
 
 
     /**

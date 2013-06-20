@@ -227,12 +227,12 @@ class Reader_CSV extends Reader_Abstract implements Reader_IReader
 	/**
 	 * Loads PHPExcel from file into PHPExcel instance
 	 *
-	 * @param 	string 		$pFilename
-	 * @param	PHPExcel	$objPHPExcel
+	 * @param 	string 				$pFilename
+	 * @param	PHPExcel\Workbook	$objPHPExcel
 	 * @return 	PHPExcel
 	 * @throws 	PHPExcel\Reader_Exception
 	 */
-	public function loadIntoExisting($pFilename, PHPExcel $objPHPExcel)
+	public function loadIntoExisting($pFilename, Workbook $objPHPExcel)
 	{
 		$lineEnding = ini_get('auto_detect_line_endings');
 		ini_set('auto_detect_line_endings', true);

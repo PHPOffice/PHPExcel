@@ -38,7 +38,7 @@ date_default_timezone_set('Europe/London');
 require_once '../Classes/Bootstrap.php';
 
 
-// Create new PHPExcel object
+// Create new PHPExcel Workbook object
 echo date('H:i:s') , " Create new PHPExcel Workbook object" , EOL;
 $objPHPExcel = new PHPExcel\Workbook();
 

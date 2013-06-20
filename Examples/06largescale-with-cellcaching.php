@@ -44,7 +44,7 @@ if (!PHPExcel\Settings::setCacheStorageMethod($cacheMethod)) {
 echo date('H:i:s') , " Enable Cell Caching using " , $cacheMethod , " method" , EOL;
 
 
-// Create new PHPExcel object
+// Create new PHPExcel Workbook object
 echo date('H:i:s') , " Create new PHPExcel Workbook object" , EOL;
 $objPHPExcel = new PHPExcel\Workbook();
 

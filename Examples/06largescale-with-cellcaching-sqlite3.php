@@ -34,17 +34,17 @@ define('EOL',(PHP_SAPI == 'cli') ? PHP_EOL : '<br />');
 
 date_default_timezone_set('Europe/London');
 
-/** Include PHPExcel */
-require_once '../Classes/PHPExcel.php';
+/** Include PHPExcel Bootstrap */
+require_once '../Classes/Bootstrap.php';
 
 $cacheMethod = PHPExcel_CachedObjectStorageFactory::cache_to_sqlite3;
 PHPExcel_Settings::setCacheStorageMethod($cacheMethod);
 echo date('H:i:s') , " Enable Cell Caching using " , $cacheMethod , " method" , EOL;
 
 
-// Create new PHPExcel object
-echo date('H:i:s') , " Create new PHPExcel object" , EOL;
-$objPHPExcel = new PHPExcel();
+// Create new PHPExcel Workbook object
+echo date('H:i:s') , " Create new PHPExcel Workbook object" , EOL;
+$objPHPExcel = new PHPExcel\Workbook();
 
 // Set document properties
 echo date('H:i:s') , " Set properties" , EOL;

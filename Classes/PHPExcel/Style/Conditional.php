@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Style
+ * @package    PHPExcel\Style
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
@@ -29,10 +29,10 @@
 namespace PHPExcel;
 
 /**
- * PHPExcel_Style_Conditional
+ * PHPExcel\Style_Conditional
  *
  * @category   PHPExcel
- * @package    PHPExcel_Style
+ * @package    PHPExcel\Style
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
 class Style_Conditional implements IComparable
@@ -88,12 +88,12 @@ class Style_Conditional implements IComparable
 	/**
 	 * Style
 	 *
-	 * @var PHPExcel_Style
+	 * @var PHPExcel\Style
 	 */
 	private $_style;
 
     /**
-     * Create a new PHPExcel_Style_Conditional
+     * Create a new PHPExcel\Style_Conditional
      */
     public function __construct()
     {
@@ -117,8 +117,8 @@ class Style_Conditional implements IComparable
     /**
      * Set Condition type
      *
-     * @param string $pValue	PHPExcel_Style_Conditional condition type
-     * @return PHPExcel_Style_Conditional
+     * @param string $pValue	PHPExcel\Style_Conditional condition type
+     * @return PHPExcel\Style_Conditional
      */
     public function setConditionType($pValue = Style_Conditional::CONDITION_NONE) {
     	$this->_conditionType = $pValue;
@@ -137,8 +137,8 @@ class Style_Conditional implements IComparable
     /**
      * Set Operator type
      *
-     * @param string $pValue	PHPExcel_Style_Conditional operator type
-     * @return PHPExcel_Style_Conditional
+     * @param string $pValue	PHPExcel\Style_Conditional operator type
+     * @return PHPExcel\Style_Conditional
      */
     public function setOperatorType($pValue = Style_Conditional::OPERATOR_NONE) {
     	$this->_operatorType = $pValue;
@@ -158,7 +158,7 @@ class Style_Conditional implements IComparable
      * Set text
      *
      * @param string $value
-     * @return PHPExcel_Style_Conditional
+     * @return PHPExcel\Style_Conditional
      */
     public function setText($value = null) {
            $this->_text = $value;
@@ -184,7 +184,7 @@ class Style_Conditional implements IComparable
      *
      * @deprecated Deprecated, use setConditions instead
      * @param string $pValue	Condition
-     * @return PHPExcel_Style_Conditional
+     * @return PHPExcel\Style_Conditional
      */
     public function setCondition($pValue = '') {
     	if (!is_array($pValue))
@@ -206,7 +206,7 @@ class Style_Conditional implements IComparable
      * Set Conditions
      *
      * @param string[] $pValue	Condition
-     * @return PHPExcel_Style_Conditional
+     * @return PHPExcel\Style_Conditional
      */
     public function setConditions($pValue) {
     	if (!is_array($pValue))
@@ -220,7 +220,7 @@ class Style_Conditional implements IComparable
      * Add Condition
      *
      * @param string $pValue	Condition
-     * @return PHPExcel_Style_Conditional
+     * @return PHPExcel\Style_Conditional
      */
     public function addCondition($pValue = '') {
     	$this->_condition[] = $pValue;
@@ -230,7 +230,7 @@ class Style_Conditional implements IComparable
     /**
      * Get Style
      *
-     * @return PHPExcel_Style
+     * @return PHPExcel\Style
      */
     public function getStyle() {
     	return $this->_style;
@@ -239,9 +239,9 @@ class Style_Conditional implements IComparable
     /**
      * Set Style
      *
-     * @param 	PHPExcel_Style $pValue
-     * @throws 	PHPExcel_Exception
-     * @return PHPExcel_Style_Conditional
+     * @param 	PHPExcel\Style $pValue
+     * @throws 	PHPExcel\Exception
+     * @return PHPExcel\Style_Conditional
      */
     public function setStyle(Style $pValue = null) {
    		$this->_style = $pValue;

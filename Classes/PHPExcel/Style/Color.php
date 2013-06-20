@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package	PHPExcel_Style
+ * @package	PHPExcel\Style
  * @copyright Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version ##VERSION##, ##DATE##
@@ -32,7 +32,7 @@ namespace PHPExcel;
  * PHPExcel\Style_Color
  *
  * @category   PHPExcel
- * @package	PHPExcel_Style
+ * @package	PHPExcel\Style
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
 class Style_Color extends Style_Supervisor implements IComparable
@@ -72,7 +72,7 @@ class Style_Color extends Style_Supervisor implements IComparable
 
 
 	/**
-	 * Create a new PHPExcel_Style_Color
+	 * Create a new PHPExcel\Style_Color
 	 *
 	 * @param	string	$pARGB			ARGB value for the colour
 	 * @param	boolean	$isSupervisor	Flag indicating if this is a supervisor or not
@@ -82,7 +82,7 @@ class Style_Color extends Style_Supervisor implements IComparable
 	 *									Leave this value at default unless you understand exactly what
 	 *										its ramifications are
 	 */
-	public function __construct($pARGB = PHPExcel_Style_Color::COLOR_BLACK, $isSupervisor = FALSE, $isConditional = FALSE)
+	public function __construct($pARGB = Style_Color::COLOR_BLACK, $isSupervisor = FALSE, $isConditional = FALSE)
 	{
 		//	Supervisor?
 		parent::__construct($isSupervisor);
@@ -98,7 +98,7 @@ class Style_Color extends Style_Supervisor implements IComparable
 	 *
 	 * @param mixed $parent
 	 * @param string $parentPropertyName
-	 * @return PHPExcel_Style_Color
+	 * @return PHPExcel\Style_Color
 	 */
 	public function bindParent($parent, $parentPropertyName=NULL)
 	{
@@ -111,7 +111,7 @@ class Style_Color extends Style_Supervisor implements IComparable
 	 * Get the shared style component for the currently active cell in currently active sheet.
 	 * Only used for style supervisor
 	 *
-	 * @return PHPExcel_Style_Color
+	 * @return PHPExcel\Style_Color
 	 */
 	public function getSharedComponent()
 	{
@@ -156,8 +156,8 @@ class Style_Color extends Style_Supervisor implements IComparable
 	 * </code>
 	 *
 	 * @param	array	$pStyles	Array containing style information
-	 * @throws	PHPExcel_Exception
-	 * @return PHPExcel_Style_Color
+	 * @throws	PHPExcel\Exception
+	 * @return PHPExcel\Style_Color
 	 */
 	public function applyFromArray($pStyles = NULL) {
 		if (is_array($pStyles)) {
@@ -172,7 +172,7 @@ class Style_Color extends Style_Supervisor implements IComparable
 				}
 			}
 		} else {
-			throw new PHPExcel_Exception("Invalid style array passed.");
+			throw new Exception("Invalid style array passed.");
 		}
 		return $this;
 	}
@@ -193,11 +193,11 @@ class Style_Color extends Style_Supervisor implements IComparable
 	 * Set ARGB
 	 *
 	 * @param string $pValue
-	 * @return PHPExcel_Style_Color
+	 * @return PHPExcel\Style_Color
 	 */
-	public function setARGB($pValue = PHPExcel_Style_Color::COLOR_BLACK) {
+	public function setARGB($pValue = Style_Color::COLOR_BLACK) {
 		if ($pValue == '') {
-			$pValue = PHPExcel_Style_Color::COLOR_BLACK;
+			$pValue = Style_Color::COLOR_BLACK;
 		}
 		if ($this->_isSupervisor) {
 			$styleArray = $this->getStyleArray(array('argb' => $pValue));
@@ -224,7 +224,7 @@ class Style_Color extends Style_Supervisor implements IComparable
 	 * Set RGB
 	 *
 	 * @param	string	$pValue	RGB value
-	 * @return PHPExcel_Style_Color
+	 * @return PHPExcel\Style_Color
 	 */
 	public function setRGB($pValue = '000000') {
 		if ($pValue == '') {
@@ -335,7 +335,7 @@ class Style_Color extends Style_Supervisor implements IComparable
 	 * @param	int			$pIndex			Index entry point into the colour array
 	 * @param	boolean		$background		Flag to indicate whether default background or foreground colour
 	 *											should be returned if the indexed colour doesn't exist
-	 * @return	PHPExcel_Style_Color
+	 * @return	PHPExcel\Style_Color
 	 */
 	public static function indexedColor($pIndex, $background=FALSE) {
 		// Clean parameter
@@ -404,13 +404,13 @@ class Style_Color extends Style_Supervisor implements IComparable
 		}
 
 		if (array_key_exists($pIndex, self::$_indexedColors)) {
-			return new PHPExcel_Style_Color(self::$_indexedColors[$pIndex]);
+			return new Style_Color(self::$_indexedColors[$pIndex]);
 		}
 
 		if ($background) {
-			return new PHPExcel_Style_Color('FFFFFFFF');
+			return new Style_Color('FFFFFFFF');
 		}
-		return new PHPExcel_Style_Color('FF000000');
+		return new Style_Color('FF000000');
 	}
 
 	/**

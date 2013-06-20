@@ -159,7 +159,7 @@ class IOFactory
 		// Include class
 		foreach (self::$_searchLocations as $searchLocation) {
 			if ($searchLocation['type'] == $searchType) {
-				$className = str_replace('{0}', $readerType, $searchLocation['class']);
+				$className = __NAMESPACE__ . '\\' . str_replace('{0}', $readerType, $searchLocation['class']);
 
 				$instance = new $className();
 				if ($instance !== NULL) {

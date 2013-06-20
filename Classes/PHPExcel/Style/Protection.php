@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Style
+ * @package    PHPExcel\Style
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    1.4.5, 2007-08-23
@@ -29,10 +29,10 @@
 namespace PHPExcel;
 
 /**
- * PHPExcel_Style_Protection
+ * PHPExcel\Style_Protection
  *
  * @category   PHPExcel
- * @package    PHPExcel_Style
+ * @package    PHPExcel\Style
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
 class Style_Protection extends Style_Supervisor implements IComparable
@@ -57,7 +57,7 @@ class Style_Protection extends Style_Supervisor implements IComparable
 	protected $_hidden;
 
 	/**
-     * Create a new PHPExcel_Style_Protection
+     * Create a new PHPExcel\Style_Protection
 	 *
 	 * @param	boolean	$isSupervisor	Flag indicating if this is a supervisor or not
 	 *									Leave this value at default unless you understand exactly what
@@ -82,7 +82,7 @@ class Style_Protection extends Style_Supervisor implements IComparable
 	 * Get the shared style component for the currently active cell in currently active sheet.
 	 * Only used for style supervisor
 	 *
-	 * @return PHPExcel_Style_Protection
+	 * @return PHPExcel\Style_Protection
 	 */
 	public function getSharedComponent()
 	{
@@ -113,8 +113,8 @@ class Style_Protection extends Style_Supervisor implements IComparable
      * </code>
      *
      * @param	array	$pStyles	Array containing style information
-     * @throws	PHPExcel_Exception
-     * @return PHPExcel_Style_Protection
+     * @throws	PHPExcel\Exception
+     * @return PHPExcel\Style_Protection
      */
 	public function applyFromArray($pStyles = NULL) {
 		if (is_array($pStyles)) {
@@ -150,7 +150,7 @@ class Style_Protection extends Style_Supervisor implements IComparable
      * Set locked
      *
      * @param string $pValue
-     * @return PHPExcel_Style_Protection
+     * @return PHPExcel\Style_Protection
      */
     public function setLocked($pValue = self::PROTECTION_INHERIT) {
 		if ($this->_isSupervisor) {
@@ -178,7 +178,7 @@ class Style_Protection extends Style_Supervisor implements IComparable
      * Set hidden
      *
      * @param string $pValue
-     * @return PHPExcel_Style_Protection
+     * @return PHPExcel\Style_Protection
      */
     public function setHidden($pValue = self::PROTECTION_INHERIT) {
 		if ($this->_isSupervisor) {

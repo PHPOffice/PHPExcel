@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Style
+ * @package    PHPExcel\Style
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
@@ -29,10 +29,10 @@
 namespace PHPExcel;
 
 /**
- * PHPExcel_Style_Borders
+ * PHPExcel\Style_Borders
  *
  * @category   PHPExcel
- * @package    PHPExcel_Style
+ * @package    PHPExcel\Style
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
 class Style_Borders extends Style_Supervisor implements IComparable
@@ -46,35 +46,35 @@ class Style_Borders extends Style_Supervisor implements IComparable
 	/**
 	 * Left
 	 *
-	 * @var PHPExcel_Style_Border
+	 * @var PHPExcel\Style_Border
 	 */
 	protected $_left;
 
 	/**
 	 * Right
 	 *
-	 * @var PHPExcel_Style_Border
+	 * @var PHPExcel\Style_Border
 	 */
 	protected $_right;
 
 	/**
 	 * Top
 	 *
-	 * @var PHPExcel_Style_Border
+	 * @var PHPExcel\Style_Border
 	 */
 	protected $_top;
 
 	/**
 	 * Bottom
 	 *
-	 * @var PHPExcel_Style_Border
+	 * @var PHPExcel\Style_Border
 	 */
 	protected $_bottom;
 
 	/**
 	 * Diagonal
 	 *
-	 * @var PHPExcel_Style_Border
+	 * @var PHPExcel\Style_Border
 	 */
 	protected $_diagonal;
 
@@ -88,40 +88,40 @@ class Style_Borders extends Style_Supervisor implements IComparable
 	/**
 	 * All borders psedo-border. Only applies to supervisor.
 	 *
-	 * @var PHPExcel_Style_Border
+	 * @var PHPExcel\Style_Border
 	 */
 	protected $_allBorders;
 
 	/**
 	 * Outline psedo-border. Only applies to supervisor.
 	 *
-	 * @var PHPExcel_Style_Border
+	 * @var PHPExcel\Style_Border
 	 */
 	protected $_outline;
 
 	/**
 	 * Inside psedo-border. Only applies to supervisor.
 	 *
-	 * @var PHPExcel_Style_Border
+	 * @var PHPExcel\Style_Border
 	 */
 	protected $_inside;
 
 	/**
 	 * Vertical pseudo-border. Only applies to supervisor.
 	 *
-	 * @var PHPExcel_Style_Border
+	 * @var PHPExcel\Style_Border
 	 */
 	protected $_vertical;
 
 	/**
 	 * Horizontal pseudo-border. Only applies to supervisor.
 	 *
-	 * @var PHPExcel_Style_Border
+	 * @var PHPExcel\Style_Border
 	 */
 	protected $_horizontal;
 
 	/**
-     * Create a new PHPExcel_Style_Borders
+     * Create a new PHPExcel\Style_Borders
 	 *
 	 * @param	boolean	$isSupervisor	Flag indicating if this is a supervisor or not
 	 *									Leave this value at default unless you understand exactly what
@@ -170,7 +170,7 @@ class Style_Borders extends Style_Supervisor implements IComparable
 	 * Get the shared style component for the currently active cell in currently active sheet.
 	 * Only used for style supervisor
 	 *
-	 * @return PHPExcel_Style_Borders
+	 * @return PHPExcel\Style_Borders
 	 */
 	public function getSharedComponent()
 	{
@@ -195,13 +195,13 @@ class Style_Borders extends Style_Supervisor implements IComparable
      * $objPHPExcel->getActiveSheet()->getStyle('B2')->getBorders()->applyFromArray(
      * 		array(
      * 			'bottom'     => array(
-     * 				'style' => PHPExcel_Style_Border::BORDER_DASHDOT,
+     * 				'style' => PHPExcel\Style_Border::BORDER_DASHDOT,
      * 				'color' => array(
      * 					'rgb' => '808080'
      * 				)
      * 			),
      * 			'top'     => array(
-     * 				'style' => PHPExcel_Style_Border::BORDER_DASHDOT,
+     * 				'style' => PHPExcel\Style_Border::BORDER_DASHDOT,
      * 				'color' => array(
      * 					'rgb' => '808080'
      * 				)
@@ -213,7 +213,7 @@ class Style_Borders extends Style_Supervisor implements IComparable
      * $objPHPExcel->getActiveSheet()->getStyle('B2')->getBorders()->applyFromArray(
      * 		array(
      * 			'allborders' => array(
-     * 				'style' => PHPExcel_Style_Border::BORDER_DASHDOT,
+     * 				'style' => PHPExcel\Style_Border::BORDER_DASHDOT,
      * 				'color' => array(
      * 					'rgb' => '808080'
      * 				)
@@ -223,8 +223,8 @@ class Style_Borders extends Style_Supervisor implements IComparable
      * </code>
      *
      * @param	array	$pStyles	Array containing style information
-     * @throws	PHPExcel_Exception
-     * @return PHPExcel_Style_Borders
+     * @throws	PHPExcel\Exception
+     * @return PHPExcel\Style_Borders
      */
 	public function applyFromArray($pStyles = null) {
 		if (is_array($pStyles)) {
@@ -257,7 +257,7 @@ class Style_Borders extends Style_Supervisor implements IComparable
 				}
 			}
 		} else {
-			throw new PHPExcel_Exception("Invalid style array passed.");
+			throw new Exception("Invalid style array passed.");
 		}
 		return $this;
 	}
@@ -265,7 +265,7 @@ class Style_Borders extends Style_Supervisor implements IComparable
     /**
      * Get Left
      *
-     * @return PHPExcel_Style_Border
+     * @return PHPExcel\Style_Border
      */
     public function getLeft() {
 		return $this->_left;
@@ -274,7 +274,7 @@ class Style_Borders extends Style_Supervisor implements IComparable
     /**
      * Get Right
      *
-     * @return PHPExcel_Style_Border
+     * @return PHPExcel\Style_Border
      */
     public function getRight() {
 		return $this->_right;
@@ -283,7 +283,7 @@ class Style_Borders extends Style_Supervisor implements IComparable
     /**
      * Get Top
      *
-     * @return PHPExcel_Style_Border
+     * @return PHPExcel\Style_Border
      */
     public function getTop() {
 		return $this->_top;
@@ -292,7 +292,7 @@ class Style_Borders extends Style_Supervisor implements IComparable
     /**
      * Get Bottom
      *
-     * @return PHPExcel_Style_Border
+     * @return PHPExcel\Style_Border
      */
     public function getBottom() {
 		return $this->_bottom;
@@ -301,7 +301,7 @@ class Style_Borders extends Style_Supervisor implements IComparable
     /**
      * Get Diagonal
      *
-     * @return PHPExcel_Style_Border
+     * @return PHPExcel\Style_Border
      */
     public function getDiagonal() {
 		return $this->_diagonal;
@@ -310,12 +310,12 @@ class Style_Borders extends Style_Supervisor implements IComparable
     /**
      * Get AllBorders (pseudo-border). Only applies to supervisor.
      *
-     * @return PHPExcel_Style_Border
-     * @throws PHPExcel_Exception
+     * @return PHPExcel\Style_Border
+     * @throws PHPExcel\Exception
      */
     public function getAllBorders() {
 		if (!$this->_isSupervisor) {
-			throw new PHPExcel_Exception('Can only get pseudo-border for supervisor.');
+			throw new Exception('Can only get pseudo-border for supervisor.');
 		}
 		return $this->_allBorders;
     }
@@ -324,11 +324,11 @@ class Style_Borders extends Style_Supervisor implements IComparable
      * Get Outline (pseudo-border). Only applies to supervisor.
      *
      * @return boolean
-     * @throws PHPExcel_Exception
+     * @throws PHPExcel\Exception
      */
     public function getOutline() {
 		if (!$this->_isSupervisor) {
-			throw new PHPExcel_Exception('Can only get pseudo-border for supervisor.');
+			throw new Exception('Can only get pseudo-border for supervisor.');
 		}
     	return $this->_outline;
     }
@@ -337,11 +337,11 @@ class Style_Borders extends Style_Supervisor implements IComparable
      * Get Inside (pseudo-border). Only applies to supervisor.
      *
      * @return boolean
-     * @throws PHPExcel_Exception
+     * @throws PHPExcel\Exception
      */
     public function getInside() {
 		if (!$this->_isSupervisor) {
-			throw new PHPExcel_Exception('Can only get pseudo-border for supervisor.');
+			throw new Exception('Can only get pseudo-border for supervisor.');
 		}
     	return $this->_inside;
     }
@@ -349,12 +349,12 @@ class Style_Borders extends Style_Supervisor implements IComparable
     /**
      * Get Vertical (pseudo-border). Only applies to supervisor.
      *
-     * @return PHPExcel_Style_Border
-     * @throws PHPExcel_Exception
+     * @return PHPExcel\Style_Border
+     * @throws PHPExcel\Exception
      */
     public function getVertical() {
 		if (!$this->_isSupervisor) {
-			throw new PHPExcel_Exception('Can only get pseudo-border for supervisor.');
+			throw new Exception('Can only get pseudo-border for supervisor.');
 		}
 		return $this->_vertical;
     }
@@ -362,12 +362,12 @@ class Style_Borders extends Style_Supervisor implements IComparable
     /**
      * Get Horizontal (pseudo-border). Only applies to supervisor.
      *
-     * @return PHPExcel_Style_Border
-     * @throws PHPExcel_Exception
+     * @return PHPExcel\Style_Border
+     * @throws PHPExcel\Exception
      */
     public function getHorizontal() {
 		if (!$this->_isSupervisor) {
-			throw new PHPExcel_Exception('Can only get pseudo-border for supervisor.');
+			throw new Exception('Can only get pseudo-border for supervisor.');
 		}
 		return $this->_horizontal;
     }
@@ -388,7 +388,7 @@ class Style_Borders extends Style_Supervisor implements IComparable
      * Set DiagonalDirection
      *
      * @param int $pValue
-     * @return PHPExcel_Style_Borders
+     * @return PHPExcel\Style_Borders
      */
     public function setDiagonalDirection($pValue = Style_Borders::DIAGONAL_NONE) {
         if ($pValue == '') {

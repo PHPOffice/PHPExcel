@@ -138,7 +138,6 @@ class Autoloader
      */
     public function loadClass($className)
     {
-echo 'Load Class ', $className, PHP_EOL;
         if (null === $this->_namespace || $this->_namespace.$this->_namespaceSeparator === substr($className, 0, strlen($this->_namespace.$this->_namespaceSeparator))) {
             $fileName = '';
             $namespace = '';

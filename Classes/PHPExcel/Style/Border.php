@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package	PHPExcel_Style
+ * @package	PHPExcel\Style
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license	http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version	##VERSION##, ##DATE##
@@ -29,10 +29,10 @@
 namespace PHPExcel;
 
 /**
- * PHPExcel_Style_Border
+ * PHPExcel\Style_Border
  *
  * @category   PHPExcel
- * @package	PHPExcel_Style
+ * @package	PHPExcel\Style
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
 class Style_Border extends Style_Supervisor implements IComparable
@@ -63,7 +63,7 @@ class Style_Border extends Style_Supervisor implements IComparable
 	/**
 	 * Border color
 	 *
-	 * @var PHPExcel_Style_Color
+	 * @var PHPExcel\Style_Color
 	 */
 	protected $_color;
 
@@ -75,7 +75,7 @@ class Style_Border extends Style_Supervisor implements IComparable
 	protected $_parentPropertyName;
 
 	/**
-	 * Create a new PHPExcel_Style_Border
+	 * Create a new PHPExcel\Style_Border
 	 *
 	 * @param	boolean	$isSupervisor	Flag indicating if this is a supervisor or not
 	 *									Leave this value at default unless you understand exactly what
@@ -101,9 +101,9 @@ class Style_Border extends Style_Supervisor implements IComparable
 	/**
 	 * Bind parent. Only used for supervisor
 	 *
-	 * @param PHPExcel_Style_Borders $parent
+	 * @param PHPExcel\Style_Borders $parent
 	 * @param string $parentPropertyName
-	 * @return PHPExcel_Style_Border
+	 * @return PHPExcel\Style_Border
 	 */
 	public function bindParent($parent, $parentPropertyName=NULL)
 	{
@@ -116,8 +116,8 @@ class Style_Border extends Style_Supervisor implements IComparable
 	 * Get the shared style component for the currently active cell in currently active sheet.
 	 * Only used for style supervisor
 	 *
-	 * @return PHPExcel_Style_Border
-	 * @throws PHPExcel_Exception
+	 * @return PHPExcel\Style_Border
+	 * @throws PHPExcel\Exception
 	 */
 	public function getSharedComponent()
 	{
@@ -182,7 +182,7 @@ class Style_Border extends Style_Supervisor implements IComparable
 	 * <code>
 	 * $objPHPExcel->getActiveSheet()->getStyle('B2')->getBorders()->getTop()->applyFromArray(
 	 *		array(
-	 *			'style' => PHPExcel_Style_Border::BORDER_DASHDOT,
+	 *			'style' => PHPExcel\Style_Border::BORDER_DASHDOT,
 	 *			'color' => array(
 	 *				'rgb' => '808080'
 	 *			)
@@ -191,8 +191,8 @@ class Style_Border extends Style_Supervisor implements IComparable
 	 * </code>
 	 *
 	 * @param	array	$pStyles	Array containing style information
-	 * @throws	PHPExcel_Exception
-	 * @return PHPExcel_Style_Border
+	 * @throws	PHPExcel\Exception
+	 * @return PHPExcel\Style_Border
 	 */
 	public function applyFromArray($pStyles = null) {
 		if (is_array($pStyles)) {
@@ -207,7 +207,7 @@ class Style_Border extends Style_Supervisor implements IComparable
 				}
 			}
 		} else {
-			throw new PHPExcel_Exception("Invalid style array passed.");
+			throw new Exception("Invalid style array passed.");
 		}
 		return $this;
 	}
@@ -228,16 +228,16 @@ class Style_Border extends Style_Supervisor implements IComparable
 	 * Set Border style
 	 *
 	 * @param string|boolean	$pValue
-	 *							When passing a boolean, FALSE equates PHPExcel_Style_Border::BORDER_NONE
-	 *								and TRUE to PHPExcel_Style_Border::BORDER_MEDIUM
-	 * @return PHPExcel_Style_Border
+	 *							When passing a boolean, FALSE equates PHPExcel\Style_Border::BORDER_NONE
+	 *								and TRUE to PHPExcel\Style_Border::BORDER_MEDIUM
+	 * @return PHPExcel\Style_Border
 	 */
-	public function setBorderStyle($pValue = PHPExcel_Style_Border::BORDER_NONE) {
+	public function setBorderStyle($pValue = Style_Border::BORDER_NONE) {
 
 		if (empty($pValue)) {
-			$pValue = PHPExcel_Style_Border::BORDER_NONE;
+			$pValue = Style_Border::BORDER_NONE;
 		} elseif(is_bool($pValue) && $pValue) {
-			$pValue = PHPExcel_Style_Border::BORDER_MEDIUM;
+			$pValue = Style_Border::BORDER_MEDIUM;
 		}
 		if ($this->_isSupervisor) {
 			$styleArray = $this->getStyleArray(array('style' => $pValue));
@@ -251,7 +251,7 @@ class Style_Border extends Style_Supervisor implements IComparable
 	/**
 	 * Get Border Color
 	 *
-	 * @return PHPExcel_Style_Color
+	 * @return PHPExcel\Style_Color
 	 */
 	public function getColor() {
 		return $this->_color;
@@ -260,11 +260,11 @@ class Style_Border extends Style_Supervisor implements IComparable
 	/**
 	 * Set Border Color
 	 *
-	 * @param	PHPExcel_Style_Color $pValue
-	 * @throws	PHPExcel_Exception
-	 * @return PHPExcel_Style_Border
+	 * @param	PHPExcel\Style_Color $pValue
+	 * @throws	PHPExcel\Exception
+	 * @return PHPExcel\Style_Border
 	 */
-	public function setColor(PHPExcel_Style_Color $pValue = null) {
+	public function setColor(Style_Color $pValue = null) {
 		// make sure parameter is a real color and not a supervisor
 		$color = $pValue->getIsSupervisor() ? $pValue->getSharedComponent() : $pValue;
 

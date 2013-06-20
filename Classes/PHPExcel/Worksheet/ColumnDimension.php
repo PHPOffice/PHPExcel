@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Worksheet
+ * @package    PHPExcel\Worksheet
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
@@ -29,10 +29,10 @@
 namespace PHPExcel;
 
 /**
- * PHPExcel_Worksheet_ColumnDimension
+ * PHPExcel\Worksheet_ColumnDimension
  *
  * @category   PHPExcel
- * @package    PHPExcel_Worksheet
+ * @package    PHPExcel\Worksheet
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
 class Worksheet_ColumnDimension
@@ -89,7 +89,7 @@ class Worksheet_ColumnDimension
 	private $_xfIndex;
 
     /**
-     * Create a new PHPExcel_Worksheet_ColumnDimension
+     * Create a new PHPExcel\Worksheet_ColumnDimension
      *
      * @param string $pIndex Character column index
      */
@@ -115,7 +115,7 @@ class Worksheet_ColumnDimension
      * Set ColumnIndex
      *
      * @param string $pValue
-     * @return PHPExcel_Worksheet_ColumnDimension
+     * @return PHPExcel\Worksheet_ColumnDimension
      */
     public function setColumnIndex($pValue) {
     	$this->_columnIndex = $pValue;
@@ -135,7 +135,7 @@ class Worksheet_ColumnDimension
      * Set Width
      *
      * @param double $pValue
-     * @return PHPExcel_Worksheet_ColumnDimension
+     * @return PHPExcel\Worksheet_ColumnDimension
      */
     public function setWidth($pValue = -1) {
     	$this->_width = $pValue;
@@ -155,7 +155,7 @@ class Worksheet_ColumnDimension
      * Set Auto Size
      *
      * @param bool $pValue
-     * @return PHPExcel_Worksheet_ColumnDimension
+     * @return PHPExcel\Worksheet_ColumnDimension
      */
     public function setAutoSize($pValue = false) {
     	$this->_autoSize = $pValue;
@@ -175,7 +175,7 @@ class Worksheet_ColumnDimension
      * Set Visible
      *
      * @param bool $pValue
-     * @return PHPExcel_Worksheet_ColumnDimension
+     * @return PHPExcel\Worksheet_ColumnDimension
      */
     public function setVisible($pValue = true) {
     	$this->_visible = $pValue;
@@ -197,12 +197,12 @@ class Worksheet_ColumnDimension
      * Value must be between 0 and 7
      *
      * @param int $pValue
-     * @throws PHPExcel_Exception
-     * @return PHPExcel_Worksheet_ColumnDimension
+     * @throws PHPExcel\Exception
+     * @return PHPExcel\Worksheet_ColumnDimension
      */
     public function setOutlineLevel($pValue) {
     	if ($pValue < 0 || $pValue > 7) {
-    		throw new PHPExcel_Exception("Outline level must range between 0 and 7.");
+    		throw new Exception("Outline level must range between 0 and 7.");
     	}
 
     	$this->_outlineLevel = $pValue;
@@ -222,7 +222,7 @@ class Worksheet_ColumnDimension
      * Set Collapsed
      *
      * @param bool $pValue
-     * @return PHPExcel_Worksheet_ColumnDimension
+     * @return PHPExcel\Worksheet_ColumnDimension
      */
     public function setCollapsed($pValue = true) {
     	$this->_collapsed = $pValue;
@@ -243,7 +243,7 @@ class Worksheet_ColumnDimension
 	 * Set index to cellXf
 	 *
 	 * @param int $pValue
-	 * @return PHPExcel_Worksheet_ColumnDimension
+	 * @return PHPExcel\Worksheet_ColumnDimension
 	 */
 	public function setXfIndex($pValue = 0)
 	{

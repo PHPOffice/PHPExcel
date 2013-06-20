@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package	PHPExcel_Style
+ * @package	PHPExcel\Style
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license	http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version	##VERSION##, ##DATE##
@@ -29,10 +29,10 @@
 namespace PHPExcel;
 
 /**
- * PHPExcel_Style_NumberFormat
+ * PHPExcel\Style_NumberFormat
  *
  * @category   PHPExcel
- * @package	PHPExcel_Style
+ * @package	PHPExcel\Style
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
 class Style_NumberFormat extends Style_Supervisor implements IComparable
@@ -106,7 +106,7 @@ class Style_NumberFormat extends Style_Supervisor implements IComparable
 	protected $_builtInFormatCode	= 0;
 
 	/**
-	 * Create a new PHPExcel_Style_NumberFormat
+	 * Create a new PHPExcel\Style_NumberFormat
 	 *
 	 * @param	boolean	$isSupervisor	Flag indicating if this is a supervisor or not
 	 *									Leave this value at default unless you understand exactly what
@@ -129,7 +129,7 @@ class Style_NumberFormat extends Style_Supervisor implements IComparable
 	 * Get the shared style component for the currently active cell in currently active sheet.
 	 * Only used for style supervisor
 	 *
-	 * @return PHPExcel_Style_NumberFormat
+	 * @return PHPExcel\Style_NumberFormat
 	 */
 	public function getSharedComponent()
 	{
@@ -153,14 +153,14 @@ class Style_NumberFormat extends Style_Supervisor implements IComparable
 	 * <code>
 	 * $objPHPExcel->getActiveSheet()->getStyle('B2')->getNumberFormat()->applyFromArray(
 	 *		array(
-	 *			'code' => PHPExcel_Style_NumberFormat::FORMAT_CURRENCY_EUR_SIMPLE
+	 *			'code' => PHPExcel\Style_NumberFormat::FORMAT_CURRENCY_EUR_SIMPLE
 	 *		)
 	 * );
 	 * </code>
 	 *
 	 * @param	array	$pStyles	Array containing style information
-	 * @throws	PHPExcel_Exception
-	 * @return PHPExcel_Style_NumberFormat
+	 * @throws	PHPExcel\Exception
+	 * @return PHPExcel\Style_NumberFormat
 	 */
 	public function applyFromArray($pStyles = null)
 	{
@@ -173,7 +173,7 @@ class Style_NumberFormat extends Style_Supervisor implements IComparable
 				}
 			}
 		} else {
-			throw new PHPExcel_Exception("Invalid style array passed.");
+			throw new Exception("Invalid style array passed.");
 		}
 		return $this;
 	}
@@ -199,7 +199,7 @@ class Style_NumberFormat extends Style_Supervisor implements IComparable
 	 * Set Format Code
 	 *
 	 * @param string $pValue
-	 * @return PHPExcel_Style_NumberFormat
+	 * @return PHPExcel\Style_NumberFormat
 	 */
 	public function setFormatCode($pValue = Style_NumberFormat::FORMAT_GENERAL)
 	{
@@ -233,7 +233,7 @@ class Style_NumberFormat extends Style_Supervisor implements IComparable
 	 * Set Built-In Format Code
 	 *
 	 * @param int $pValue
-	 * @return PHPExcel_Style_NumberFormat
+	 * @return PHPExcel\Style_NumberFormat
 	 */
 	public function setBuiltInFormatCode($pValue = 0)
 	{
@@ -258,7 +258,7 @@ class Style_NumberFormat extends Style_Supervisor implements IComparable
 			self::$_builtInFormats = array();
 
 			// General
-			self::$_builtInFormats[0] = PHPExcel_Style_NumberFormat::FORMAT_GENERAL;
+			self::$_builtInFormats[0] = Style_NumberFormat::FORMAT_GENERAL;
 			self::$_builtInFormats[1] = '0';
 			self::$_builtInFormats[2] = '0.00';
 			self::$_builtInFormats[3] = '#,##0';
@@ -452,7 +452,7 @@ class Style_NumberFormat extends Style_Supervisor implements IComparable
 			$format = strtr($format,self::$_dateFormatReplacements12);
 		}
 
-		$dateObj = PHPExcel_Shared_Date::ExcelToPHPObject($value);
+		$dateObj = Shared_Date::ExcelToPHPObject($value);
 		$value = $dateObj->format($format);
 	}
 
@@ -483,7 +483,7 @@ class Style_NumberFormat extends Style_Supervisor implements IComparable
 		$decimalLength = strlen($decimalPart);
 		$decimalDivisor = pow(10,$decimalLength);
 
-		$GCD = PHPExcel_Calculation_MathTrig::GCD($decimalPart,$decimalDivisor);
+		$GCD = Calculation_MathTrig::GCD($decimalPart,$decimalDivisor);
 
 		$adjustedDecimalPart = $decimalPart/$GCD;
 		$adjustedDecimalDivisor = $decimalDivisor/$GCD;
@@ -543,14 +543,14 @@ class Style_NumberFormat extends Style_Supervisor implements IComparable
 	 * @param array		$callBack	Callback function for additional formatting of string
 	 * @return string	Formatted string
 	 */
-	public static function toFormattedString($value = '0', $format = PHPExcel_Style_NumberFormat::FORMAT_GENERAL, $callBack = null)
+	public static function toFormattedString($value = '0', $format = Style_NumberFormat::FORMAT_GENERAL, $callBack = null)
 	{
 		// For now we do not treat strings although section 4 of a format code affects strings
 		if (!is_numeric($value)) return $value;
 
 		// For 'General' format code, we just pass the value although this is not entirely the way Excel does it,
 		// it seems to round numbers to a total of 10 digits.
-		if (($format === PHPExcel_Style_NumberFormat::FORMAT_GENERAL) || ($format === PHPExcel_Style_NumberFormat::FORMAT_TEXT)) {
+		if (($format === Style_NumberFormat::FORMAT_GENERAL) || ($format === Style_NumberFormat::FORMAT_TEXT)) {
 			return $value;
 		}
 
@@ -670,8 +670,8 @@ class Style_NumberFormat extends Style_Supervisor implements IComparable
 							$value = number_format(
 										$value
 										, strlen($right)
-										, PHPExcel_Shared_String::getDecimalSeparator()
-										, PHPExcel_Shared_String::getThousandsSeparator()
+										, Shared_String::getDecimalSeparator()
+										, Shared_String::getThousandsSeparator()
 									);
 							$value = preg_replace($number_regex, $value, $format);
 						} else {
@@ -694,7 +694,7 @@ class Style_NumberFormat extends Style_Supervisor implements IComparable
 					$currencyCode = $m[1];
 					list($currencyCode) = explode('-',$currencyCode);
 					if ($currencyCode == '') {
-						$currencyCode = PHPExcel_Shared_String::getCurrencyCode();
+						$currencyCode = Shared_String::getCurrencyCode();
 					}
 					$value = preg_replace('/\[\$([^\]]*)\]/u',$currencyCode,$value);
 				}

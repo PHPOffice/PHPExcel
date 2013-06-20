@@ -76,13 +76,13 @@ class Reader_Excel2007 extends Reader_Abstract implements Reader_IReader
 		}
 
 		// Check if zip class exists
-		if (!class_exists('ZipArchive',FALSE)) {
+		if (!class_exists('\ZipArchive',FALSE)) {
 			throw new Reader_Exception("ZipArchive library is not enabled");
 		}
 
 		$xl = false;
 		// Load file
-		$zip = new ZipArchive;
+		$zip = new \ZipArchive;
 		if ($zip->open($pFilename) === true) {
 			// check if it is an OOXML archive
 			$rels = simplexml_load_string($this->_getFromZipArchive($zip, "_rels/.rels"));
@@ -120,7 +120,7 @@ class Reader_Excel2007 extends Reader_Abstract implements Reader_IReader
 
 		$worksheetNames = array();
 
-		$zip = new ZipArchive;
+		$zip = new \ZipArchive;
 		$zip->open($pFilename);
 
 		//	The files we're looking at here are small enough that simpleXML is more efficient than XMLReader
@@ -164,7 +164,7 @@ class Reader_Excel2007 extends Reader_Abstract implements Reader_IReader
 
 		$worksheetInfo = array();
 
-		$zip = new ZipArchive;
+		$zip = new \ZipArchive;
 		$zip->open($pFilename);
 
 		$rels = simplexml_load_string($this->_getFromZipArchive($zip, "_rels/.rels")); //~ http://schemas.openxmlformats.org/package/2006/relationships");
@@ -303,7 +303,7 @@ class Reader_Excel2007 extends Reader_Abstract implements Reader_IReader
 	}
 
 
-	public function _getFromZipArchive(ZipArchive $archive, $fileName = '')
+	public function _getFromZipArchive(\ZipArchive $archive, $fileName = '')
 	{
 		// Root-relative paths
 		if (strpos($fileName, '//') !== false)
@@ -343,7 +343,7 @@ class Reader_Excel2007 extends Reader_Abstract implements Reader_IReader
 			$excel->removeCellStyleXfByIndex(0); // remove the default style
 			$excel->removeCellXfByIndex(0); // remove the default style
 		}
-		$zip = new ZipArchive;
+		$zip = new \ZipArchive;
 		$zip->open($pFilename);
 
 		//	Read the theme first, because we need the colour scheme when reading the styles

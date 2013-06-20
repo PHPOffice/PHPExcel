@@ -3424,6 +3424,7 @@ class Calculation {
 							$args[] = $pCell;
 						}
 						if (strpos($functionCall,'::') !== FALSE) {
+                            $functionCall = __NAMESPACE__ . '\\' . $functionCall;
 							$result = call_user_func_array(explode('::',$functionCall),$args);
 						} else {
 							foreach($args as &$arg) {

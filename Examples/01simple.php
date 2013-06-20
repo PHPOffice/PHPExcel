@@ -33,13 +33,13 @@ date_default_timezone_set('Europe/London');
 
 define('EOL',(PHP_SAPI == 'cli') ? PHP_EOL : '<br />');
 
-/** Include PHPExcel */
-require_once '../Classes/PHPExcel.php';
+/** Include PHPExcel Bootstrap */
+require_once '../Classes/Bootstrap.php';
 
 
 // Create new PHPExcel object
-echo date('H:i:s') , " Create new PHPExcel object" , EOL;
-$objPHPExcel = new PHPExcel();
+echo date('H:i:s') , " Create new PHPExcel Workbook object" , EOL;
+$objPHPExcel = new PHPExcel\Workbook();
 
 // Set document properties
 echo date('H:i:s') , " Set document properties" , EOL;
@@ -80,11 +80,11 @@ $objPHPExcel->getActiveSheet()->setTitle('Simple');
 $objPHPExcel->setActiveSheetIndex(0);
 
 
-// Save Excel 2007 file
+// Save as an Excel 2007 file
 echo date('H:i:s') , " Write to Excel2007 format" , EOL;
 $callStartTime = microtime(true);
 
-$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+$objWriter = PHPExcel\IOFactory::createWriter($objPHPExcel, 'Excel2007');
 $objWriter->save(str_replace('.php', '.xlsx', __FILE__));
 $callEndTime = microtime(true);
 $callTime = $callEndTime - $callStartTime;
@@ -95,11 +95,11 @@ echo 'Call time to write Workbook was ' , sprintf('%.4f',$callTime) , " seconds"
 echo date('H:i:s') , ' Current memory usage: ' , (memory_get_usage(true) / 1024 / 1024) , " MB" , EOL;
 
 
-// Save Excel 95 file
+// Save as an Excel 95 file
 echo date('H:i:s') , " Write to Excel5 format" , EOL;
 $callStartTime = microtime(true);
 
-$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+$objWriter = PHPExcel\IOFactory::createWriter($objPHPExcel, 'Excel5');
 $objWriter->save(str_replace('.php', '.xls', __FILE__));
 $callEndTime = microtime(true);
 $callTime = $callEndTime - $callStartTime;

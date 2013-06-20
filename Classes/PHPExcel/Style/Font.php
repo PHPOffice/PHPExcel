@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package	PHPExcel_Style
+ * @package	PHPExcel\Style
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license	http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version	##VERSION##, ##DATE##
@@ -32,7 +32,7 @@ namespace PHPExcel;
  * PHPExcel\Style\Font
  *
  * @category   PHPExcel
- * @package	PHPExcel_Style
+ * @package	PHPExcel\Style
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
 class Style_Font extends Style_Supervisor implements IComparable
@@ -103,12 +103,12 @@ class Style_Font extends Style_Supervisor implements IComparable
 	/**
 	 * Foreground color
 	 *
-	 * @var PHPExcel_Style_Color
+	 * @var PHPExcel\Style_Color
 	 */
 	protected $_color;
 
 	/**
-	 * Create a new PHPExcel_Style_Font
+	 * Create a new PHPExcel\Style_Font
 	 *
 	 * @param	boolean	$isSupervisor	Flag indicating if this is a supervisor or not
 	 *									Leave this value at default unless you understand exactly what
@@ -146,7 +146,7 @@ class Style_Font extends Style_Supervisor implements IComparable
 	 * Get the shared style component for the currently active cell in currently active sheet.
 	 * Only used for style supervisor
 	 *
-	 * @return PHPExcel_Style_Font
+	 * @return PHPExcel\Style_Font
 	 */
 	public function getSharedComponent()
 	{
@@ -173,7 +173,7 @@ class Style_Font extends Style_Supervisor implements IComparable
 	 *			'name'		=> 'Arial',
 	 *			'bold'		=> TRUE,
 	 *			'italic'	=> FALSE,
-	 *			'underline' => PHPExcel_Style_Font::UNDERLINE_DOUBLE,
+	 *			'underline' => PHPExcel\Style_Font::UNDERLINE_DOUBLE,
 	 *			'strike'	=> FALSE,
 	 *			'color'		=> array(
 	 *				'rgb' => '808080'
@@ -183,8 +183,8 @@ class Style_Font extends Style_Supervisor implements IComparable
 	 * </code>
 	 *
 	 * @param	array	$pStyles	Array containing style information
-	 * @throws	PHPExcel_Exception
-	 * @return PHPExcel_Style_Font
+	 * @throws	PHPExcel\Exception
+	 * @return PHPExcel\Style_Font
 	 */
 	public function applyFromArray($pStyles = null) {
 		if (is_array($pStyles)) {
@@ -220,7 +220,7 @@ class Style_Font extends Style_Supervisor implements IComparable
 				}
 			}
 		} else {
-			throw new PHPExcel_Exception("Invalid style array passed.");
+			throw new Exception("Invalid style array passed.");
 		}
 		return $this;
 	}
@@ -241,7 +241,7 @@ class Style_Font extends Style_Supervisor implements IComparable
 	 * Set Name
 	 *
 	 * @param string $pValue
-	 * @return PHPExcel_Style_Font
+	 * @return PHPExcel\Style_Font
 	 */
 	public function setName($pValue = 'Calibri') {
   		if ($pValue == '') {
@@ -272,7 +272,7 @@ class Style_Font extends Style_Supervisor implements IComparable
 	 * Set Size
 	 *
 	 * @param double $pValue
-	 * @return PHPExcel_Style_Font
+	 * @return PHPExcel\Style_Font
 	 */
 	public function setSize($pValue = 10) {
 		if ($pValue == '') {
@@ -303,7 +303,7 @@ class Style_Font extends Style_Supervisor implements IComparable
 	 * Set Bold
 	 *
 	 * @param boolean $pValue
-	 * @return PHPExcel_Style_Font
+	 * @return PHPExcel\Style_Font
 	 */
 	public function setBold($pValue = false) {
 		if ($pValue == '') {
@@ -334,7 +334,7 @@ class Style_Font extends Style_Supervisor implements IComparable
 	 * Set Italic
 	 *
 	 * @param boolean $pValue
-	 * @return PHPExcel_Style_Font
+	 * @return PHPExcel\Style_Font
 	 */
 	public function setItalic($pValue = false) {
 		if ($pValue == '') {
@@ -365,7 +365,7 @@ class Style_Font extends Style_Supervisor implements IComparable
 	 * Set SuperScript
 	 *
 	 * @param boolean $pValue
-	 * @return PHPExcel_Style_Font
+	 * @return PHPExcel\Style_Font
 	 */
 	public function setSuperScript($pValue = false) {
 		if ($pValue == '') {
@@ -397,7 +397,7 @@ class Style_Font extends Style_Supervisor implements IComparable
 	 * Set SubScript
 	 *
 	 * @param boolean $pValue
-	 * @return PHPExcel_Style_Font
+	 * @return PHPExcel\Style_Font
 	 */
 	public function setSubScript($pValue = false) {
 		if ($pValue == '') {
@@ -428,10 +428,10 @@ class Style_Font extends Style_Supervisor implements IComparable
 	/**
 	 * Set Underline
 	 *
-	 * @param string|boolean $pValue	PHPExcel_Style_Font underline type
+	 * @param string|boolean $pValue	PHPExcel\Style_Font underline type
 	 *									If a boolean is passed, then TRUE equates to UNDERLINE_SINGLE,
 	 *										false equates to UNDERLINE_NONE
-	 * @return PHPExcel_Style_Font
+	 * @return PHPExcel\Style_Font
 	 */
 	public function setUnderline($pValue = self::UNDERLINE_NONE) {
 		if (is_bool($pValue)) {
@@ -464,7 +464,7 @@ class Style_Font extends Style_Supervisor implements IComparable
 	 * Set Strikethrough
 	 *
 	 * @param boolean $pValue
-	 * @return PHPExcel_Style_Font
+	 * @return PHPExcel\Style_Font
 	 */
 	public function setStrikethrough($pValue = false) {
 		if ($pValue == '') {
@@ -482,7 +482,7 @@ class Style_Font extends Style_Supervisor implements IComparable
 	/**
 	 * Get Color
 	 *
-	 * @return PHPExcel_Style_Color
+	 * @return PHPExcel\Style_Color
 	 */
 	public function getColor() {
 		return $this->_color;
@@ -491,11 +491,11 @@ class Style_Font extends Style_Supervisor implements IComparable
 	/**
 	 * Set Color
 	 *
-	 * @param	PHPExcel_Style_Color $pValue
-	 * @throws	PHPExcel_Exception
-	 * @return PHPExcel_Style_Font
+	 * @param	PHPExcel\Style_Color $pValue
+	 * @throws	PHPExcel\Exception
+	 * @return PHPExcel\Style_Font
 	 */
-	public function setColor(PHPExcel_Style_Color $pValue = null) {
+	public function setColor(Style_Color $pValue = null) {
 		// make sure parameter is a real color and not a supervisor
 		$color = $pValue->getIsSupervisor() ? $pValue->getSharedComponent() : $pValue;
 

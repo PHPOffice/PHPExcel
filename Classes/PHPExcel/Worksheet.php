@@ -2243,7 +2243,7 @@ class Worksheet implements IComparable
      */
     public function getCommentByColumnAndRow($pColumn = 0, $pRow = 1)
     {
-        return $this->getComment(PHPExcel\Cell::stringFromColumnIndex($pColumn) . $pRow);
+        return $this->getComment(Cell::stringFromColumnIndex($pColumn) . $pRow);
     }
 
     /**

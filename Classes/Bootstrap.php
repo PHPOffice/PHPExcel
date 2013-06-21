@@ -29,20 +29,19 @@ namespace PHPExcel;
  
 /** PHPOffice root directory */
 if (!defined('PHPEXCEL_ROOT')) {
-    define('PHPEXCEL_ROOT', dirname(__FILE__) . '/');
+    define('PHPEXCEL_ROOT', dirname(__FILE__));
 }
 
-include PHPEXCEL_ROOT . 'Autoloader.php';
+include PHPEXCEL_ROOT . '/Autoloader.php';
 
 $autoloader = new Autoloader('PHPExcel', PHPEXCEL_ROOT);
 $autoloader->register();
 
-// As we always try to run the autoloader before anything else, we can use it to do a few
+// As we always run the bootstrap before anything else, we can use it to do a few
 //    simple checks and initialisations
 // check mbstring.func_overload
 if (ini_get('mbstring.func_overload') & 2) {
     throw new Exception('Multibyte function overloading in PHP must be disabled for string functions (2).');
 }
 Shared_String::buildCharacterSets();
-
 

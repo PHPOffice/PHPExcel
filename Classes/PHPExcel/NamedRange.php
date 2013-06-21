@@ -42,35 +42,35 @@ class NamedRange
 	 *
 	 * @var string
 	 */
-	private $_name;
+	protected $_name;
 
 	/**
 	 * Worksheet on which the named range can be resolved
 	 *
 	 * @var PHPExcel\Worksheet
 	 */
-	private $_worksheet;
+	protected $_worksheet;
 
 	/**
 	 * Range of the referenced cells
 	 *
 	 * @var string
 	 */
-	private $_range;
+	protected $_range;
 
 	/**
 	 * Is the named range local? (i.e. can only be used on $this->_worksheet)
 	 *
 	 * @var bool
 	 */
-	private $_localOnly;
+	protected $_localOnly;
 
 	/**
 	 * Scope
 	 *
 	 * @var PHPExcel\Worksheet
 	 */
-	private $_scope;
+	protected $_scope;
 
     /**
      * Create a new NamedRange

@@ -50,84 +50,84 @@ class DocumentProperties
      *
      * @var string
      */
-    private $_creator    = 'Unknown Creator';
+    protected $_creator    = 'Unknown Creator';
 
     /**
      * LastModifiedBy
      *
      * @var string
      */
-    private $_lastModifiedBy;
+    protected $_lastModifiedBy;
 
     /**
      * Created
      *
      * @var datetime
      */
-    private $_created;
+    protected $_created;
 
     /**
      * Modified
      *
      * @var datetime
      */
-    private $_modified;
+    protected $_modified;
 
     /**
      * Title
      *
      * @var string
      */
-    private $_title            = 'Untitled Spreadsheet';
+    protected $_title            = 'Untitled Spreadsheet';
 
     /**
      * Description
      *
      * @var string
      */
-    private $_description    = '';
+    protected $_description    = '';
 
     /**
      * Subject
      *
      * @var string
      */
-    private $_subject        = '';
+    protected $_subject        = '';
 
     /**
      * Keywords
      *
      * @var string
      */
-    private $_keywords        = '';
+    protected $_keywords        = '';
 
     /**
      * Category
      *
      * @var string
      */
-    private $_category        = '';
+    protected $_category        = '';
 
     /**
      * Manager
      *
      * @var string
      */
-    private $_manager        = '';
+    protected $_manager        = '';
 
     /**
      * Company
      *
      * @var string
      */
-    private $_company        = 'Microsoft Corporation';
+    protected $_company        = 'Microsoft Corporation';
 
     /**
      * Custom Properties
      *
      * @var string
      */
-    private $_customProperties    = array();
+    protected $_customProperties    = array();
 
 
     /**

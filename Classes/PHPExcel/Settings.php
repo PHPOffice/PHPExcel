@@ -44,11 +44,11 @@ class Settings
     const PDF_RENDERER_MPDF 		= 'mPDF';
 
 
-    private static $_chartRenderers = array(
+    protected static $_chartRenderers = array(
         self::CHART_RENDERER_JPGRAPH,
     );
 
-    private static $_pdfRenderers = array(
+    protected static $_pdfRenderers = array(
         self::PDF_RENDERER_TCPDF,
         self::PDF_RENDERER_DOMPDF,
         self::PDF_RENDERER_MPDF,
@@ -62,7 +62,7 @@ class Settings
      *
      * @var string
      */
-    private static $_zipClass    = self::ZIPARCHIVE;
+    protected static $_zipClass    = self::ZIPARCHIVE;
 
 
     /**
@@ -72,14 +72,14 @@ class Settings
      *
      * @var string
      */
-    private static $_chartRendererName = NULL;
+    protected static $_chartRendererName = NULL;
 
     /**
      * Directory Path to the external Library used for rendering charts
      *
      * @var string
      */
-    private static $_chartRendererPath = NULL;
+    protected static $_chartRendererPath = NULL;
 
 
     /**
@@ -89,14 +89,14 @@ class Settings
      *
      * @var string
      */
-    private static $_pdfRendererName = NULL;
+    protected static $_pdfRendererName = NULL;
 
     /**
      * Directory Path to the external Library used for rendering PDF files
      *
      * @var string
      */
-    private static $_pdfRendererPath = NULL;
+    protected static $_pdfRendererPath = NULL;
 
 
     /**

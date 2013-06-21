@@ -42,7 +42,7 @@ class RichText implements IComparable
      *
      * @var PHPExcel\RichText_ITextElement[]
      */
-    private $_richTextElements;
+    protected $_richTextElements;
 
     /**
      * Create a new PHPExcel\RichText instance

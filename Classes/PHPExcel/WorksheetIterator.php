@@ -44,14 +44,14 @@ class WorksheetIterator implements \Iterator
      *
      * @var PHPExcel
      */
-    private $_subject;
+    protected $_subject;
 
     /**
      * Current iterator position
      *
      * @var int
      */
-    private $_position = 0;
+    protected $_position = 0;
 
     /**
      * Create a new worksheet iterator

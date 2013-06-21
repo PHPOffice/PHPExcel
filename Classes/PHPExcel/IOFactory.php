@@ -41,10 +41,9 @@ class IOFactory
 	 * Search locations
 	 *
 	 * @var	array
-	 * @access	private
 	 * @static
 	 */
-	private static $_searchLocations = array(
+	protected static $_searchLocations = array(
 		array( 'type' => 'IWriter', 'path' => 'PHPExcel/Writer/{0}.php', 'class' => 'Writer_{0}' ),
 		array( 'type' => 'IReader', 'path' => 'PHPExcel/Reader/{0}.php', 'class' => 'Reader_{0}' )
 	);
@@ -53,10 +52,9 @@ class IOFactory
 	 * Autoresolve classes
 	 *
 	 * @var	array
-	 * @access	private
 	 * @static
 	 */
-	private static $_autoResolveClasses = array(
+	protected static $_autoResolveClasses = array(
 		'Excel2007',
 		'Excel5',
 		'Excel2003XML',

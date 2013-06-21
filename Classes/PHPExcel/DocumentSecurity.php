@@ -42,35 +42,35 @@ class DocumentSecurity
 	 *
 	 * @var boolean
 	 */
-	private $_lockRevision;
+	protected $_lockRevision;
 
 	/**
 	 * LockStructure
 	 *
 	 * @var boolean
 	 */
-	private $_lockStructure;
+	protected $_lockStructure;
 
 	/**
 	 * LockWindows
 	 *
 	 * @var boolean
 	 */
-	private $_lockWindows;
+	protected $_lockWindows;
 
 	/**
 	 * RevisionsPassword
 	 *
 	 * @var string
 	 */
-	private $_revisionsPassword;
+	protected $_revisionsPassword;
 
 	/**
 	 * WorkbookPassword
 	 *
 	 * @var string
 	 */
-	private $_workbookPassword;
+	protected $_workbookPassword;
 
     /**
      * Create a new PHPExcel\DocumentSecurity

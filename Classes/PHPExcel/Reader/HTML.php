@@ -110,7 +110,7 @@ class Reader_HTML extends Reader_Abstract implements Reader_IReader
 	{
 		//	Reading 2048 bytes should be enough to validate that the format is HTML
 		$data = fread($this->_fileHandle, 2048);
-		if ((strpos('<',$data) !== FALSE) &&
+		if ((strpos($data, '<') !== FALSE) &&
 			(strlen($data) !== strlen(strip_tags($data)))) {
 			return TRUE;
 		}

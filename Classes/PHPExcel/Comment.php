@@ -42,63 +42,63 @@ class Comment implements IComparable
      *
      * @var string
      */
-    private $_author;
+    protected $_author;
 
     /**
      * Rich text comment
      *
      * @var PHPExcel\RichText
      */
-    private $_text;
+    protected $_text;
 
     /**
      * Comment width (CSS style, i.e. XXpx or YYpt)
      *
      * @var string
      */
-    private $_width = '96pt';
+    protected $_width = '96pt';
 
     /**
      * Left margin (CSS style, i.e. XXpx or YYpt)
      *
      * @var string
      */
-    private $_marginLeft = '59.25pt';
+    protected $_marginLeft = '59.25pt';
 
     /**
      * Top margin (CSS style, i.e. XXpx or YYpt)
      *
      * @var string
      */
-    private $_marginTop = '1.5pt';
+    protected $_marginTop = '1.5pt';
 
     /**
      * Visible
      *
      * @var boolean
      */
-    private $_visible = false;
+    protected $_visible = false;
 
     /**
      * Comment height (CSS style, i.e. XXpx or YYpt)
      *
      * @var string
      */
-    private $_height = '55.5pt';
+    protected $_height = '55.5pt';
 
     /**
      * Comment fill color
      *
      * @var PHPExcel\Style_Color
      */
-    private $_fillColor;
+    protected $_fillColor;
 
     /**
      * Alignment
      *
      * @var string
      */
-    private $_alignment;
+    protected $_alignment;
 
     /**
      * Create a new PHPExcel\Comment

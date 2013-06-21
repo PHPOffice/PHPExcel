@@ -50,14 +50,14 @@ class Cell
 	 *
 	 *	@var	PHPExcel\Cell_IValueBinder
 	 */
-	private static $_valueBinder = NULL;
+	protected static $_valueBinder = NULL;
 
 	/**
 	 *	Value of the cell
 	 *
 	 *	@var	mixed
 	 */
-	private $_value;
+	protected $_value;
 
 	/**
 	 *	Calculated value of the cell (used for caching)
@@ -69,34 +69,34 @@ class Cell
 	 *
 	 *	@var mixed
 	 */
-	private $_calculatedValue = NULL;
+	protected $_calculatedValue = NULL;
 
 	/**
 	 *	Type of the cell data
 	 *
 	 *	@var	string
 	 */
-	private $_dataType;
+	protected $_dataType;
 
 	/**
 	 *	Parent worksheet
 	 *
 	 *	@var	PHPExcel\CachedObjectStorage_CacheBase
 	 */
-	private $_parent;
+	protected $_parent;
 
 	/**
 	 *	Index to cellXf
 	 *
 	 *	@var	int
 	 */
-	private $_xfIndex;
+	protected $_xfIndex;
 
 	/**
 	 *	Attributes of the formula
 	 *
 	 */
-	private $_formulaAttributes;
+	protected $_formulaAttributes;
 
 
 	/**

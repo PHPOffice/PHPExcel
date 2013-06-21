@@ -42,47 +42,41 @@ class DocumentSecurity
 	 *
 	 * @var boolean
 	 */
-	protected $_lockRevision;
+	protected $_lockRevision = false;
 
 	/**
 	 * LockStructure
 	 *
 	 * @var boolean
 	 */
-	protected $_lockStructure;
+	protected $_lockStructure = false;
 
 	/**
 	 * LockWindows
 	 *
 	 * @var boolean
 	 */
-	protected $_lockWindows;
+	protected $_lockWindows = false;
 
 	/**
 	 * RevisionsPassword
 	 *
 	 * @var string
 	 */
-	protected $_revisionsPassword;
+	protected $_revisionsPassword = '';
 
 	/**
 	 * WorkbookPassword
 	 *
 	 * @var string
 	 */
-	protected $_workbookPassword;
+	protected $_workbookPassword = '';
 
     /**
      * Create a new PHPExcel\DocumentSecurity
      */
     public function __construct()
     {
-    	// Initialise values
-    	$this->_lockRevision		= false;
-    	$this->_lockStructure		= false;
-    	$this->_lockWindows			= false;
-    	$this->_revisionsPassword	= '';
-    	$this->_workbookPassword	= '';
     }
 
     /**

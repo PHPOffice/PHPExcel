@@ -42,42 +42,42 @@ class Worksheet_PageMargins
 	 *
 	 * @var double
 	 */
-	private $_left		= 0.7;
+	protected $_left		= 0.7;
 
 	/**
 	 * Right
 	 *
 	 * @var double
 	 */
-	private $_right		= 0.7;
+	protected $_right		= 0.7;
 
 	/**
 	 * Top
 	 *
 	 * @var double
 	 */
-	private $_top		= 0.75;
+	protected $_top		= 0.75;
 
 	/**
 	 * Bottom
 	 *
 	 * @var double
 	 */
-	private $_bottom	= 0.75;
+	protected $_bottom	= 0.75;
 
 	/**
 	 * Header
 	 *
 	 * @var double
 	 */
-	private $_header 	= 0.3;
+	protected $_header 	= 0.3;
 
 	/**
 	 * Footer
 	 *
 	 * @var double
 	 */
-	private $_footer 	= 0.3;
+	protected $_footer 	= 0.3;
 
     /**
      * Create a new PHPExcel\Worksheet_PageMargins

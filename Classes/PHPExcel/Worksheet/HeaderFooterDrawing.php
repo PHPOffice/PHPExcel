@@ -42,63 +42,55 @@ class Worksheet_HeaderFooterDrawing extends Worksheet_Drawing implements ICompar
 	 *
 	 * @var string
 	 */
-	private $_path;
+	protected $_path = '';
 
 	/**
 	 * Name
 	 *
 	 * @var string
 	 */
-	protected $_name;
+	protected $_name = '';
 
 	/**
 	 * Offset X
 	 *
 	 * @var int
 	 */
-	protected $_offsetX;
+	protected $_offsetX = 0;
 
 	/**
 	 * Offset Y
 	 *
 	 * @var int
 	 */
-	protected $_offsetY;
+	protected $_offsetY = 0;
 
 	/**
 	 * Width
 	 *
 	 * @var int
 	 */
-	protected $_width;
+	protected $_width = 0;
 
 	/**
 	 * Height
 	 *
 	 * @var int
 	 */
-	protected $_height;
+	protected $_height = 0;
 
 	/**
 	 * Proportional resize
 	 *
 	 * @var boolean
 	 */
-	protected $_resizeProportional;
+	protected $_resizeProportional = true;
 
     /**
      * Create a new PHPExcel\Worksheet_HeaderFooterDrawing
      */
     public function __construct()
     {
-    	// Initialise values
-    	$this->_path				= '';
-    	$this->_name				= '';
-    	$this->_offsetX				= 0;
-    	$this->_offsetY				= 0;
-    	$this->_width				= 0;
-    	$this->_height				= 0;
-    	$this->_resizeProportional	= true;
     }
 
     /**

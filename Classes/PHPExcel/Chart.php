@@ -42,63 +42,63 @@ class Chart
 	 *
 	 * @var string
 	 */
-	private $_name = '';
+	protected $_name = '';
 
 	/**
 	 * Worksheet
 	 *
 	 * @var PHPExcel\Worksheet
 	 */
-	private $_worksheet = null;
+	protected $_worksheet = null;
 
 	/**
 	 * Chart Title
 	 *
 	 * @var PHPExcel\Chart_Title
 	 */
-	private $_title = null;
+	protected $_title = null;
 
 	/**
 	 * Chart Legend
 	 *
 	 * @var PHPExcel\Chart_Legend
 	 */
-	private $_legend = null;
+	protected $_legend = null;
 
 	/**
 	 * X-Axis Label
 	 *
 	 * @var PHPExcel\Chart_Title
 	 */
-	private $_xAxisLabel = null;
+	protected $_xAxisLabel = null;
 
 	/**
 	 * Y-Axis Label
 	 *
 	 * @var PHPExcel\Chart_Title
 	 */
-	private $_yAxisLabel = null;
+	protected $_yAxisLabel = null;
 
 	/**
 	 * Chart Plot Area
 	 *
 	 * @var PHPExcel\Chart_PlotArea
 	 */
-	private $_plotArea = null;
+	protected $_plotArea = null;
 
 	/**
 	 * Plot Visible Only
 	 *
 	 * @var boolean
 	 */
-	private $_plotVisibleOnly = true;
+	protected $_plotVisibleOnly = true;
 
 	/**
 	 * Display Blanks as
 	 *
 	 * @var string
 	 */
-	private $_displayBlanksAs = '0';
+	protected $_displayBlanksAs = '0';
 
 
 	/**
@@ -106,7 +106,7 @@ class Chart
 	 *
 	 * @var string
 	 */
-	private $_topLeftCellRef = 'A1';
+	protected $_topLeftCellRef = 'A1';
 
 
 	/**
@@ -114,7 +114,7 @@ class Chart
 	 *
 	 * @var integer
 	 */
-	private $_topLeftXOffset = 0;
+	protected $_topLeftXOffset = 0;
 
 
 	/**
@@ -122,7 +122,7 @@ class Chart
 	 *
 	 * @var integer
 	 */
-	private $_topLeftYOffset = 0;
+	protected $_topLeftYOffset = 0;
 
 
 	/**
@@ -130,7 +130,7 @@ class Chart
 	 *
 	 * @var string
 	 */
-	private $_bottomRightCellRef = 'A1';
+	protected $_bottomRightCellRef = 'A1';
 
 
 	/**
@@ -138,7 +138,7 @@ class Chart
 	 *
 	 * @var integer
 	 */
-	private $_bottomRightXOffset = 10;
+	protected $_bottomRightXOffset = 10;
 
 
 	/**
@@ -146,7 +146,7 @@ class Chart
 	 *
 	 * @var integer
 	 */
-	private $_bottomRightYOffset = 10;
+	protected $_bottomRightYOffset = 10;
 
 
 	/**

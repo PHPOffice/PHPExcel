@@ -191,14 +191,14 @@ class Worksheet_PageSetup
 	 *
 	 * @var int
 	 */
-	private $_paperSize		= Worksheet_PageSetup::PAPERSIZE_LETTER;
+	protected $_paperSize		= Worksheet_PageSetup::PAPERSIZE_LETTER;
 
 	/**
 	 * Orientation
 	 *
 	 * @var string
 	 */
-	private $_orientation	= Worksheet_PageSetup::ORIENTATION_DEFAULT;
+	protected $_orientation	= Worksheet_PageSetup::ORIENTATION_DEFAULT;
 
 	/**
 	 * Scale (Print Scale)
@@ -208,7 +208,7 @@ class Worksheet_PageSetup
 	 *
 	 * @var int?
 	 */
-	private $_scale			= 100;
+	protected $_scale			= 100;
 
 	/**
 	  * Fit To Page
@@ -216,7 +216,7 @@ class Worksheet_PageSetup
 	  *
 	  * @var boolean
 	  */
-	private $_fitToPage		= FALSE;
+	protected $_fitToPage		= FALSE;
 
 	/**
 	  * Fit To Height
@@ -224,7 +224,7 @@ class Worksheet_PageSetup
 	  *
 	  * @var int?
 	  */
-	private $_fitToHeight	= 1;
+	protected $_fitToHeight	= 1;
 
 	/**
 	  * Fit To Width
@@ -232,49 +232,49 @@ class Worksheet_PageSetup
 	  *
 	  * @var int?
 	  */
-	private $_fitToWidth	= 1;
+	protected $_fitToWidth	= 1;
 
 	/**
 	 * Columns to repeat at left
 	 *
 	 * @var array Containing start column and end column, empty array if option unset
 	 */
-	private $_columnsToRepeatAtLeft = array('', '');
+	protected $_columnsToRepeatAtLeft = array('', '');
 
 	/**
 	 * Rows to repeat at top
 	 *
 	 * @var array Containing start row number and end row number, empty array if option unset
 	 */
-	private $_rowsToRepeatAtTop = array(0, 0);
+	protected $_rowsToRepeatAtTop = array(0, 0);
 
 	/**
 	 * Center page horizontally
 	 *
 	 * @var boolean
 	 */
-	private $_horizontalCentered = FALSE;
+	protected $_horizontalCentered = FALSE;
 
 	/**
 	 * Center page vertically
 	 *
 	 * @var boolean
 	 */
-	private $_verticalCentered = FALSE;
+	protected $_verticalCentered = FALSE;
 
 	/**
 	 * Print area
 	 *
 	 * @var string
 	 */
-	private $_printArea = NULL;
+	protected $_printArea = NULL;
 
 	/**
 	 * First page number
 	 *
 	 * @var int
 	 */
-	private $_firstPageNumber = NULL;
+	protected $_firstPageNumber = NULL;
 
     /**
      * Create a new PHPExcel\Worksheet_PageSetup

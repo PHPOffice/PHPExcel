@@ -251,7 +251,7 @@ class Style_NumberFormat extends Style_Supervisor implements IComparable
 	/**
 	 * Fill built-in format codes
 	 */
-	private static function fillBuiltInFormatCodes()
+	protected static function fillBuiltInFormatCodes()
 	{
 		// Built-in format codes
 		if (is_null(self::$_builtInFormats)) {
@@ -376,7 +376,7 @@ class Style_NumberFormat extends Style_Supervisor implements IComparable
 	 *
 	 * @var array
 	 */
-	private static $_dateFormatReplacements = array(
+	protected static $_dateFormatReplacements = array(
 			// first remove escapes related to non-format characters
 			'\\'	=> '',
 			//	12-hour suffix
@@ -419,7 +419,7 @@ class Style_NumberFormat extends Style_Supervisor implements IComparable
 	 *
 	 * @var array
 	 */
-	private static $_dateFormatReplacements24 = array(
+	protected static $_dateFormatReplacements24 = array(
 			'hh'	=> 'H',
 			'h'		=> 'G'
 		);
@@ -428,12 +428,12 @@ class Style_NumberFormat extends Style_Supervisor implements IComparable
 	 *
 	 * @var array
 	 */
-	private static $_dateFormatReplacements12 = array(
+	protected static $_dateFormatReplacements12 = array(
 			'hh'	=> 'h',
 			'h'		=> 'g'
 		);
 
-	private static function _formatAsDate(&$value, &$format)
+	protected static function _formatAsDate(&$value, &$format)
 	{
 		// dvc: convert Excel formats to PHP date formats
 
@@ -456,7 +456,7 @@ class Style_NumberFormat extends Style_Supervisor implements IComparable
 		$value = $dateObj->format($format);
 	}
 
-	private static function _formatAsPercentage(&$value, &$format)
+	protected static function _formatAsPercentage(&$value, &$format)
 	{
 		if ($format === self::FORMAT_PERCENTAGE) {
 			$value = round( (100 * $value), 0) . '%';
@@ -474,7 +474,7 @@ class Style_NumberFormat extends Style_Supervisor implements IComparable
 		}
 	}
 
-	private static function _formatAsFraction(&$value, &$format)
+	protected static function _formatAsFraction(&$value, &$format)
 	{
 		$sign = ($value < 0) ? '-' : '';
 
@@ -499,7 +499,7 @@ class Style_NumberFormat extends Style_Supervisor implements IComparable
 		}
 	}
 
-	private static function _complexNumberFormatMask($number, $mask) {
+	protected static function _complexNumberFormatMask($number, $mask) {
 		if (strpos($mask,'.') !== false) {
 			$numbers = explode('.', $number . '.0');
 			$masks = explode('.', $mask . '.0');

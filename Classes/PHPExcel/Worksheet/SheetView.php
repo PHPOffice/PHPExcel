@@ -43,7 +43,7 @@ class Worksheet_SheetView
 	const SHEETVIEW_PAGE_LAYOUT			= 'pageLayout';
 	const SHEETVIEW_PAGE_BREAK_PREVIEW	= 'pageBreakPreview';
 
-	private static $_sheetViewTypes = array(
+	protected static $_sheetViewTypes = array(
 		self::SHEETVIEW_NORMAL,
 		self::SHEETVIEW_PAGE_LAYOUT,
 		self::SHEETVIEW_PAGE_BREAK_PREVIEW,
@@ -56,7 +56,7 @@ class Worksheet_SheetView
 	 *
 	 * @var int
 	 */
-	private $_zoomScale			= 100;
+	protected $_zoomScale			= 100;
 
 	/**
 	 * ZoomScaleNormal
@@ -65,7 +65,7 @@ class Worksheet_SheetView
 	 *
 	 * @var int
 	 */
-	private $_zoomScaleNormal	= 100;
+	protected $_zoomScaleNormal	= 100;
 
 	/**
 	 * View
@@ -74,7 +74,7 @@ class Worksheet_SheetView
 	 *
 	 * @var string
 	 */
-	private $_sheetviewType		= self::SHEETVIEW_NORMAL;
+	protected $_sheetviewType		= self::SHEETVIEW_NORMAL;
 
     /**
      * Create a new PHPExcel\Worksheet_SheetView

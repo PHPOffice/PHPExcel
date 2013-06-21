@@ -42,16 +42,13 @@ class Worksheet_Drawing extends Worksheet_BaseDrawing implements IComparable
 	 *
 	 * @var string
 	 */
-	private $_path;
+	protected $_path = '';
 
     /**
      * Create a new PHPExcel\Worksheet_Drawing
      */
     public function __construct()
     {
-    	// Initialise values
-    	$this->_path				= '';
-
     	// Initialize parent
     	parent::__construct();
     }

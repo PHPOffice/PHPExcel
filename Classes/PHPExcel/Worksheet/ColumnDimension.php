@@ -42,7 +42,7 @@ class Worksheet_ColumnDimension
 	 *
 	 * @var int
 	 */
-	private $_columnIndex;
+	protected $_columnIndex;
 
 	/**
 	 * Column width
@@ -51,42 +51,42 @@ class Worksheet_ColumnDimension
 	 *
 	 * @var double
 	 */
-	private $_width			= -1;
+	protected $_width			= -1;
 
 	/**
 	 * Auto size?
 	 *
 	 * @var bool
 	 */
-	private $_autoSize		= false;
+	protected $_autoSize		= false;
 
 	/**
 	 * Visible?
 	 *
 	 * @var bool
 	 */
-	private $_visible		= true;
+	protected $_visible		= true;
 
 	/**
 	 * Outline level
 	 *
 	 * @var int
 	 */
-	private $_outlineLevel	= 0;
+	protected $_outlineLevel	= 0;
 
 	/**
 	 * Collapsed
 	 *
 	 * @var bool
 	 */
-	private $_collapsed		= false;
+	protected $_collapsed		= false;
 
 	/**
 	 * Index to cellXf
 	 *
 	 * @var int
 	 */
-	private $_xfIndex;
+	protected $_xfIndex = 0;
 
     /**
      * Create a new PHPExcel\Worksheet_ColumnDimension
@@ -97,9 +97,6 @@ class Worksheet_ColumnDimension
     {
     	// Initialise values
     	$this->_columnIndex		= $pIndex;
-
-		// set default index to cellXf
-		$this->_xfIndex = 0;
     }
 
     /**

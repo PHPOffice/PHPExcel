@@ -44,28 +44,28 @@ class Worksheet_CellIterator implements \Iterator
 	 *
 	 * @var PHPExcel\Worksheet
 	 */
-	private $_subject;
+	protected $_subject;
 
 	/**
 	 * Row index
 	 *
 	 * @var int
 	 */
-	private $_rowIndex;
+	protected $_rowIndex;
 
 	/**
 	 * Current iterator position
 	 *
 	 * @var int
 	 */
-	private $_position = 0;
+	protected $_position = 0;
 
 	/**
 	 * Loop only existing cells
 	 *
 	 * @var boolean
 	 */
-	private $_onlyExistingCells = true;
+	protected $_onlyExistingCells = true;
 
 	/**
 	 * Create a new cell iterator

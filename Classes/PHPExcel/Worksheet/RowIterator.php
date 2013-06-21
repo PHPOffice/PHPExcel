@@ -44,21 +44,21 @@ class Worksheet_RowIterator implements \Iterator
 	 *
 	 * @var PHPExcel\Worksheet
 	 */
-	private $_subject;
+	protected $_subject;
 
 	/**
 	 * Current iterator position
 	 *
 	 * @var int
 	 */
-	private $_position = 1;
+	protected $_position = 1;
 
 	/**
 	 * Start position
 	 *
 	 * @var int
 	 */
-	private $_startRow = 1;
+	protected $_startRow = 1;
 
 
 	/**

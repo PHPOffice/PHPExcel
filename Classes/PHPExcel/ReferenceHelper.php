@@ -67,7 +67,7 @@ class ReferenceHelper
 	/**
 	 * Create a new PHPExcel\ReferenceHelper
 	 */
-	protected function __construct() {
+	private function __construct() {
 	}
 
 	/**

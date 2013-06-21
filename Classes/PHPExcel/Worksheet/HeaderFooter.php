@@ -110,77 +110,77 @@ class Worksheet_HeaderFooter
 	 *
 	 * @var string
 	 */
-	private $_oddHeader			= '';
+	protected $_oddHeader			= '';
 
 	/**
 	 * OddFooter
 	 *
 	 * @var string
 	 */
-	private $_oddFooter			= '';
+	protected $_oddFooter			= '';
 
 	/**
 	 * EvenHeader
 	 *
 	 * @var string
 	 */
-	private $_evenHeader		= '';
+	protected $_evenHeader		= '';
 
 	/**
 	 * EvenFooter
 	 *
 	 * @var string
 	 */
-	private $_evenFooter		= '';
+	protected $_evenFooter		= '';
 
 	/**
 	 * FirstHeader
 	 *
 	 * @var string
 	 */
-	private $_firstHeader		= '';
+	protected $_firstHeader		= '';
 
 	/**
 	 * FirstFooter
 	 *
 	 * @var string
 	 */
-	private $_firstFooter		= '';
+	protected $_firstFooter		= '';
 
 	/**
 	 * Different header for Odd/Even, defaults to false
 	 *
 	 * @var boolean
 	 */
-	private $_differentOddEven	= false;
+	protected $_differentOddEven	= false;
 
 	/**
 	 * Different header for first page, defaults to false
 	 *
 	 * @var boolean
 	 */
-	private $_differentFirst	= false;
+	protected $_differentFirst	= false;
 
 	/**
 	 * Scale with document, defaults to true
 	 *
 	 * @var boolean
 	 */
-	private $_scaleWithDocument	= true;
+	protected $_scaleWithDocument	= true;
 
 	/**
 	 * Align with margins, defaults to true
 	 *
 	 * @var boolean
 	 */
-	private $_alignWithMargins	= true;
+	protected $_alignWithMargins	= true;
 
 	/**
 	 * Header/footer images
 	 *
 	 * @var PHPExcel\Worksheet_HeaderFooterDrawing[]
 	 */
-	private $_headerFooterImages = array();
+	protected $_headerFooterImages = array();
 
     /**
      * Create a new PHPExcel\Worksheet_HeaderFooter

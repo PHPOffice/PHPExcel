@@ -42,28 +42,28 @@ class Worksheet_BaseDrawing implements IComparable
 	 *
 	 * @var int
 	 */
-	private static $_imageCounter = 0;
+	protected static $_imageCounter = 0;
 
 	/**
 	 * Image index
 	 *
 	 * @var int
 	 */
-	private $_imageIndex = 0;
+	protected $_imageIndex = 0;
 
 	/**
 	 * Name
 	 *
 	 * @var string
 	 */
-	protected $_name;
+	protected $_name = '';
 
 	/**
 	 * Description
 	 *
 	 * @var string
 	 */
-	protected $_description;
+	protected $_description = '';
 
 	/**
 	 * Worksheet
@@ -77,49 +77,49 @@ class Worksheet_BaseDrawing implements IComparable
 	 *
 	 * @var string
 	 */
-	protected $_coordinates;
+	protected $_coordinates = 'A1';
 
 	/**
 	 * Offset X
 	 *
 	 * @var int
 	 */
-	protected $_offsetX;
+	protected $_offsetX = 0;
 
 	/**
 	 * Offset Y
 	 *
 	 * @var int
 	 */
-	protected $_offsetY;
+	protected $_offsetY = 0;
 
 	/**
 	 * Width
 	 *
 	 * @var int
 	 */
-	protected $_width;
+	protected $_width = 0;
 
 	/**
 	 * Height
 	 *
 	 * @var int
 	 */
-	protected $_height;
+	protected $_height = 0;
 
 	/**
 	 * Proportional resize
 	 *
 	 * @var boolean
 	 */
-	protected $_resizeProportional;
+	protected $_resizeProportional = true;
 
 	/**
 	 * Rotation
 	 *
 	 * @var int
 	 */
-	protected $_rotation;
+	protected $_rotation = 0;
 
 	/**
 	 * Shadow
@@ -134,16 +134,6 @@ class Worksheet_BaseDrawing implements IComparable
     public function __construct()
     {
     	// Initialise values
-    	$this->_name				= '';
-    	$this->_description			= '';
-    	$this->_worksheet			= null;
-    	$this->_coordinates			= 'A1';
-    	$this->_offsetX				= 0;
-    	$this->_offsetY				= 0;
-    	$this->_width				= 0;
-    	$this->_height				= 0;
-    	$this->_resizeProportional	= true;
-    	$this->_rotation			= 0;
     	$this->_shadow				= new Worksheet_Drawing_Shadow();
 
 		// Set image index

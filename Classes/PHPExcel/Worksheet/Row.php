@@ -44,14 +44,14 @@ class Worksheet_Row
 	 *
 	 * @var PHPExcel\Worksheet
 	 */
-	private $_parent;
+	protected $_parent;
 
 	/**
 	 * Row index
 	 *
 	 * @var int
 	 */
-	private $_rowIndex = 0;
+	protected $_rowIndex = 0;
 
 	/**
 	 * Create a new row

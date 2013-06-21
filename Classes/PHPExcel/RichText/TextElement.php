@@ -40,7 +40,7 @@ class RichText_TextElement implements RichText_ITextElement
 	 *
 	 * @var string
 	 */
-	private $_text;
+	protected $_text;
 
     /**
      * Create a new PHPExcel\RichText_TextElement instance

@@ -42,7 +42,7 @@ class Worksheet_RowDimension
 	 *
 	 * @var int
 	 */
-	private $_rowIndex;
+	protected $_rowIndex;
 
 	/**
 	 * Row height (in pt)
@@ -51,42 +51,42 @@ class Worksheet_RowDimension
 	 *
 	 * @var double
 	 */
-	private $_rowHeight		= -1;
+	protected $_rowHeight		= -1;
 
  	/**
 	 * ZeroHeight for Row?
 	 *
 	 * @var bool
 	 */
-	private $_zeroHeight	= false;
+	protected $_zeroHeight	= false;
 
 	/**
 	 * Visible?
 	 *
 	 * @var bool
 	 */
-	private $_visible		= true;
+	protected $_visible		= true;
 
 	/**
 	 * Outline level
 	 *
 	 * @var int
 	 */
-	private $_outlineLevel	= 0;
+	protected $_outlineLevel	= 0;
 
 	/**
 	 * Collapsed
 	 *
 	 * @var bool
 	 */
-	private $_collapsed		= false;
+	protected $_collapsed		= false;
 
 	/**
 	 * Index to cellXf. Null value means row has no explicit cellXf format.
 	 *
 	 * @var int|null
 	 */
-	private $_xfIndex;
+	protected $_xfIndex;
 
     /**
      * Create a new PHPExcel\Worksheet_RowDimension

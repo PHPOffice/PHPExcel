@@ -42,7 +42,7 @@ class Worksheet_AutoFilter
 	 *
 	 * @var PHPExcel\Worksheet
 	 */
-	private $_workSheet = NULL;
+	protected $_workSheet = NULL;
 
 
 	/**
@@ -50,7 +50,7 @@ class Worksheet_AutoFilter
 	 *
 	 * @var string
 	 */
-	private $_range = '';
+	protected $_range = '';
 
 
 	/**
@@ -58,7 +58,7 @@ class Worksheet_AutoFilter
 	 *
 	 * @var array of PHPExcel\Worksheet_AutoFilter_Column
 	 */
-	private $_columns = array();
+	protected $_columns = array();
 
 
     /**

@@ -54,28 +54,28 @@ class Worksheet_MemoryDrawing extends Worksheet_BaseDrawing implements IComparab
 	 *
 	 * @var resource
 	 */
-	private $_imageResource;
+	protected $_imageResource;
 
 	/**
 	 * Rendering function
 	 *
 	 * @var string
 	 */
-	private $_renderingFunction;
+	protected $_renderingFunction = self::RENDERING_DEFAULT;
 
 	/**
 	 * Mime type
 	 *
 	 * @var string
 	 */
-	private $_mimeType;
+	protected $_mimeType = self::MIMETYPE_DEFAULT;
 
 	/**
 	 * Unique name
 	 *
 	 * @var string
 	 */
-	private $_uniqueName;
+	protected $_uniqueName;
 
     /**
      * Create a new PHPExcel\Worksheet_MemoryDrawing
@@ -83,9 +83,6 @@ class Worksheet_MemoryDrawing extends Worksheet_BaseDrawing implements IComparab
     public function __construct()
     {
     	// Initialise values
-    	$this->_imageResource		= null;
-    	$this->_renderingFunction 	= self::RENDERING_DEFAULT;
-    	$this->_mimeType			= self::MIMETYPE_DEFAULT;
     	$this->_uniqueName			= md5(rand(0, 9999). time() . rand(0, 9999));
 
     	// Initialize parent

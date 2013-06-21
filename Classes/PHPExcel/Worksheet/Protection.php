@@ -42,119 +42,119 @@ class Worksheet_Protection
 	 *
 	 * @var boolean
 	 */
-	private $_sheet					= false;
+	protected $_sheet					= false;
 
 	/**
 	 * Objects
 	 *
 	 * @var boolean
 	 */
-	private $_objects				= false;
+	protected $_objects				= false;
 
 	/**
 	 * Scenarios
 	 *
 	 * @var boolean
 	 */
-	private $_scenarios				= false;
+	protected $_scenarios				= false;
 
 	/**
 	 * Format cells
 	 *
 	 * @var boolean
 	 */
-	private $_formatCells			= false;
+	protected $_formatCells			= false;
 
 	/**
 	 * Format columns
 	 *
 	 * @var boolean
 	 */
-	private $_formatColumns			= false;
+	protected $_formatColumns			= false;
 
 	/**
 	 * Format rows
 	 *
 	 * @var boolean
 	 */
-	private $_formatRows			= false;
+	protected $_formatRows			= false;
 
 	/**
 	 * Insert columns
 	 *
 	 * @var boolean
 	 */
-	private $_insertColumns			= false;
+	protected $_insertColumns			= false;
 
 	/**
 	 * Insert rows
 	 *
 	 * @var boolean
 	 */
-	private $_insertRows			= false;
+	protected $_insertRows			= false;
 
 	/**
 	 * Insert hyperlinks
 	 *
 	 * @var boolean
 	 */
-	private $_insertHyperlinks		= false;
+	protected $_insertHyperlinks		= false;
 
 	/**
 	 * Delete columns
 	 *
 	 * @var boolean
 	 */
-	private $_deleteColumns			= false;
+	protected $_deleteColumns			= false;
 
 	/**
 	 * Delete rows
 	 *
 	 * @var boolean
 	 */
-	private $_deleteRows			= false;
+	protected $_deleteRows			= false;
 
 	/**
 	 * Select locked cells
 	 *
 	 * @var boolean
 	 */
-	private $_selectLockedCells		= false;
+	protected $_selectLockedCells		= false;
 
 	/**
 	 * Sort
 	 *
 	 * @var boolean
 	 */
-	private $_sort					= false;
+	protected $_sort					= false;
 
 	/**
 	 * AutoFilter
 	 *
 	 * @var boolean
 	 */
-	private $_autoFilter			= false;
+	protected $_autoFilter			= false;
 
 	/**
 	 * Pivot tables
 	 *
 	 * @var boolean
 	 */
-	private $_pivotTables			= false;
+	protected $_pivotTables			= false;
 
 	/**
 	 * Select unlocked cells
 	 *
 	 * @var boolean
 	 */
-	private $_selectUnlockedCells	= false;
+	protected $_selectUnlockedCells	= false;
 
 	/**
 	 * Password
 	 *
 	 * @var string
 	 */
-	private $_password				= '';
+	protected $_password				= '';
 
     /**
      * Create a new PHPExcel\Worksheet_Protection

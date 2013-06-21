@@ -62,35 +62,35 @@ class Style_Conditional implements IComparable
 	 *
 	 * @var int
 	 */
-	private $_conditionType;
+	protected $_conditionType = Style_Conditional::CONDITION_NONE;
 
 	/**
 	 * Operator type
 	 *
 	 * @var int
 	 */
-	private $_operatorType;
+	protected $_operatorType = Style_Conditional::OPERATOR_NONE;
 
 	/**
 	 * Text
 	 *
 	 * @var string
 	 */
-	private $_text;
+	protected $_text;
 
 	/**
 	 * Condition
 	 *
 	 * @var string[]
 	 */
-	private $_condition = array();
+	protected $_condition = array();
 
 	/**
 	 * Style
 	 *
 	 * @var PHPExcel\Style
 	 */
-	private $_style;
+	protected $_style;
 
     /**
      * Create a new PHPExcel\Style_Conditional
@@ -98,10 +98,6 @@ class Style_Conditional implements IComparable
     public function __construct()
     {
     	// Initialise values
-    	$this->_conditionType		= Style_Conditional::CONDITION_NONE;
-    	$this->_operatorType		= Style_Conditional::OPERATOR_NONE;
-    	$this->_text    			= null;
-    	$this->_condition			= array();
     	$this->_style				= new Style(FALSE, TRUE);
     }
 

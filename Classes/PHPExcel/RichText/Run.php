@@ -40,7 +40,7 @@ class RichText_Run extends RichText_TextElement implements RichText_ITextElement
 	 *
 	 * @var PHPExcel\Style_Font
 	 */
-	private $_font;
+	protected $_font;
 
     /**
      * Create a new PHPExcel\RichText_Run instance

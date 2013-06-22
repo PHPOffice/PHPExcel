@@ -52,7 +52,7 @@ class Cell_DataType
      *
      * @var array
      */
-    private static $_errorCodes = array(
+    protected static $_errorCodes = array(
         '#NULL!'  => 0,
         '#DIV/0!' => 1,
         '#VALUE!' => 2,

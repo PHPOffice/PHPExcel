@@ -40,25 +40,22 @@ class CachedObjectStorage_APC extends CachedObjectStorage_CacheBase implements C
     /**
      * Prefix used to uniquely identify cache data for this worksheet
      *
-     * @access    private
      * @var string
      */
-    private $_cachePrefix = null;
+    protected $_cachePrefix = null;
 
     /**
      * Cache timeout
      *
-     * @access    private
      * @var integer
      */
-    private $_cacheTime = 600;
+    protected $_cacheTime = 600;
 
 
     /**
      * Store cell data in cache for the current cell object if it's "dirty",
      *     and the 'nullify' the current cell object
      *
-     * @access  private
      * @return  void
      * @throws  PHPExcel\Exception
      */

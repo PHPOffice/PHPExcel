@@ -67,111 +67,97 @@ class Cell_DataValidation
      *
      * @var string
      */
-    private $_formula1;
+    protected $_formula1 = '';
 
     /**
      * Formula 2
      *
      * @var string
      */
-    private $_formula2;
+    protected $_formula2 = '';
 
     /**
      * Type
      *
      * @var string
      */
-    private $_type = Cell_DataValidation::TYPE_NONE;
+    protected $_type = Cell_DataValidation::TYPE_NONE;
 
     /**
      * Error style
      *
      * @var string
      */
-    private $_errorStyle = Cell_DataValidation::STYLE_STOP;
+    protected $_errorStyle = Cell_DataValidation::STYLE_STOP;
 
     /**
      * Operator
      *
      * @var string
      */
-    private $_operator;
+    protected $_operator = '';
 
     /**
      * Allow Blank
      *
      * @var boolean
      */
-    private $_allowBlank;
+    protected $_allowBlank = false;
 
     /**
      * Show DropDown
      *
      * @var boolean
      */
-    private $_showDropDown;
+    protected $_showDropDown = false;
 
     /**
      * Show InputMessage
      *
      * @var boolean
      */
-    private $_showInputMessage;
+    protected $_showInputMessage = false;
 
     /**
      * Show ErrorMessage
      *
      * @var boolean
      */
-    private $_showErrorMessage;
+    protected $_showErrorMessage = false;
 
     /**
      * Error title
      *
      * @var string
      */
-    private $_errorTitle;
+    protected $_errorTitle = '';
 
     /**
      * Error
      *
      * @var string
      */
-    private $_error;
+    protected $_error = '';
 
     /**
      * Prompt title
      *
      * @var string
      */
-    private $_promptTitle;
+    protected $_promptTitle = '';
 
     /**
      * Prompt
      *
      * @var string
      */
-    private $_prompt;
+    protected $_prompt = '';
 
     /**
      * Create a new PHPExcel\Cell_DataValidation
      */
     public function __construct()
     {
-        // Initialise member variables
-        $this->_formula1          = '';
-        $this->_formula2          = '';
-        $this->_type              = Cell_DataValidation::TYPE_NONE;
-        $this->_errorStyle        = Cell_DataValidation::STYLE_STOP;
-        $this->_operator          = '';
-        $this->_allowBlank        = FALSE;
-        $this->_showDropDown      = FALSE;
-        $this->_showInputMessage  = FALSE;
-        $this->_showErrorMessage  = FALSE;
-        $this->_errorTitle        = '';
-        $this->_error             = '';
-        $this->_promptTitle       = '';
-        $this->_prompt            = '';
     }
 
     /**

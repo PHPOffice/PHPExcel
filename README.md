@@ -26,7 +26,7 @@ Develop: [![Build Status](https://travis-ci.org/PHPOffice/PHPExcel.png?branch=de
 
 
 ## Requirements
- * PHP version 5.2.0 or higher
+ * PHP version 5.3.0 or higher
  * PHP extension php_zip enabled (required if you need PHPExcel to handle .xlsx .ods or .gnumeric files)
  * PHP extension php_xml enabled
  * PHP extension php_gd2 enabled (optional, but required for exact column width autocalculation)

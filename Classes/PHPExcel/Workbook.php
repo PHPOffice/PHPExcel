@@ -26,7 +26,7 @@
  */
 
 namespace PHPExcel;
- 
+
 /**
  * PHPExcel
  *

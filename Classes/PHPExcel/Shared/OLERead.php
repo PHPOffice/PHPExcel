@@ -25,7 +25,7 @@
  * @version    ##VERSION##, ##DATE##
  */
 
- 
+
 namespace PHPExcel;
 
 defined('IDENTIFIER_OLE') ||

@@ -27,7 +27,7 @@
 
 
 namespace PHPExcel;
- 
+
 /**
  * PHPExcel\Shared_String
  *

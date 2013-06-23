@@ -28,7 +28,7 @@
 
 
 namespace PHPExcel;
- 
+
 /**
  * PHPExcel\CachedObjectStorageFactory
  *

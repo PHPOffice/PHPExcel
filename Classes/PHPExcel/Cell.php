@@ -27,7 +27,7 @@
 
 
 namespace PHPExcel;
- 
+
 /**
  *    PHPExcel\Cell
  *

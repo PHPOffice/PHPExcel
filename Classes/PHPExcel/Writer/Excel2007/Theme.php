@@ -130,7 +130,7 @@ class Writer_Excel2007_Theme extends Writer_Excel2007_WriterPart
                     'hlink'        => '0000FF',
                     'folHlink'    => '800080',
             );
-            
+
     /**
      * Write theme to XML format
      *
@@ -868,6 +868,6 @@ class Writer_Excel2007_Theme extends Writer_Excel2007_WriterPart
 
             $objWriter->endElement();
         }
-                        
+
     }
 }

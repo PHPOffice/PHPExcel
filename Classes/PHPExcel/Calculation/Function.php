@@ -27,7 +27,7 @@
 
 
 namespace PHPExcel;
- 
+
 /**
  * PHPExcel\Calculation_Function
  *

@@ -27,7 +27,7 @@
 
 
 namespace PHPExcel;
- 
+
  if (!defined('PCLZIP_TEMPORARY_DIR')) {
     define('PCLZIP_TEMPORARY_DIR', Shared_File::sys_get_temp_dir());
 }

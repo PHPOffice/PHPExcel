@@ -27,7 +27,7 @@
 
 
 namespace PHPExcel;
- 
+
 /**
  * PHPExcel\CalcEngine_CyclicReferenceStack
  *

@@ -966,9 +966,9 @@ class Writer_HTML extends Writer_Abstract implements Writer_IWriter {
     private function _createCSSStyleBorder(Style_Border $pStyle) {
         // Create CSS
 //        $css = $this->_mapBorderStyle($pStyle->getBorderStyle()) . ' #' . $pStyle->getColor()->getRGB();
-        //    Create CSS - add !important to non-none border styles for merged cells  
-        $borderStyle = $this->_mapBorderStyle($pStyle->getBorderStyle());  
-        $css = $borderStyle . ' #' . $pStyle->getColor()->getRGB() . (($borderStyle == 'none') ? '' : ' !important'); 
+        //    Create CSS - add !important to non-none border styles for merged cells
+        $borderStyle = $this->_mapBorderStyle($pStyle->getBorderStyle());
+        $css = $borderStyle . ' #' . $pStyle->getColor()->getRGB() . (($borderStyle == 'none') ? '' : ' !important');
 
         // Return
         return $css;
@@ -1019,7 +1019,7 @@ class Writer_HTML extends Writer_Abstract implements Writer_IWriter {
         // Construct HTML
         $html = '';
         $html .= $this->_setMargins($pSheet);
-            
+
         if (!$this->_useInlineCss) {
             $gridlines = $pSheet->getShowGridLines() ? ' gridlines' : '';
             $html .= '    <table border="0" cellpadding="0" cellspacing="0" id="sheet' . $sheetIndex . '" class="sheet' . $sheetIndex . $gridlines . '">' . PHP_EOL;

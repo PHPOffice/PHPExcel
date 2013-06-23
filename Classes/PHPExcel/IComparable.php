@@ -25,7 +25,7 @@
 
 
 namespace PHPExcel;
- 
+
 /**
  * PHPExcel\IComparable
  *

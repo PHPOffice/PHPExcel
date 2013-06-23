@@ -482,7 +482,7 @@ class Calculation_TextData {
      * @param    string    $oldText    String to modify
      * @param    int        $start        Start character
      * @param    int        $chars        Number of characters
-     * @param    string    $newText    String to replace in defined position 
+     * @param    string    $newText    String to replace in defined position
      * @return    string
      */
     public static function REPLACE($oldText = '', $start = 1, $chars = null, $newText) {

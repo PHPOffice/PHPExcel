@@ -88,7 +88,7 @@ class Reader_Excel2003XML extends Reader_Abstract implements Reader_IReader
         // Open file
         $this->_openFile($pFilename);
         $fileHandle = $this->_fileHandle;
-        
+
         // Read sample data (first 2 KB will do)
         $data = fread($fileHandle, 2048);
         fclose($fileHandle);

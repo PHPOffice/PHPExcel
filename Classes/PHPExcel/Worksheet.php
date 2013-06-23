@@ -27,7 +27,7 @@
 
 
 namespace PHPExcel;
- 
+
 /**
  * PHPExcel\Worksheet
  *
@@ -1165,8 +1165,8 @@ class Worksheet implements IComparable
         $cell = $this->_cellCollection->addCacheData(
             $pCoordinate,
             new Cell(
-                null, 
-                Cell_DataType::TYPE_NULL, 
+                null,
+                Cell_DataType::TYPE_NULL,
                 $this
             )
         );
@@ -1193,7 +1193,7 @@ class Worksheet implements IComparable
 
         return $cell;
     }
-    
+
     /**
      * Does the cell at a specific coordinate exist?
      *

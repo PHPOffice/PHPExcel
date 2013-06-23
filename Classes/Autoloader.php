@@ -44,7 +44,7 @@
 
 
 namespace PHPExcel;
- 
+
 /**
  * PHPExcel\Autoloader
  *
@@ -58,11 +58,11 @@ class Autoloader
     private $namespace;
     private $includePath;
     private $namespaceSeparator = '\\';
- 
+
     /**
      * Creates a new SplClassLoader that loads classes of the
      * specified namespace.
-     * 
+     *
      * @param string $namespace The namespace to use.
      * @param string $includePath The directory path for that namespace.
      */
@@ -71,17 +71,17 @@ class Autoloader
         $this->namespace = $namespace;
         $this->includePath = $includePath;
     }
- 
+
     /**
      * Sets the namespace separator used by classes in the namespace of this class loader.
-     * 
+     *
      * @param string $sep The separator to use.
      */
     public function setNamespaceSeparator($sep)
     {
         $this->namespaceSeparator = $sep;
     }
- 
+
     /**
      * Gets the namespace seperator used by classes in the namespace of this class loader.
      *
@@ -91,17 +91,17 @@ class Autoloader
     {
         return $this->namespaceSeparator;
     }
- 
+
     /**
      * Sets the base include path for all class files in the namespace of this class loader.
-     * 
+     *
      * @param string $includePath
      */
     public function setIncludePath($includePath)
     {
         $this->includePath = $includePath;
     }
- 
+
     /**
      * Gets the base include path for all class files in the namespace of this class loader.
      *
@@ -111,17 +111,17 @@ class Autoloader
     {
         return $this->includePath;
     }
- 
+
     /**
      * Sets the file extension of class files in the namespace of this class loader.
-     * 
+     *
      * @param string $fileExtension
      */
     public function setFileExtension($fileExtension)
     {
         $this->fileExtension = $fileExtension;
     }
- 
+
     /**
      * Gets the file extension of class files in the namespace of this class loader.
      *
@@ -131,7 +131,7 @@ class Autoloader
     {
         return $this->fileExtension;
     }
- 
+
     /**
      * Installs this class loader on the SPL autoload stack.
      */
@@ -139,7 +139,7 @@ class Autoloader
     {
         spl_autoload_register(array($this, 'loadClass'));
     }
- 
+
     /**
      * Uninstalls this class loader from the SPL autoloader stack.
      */
@@ -147,7 +147,7 @@ class Autoloader
     {
         spl_autoload_unregister(array($this, 'loadClass'));
     }
- 
+
     /**
      * Loads the given class or interface.
      *

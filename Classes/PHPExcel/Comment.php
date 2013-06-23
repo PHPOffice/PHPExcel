@@ -108,10 +108,10 @@ class Comment implements IComparable
     public function __construct()
     {
         // Initialise variables
-        $this->_author		= 'Author';
-        $this->_text		= new RichText();
-        $this->_fillColor	= new Style_Color('FFFFFFE1');
-        $this->_alignment	= Style_Alignment::HORIZONTAL_GENERAL;
+        $this->_author        = 'Author';
+        $this->_text        = new RichText();
+        $this->_fillColor    = new Style_Color('FFFFFFE1');
+        $this->_alignment    = Style_Alignment::HORIZONTAL_GENERAL;
     }
 
     /**
@@ -325,5 +325,4 @@ class Comment implements IComparable
     public function __toString() {
         return $this->_text->getPlainText();
     }
-
 }

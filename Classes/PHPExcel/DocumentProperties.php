@@ -38,7 +38,7 @@ namespace PHPExcel;
 class DocumentProperties
 {
     /** constants */
-    const PROPERTY_TYPE_BOOLEAN	= 'b';
+    const PROPERTY_TYPE_BOOLEAN    = 'b';
     const PROPERTY_TYPE_INTEGER = 'i';
     const PROPERTY_TYPE_FLOAT   = 'f';
     const PROPERTY_TYPE_DATE    = 'd';
@@ -197,7 +197,7 @@ class DocumentProperties
      * @return PHPExcel\DocumentProperties
      */
     public function setCreated($pValue = null) {
-        if ($pValue === NULL) {
+        if ($pValue === null) {
             $pValue = time();
         } elseif (is_string($pValue)) {
             if (is_numeric($pValue)) {
@@ -227,7 +227,7 @@ class DocumentProperties
      * @return PHPExcel\DocumentProperties
      */
     public function setModified($pValue = null) {
-        if ($pValue === NULL) {
+        if ($pValue === null) {
             $pValue = time();
         } elseif (is_string($pValue)) {
             if (is_numeric($pValue)) {
@@ -432,20 +432,20 @@ class DocumentProperties
      * @param string $propertyName
      * @param mixed $propertyValue
      * @param string $propertyType
-     * 	 'i'    : Integer
+     *      'i'    : Integer
      *   'f' : Floating Point
      *   's' : String
      *   'd' : Date/Time
      *   'b' : Boolean
      * @return PHPExcel\DocumentProperties
      */
-    public function setCustomProperty($propertyName,$propertyValue='',$propertyType=NULL) {
-        if (($propertyType === NULL) || (!in_array($propertyType,array(self::PROPERTY_TYPE_INTEGER,
+    public function setCustomProperty($propertyName,$propertyValue='',$propertyType=null) {
+        if (($propertyType === null) || (!in_array($propertyType,array(self::PROPERTY_TYPE_INTEGER,
                                                                        self::PROPERTY_TYPE_FLOAT,
                                                                        self::PROPERTY_TYPE_STRING,
                                                                        self::PROPERTY_TYPE_DATE,
                                                                        self::PROPERTY_TYPE_BOOLEAN)))) {
-            if ($propertyValue === NULL) {
+            if ($propertyValue === null) {
                 $propertyType = self::PROPERTY_TYPE_STRING;
             } elseif (is_float($propertyValue)) {
                 $propertyType = self::PROPERTY_TYPE_FLOAT;
@@ -482,7 +482,7 @@ class DocumentProperties
                 return '';
                 break;
             case 'null'        :    //    Null
-                return NULL;
+                return null;
                 break;
             case 'i1'        :    //    1-Byte Signed Integer
             case 'i2'        :    //    2-Byte Signed Integer
@@ -585,5 +585,4 @@ class DocumentProperties
         }
         return self::PROPERTY_TYPE_UNKNOWN;
     }
-
 }

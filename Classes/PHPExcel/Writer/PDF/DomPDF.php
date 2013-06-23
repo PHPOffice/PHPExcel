@@ -61,7 +61,7 @@ class Writer_PDF_DomPDF extends Writer_PDF_Core implements Writer_IWriter
      *  @param   string     $pFilename   Name of the file to save as
      *  @throws  PHPExcel\Writer_Exception
      */
-    public function save($pFilename = NULL)
+    public function save($pFilename = null)
     {
         $fileHandle = parent::prepareForSave($pFilename);
 
@@ -107,7 +107,7 @@ class Writer_PDF_DomPDF extends Writer_PDF_Core implements Writer_IWriter
         $pdf->set_paper(strtolower($paperSize), $orientation);
 
         $pdf->load_html(
-            $this->generateHTMLHeader(FALSE) .
+            $this->generateHTMLHeader(false) .
             $this->generateSheetData() .
             $this->generateHTMLFooter()
         );
@@ -116,7 +116,6 @@ class Writer_PDF_DomPDF extends Writer_PDF_Core implements Writer_IWriter
         //  Write to file
         fwrite($fileHandle, $pdf->output());
 
-		parent::restoreStateAfterSave($fileHandle);
+        parent::restoreStateAfterSave($fileHandle);
     }
-
 }

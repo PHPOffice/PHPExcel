@@ -21,7 +21,7 @@
  * @category   PHPExcel
  * @package    PHPExcel\Reader
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
- * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
+ * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
 
@@ -37,13 +37,13 @@ namespace PHPExcel;
  */
 interface Reader_IReadFilter
 {
-	/**
-	 * Should this cell be read?
-	 *
-	 * @param 	$column		String column index
-	 * @param 	$row			Row index
-	 * @param	$worksheetName	Optional worksheet name
-	 * @return	boolean
-	 */
-	public function readCell($column, $row, $worksheetName = '');
+    /**
+     * Should this cell be read?
+     *
+     * @param     $column        String column index
+     * @param     $row            Row index
+     * @param    $worksheetName    Optional worksheet name
+     * @return    boolean
+     */
+    public function readCell($column, $row, $worksheetName = '');
 }

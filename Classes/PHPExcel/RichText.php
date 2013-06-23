@@ -56,7 +56,7 @@ class RichText implements IComparable
         $this->_richTextElements = array();
 
         // Rich-Text string attached to cell?
-        if ($pCell !== NULL) {
+        if ($pCell !== null) {
             // Add cell text and style
             if ($pCell->getValue() != "") {
                 $objRun = new RichText_Run($pCell->getValue());

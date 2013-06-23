@@ -21,7 +21,7 @@
  * @category   PHPExcel
  * @package    PHPExcel\Worksheet
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
- * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
+ * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
 
@@ -39,56 +39,56 @@ namespace PHPExcel;
  */
 class Worksheet_CellIterator implements \Iterator
 {
-	/**
-	 * PHPExcel\Worksheet to iterate
-	 *
-	 * @var PHPExcel\Worksheet
-	 */
-	protected $_subject;
+    /**
+     * PHPExcel\Worksheet to iterate
+     *
+     * @var PHPExcel\Worksheet
+     */
+    protected $_subject;
 
-	/**
-	 * Row index
-	 *
-	 * @var int
-	 */
-	protected $_rowIndex;
+    /**
+     * Row index
+     *
+     * @var int
+     */
+    protected $_rowIndex;
 
-	/**
-	 * Current iterator position
-	 *
-	 * @var int
-	 */
-	protected $_position = 0;
+    /**
+     * Current iterator position
+     *
+     * @var int
+     */
+    protected $_position = 0;
 
-	/**
-	 * Loop only existing cells
-	 *
-	 * @var boolean
-	 */
-	protected $_onlyExistingCells = true;
+    /**
+     * Loop only existing cells
+     *
+     * @var boolean
+     */
+    protected $_onlyExistingCells = true;
 
-	/**
-	 * Create a new cell iterator
-	 *
-	 * @param PHPExcel\Worksheet 		$subject
-	 * @param int						$rowIndex
-	 */
-	public function __construct(Worksheet $subject = null, $rowIndex = 1) {
-		// Set subject and row index
-		$this->_subject 	= $subject;
-		$this->_rowIndex 	= $rowIndex;
-	}
+    /**
+     * Create a new cell iterator
+     *
+     * @param PHPExcel\Worksheet         $subject
+     * @param int                        $rowIndex
+     */
+    public function __construct(Worksheet $subject = null, $rowIndex = 1) {
+        // Set subject and row index
+        $this->_subject     = $subject;
+        $this->_rowIndex     = $rowIndex;
+    }
 
-	/**
-	 * Destructor
-	 */
-	public function __destruct() {
-		unset($this->_subject);
-	}
+    /**
+     * Destructor
+     */
+    public function __destruct() {
+        unset($this->_subject);
+    }
 
-	/**
-	 * Rewind iterator
-	 */
+    /**
+     * Rewind iterator
+     */
     public function rewind() {
         $this->_position = 0;
     }
@@ -99,7 +99,7 @@ class Worksheet_CellIterator implements \Iterator
      * @return PHPExcel\Cell
      */
     public function current() {
-		return $this->_subject->getCellByColumnAndRow($this->_position, $this->_rowIndex);
+        return $this->_subject->getCellByColumnAndRow($this->_position, $this->_rowIndex);
     }
 
     /**
@@ -143,21 +143,21 @@ class Worksheet_CellIterator implements \Iterator
         return $this->_position < $columnCount;
     }
 
-	/**
-	 * Get loop only existing cells
-	 *
-	 * @return boolean
-	 */
+    /**
+     * Get loop only existing cells
+     *
+     * @return boolean
+     */
     public function getIterateOnlyExistingCells() {
-    	return $this->_onlyExistingCells;
+        return $this->_onlyExistingCells;
     }
 
-	/**
-	 * Set the iterator to loop only existing cells
-	 *
-	 * @param	boolean		$value
-	 */
+    /**
+     * Set the iterator to loop only existing cells
+     *
+     * @param    boolean        $value
+     */
     public function setIterateOnlyExistingCells($value = true) {
-    	$this->_onlyExistingCells = $value;
+        $this->_onlyExistingCells = $value;
     }
 }

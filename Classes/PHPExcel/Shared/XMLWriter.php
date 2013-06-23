@@ -19,10 +19,10 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package	PHPExcel\Shared
+ * @package    PHPExcel\Shared
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
- * @license	http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
- * @version	##VERSION##, ##DATE##
+ * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
+ * @version    ##VERSION##, ##DATE##
  */
 
 
@@ -36,85 +36,85 @@ namespace PHPExcel;
  * PHPExcel\Shared_XMLWriter
  *
  * @category   PHPExcel
- * @package	PHPExcel\Shared
+ * @package    PHPExcel\Shared
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
 class Shared_XMLWriter extends \XMLWriter {
-	/** Temporary storage method */
-	const STORAGE_MEMORY	= 1;
-	const STORAGE_DISK		= 2;
+    /** Temporary storage method */
+    const STORAGE_MEMORY    = 1;
+    const STORAGE_DISK        = 2;
 
-	/**
-	 * Temporary filename
-	 *
-	 * @var string
-	 */
-	private $_tempFileName = '';
+    /**
+     * Temporary filename
+     *
+     * @var string
+     */
+    private $_tempFileName = '';
 
-	/**
-	 * Create a new PHPExcel\Shared_XMLWriter instance
-	 *
-	 * @param int		$pTemporaryStorage			Temporary storage location
-	 * @param string	$pTemporaryStorageFolder	Temporary storage folder
-	 */
-	public function __construct($pTemporaryStorage = self::STORAGE_MEMORY, $pTemporaryStorageFolder = NULL) {
-		// Open temporary storage
-		if ($pTemporaryStorage == self::STORAGE_MEMORY) {
-			$this->openMemory();
-		} else {
-			// Create temporary filename
-			if ($pTemporaryStorageFolder === NULL)
-				$pTemporaryStorageFolder = Shared_File::sys_get_temp_dir();
-			$this->_tempFileName = @tempnam($pTemporaryStorageFolder, 'xml');
+    /**
+     * Create a new PHPExcel\Shared_XMLWriter instance
+     *
+     * @param int        $pTemporaryStorage            Temporary storage location
+     * @param string    $pTemporaryStorageFolder    Temporary storage folder
+     */
+    public function __construct($pTemporaryStorage = self::STORAGE_MEMORY, $pTemporaryStorageFolder = null) {
+        // Open temporary storage
+        if ($pTemporaryStorage == self::STORAGE_MEMORY) {
+            $this->openMemory();
+        } else {
+            // Create temporary filename
+            if ($pTemporaryStorageFolder === null)
+                $pTemporaryStorageFolder = Shared_File::sys_get_temp_dir();
+            $this->_tempFileName = @tempnam($pTemporaryStorageFolder, 'xml');
 
-			// Open storage
-			if ($this->openUri($this->_tempFileName) === false) {
-				// Fallback to memory...
-				$this->openMemory();
-			}
-		}
-	}
+            // Open storage
+            if ($this->openUri($this->_tempFileName) === false) {
+                // Fallback to memory...
+                $this->openMemory();
+            }
+        }
+    }
 
-	/**
-	 * Destructor
-	 */
-	public function __destruct() {
-		// Unlink temporary files
-		if ($this->_tempFileName != '') {
-			@unlink($this->_tempFileName);
-		}
-	}
+    /**
+     * Destructor
+     */
+    public function __destruct() {
+        // Unlink temporary files
+        if ($this->_tempFileName != '') {
+            @unlink($this->_tempFileName);
+        }
+    }
 
-	/**
-	 * Get written data
-	 *
-	 * @return $data
-	 */
-	public function getData() {
-		if ($this->_tempFileName == '') {
-			return $this->outputMemory(true);
-		} else {
-			$this->flush();
-			return file_get_contents($this->_tempFileName);
-		}
-	}
+    /**
+     * Get written data
+     *
+     * @return $data
+     */
+    public function getData() {
+        if ($this->_tempFileName == '') {
+            return $this->outputMemory(true);
+        } else {
+            $this->flush();
+            return file_get_contents($this->_tempFileName);
+        }
+    }
 
-	/**
-	 * Fallback method for writeRaw, introduced in PHP 5.2
-	 *
-	 * @param string $text
-	 * @return string
-	 */
-	public function writeRawData($text)
-	{
-		if (is_array($text)) {
-			$text = implode("\n",$text);
-		}
+    /**
+     * Fallback method for writeRaw, introduced in PHP 5.2
+     *
+     * @param string $text
+     * @return string
+     */
+    public function writeRawData($text)
+    {
+        if (is_array($text)) {
+            $text = implode("\n",$text);
+        }
 
-		if (method_exists($this, 'writeRaw')) {
-			return $this->writeRaw(htmlspecialchars($text));
-		}
+        if (method_exists($this, 'writeRaw')) {
+            return $this->writeRaw(htmlspecialchars($text));
+        }
 
-		return $this->text($text);
-	}
+        return $this->text($text);
+    }
 }

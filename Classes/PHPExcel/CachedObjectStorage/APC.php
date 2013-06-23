@@ -112,7 +112,7 @@ class CachedObjectStorage_APC extends CachedObjectStorage_CacheBase implements C
             }
             //    Check if the requested entry still exists in apc
             $success = apc_fetch($this->_cachePrefix.$pCoord.'.cache');
-            if ($success === FALSE) {
+            if ($success === false) {
                 //    Entry no longer exists in APC, so clear it from the cache array
                 parent::deleteCacheData($pCoord);
                 throw new Exception('Cell entry '.$pCoord.' no longer exists in APC cache');
@@ -140,7 +140,7 @@ class CachedObjectStorage_APC extends CachedObjectStorage_CacheBase implements C
         //    Check if the entry that has been requested actually exists
         if (parent::isDataSet($pCoord)) {
             $obj = apc_fetch($this->_cachePrefix.$pCoord.'.cache');
-            if ($obj === FALSE) {
+            if ($obj === false) {
                 //    Entry no longer exists in APC, so clear it from the cache array
                 parent::deleteCacheData($pCoord);
                 throw new Exception('Cell entry '.$pCoord.' no longer exists in APC cache');
@@ -161,18 +161,18 @@ class CachedObjectStorage_APC extends CachedObjectStorage_CacheBase implements C
     }    //    function getCacheData()
 
 
-	/**
-	 * Get a list of all cell addresses currently held in cache
-	 *
-	 * @return  array of string
-	 */
-	public function getCellList() {
-		if ($this->_currentObjectID !== null) {
-			$this->_storeData();
-		}
+    /**
+     * Get a list of all cell addresses currently held in cache
+     *
+     * @return  array of string
+     */
+    public function getCellList() {
+        if ($this->_currentObjectID !== null) {
+            $this->_storeData();
+        }
 
-		return parent::getCellList();
-	}
+        return parent::getCellList();
+    }
 
 
     /**
@@ -208,7 +208,7 @@ class CachedObjectStorage_APC extends CachedObjectStorage_CacheBase implements C
         foreach($cacheList as $cellID) {
             if ($cellID != $this->_currentObjectID) {
                 $obj = apc_fetch($this->_cachePrefix.$cellID.'.cache');
-                if ($obj === FALSE) {
+                if ($obj === false) {
                     //    Entry no longer exists in APC, so clear it from the cache array
                     parent::deleteCacheData($cellID);
                     throw new Exception('Cell entry '.$cellID.' no longer exists in APC');
@@ -229,7 +229,7 @@ class CachedObjectStorage_APC extends CachedObjectStorage_CacheBase implements C
      * @return  void
      */
     public function unsetWorksheetCells() {
-        if ($this->_currentObject !== NULL) {
+        if ($this->_currentObject !== null) {
             $this->_currentObject->detach();
             $this->_currentObject = $this->_currentObjectID = null;
         }
@@ -253,7 +253,7 @@ class CachedObjectStorage_APC extends CachedObjectStorage_CacheBase implements C
     public function __construct(Worksheet $parent, $arguments) {
         $cacheTime = (isset($arguments['cacheTime'])) ? $arguments['cacheTime'] : 600;
 
-        if ($this->_cachePrefix === NULL) {
+        if ($this->_cachePrefix === null) {
             $baseUnique = $this->_getUniqueID();
             $this->_cachePrefix = substr(md5($baseUnique),0,8).'.';
             $this->_cacheTime = $cacheTime;
@@ -282,13 +282,12 @@ class CachedObjectStorage_APC extends CachedObjectStorage_CacheBase implements C
      */
     public static function cacheMethodIsAvailable() {
         if (!function_exists('apc_store')) {
-            return FALSE;
+            return false;
         }
-        if (apc_sma_info() === FALSE) {
-            return FALSE;
+        if (apc_sma_info() === false) {
+            return false;
         }
 
-        return TRUE;
+        return true;
     }
-
 }

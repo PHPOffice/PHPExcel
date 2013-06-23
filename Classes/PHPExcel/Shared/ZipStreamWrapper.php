@@ -21,7 +21,7 @@
  * @category   PHPExcel
  * @package    PHPExcel\Shared
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
- * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
+ * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
 
@@ -36,11 +36,11 @@ namespace PHPExcel;
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
 class Shared_ZipStreamWrapper {
-	/**
-	 * Internal ZipAcrhive
-	 *
-	 * @var ZipAcrhive
-	 */
+    /**
+     * Internal ZipAcrhive
+     *
+     * @var ZipAcrhive
+     */
     private $_archive;
 
     /**
@@ -68,18 +68,18 @@ class Shared_ZipStreamWrapper {
      * Register wrapper
      */
     public static function register() {
-		@stream_wrapper_unregister("zip");
-		@stream_wrapper_register("zip", __CLASS__);
+        @stream_wrapper_unregister("zip");
+        @stream_wrapper_register("zip", __CLASS__);
     }
 
     /**
-	 * Implements support for fopen().
-	 *
-	 * @param	string	$path			resource name including scheme, e.g.
-	 * @param	string	$mode			only "r" is supported
-	 * @param	int		$options		mask of STREAM_REPORT_ERRORS and STREAM_USE_PATH
-	 * @param	string  &$openedPath	absolute path of the opened stream (out parameter)
-	 * @return	bool    true on success
+     * Implements support for fopen().
+     *
+     * @param    string    $path            resource name including scheme, e.g.
+     * @param    string    $mode            only "r" is supported
+     * @param    int        $options        mask of STREAM_REPORT_ERRORS and STREAM_USE_PATH
+     * @param    string  &$openedPath    absolute path of the opened stream (out parameter)
+     * @return    bool    true on success
      */
     public function stream_open($path, $mode, $options, &$opened_path) {
         // Check for mode
@@ -87,9 +87,9 @@ class Shared_ZipStreamWrapper {
             throw new Reader_Exception('Mode ' . $mode . ' is not supported. Only read mode is supported.');
         }
 
-		$pos = strrpos($path, '#');
-		$url['host'] = substr($path, 6, $pos - 6); // 6: strlen('zip://')
-		$url['fragment'] = substr($path, $pos + 1);
+        $pos = strrpos($path, '#');
+        $url['host'] = substr($path, 6, $pos - 6); // 6: strlen('zip://')
+        $url['fragment'] = substr($path, $pos + 1);
 
         // Open archive
         $this->_archive = new \ZipArchive();
@@ -103,37 +103,37 @@ class Shared_ZipStreamWrapper {
     }
 
     /**
-	 * Implements support for fstat().
-	 *
-	 * @return  boolean
+     * Implements support for fstat().
+     *
+     * @return  boolean
      */
     public function statName() {
         return $this->_fileNameInArchive;
     }
 
     /**
-	 * Implements support for fstat().
-	 *
-	 * @return  boolean
+     * Implements support for fstat().
+     *
+     * @return  boolean
      */
     public function url_stat() {
         return $this->statName( $this->_fileNameInArchive );
     }
 
     /**
-	 * Implements support for fstat().
-	 *
-	 * @return  boolean
+     * Implements support for fstat().
+     *
+     * @return  boolean
      */
     public function stream_stat() {
         return $this->_archive->statName( $this->_fileNameInArchive );
     }
 
     /**
-	 * Implements support for fread(), fgets() etc.
-	 *
-	 * @param   int		$count	maximum number of bytes to read
-	 * @return  string
+     * Implements support for fread(), fgets() etc.
+     *
+     * @param   int        $count    maximum number of bytes to read
+     * @return  string
      */
     function stream_read($count) {
         $ret = substr($this->_data, $this->_position, $count);
@@ -142,10 +142,10 @@ class Shared_ZipStreamWrapper {
     }
 
     /**
-	 * Returns the position of the file pointer, i.e. its offset into the file
-	 * stream. Implements support for ftell().
-	 *
-	 * @return  int
+     * Returns the position of the file pointer, i.e. its offset into the file
+     * stream. Implements support for ftell().
+     *
+     * @return  int
      */
     public function stream_tell() {
         return $this->_position;
@@ -153,8 +153,8 @@ class Shared_ZipStreamWrapper {
 
     /**
      * EOF stream
-	 *
-	 * @return	bool
+     *
+     * @return    bool
      */
     public function stream_eof() {
         return $this->_position >= strlen($this->_data);
@@ -162,10 +162,10 @@ class Shared_ZipStreamWrapper {
 
     /**
      * Seek stream
-	 *
-	 * @param	int		$offset	byte offset
-	 * @param	int		$whence	SEEK_SET, SEEK_CUR or SEEK_END
-	 * @return	bool
+     *
+     * @param    int        $offset    byte offset
+     * @param    int        $whence    SEEK_SET, SEEK_CUR or SEEK_END
+     * @return    bool
      */
     public function stream_seek($offset, $whence) {
         switch ($whence) {

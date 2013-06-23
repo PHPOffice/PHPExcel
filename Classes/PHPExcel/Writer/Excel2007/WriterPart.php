@@ -21,7 +21,7 @@
  * @category   PHPExcel
  * @package    PHPExcel\Writer_Excel2007
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
- * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
+ * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
 
@@ -37,47 +37,47 @@ namespace PHPExcel;
  */
 abstract class Writer_Excel2007_WriterPart
 {
-	/**
-	 * Parent IWriter object
-	 *
-	 * @var PHPExcel\Writer_IWriter
-	 */
-	private $_parentWriter;
+    /**
+     * Parent IWriter object
+     *
+     * @var PHPExcel\Writer_IWriter
+     */
+    private $_parentWriter;
 
-	/**
-	 * Set parent IWriter object
-	 *
-	 * @param PHPExcel\Writer_IWriter	$pWriter
-	 * @throws PHPExcel\Writer_Exception
-	 */
-	public function setParentWriter(Writer_IWriter $pWriter = null) {
-		$this->_parentWriter = $pWriter;
-	}
+    /**
+     * Set parent IWriter object
+     *
+     * @param PHPExcel\Writer_IWriter    $pWriter
+     * @throws PHPExcel\Writer_Exception
+     */
+    public function setParentWriter(Writer_IWriter $pWriter = null) {
+        $this->_parentWriter = $pWriter;
+    }
 
-	/**
-	 * Get parent IWriter object
-	 *
-	 * @return PHPExcel\Writer_IWriter
-	 * @throws PHPExcel\Writer_Exception
-	 */
-	public function getParentWriter() {
-		if (!is_null($this->_parentWriter)) {
-			return $this->_parentWriter;
-		} else {
-			throw new Writer_Exception("No parent PHPExcel\Writer_IWriter assigned.");
-		}
-	}
+    /**
+     * Get parent IWriter object
+     *
+     * @return PHPExcel\Writer_IWriter
+     * @throws PHPExcel\Writer_Exception
+     */
+    public function getParentWriter() {
+        if (!is_null($this->_parentWriter)) {
+            return $this->_parentWriter;
+        } else {
+            throw new Writer_Exception("No parent PHPExcel\Writer_IWriter assigned.");
+        }
+    }
 
-	/**
-	 * Set parent IWriter object
-	 *
-	 * @param PHPExcel\Writer_IWriter	$pWriter
-	 * @throws PHPExcel\Writer_Exception
-	 */
-	public function __construct(Writer_IWriter $pWriter = null) {
-		if (!is_null($pWriter)) {
-			$this->_parentWriter = $pWriter;
-		}
-	}
+    /**
+     * Set parent IWriter object
+     *
+     * @param PHPExcel\Writer_IWriter    $pWriter
+     * @throws PHPExcel\Writer_Exception
+     */
+    public function __construct(Writer_IWriter $pWriter = null) {
+        if (!is_null($pWriter)) {
+            $this->_parentWriter = $pWriter;
+        }
+    }
 
 }

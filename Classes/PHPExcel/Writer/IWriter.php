@@ -43,6 +43,5 @@ interface Writer_IWriter
      *  @param   string       $pFilename  Name of the file to save
      *  @throws  PHPExcel\Writer_Exception
      */
-    public function save($pFilename = NULL);
-
+    public function save($pFilename = null);
 }

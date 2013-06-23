@@ -24,6 +24,7 @@
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  *
+ * Based on:
  * SplClassLoader implementation that implements the technical interoperability
  * standards for PHP 5.3 namespaces and class names.
  *
@@ -53,10 +54,10 @@ namespace PHPExcel;
  */
 class Autoloader
 {
-    private $_fileExtension = '.php';
-    private $_namespace;
-    private $_includePath;
-    private $_namespaceSeparator = '\\';
+    private $fileExtension = '.php';
+    private $namespace;
+    private $includePath;
+    private $namespaceSeparator = '\\';
  
     /**
      * Creates a new SplClassLoader that loads classes of the
@@ -67,8 +68,8 @@ class Autoloader
      */
     public function __construct($namespace = null, $includePath = null)
     {
-        $this->_namespace = $namespace;
-        $this->_includePath = $includePath;
+        $this->namespace = $namespace;
+        $this->includePath = $includePath;
     }
  
     /**
@@ -78,7 +79,7 @@ class Autoloader
      */
     public function setNamespaceSeparator($sep)
     {
-        $this->_namespaceSeparator = $sep;
+        $this->namespaceSeparator = $sep;
     }
  
     /**
@@ -88,7 +89,7 @@ class Autoloader
      */
     public function getNamespaceSeparator()
     {
-        return $this->_namespaceSeparator;
+        return $this->namespaceSeparator;
     }
  
     /**
@@ -98,7 +99,7 @@ class Autoloader
      */
     public function setIncludePath($includePath)
     {
-        $this->_includePath = $includePath;
+        $this->includePath = $includePath;
     }
  
     /**
@@ -108,7 +109,7 @@ class Autoloader
      */
     public function getIncludePath()
     {
-        return $this->_includePath;
+        return $this->includePath;
     }
  
     /**
@@ -118,7 +119,7 @@ class Autoloader
      */
     public function setFileExtension($fileExtension)
     {
-        $this->_fileExtension = $fileExtension;
+        $this->fileExtension = $fileExtension;
     }
  
     /**
@@ -128,7 +129,7 @@ class Autoloader
      */
     public function getFileExtension()
     {
-        return $this->_fileExtension;
+        return $this->fileExtension;
     }
  
     /**
@@ -155,17 +156,23 @@ class Autoloader
      */
     public function loadClass($className)
     {
-		if (null === $this->_namespace || $this->_namespace.$this->_namespaceSeparator === substr($className, 0, strlen($this->_namespace.$this->_namespaceSeparator))) {
-//			$fileName = '';
-//          $namespace = '';
-//			if (false !== ($lastNsPos = strripos($className, $this->_namespaceSeparator))) {
-//				$namespace = substr($className, 0, $lastNsPos);
-//				$className = substr($className, $lastNsPos + 1);
-//				$fileName = str_replace($this->_namespaceSeparator, DIRECTORY_SEPARATOR, $namespace) . DIRECTORY_SEPARATOR;
-//			}
-			$fileName = str_replace(array('\\','_'), DIRECTORY_SEPARATOR, $className) . $this->_fileExtension;
-			require ($this->_includePath !== null ? $this->_includePath . DIRECTORY_SEPARATOR : '') . $fileName;
-		}
+        if (null === $this->namespace ||
+            $this->namespace.$this->namespaceSeparator ===
+                substr($className, 0, strlen($this->namespace.$this->namespaceSeparator))
+            ) {
+            //  $fileName = '';
+            //  $namespace = '';
+            //  if (false !== ($lastNsPos = strripos($className, $this->_namespaceSeparator))) {
+            //      $namespace = substr($className, 0, $lastNsPos);
+            //      $className = substr($className, $lastNsPos + 1);
+            //      $fileName = str_replace(
+            //          $this->_namespaceSeparator,
+            //          DIRECTORY_SEPARATOR,
+            //          $namespace
+            //      ) . DIRECTORY_SEPARATOR;
+            //  }
+            $fileName = str_replace(array('\\','_'), DIRECTORY_SEPARATOR, $className) . $this->fileExtension;
+            require ($this->includePath !== null ? $this->includePath . DIRECTORY_SEPARATOR : '') . $fileName;
+        }
     }
-
 }

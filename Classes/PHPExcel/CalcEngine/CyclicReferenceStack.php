@@ -21,8 +21,8 @@
  * @category   PHPExcel
  * @package    PHPExcel\Calculation
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
- * @license	http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
- * @version	##VERSION##, ##DATE##
+ * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
+ * @version    ##VERSION##, ##DATE##
  */
 
 
@@ -31,70 +31,69 @@ namespace PHPExcel;
 /**
  * PHPExcel\CalcEngine_CyclicReferenceStack
  *
- * @category	PHPExcel\CalcEngine_CyclicReferenceStack
- * @package		PHPExcel\Calculation
- * @copyright	Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @category    PHPExcel\CalcEngine_CyclicReferenceStack
+ * @package        PHPExcel\Calculation
+ * @copyright    Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
 class CalcEngine_CyclicReferenceStack {
 
-	/**
-	 *  The call stack for calculated cells
-	 *
-	 *  @var mixed[]
-	 */
-	private $_stack = array();
+    /**
+     *  The call stack for calculated cells
+     *
+     *  @var mixed[]
+     */
+    private $stack = array();
 
 
-	/**
-	 * Return the number of entries on the stack
-	 *
-	 * @return  integer
-	 */
-	public function count() {
-		return count($this->_stack);
-	}
+    /**
+     * Return the number of entries on the stack
+     *
+     * @return  integer
+     */
+    public function count() {
+        return count($this->stack);
+    }
 
-	/**
-	 * Push a new entry onto the stack
-	 *
-	 * @param  mixed  $value
-	 */
-	public function push($value) {
-		$this->_stack[] = $value;
-	}	//	function push()
+    /**
+     * Push a new entry onto the stack
+     *
+     * @param  mixed  $value
+     */
+    public function push($value) {
+        $this->stack[] = $value;
+    }    //    function push()
 
-	/**
-	 * Pop the last entry from the stack
-	 *
-	 * @return  mixed
-	 */
-	public function pop() {
-		return array_pop($this->_stack);
-	}	//	function pop()
+    /**
+     * Pop the last entry from the stack
+     *
+     * @return  mixed
+     */
+    public function pop() {
+        return array_pop($this->stack);
+    }    //    function pop()
 
-	/**
-	 * Test to see if a specified entry exists on the stack
-	 *
-	 * @param  mixed  $value  The value to test
-	 */
-	public function onStack($value) {
-		return in_array($value, $this->_stack);
-	}
+    /**
+     * Test to see if a specified entry exists on the stack
+     *
+     * @param  mixed  $value  The value to test
+     */
+    public function onStack($value) {
+        return in_array($value, $this->stack);
+    }
 
-	/**
-	 * Clear the stack
-	 */
-	public function clear() {
-		$this->_stack = array();
-	}	//	function push()
+    /**
+     * Clear the stack
+     */
+    public function clear() {
+        $this->stack = array();
+    }    //    function push()
 
-	/**
-	 * Return an array of all entries on the stack
-	 *
-	 * @return  mixed[]
-	 */
-	public function showStack() {
-		return $this->_stack;
-	}
-
+    /**
+     * Return an array of all entries on the stack
+     *
+     * @return  mixed[]
+     */
+    public function showStack() {
+        return $this->stack;
+    }
 }

@@ -97,10 +97,10 @@ class Style extends Style_Supervisor implements IComparable
      * Create a new PHPExcel\Style
      *
      * @param boolean $isSupervisor Flag indicating if this is a supervisor or not
-     * 		Leave this value at default unless you understand exactly what
+     *         Leave this value at default unless you understand exactly what
      *    its ramifications are
      * @param boolean $isConditional Flag indicating if this is a conditional style or not
-     *   	Leave this value at default unless you understand exactly what
+     *       Leave this value at default unless you understand exactly what
      *    its ramifications are
      */
     public function __construct($isSupervisor = false, $isConditional = false)
@@ -109,7 +109,7 @@ class Style extends Style_Supervisor implements IComparable
         $this->_isSupervisor = $isSupervisor;
 
         // Initialise values
-        $this->_conditionalStyles	= array();
+        $this->_conditionalStyles    = array();
         $this->_font              = new Style_Font($isSupervisor, $isConditional);
         $this->_fill              = new Style_Fill($isSupervisor, $isConditional);
         $this->_borders           = new Style_Borders($isSupervisor, $isConditional);

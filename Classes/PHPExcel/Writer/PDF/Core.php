@@ -42,28 +42,28 @@ abstract class Writer_PDF_Core extends Writer_HTML
      *
      * @var string
      */
-    protected $_tempDir = '';
+    protected $tempDir = '';
 
     /**
      * Font
      *
      * @var string
      */
-    protected $_font = 'freesans';
+    protected $font = 'freesans';
 
     /**
      * Orientation (Over-ride)
      *
      * @var string
      */
-    protected $_orientation    = NULL;
+    protected $orientation    = null;
 
     /**
      * Paper size (Over-ride)
      *
      * @var int
      */
-    protected $_paperSize    = NULL;
+    protected $paperSize    = null;
 
 
     /**
@@ -71,14 +71,14 @@ abstract class Writer_PDF_Core extends Writer_HTML
      *
      * @var string
      */
-	private $_saveArrayReturnType;
+    private $saveArrayReturnType;
 
     /**
      * Paper Sizes xRef List
      *
      * @var array
      */
-    protected static $_paperSizes = array(
+    protected static $paperSizes = array(
         Worksheet_PageSetup::PAPERSIZE_LETTER
             => 'LETTER',                 //    (8.5 in. by 11 in.)
         Worksheet_PageSetup::PAPERSIZE_LETTER_SMALL
@@ -221,8 +221,8 @@ abstract class Writer_PDF_Core extends Writer_HTML
     public function __construct(Workbook $phpExcel)
     {
         parent::__construct($phpExcel);
-        $this->setUseInlineCss(TRUE);
-        $this->_tempDir = Shared_File::sys_get_temp_dir();
+        $this->setUseInlineCss(true);
+        $this->tempDir = Shared_File::sys_get_temp_dir();
     }
 
     /**
@@ -232,7 +232,7 @@ abstract class Writer_PDF_Core extends Writer_HTML
      */
     public function getFont()
     {
-        return $this->_font;
+        return $this->font;
     }
 
     /**
@@ -246,7 +246,7 @@ abstract class Writer_PDF_Core extends Writer_HTML
      */
     public function setFont($fontName)
     {
-        $this->_font = $fontName;
+        $this->font = $fontName;
         return $this;
     }
 
@@ -257,7 +257,7 @@ abstract class Writer_PDF_Core extends Writer_HTML
      */
     public function getPaperSize()
     {
-        return $this->_paperSize;
+        return $this->paperSize;
     }
 
     /**
@@ -268,7 +268,7 @@ abstract class Writer_PDF_Core extends Writer_HTML
      */
     public function setPaperSize($pValue = Worksheet_PageSetup::PAPERSIZE_LETTER)
     {
-        $this->_paperSize = $pValue;
+        $this->paperSize = $pValue;
         return $this;
     }
 
@@ -279,7 +279,7 @@ abstract class Writer_PDF_Core extends Writer_HTML
      */
     public function getOrientation()
     {
-        return $this->_orientation;
+        return $this->orientation;
     }
 
     /**
@@ -290,7 +290,7 @@ abstract class Writer_PDF_Core extends Writer_HTML
      */
     public function setOrientation($pValue = Worksheet_PageSetup::ORIENTATION_DEFAULT)
     {
-        $this->_orientation = $pValue;
+        $this->orientation = $pValue;
         return $this;
     }
 
@@ -301,7 +301,7 @@ abstract class Writer_PDF_Core extends Writer_HTML
      */
     public function getTempDir()
     {
-        return $this->_tempDir;
+        return $this->tempDir;
     }
 
     /**
@@ -314,7 +314,7 @@ abstract class Writer_PDF_Core extends Writer_HTML
     public function setTempDir($pValue = '')
     {
         if (is_dir($pValue)) {
-            $this->_tempDir = $pValue;
+            $this->tempDir = $pValue;
         } else {
             throw new Writer_Exception("Directory does not exist: $pValue");
         }
@@ -327,7 +327,7 @@ abstract class Writer_PDF_Core extends Writer_HTML
      *  @param     string     $pFilename   Name of the file to save as
      *  @throws    PHPExcel\Writer_Exception
      */
-    protected function prepareForSave($pFilename = NULL)
+    protected function prepareForSave($pFilename = null)
     {
         //  garbage collect
         $this->_phpExcel->garbageCollect();
@@ -337,14 +337,14 @@ abstract class Writer_PDF_Core extends Writer_HTML
 
         //  Open file
         $fileHandle = fopen($pFilename, 'w');
-        if ($fileHandle === FALSE) {
+        if ($fileHandle === false) {
             throw new Writer_Exception("Could not open file $pFilename for writing.");
         }
 
         //  Set PDF
-        $this->_isPdf = TRUE;
+        $this->_isPdf = true;
         //  Build CSS
-        $this->buildCSS(TRUE);
+        $this->buildCSS(true);
 
         return $fileHandle;
     }
@@ -362,5 +362,4 @@ abstract class Writer_PDF_Core extends Writer_HTML
 
         Calculation::setArrayReturnType($this->_saveArrayReturnType);
     }
-
 }

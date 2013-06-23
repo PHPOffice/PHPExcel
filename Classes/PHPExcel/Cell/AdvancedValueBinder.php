@@ -61,7 +61,7 @@ class Cell_AdvancedValueBinder extends Cell_DefaultValueBinder implements Cell_I
                 $cell->setValueExplicit( TRUE, Cell_DataType::TYPE_BOOL);
                 return true;
             } elseif($value == Calculation::getFALSE()) {
-                $cell->setValueExplicit( FALSE, Cell_DataType::TYPE_BOOL);
+                $cell->setValueExplicit( false, Cell_DataType::TYPE_BOOL);
                 return true;
             }
 
@@ -168,12 +168,12 @@ class Cell_AdvancedValueBinder extends Cell_DefaultValueBinder implements Cell_I
             }
 
             // Check for newline character "\n"
-            if (strpos($value, "\n") !== FALSE) {
+            if (strpos($value, "\n") !== false) {
                 $value = Shared_String::SanitizeUTF8($value);
                 $cell->setValueExplicit($value, Cell_DataType::TYPE_STRING);
                 // Set style
                 $cell->getWorksheet()->getStyle( $cell->getCoordinate() )
-                    ->getAlignment()->setWrapText(TRUE);
+                    ->getAlignment()->setWrapText(true);
                 return true;
             }
         }

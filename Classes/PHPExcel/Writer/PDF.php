@@ -43,7 +43,7 @@ class Writer_PDF
      *
      * @var PHPExcel\Writer_PDF_Core
      */
-    private $_renderer = NULL;
+    private $_renderer = null;
 
     /**
      *  Instantiate a new renderer of the configured type within this container class
@@ -82,11 +82,10 @@ class Writer_PDF
      */
     public function __call($name, $arguments)
     {
-        if ($this->_renderer === NULL) {
+        if ($this->_renderer === null) {
             throw new Writer_Exception("PDF Rendering library has not been defined.");
         }
 
         return call_user_func_array(array($this->_renderer, $name), $arguments);
     }
-
 }

@@ -44,5 +44,5 @@ interface Cell_IValueBinder
      * @param  mixed $value           Value to bind in cell
      * @return boolean
      */
-    public function bindValue(Cell $cell, $value = NULL);
+    public function bindValue(Cell $cell, $value = null);
 }

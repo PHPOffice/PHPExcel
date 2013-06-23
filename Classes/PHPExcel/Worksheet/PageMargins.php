@@ -21,7 +21,7 @@
  * @category   PHPExcel
  * @package    PHPExcel\Worksheet
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
- * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
+ * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
 
@@ -37,47 +37,47 @@ namespace PHPExcel;
  */
 class Worksheet_PageMargins
 {
-	/**
-	 * Left
-	 *
-	 * @var double
-	 */
-	protected $_left		= 0.7;
+    /**
+     * Left
+     *
+     * @var double
+     */
+    protected $_left        = 0.7;
 
-	/**
-	 * Right
-	 *
-	 * @var double
-	 */
-	protected $_right		= 0.7;
+    /**
+     * Right
+     *
+     * @var double
+     */
+    protected $_right        = 0.7;
 
-	/**
-	 * Top
-	 *
-	 * @var double
-	 */
-	protected $_top		= 0.75;
+    /**
+     * Top
+     *
+     * @var double
+     */
+    protected $_top        = 0.75;
 
-	/**
-	 * Bottom
-	 *
-	 * @var double
-	 */
-	protected $_bottom	= 0.75;
+    /**
+     * Bottom
+     *
+     * @var double
+     */
+    protected $_bottom    = 0.75;
 
-	/**
-	 * Header
-	 *
-	 * @var double
-	 */
-	protected $_header 	= 0.3;
+    /**
+     * Header
+     *
+     * @var double
+     */
+    protected $_header     = 0.3;
 
-	/**
-	 * Footer
-	 *
-	 * @var double
-	 */
-	protected $_footer 	= 0.3;
+    /**
+     * Footer
+     *
+     * @var double
+     */
+    protected $_footer     = 0.3;
 
     /**
      * Create a new PHPExcel\Worksheet_PageMargins
@@ -92,7 +92,7 @@ class Worksheet_PageMargins
      * @return double
      */
     public function getLeft() {
-    	return $this->_left;
+        return $this->_left;
     }
 
     /**
@@ -102,8 +102,8 @@ class Worksheet_PageMargins
      * @return PHPExcel\Worksheet_PageMargins
      */
     public function setLeft($pValue) {
-    	$this->_left = $pValue;
-    	return $this;
+        $this->_left = $pValue;
+        return $this;
     }
 
     /**
@@ -112,7 +112,7 @@ class Worksheet_PageMargins
      * @return double
      */
     public function getRight() {
-    	return $this->_right;
+        return $this->_right;
     }
 
     /**
@@ -122,8 +122,8 @@ class Worksheet_PageMargins
      * @return PHPExcel\Worksheet_PageMargins
      */
     public function setRight($pValue) {
-    	$this->_right = $pValue;
-    	return $this;
+        $this->_right = $pValue;
+        return $this;
     }
 
     /**
@@ -132,7 +132,7 @@ class Worksheet_PageMargins
      * @return double
      */
     public function getTop() {
-    	return $this->_top;
+        return $this->_top;
     }
 
     /**
@@ -142,8 +142,8 @@ class Worksheet_PageMargins
      * @return PHPExcel\Worksheet_PageMargins
      */
     public function setTop($pValue) {
-    	$this->_top = $pValue;
-    	return $this;
+        $this->_top = $pValue;
+        return $this;
     }
 
     /**
@@ -152,7 +152,7 @@ class Worksheet_PageMargins
      * @return double
      */
     public function getBottom() {
-    	return $this->_bottom;
+        return $this->_bottom;
     }
 
     /**
@@ -162,8 +162,8 @@ class Worksheet_PageMargins
      * @return PHPExcel\Worksheet_PageMargins
      */
     public function setBottom($pValue) {
-    	$this->_bottom = $pValue;
-    	return $this;
+        $this->_bottom = $pValue;
+        return $this;
     }
 
     /**
@@ -172,7 +172,7 @@ class Worksheet_PageMargins
      * @return double
      */
     public function getHeader() {
-    	return $this->_header;
+        return $this->_header;
     }
 
     /**
@@ -182,8 +182,8 @@ class Worksheet_PageMargins
      * @return PHPExcel\Worksheet_PageMargins
      */
     public function setHeader($pValue) {
-    	$this->_header = $pValue;
-    	return $this;
+        $this->_header = $pValue;
+        return $this;
     }
 
     /**
@@ -192,7 +192,7 @@ class Worksheet_PageMargins
      * @return double
      */
     public function getFooter() {
-    	return $this->_footer;
+        return $this->_footer;
     }
 
     /**
@@ -202,21 +202,21 @@ class Worksheet_PageMargins
      * @return PHPExcel\Worksheet_PageMargins
      */
     public function setFooter($pValue) {
-    	$this->_footer = $pValue;
-    	return $this;
+        $this->_footer = $pValue;
+        return $this;
     }
 
-	/**
-	 * Implement PHP __clone to create a deep clone, not just a shallow copy.
-	 */
-	public function __clone() {
-		$vars = get_object_vars($this);
-		foreach ($vars as $key => $value) {
-			if (is_object($value)) {
-				$this->$key = clone $value;
-			} else {
-				$this->$key = $value;
-			}
-		}
-	}
+    /**
+     * Implement PHP __clone to create a deep clone, not just a shallow copy.
+     */
+    public function __clone() {
+        $vars = get_object_vars($this);
+        foreach ($vars as $key => $value) {
+            if (is_object($value)) {
+                $this->$key = clone $value;
+            } else {
+                $this->$key = $value;
+            }
+        }
+    }
 }

@@ -35,7 +35,8 @@ namespace PHPExcel;
  * @package    PHPExcel
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class Exception extends \Exception {
+class Exception extends \Exception
+{
     /**
      * Error handler callback
      *
@@ -45,7 +46,8 @@ class Exception extends \Exception {
      * @param mixed $line
      * @param mixed $context
      */
-    public static function errorHandlerCallback($code, $string, $file, $line, $context) {
+    public static function errorHandlerCallback($code, $string, $file, $line, $context)
+    {
         $e = new self($string, $code);
         $e->line = $line;
         $e->file = $file;

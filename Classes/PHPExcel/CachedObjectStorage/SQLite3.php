@@ -95,8 +95,9 @@ class CachedObjectStorage_SQLite3 extends CachedObjectStorage_CacheBase implemen
             $this->insertQuery->bindValue('id', $this->currentObjectID, SQLITE3_TEXT);
             $this->insertQuery->bindValue('data', serialize($this->currentObject), SQLITE3_BLOB);
             $result = $this->insertQuery->execute();
-            if ($result === false)
+            if (!$result) {
                 throw new Exception($this->DBHandle->lastErrorMsg());
+            }
             $this->currentCellIsDirty = false;
         }
         $this->currentObjectID = $this->currentObject = null;
@@ -198,8 +199,9 @@ class CachedObjectStorage_SQLite3 extends CachedObjectStorage_CacheBase implemen
         //    Check if the requested entry exists in the cache
         $this->deleteQuery->bindValue('id', $pCoord, SQLITE3_TEXT);
         $result = $this->deleteQuery->execute();
-        if ($result === false)
+        if (!$result) {
             throw new Exception($this->DBHandle->lastErrorMsg());
+        }
 
         $this->currentCellIsDirty = false;
     }
@@ -219,14 +221,16 @@ class CachedObjectStorage_SQLite3 extends CachedObjectStorage_CacheBase implemen
 
         $this->deleteQuery->bindValue('id', $toAddress, SQLITE3_TEXT);
         $result = $this->deleteQuery->execute();
-        if ($result === false)
+        if (!$result) {
             throw new Exception($this->DBHandle->lastErrorMsg());
+        }
 
         $this->updateQuery->bindValue('toid', $toAddress, SQLITE3_TEXT);
         $this->updateQuery->bindValue('fromid', $fromAddress, SQLITE3_TEXT);
         $result = $this->updateQuery->execute();
-        if ($result === false)
+        if (!$result) {
             throw new Exception($this->DBHandle->lastErrorMsg());
+        }
 
         return true;
     }
@@ -267,10 +271,13 @@ class CachedObjectStorage_SQLite3 extends CachedObjectStorage_CacheBase implemen
         $this->storeData();
 
         //    Get a new id for the new table name
-        $tableName = str_replace('.','_',$this->getUniqueID());
-        if (!$this->DBHandle->exec('CREATE TABLE kvp_'.$tableName.' (id VARCHAR(12) PRIMARY KEY, value BLOB)
-                                               AS SELECT * FROM kvp_'.$this->TableName))
+        $tableName = str_replace('.', '_', $this->getUniqueID());
+        if (!$this->DBHandle->exec(
+            'CREATE TABLE kvp_'.$tableName.' (id VARCHAR(12) PRIMARY KEY, value BLOB)
+                AS SELECT * FROM kvp_'.$this->TableName
+        )) {
             throw new Exception($this->DBHandle->lastErrorMsg());
+        }
 
         //    Copy the existing cell cache file
         $this->TableName = $tableName;
@@ -283,7 +290,7 @@ class CachedObjectStorage_SQLite3 extends CachedObjectStorage_CacheBase implemen
      */
     public function unsetWorksheetCells()
     {
-        if(!is_null($this->currentObject)) {
+        if (!is_null($this->currentObject)) {
             $this->currentObject->detach();
             $this->currentObject = $this->currentObjectID = null;
         }
@@ -307,16 +314,27 @@ class CachedObjectStorage_SQLite3 extends CachedObjectStorage_CacheBase implemen
             $DBName = ':memory:';
 
             $this->DBHandle = new SQLite3($DBName);
-            if ($this->DBHandle === false)
+            if (!$this->DBHandle) {
                 throw new Exception($this->DBHandle->lastErrorMsg());
-            if (!$this->DBHandle->exec('CREATE TABLE kvp_'.$this->TableName.' (id VARCHAR(12) PRIMARY KEY, value BLOB)'))
+            }
+            $query = 'CREATE TABLE kvp_'.$this->TableName.' (id VARCHAR(12) PRIMARY KEY, value BLOB)';
+            if (!$this->DBHandle->exec($query)) {
                 throw new Exception($this->DBHandle->lastErrorMsg());
+            }
         }
 
-        $this->selectQuery = $this->DBHandle->prepare("SELECT value FROM kvp_".$this->TableName." WHERE id = :id");
-        $this->insertQuery = $this->DBHandle->prepare("INSERT OR REPLACE INTO kvp_".$this->TableName." VALUES(:id,:data)");
-        $this->updateQuery = $this->DBHandle->prepare("UPDATE kvp_".$this->TableName." SET id=:toId WHERE id=:fromId");
-        $this->deleteQuery = $this->DBHandle->prepare("DELETE FROM kvp_".$this->TableName." WHERE id = :id");
+        $this->selectQuery = $this->DBHandle->prepare(
+            "SELECT value FROM kvp_".$this->TableName." WHERE id = :id"
+        );
+        $this->insertQuery = $this->DBHandle->prepare(
+            "INSERT OR REPLACE INTO kvp_".$this->TableName." VALUES(:id,:data)"
+        );
+        $this->updateQuery = $this->DBHandle->prepare(
+            "UPDATE kvp_".$this->TableName." SET id=:toId WHERE id=:fromId"
+        );
+        $this->deleteQuery = $this->DBHandle->prepare(
+            "DELETE FROM kvp_".$this->TableName." WHERE id = :id"
+        );
     }
 
     /**

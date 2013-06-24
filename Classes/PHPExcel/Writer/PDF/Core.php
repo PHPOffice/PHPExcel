@@ -330,9 +330,9 @@ abstract class Writer_PDF_Core extends Writer_HTML
     protected function prepareForSave($pFilename = null)
     {
         //  garbage collect
-        $this->_phpExcel->garbageCollect();
+        $this->phpExcel->garbageCollect();
 
-        $this->_saveArrayReturnType = Calculation::getArrayReturnType();
+        $this->saveArrayReturnType = Calculation::getArrayReturnType();
         Calculation::setArrayReturnType(Calculation::RETURN_ARRAY_AS_VALUE);
 
         //  Open file
@@ -342,7 +342,7 @@ abstract class Writer_PDF_Core extends Writer_HTML
         }
 
         //  Set PDF
-        $this->_isPdf = true;
+        $this->isPdf = true;
         //  Build CSS
         $this->buildCSS(true);
 
@@ -360,6 +360,6 @@ abstract class Writer_PDF_Core extends Writer_HTML
         //  Close file
         fclose($fileHandle);
 
-        Calculation::setArrayReturnType($this->_saveArrayReturnType);
+        Calculation::setArrayReturnType($this->saveArrayReturnType);
     }
 }

@@ -162,7 +162,7 @@ class CachedObjectStorage_DiscISAM extends CachedObjectStorage_CacheBase impleme
         $baseUnique = $this->getUniqueID();
         $newFileName = $this->cacheDirectory.'/PHPExcel.'.$baseUnique.'.cache';
         //    Copy the existing cell cache file
-        copy ($this->fileName, $newFileName);
+        copy($this->fileName, $newFileName);
         $this->fileName = $newFileName;
         //    Open the copied cell cache file
         $this->fileHandle = fopen($this->fileName, 'a+');

@@ -63,9 +63,12 @@ class CachedObjectStorage_SQLite extends CachedObjectStorage_CacheBase implement
     {
         if ($this->currentCellIsDirty) {
             $this->currentObject->detach();
-
-            if (!$this->DBHandle->queryExec("INSERT OR REPLACE INTO kvp_".$this->TableName." VALUES('".$this->currentObjectID."','".sqlite_escape_string(serialize($this->currentObject))."')"))
+            $query = "INSERT OR REPLACE INTO kvp_" . $this->TableName .
+                " VALUES('" . $this->currentObjectID . "','" .
+                sqlite_escape_string(serialize($this->currentObject)) . "')";
+            if (!$this->DBHandle->queryExec($query)) {
                 throw new Exception(sqlite_error_string($this->DBHandle->lastError()));
+            }
             $this->currentCellIsDirty = false;
         }
         $this->currentObjectID = $this->currentObject = null;
@@ -107,7 +110,7 @@ class CachedObjectStorage_SQLite extends CachedObjectStorage_CacheBase implement
         $this->storeData();
 
         $query = "SELECT value FROM kvp_".$this->TableName." WHERE id='".$pCoord."'";
-        $cellResultSet = $this->DBHandle->query($query,SQLITE_ASSOC);
+        $cellResultSet = $this->DBHandle->query($query, SQLITE_ASSOC);
         if ($cellResultSet === false) {
             throw new Exception(sqlite_error_string($this->DBHandle->lastError()));
         } elseif ($cellResultSet->numRows() == 0) {
@@ -141,7 +144,7 @@ class CachedObjectStorage_SQLite extends CachedObjectStorage_CacheBase implement
 
         //    Check if the requested entry exists in the cache
         $query = "SELECT id FROM kvp_".$this->TableName." WHERE id='".$pCoord."'";
-        $cellResultSet = $this->DBHandle->query($query,SQLITE_ASSOC);
+        $cellResultSet = $this->DBHandle->query($query, SQLITE_ASSOC);
         if ($cellResultSet === false) {
             throw new Exception(sqlite_error_string($this->DBHandle->lastError()));
         } elseif ($cellResultSet->numRows() == 0) {
@@ -166,8 +169,9 @@ class CachedObjectStorage_SQLite extends CachedObjectStorage_CacheBase implement
 
         //    Check if the requested entry exists in the cache
         $query = "DELETE FROM kvp_".$this->TableName." WHERE id='".$pCoord."'";
-        if (!$this->DBHandle->queryExec($query))
+        if (!$this->DBHandle->queryExec($query)) {
             throw new Exception(sqlite_error_string($this->DBHandle->lastError()));
+        }
 
         $this->currentCellIsDirty = false;
     }
@@ -186,14 +190,14 @@ class CachedObjectStorage_SQLite extends CachedObjectStorage_CacheBase implement
         }
 
         $query = "DELETE FROM kvp_".$this->TableName." WHERE id='".$toAddress."'";
-        $result = $this->DBHandle->exec($query);
-        if ($result === false)
+        if (!$this->DBHandle->exec($query)) {
             throw new Exception($this->DBHandle->lastErrorMsg());
+        }
 
         $query = "UPDATE kvp_".$this->TableName." SET id='".$toAddress."' WHERE id='".$fromAddress."'";
-        $result = $this->DBHandle->exec($query);
-        if ($result === false)
+        if (!$this->DBHandle->exec($query)) {
             throw new Exception($this->DBHandle->lastErrorMsg());
+        }
 
         return true;
     }
@@ -210,12 +214,13 @@ class CachedObjectStorage_SQLite extends CachedObjectStorage_CacheBase implement
         }
 
         $query = "SELECT id FROM kvp_".$this->TableName;
-        $cellIdsResult = $this->DBHandle->unbufferedQuery($query,SQLITE_ASSOC);
-        if ($cellIdsResult === false)
+        $cellIdsResult = $this->DBHandle->unbufferedQuery($query, SQLITE_ASSOC);
+        if (!$cellIdsResult) {
             throw new Exception(sqlite_error_string($this->DBHandle->lastError()));
+        }
 
         $cellKeys = array();
-        foreach($cellIdsResult as $row) {
+        foreach ($cellIdsResult as $row) {
             $cellKeys[] = $row['id'];
         }
 
@@ -234,10 +239,14 @@ class CachedObjectStorage_SQLite extends CachedObjectStorage_CacheBase implement
         $this->storeData();
 
         //    Get a new id for the new table name
-        $tableName = str_replace('.','_',$this->getUniqueID());
-        if (!$this->DBHandle->queryExec('CREATE TABLE kvp_'.$tableName.' (id VARCHAR(12) PRIMARY KEY, value BLOB)
-                                                    AS SELECT * FROM kvp_'.$this->TableName))
+        $tableName = str_replace('.', '_', $this->getUniqueID());
+        $result = $this->DBHandle->queryExec(
+            'CREATE TABLE kvp_'.$tableName.' (id VARCHAR(12) PRIMARY KEY, value BLOB)
+                AS SELECT * FROM kvp_'.$this->TableName
+        );
+        if (!$result) {
             throw new Exception(sqlite_error_string($this->DBHandle->lastError()));
+        }
 
         //    Copy the existing cell cache file
         $this->TableName = $tableName;
@@ -250,7 +259,7 @@ class CachedObjectStorage_SQLite extends CachedObjectStorage_CacheBase implement
      */
     public function unsetWorksheetCells()
     {
-        if(!is_null($this->currentObject)) {
+        if (!is_null($this->currentObject)) {
             $this->currentObject->detach();
             $this->currentObject = $this->currentObjectID = null;
         }
@@ -270,14 +279,19 @@ class CachedObjectStorage_SQLite extends CachedObjectStorage_CacheBase implement
     {
         parent::__construct($parent);
         if (is_null($this->DBHandle)) {
-            $this->TableName = str_replace('.','_',$this->getUniqueID());
+            $this->TableName = str_replace('.', '_', $this->getUniqueID());
             $DBName = ':memory:';
 
             $this->DBHandle = new SQLiteDatabase($DBName);
-            if ($this->DBHandle === false)
+            if (!$this->DBHandle) {
                 throw new Exception(sqlite_error_string($this->DBHandle->lastError()));
-            if (!$this->DBHandle->queryExec('CREATE TABLE kvp_'.$this->TableName.' (id VARCHAR(12) PRIMARY KEY, value BLOB)'))
+            }
+            $result = $this->DBHandle->queryExec(
+                'CREATE TABLE kvp_'.$this->TableName.' (id VARCHAR(12) PRIMARY KEY, value BLOB)'
+            );
+            if (!$result) {
                 throw new Exception(sqlite_error_string($this->DBHandle->lastError()));
+            }
         }
     }
 

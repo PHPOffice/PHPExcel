@@ -35,7 +35,8 @@ namespace PHPExcel;
  * @package        PHPExcel\Calculation
  * @copyright    Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class CalcEngine_CyclicReferenceStack {
+class CalcEngine_CyclicReferenceStack
+{
 
     /**
      *  The call stack for calculated cells
@@ -50,7 +51,8 @@ class CalcEngine_CyclicReferenceStack {
      *
      * @return  integer
      */
-    public function count() {
+    public function count()
+    {
         return count($this->stack);
     }
 
@@ -59,7 +61,8 @@ class CalcEngine_CyclicReferenceStack {
      *
      * @param  mixed  $value
      */
-    public function push($value) {
+    public function push($value)
+    {
         $this->stack[] = $value;
     }    //    function push()
 
@@ -68,7 +71,8 @@ class CalcEngine_CyclicReferenceStack {
      *
      * @return  mixed
      */
-    public function pop() {
+    public function pop()
+    {
         return array_pop($this->stack);
     }    //    function pop()
 
@@ -77,14 +81,16 @@ class CalcEngine_CyclicReferenceStack {
      *
      * @param  mixed  $value  The value to test
      */
-    public function onStack($value) {
+    public function onStack($value)
+    {
         return in_array($value, $this->stack);
     }
 
     /**
      * Clear the stack
      */
-    public function clear() {
+    public function clear()
+    {
         $this->stack = array();
     }    //    function push()
 
@@ -93,7 +99,8 @@ class CalcEngine_CyclicReferenceStack {
      *
      * @return  mixed[]
      */
-    public function showStack() {
+    public function showStack()
+    {
         return $this->stack;
     }
 }

@@ -26,6 +26,8 @@
  */
 
 
+namespace PHPExcel;
+
 /**
  * PHPExcel\CachedObjectStorage_PHPTemp
  *
@@ -61,7 +63,7 @@ class CachedObjectStorage_PHPTemp extends CachedObjectStorage_CacheBase implemen
         if ($this->currentCellIsDirty) {
             $this->currentObject->detach();
 
-            fseek($this->fileHandle,0,SEEK_END);
+            fseek($this->fileHandle, 0, SEEK_END);
             $offset = ftell($this->fileHandle);
             fwrite($this->fileHandle, serialize($this->currentObject));
             $this->cellCache[$this->currentObjectID]    = array('ptr' => $offset,
@@ -115,8 +117,8 @@ class CachedObjectStorage_PHPTemp extends CachedObjectStorage_CacheBase implemen
 
         //    Set current entry to the requested entry
         $this->currentObjectID = $pCoord;
-        fseek($this->fileHandle,$this->cellCache[$pCoord]['ptr']);
-        $this->currentObject = unserialize(fread($this->fileHandle,$this->cellCache[$pCoord]['sz']));
+        fseek($this->fileHandle, $this->cellCache[$pCoord]['ptr']);
+        $this->currentObject = unserialize(fread($this->fileHandle, $this->cellCache[$pCoord]['sz']));
         //    Re-attach this as the cell's parent
         $this->currentObject->attach($this);
 
@@ -148,11 +150,11 @@ class CachedObjectStorage_PHPTemp extends CachedObjectStorage_CacheBase implemen
     {
         parent::copyCellCollection($parent);
         //    Open a new stream for the cell cache data
-        $newFileHandle = fopen('php://temp/maxmemory:'.$this->memoryCacheSize,'a+');
+        $newFileHandle = fopen('php://temp/maxmemory:'.$this->memoryCacheSize, 'a+');
         //    Copy the existing cell cache data to the new stream
-        fseek($this->fileHandle,0);
+        fseek($this->fileHandle, 0);
         while (!feof($this->fileHandle)) {
-            fwrite($newFileHandle,fread($this->fileHandle, 1024));
+            fwrite($newFileHandle, fread($this->fileHandle, 1024));
         }
         $this->fileHandle = $newFileHandle;
     }
@@ -164,7 +166,7 @@ class CachedObjectStorage_PHPTemp extends CachedObjectStorage_CacheBase implemen
      */
     public function unsetWorksheetCells()
     {
-        if(!is_null($this->currentObject)) {
+        if (!is_null($this->currentObject)) {
             $this->currentObject->detach();
             $this->currentObject = $this->currentObjectID = null;
         }
@@ -189,7 +191,7 @@ class CachedObjectStorage_PHPTemp extends CachedObjectStorage_CacheBase implemen
 
         parent::__construct($parent);
         if (is_null($this->fileHandle)) {
-            $this->fileHandle = fopen('php://temp/maxmemory:'.$this->memoryCacheSize,'a+');
+            $this->fileHandle = fopen('php://temp/maxmemory:'.$this->memoryCacheSize, 'a+');
         }
     }
 

@@ -67,8 +67,8 @@ class CachedObjectStorage_APC extends CachedObjectStorage_CacheBase implements C
             if (!apc_store(
                 $this->cachePrefix.$this->currentObjectID.'.cache',
                 serialize($this->currentObject),
-                $this->cacheTime)
-            ) {
+                $this->cacheTime
+            )) {
                 $this->__destruct();
                 throw new Exception('Failed to store cell '.$this->currentObjectID.' in APC');
             }
@@ -268,7 +268,7 @@ class CachedObjectStorage_APC extends CachedObjectStorage_CacheBase implements C
     public function __destruct()
     {
         $cacheList = $this->getCellList();
-        foreach($cacheList as $cellID) {
+        foreach ($cacheList as $cellID) {
             apc_delete($this->cachePrefix.$cellID.'.cache');
         }
     }

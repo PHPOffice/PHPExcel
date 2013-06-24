@@ -127,7 +127,7 @@ class CachedObjectStorage_MemorySerialized extends CachedObjectStorage_CacheBase
      */
     public function unsetWorksheetCells()
     {
-        if(!is_null($this->currentObject)) {
+        if (!is_null($this->currentObject)) {
             $this->currentObject->detach();
             $this->currentObject = $this->currentObjectID = null;
         }

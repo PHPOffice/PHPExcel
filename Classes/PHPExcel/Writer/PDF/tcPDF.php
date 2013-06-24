@@ -107,7 +107,7 @@ class Writer_PDF_tcPDF extends Writer_PDF_Core implements Writer_IWriter
         $pdf->setFontSubsetting(false);
         //    Set margins, converting inches to points (using 72 dpi)
         $pdf->SetMargins($printMargins->getLeft() * 72, $printMargins->getTop() * 72, $printMargins->getRight() * 72);
-        $pdf->SetAutoPageBreak(TRUE, $printMargins->getBottom() * 72);
+        $pdf->SetAutoPageBreak(true, $printMargins->getBottom() * 72);
 
         $pdf->setPrintHeader(false);
         $pdf->setPrintFooter(false);

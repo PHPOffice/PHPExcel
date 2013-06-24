@@ -111,7 +111,8 @@ class CachedObjectStorage_MemoryGZip extends CachedObjectStorage_CacheBase imple
      *
      * @return  array of string
      */
-    public function getCellList() {
+    public function getCellList()
+    {
         if ($this->currentObjectID !== null) {
             $this->storeData();
         }
@@ -126,7 +127,7 @@ class CachedObjectStorage_MemoryGZip extends CachedObjectStorage_CacheBase imple
      */
     public function unsetWorksheetCells()
     {
-        if(!is_null($this->currentObject)) {
+        if (!is_null($this->currentObject)) {
             $this->currentObject->detach();
             $this->currentObject = $this->currentObjectID = null;
         }

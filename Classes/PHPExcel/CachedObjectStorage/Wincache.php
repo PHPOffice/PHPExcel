@@ -59,7 +59,7 @@ class CachedObjectStorage_Wincache extends CachedObjectStorage_CacheBase impleme
      * @return    void
      * @throws    PHPExcel\Exception
      */
-    protected function _storeData()
+    protected function storeData()
     {
         if ($this->currentCellIsDirty) {
             $this->currentObject->detach();
@@ -210,11 +210,11 @@ class CachedObjectStorage_Wincache extends CachedObjectStorage_CacheBase impleme
         $baseUnique = $this->getUniqueID();
         $newCachePrefix = substr(md5($baseUnique), 0, 8).'.';
         $cacheList = $this->getCellList();
-        foreach($cacheList as $cellID) {
+        foreach ($cacheList as $cellID) {
             if ($cellID != $this->currentObjectID) {
                 $success = false;
                 $obj = wincache_ucache_get($this->cachePrefix.$cellID.'.cache', $success);
-                if ($success === false) {
+                if (!$success) {
                     //    Entry no longer exists in WinCache, so clear it from the cache array
                     parent::deleteCacheData($cellID);
                     throw new Exception('Cell entry '.$cellID.' no longer exists in Wincache');
@@ -235,7 +235,7 @@ class CachedObjectStorage_Wincache extends CachedObjectStorage_CacheBase impleme
      */
     public function unsetWorksheetCells()
     {
-        if(!is_null($this->currentObject)) {
+        if (!is_null($this->currentObject)) {
             $this->currentObject->detach();
             $this->currentObject = $this->currentObjectID = null;
         }
@@ -274,7 +274,7 @@ class CachedObjectStorage_Wincache extends CachedObjectStorage_CacheBase impleme
     public function __destruct()
     {
         $cacheList = $this->getCellList();
-        foreach($cacheList as $cellID) {
+        foreach ($cacheList as $cellID) {
             wincache_ucache_delete($this->cachePrefix.$cellID.'.cache');
         }
     }

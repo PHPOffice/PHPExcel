@@ -42,7 +42,8 @@ class CachedObjectStorage_Memory extends CachedObjectStorage_CacheBase implement
      *
      * @return    void
      */
-    protected function storeData() {
+    protected function storeData()
+    {
     }
 
     /**
@@ -53,7 +54,8 @@ class CachedObjectStorage_Memory extends CachedObjectStorage_CacheBase implement
      * @return    PHPExcel\Cell
      * @throws    PHPExcel\Exception
      */
-    public function addCacheData($pCoord, Cell $cell) {
+    public function addCacheData($pCoord, Cell $cell)
+    {
         $this->cellCache[$pCoord] = $cell;
 
         //    Set current entry to the new/updated entry
@@ -96,7 +98,7 @@ class CachedObjectStorage_Memory extends CachedObjectStorage_CacheBase implement
         parent::copyCellCollection($parent);
 
         $newCollection = array();
-        foreach($this->cellCache as $k => &$cell) {
+        foreach ($this->cellCache as $k => &$cell) {
             $newCollection[$k] = clone $cell;
             $newCollection[$k]->attach($this);
         }
@@ -112,7 +114,7 @@ class CachedObjectStorage_Memory extends CachedObjectStorage_CacheBase implement
     public function unsetWorksheetCells()
     {
         //    Because cells are all stored as intact objects in memory, we need to detach each one from the parent
-        foreach($this->cellCache as $k => &$cell) {
+        foreach ($this->cellCache as $k => &$cell) {
             $cell->detach();
             $this->cellCache[$k] = null;
         }

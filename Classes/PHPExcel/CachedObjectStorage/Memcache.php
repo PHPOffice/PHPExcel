@@ -78,7 +78,8 @@ class CachedObjectStorage_Memcache extends CachedObjectStorage_CacheBase impleme
                 null,
                 $this->cacheTime
             )) {
-                if (!$this->memcache->add($this->cachePrefix.$this->currentObjectID.'.cache',
+                if (!$this->memcache->add(
+                    $this->cachePrefix.$this->currentObjectID.'.cache',
                     $obj,
                     null,
                     $this->cacheTime
@@ -149,8 +150,7 @@ class CachedObjectStorage_Memcache extends CachedObjectStorage_CacheBase impleme
      */
     public function getCacheData($pCoord)
     {
-        if ($pCoord === $this->currentObjectID)
-        {
+        if ($pCoord === $this->currentObjectID) {
             return $this->currentObject;
         }
         $this->storeData();
@@ -278,13 +278,13 @@ class CachedObjectStorage_Memcache extends CachedObjectStorage_CacheBase impleme
             //    Set a new Memcache object and connect to the Memcache server
             $this->memcache = new Memcache();
             if (!$this->memcache->addServer(
-                $memcacheServer, 
-                $memcachePort, 
-                false, 
-                50, 
-                5, 
-                5, 
-                true, 
+                $memcacheServer,
+                $memcachePort,
+                false,
+                50,
+                5,
+                5,
+                true,
                 array($this, 'failureCallback')
             )) {
                 throw new Exception(

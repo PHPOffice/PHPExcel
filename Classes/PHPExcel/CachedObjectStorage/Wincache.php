@@ -35,21 +35,21 @@ namespace PHPExcel;
  * @package    PHPExcel\CachedObjectStorage
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class CachedObjectStorage_Wincache extends CachedObjectStorage_CacheBase implements CachedObjectStorage_ICache {
-
+class CachedObjectStorage_Wincache extends CachedObjectStorage_CacheBase implements CachedObjectStorage_ICache
+{
     /**
      * Prefix used to uniquely identify cache data for this worksheet
      *
      * @var string
      */
-    private $_cachePrefix = null;
+    private $cachePrefix = null;
 
     /**
      * Cache timeout
      *
      * @var integer
      */
-    private $_cacheTime = 600;
+    private $cacheTime = 600;
 
 
     /**
@@ -59,28 +59,28 @@ class CachedObjectStorage_Wincache extends CachedObjectStorage_CacheBase impleme
      * @return    void
      * @throws    PHPExcel\Exception
      */
-    protected function _storeData() {
-        if ($this->_currentCellIsDirty) {
-            $this->_currentObject->detach();
+    protected function _storeData()
+    {
+        if ($this->currentCellIsDirty) {
+            $this->currentObject->detach();
 
-            $obj = serialize($this->_currentObject);
-            if (wincache_ucache_exists($this->_cachePrefix.$this->_currentObjectID.'.cache')) {
-                if (!wincache_ucache_set($this->_cachePrefix.$this->_currentObjectID.'.cache', $obj, $this->_cacheTime)) {
+            $obj = serialize($this->currentObject);
+            if (wincache_ucache_exists($this->cachePrefix.$this->currentObjectID.'.cache')) {
+                if (!wincache_ucache_set($this->cachePrefix.$this->currentObjectID.'.cache', $obj, $this->cacheTime)) {
                     $this->__destruct();
-                    throw new Exception('Failed to store cell '.$this->_currentObjectID.' in WinCache');
+                    throw new Exception('Failed to store cell '.$this->currentObjectID.' in WinCache');
                 }
             } else {
-                if (!wincache_ucache_add($this->_cachePrefix.$this->_currentObjectID.'.cache', $obj, $this->_cacheTime)) {
+                if (!wincache_ucache_add($this->cachePrefix.$this->currentObjectID.'.cache', $obj, $this->cacheTime)) {
                     $this->__destruct();
-                    throw new Exception('Failed to store cell '.$this->_currentObjectID.' in WinCache');
+                    throw new Exception('Failed to store cell '.$this->currentObjectID.' in WinCache');
                 }
             }
-            $this->_currentCellIsDirty = false;
+            $this->currentCellIsDirty = false;
         }
 
-        $this->_currentObjectID = $this->_currentObject = null;
-    }    //    function _storeData()
-
+        $this->currentObjectID = $this->currentObject = null;
+    }
 
     /**
      * Add or Update a cell in cache identified by coordinate address
@@ -90,19 +90,19 @@ class CachedObjectStorage_Wincache extends CachedObjectStorage_CacheBase impleme
      * @return    void
      * @throws    PHPExcel\Exception
      */
-    public function addCacheData($pCoord, Cell $cell) {
-        if (($pCoord !== $this->_currentObjectID) && ($this->_currentObjectID !== null)) {
-            $this->_storeData();
+    public function addCacheData($pCoord, Cell $cell)
+    {
+        if (($pCoord !== $this->currentObjectID) && ($this->currentObjectID !== null)) {
+            $this->storeData();
         }
-        $this->_cellCache[$pCoord] = true;
+        $this->cellCache[$pCoord] = true;
 
-        $this->_currentObjectID = $pCoord;
-        $this->_currentObject = $cell;
-        $this->_currentCellIsDirty = true;
+        $this->currentObjectID = $pCoord;
+        $this->currentObject = $cell;
+        $this->currentCellIsDirty = true;
 
         return $cell;
-    }    //    function addCacheData()
-
+    }
 
     /**
      * Is a value set in the current PHPExcel\CachedObjectStorage_ICache for an indexed cell?
@@ -110,14 +110,15 @@ class CachedObjectStorage_Wincache extends CachedObjectStorage_CacheBase impleme
      * @param    string        $pCoord        Coordinate address of the cell to check
      * @return    boolean
      */
-    public function isDataSet($pCoord) {
+    public function isDataSet($pCoord)
+    {
         //    Check if the requested entry is the current object, or exists in the cache
         if (parent::isDataSet($pCoord)) {
-            if ($this->_currentObjectID == $pCoord) {
+            if ($this->currentObjectID == $pCoord) {
                 return true;
             }
             //    Check if the requested entry still exists in cache
-            $success = wincache_ucache_exists($this->_cachePrefix.$pCoord.'.cache');
+            $success = wincache_ucache_exists($this->cachePrefix.$pCoord.'.cache');
             if ($success === false) {
                 //    Entry no longer exists in Wincache, so clear it from the cache array
                 parent::deleteCacheData($pCoord);
@@ -126,8 +127,7 @@ class CachedObjectStorage_Wincache extends CachedObjectStorage_CacheBase impleme
             return true;
         }
         return false;
-    }    //    function isDataSet()
-
+    }
 
     /**
      * Get cell at a specific coordinate
@@ -136,17 +136,18 @@ class CachedObjectStorage_Wincache extends CachedObjectStorage_CacheBase impleme
      * @throws    PHPExcel\Exception
      * @return    PHPExcel\Cell    Cell that was found, or null if not found
      */
-    public function getCacheData($pCoord) {
-        if ($pCoord === $this->_currentObjectID) {
-            return $this->_currentObject;
+    public function getCacheData($pCoord)
+    {
+        if ($pCoord === $this->currentObjectID) {
+            return $this->currentObject;
         }
-        $this->_storeData();
+        $this->storeData();
 
         //    Check if the entry that has been requested actually exists
         $obj = null;
         if (parent::isDataSet($pCoord)) {
             $success = false;
-            $obj = wincache_ucache_get($this->_cachePrefix.$pCoord.'.cache', $success);
+            $obj = wincache_ucache_get($this->cachePrefix.$pCoord.'.cache', $success);
             if ($success === false) {
                 //    Entry no longer exists in WinCache, so clear it from the cache array
                 parent::deleteCacheData($pCoord);
@@ -158,29 +159,28 @@ class CachedObjectStorage_Wincache extends CachedObjectStorage_CacheBase impleme
         }
 
         //    Set current entry to the requested entry
-        $this->_currentObjectID = $pCoord;
-        $this->_currentObject = unserialize($obj);
+        $this->currentObjectID = $pCoord;
+        $this->currentObject = unserialize($obj);
         //    Re-attach this as the cell's parent
-        $this->_currentObject->attach($this);
+        $this->currentObject->attach($this);
 
         //    Return requested entry
-        return $this->_currentObject;
-    }    //    function getCacheData()
-
+        return $this->currentObject;
+    }
 
     /**
      * Get a list of all cell addresses currently held in cache
      *
      * @return  array of string
      */
-    public function getCellList() {
-        if ($this->_currentObjectID !== null) {
-            $this->_storeData();
+    public function getCellList()
+    {
+        if ($this->currentObjectID !== null) {
+            $this->storeData();
         }
 
         return parent::getCellList();
     }
-
 
     /**
      * Delete a cell in cache identified by coordinate address
@@ -188,14 +188,14 @@ class CachedObjectStorage_Wincache extends CachedObjectStorage_CacheBase impleme
      * @param    string            $pCoord        Coordinate address of the cell to delete
      * @throws    PHPExcel\Exception
      */
-    public function deleteCacheData($pCoord) {
+    public function deleteCacheData($pCoord)
+    {
         //    Delete the entry from Wincache
-        wincache_ucache_delete($this->_cachePrefix.$pCoord.'.cache');
+        wincache_ucache_delete($this->cachePrefix.$pCoord.'.cache');
 
         //    Delete the entry from our cell address array
         parent::deleteCacheData($pCoord);
-    }    //    function deleteCacheData()
-
+    }
 
     /**
      * Clone the cell collection
@@ -203,51 +203,51 @@ class CachedObjectStorage_Wincache extends CachedObjectStorage_CacheBase impleme
      * @param    PHPExcel\Worksheet    $parent        The new worksheet
      * @return    void
      */
-    public function copyCellCollection(Worksheet $parent) {
+    public function copyCellCollection(Worksheet $parent)
+    {
         parent::copyCellCollection($parent);
         //    Get a new id for the new file name
-        $baseUnique = $this->_getUniqueID();
-        $newCachePrefix = substr(md5($baseUnique),0,8).'.';
+        $baseUnique = $this->getUniqueID();
+        $newCachePrefix = substr(md5($baseUnique), 0, 8).'.';
         $cacheList = $this->getCellList();
         foreach($cacheList as $cellID) {
-            if ($cellID != $this->_currentObjectID) {
+            if ($cellID != $this->currentObjectID) {
                 $success = false;
-                $obj = wincache_ucache_get($this->_cachePrefix.$cellID.'.cache', $success);
+                $obj = wincache_ucache_get($this->cachePrefix.$cellID.'.cache', $success);
                 if ($success === false) {
                     //    Entry no longer exists in WinCache, so clear it from the cache array
                     parent::deleteCacheData($cellID);
                     throw new Exception('Cell entry '.$cellID.' no longer exists in Wincache');
                 }
-                if (!wincache_ucache_add($newCachePrefix.$cellID.'.cache', $obj, $this->_cacheTime)) {
+                if (!wincache_ucache_add($newCachePrefix.$cellID.'.cache', $obj, $this->cacheTime)) {
                     $this->__destruct();
                     throw new Exception('Failed to store cell '.$cellID.' in Wincache');
                 }
             }
         }
-        $this->_cachePrefix = $newCachePrefix;
-    }    //    function copyCellCollection()
-
+        $this->cachePrefix = $newCachePrefix;
+    }
 
     /**
      * Clear the cell collection and disconnect from our parent
      *
      * @return    void
      */
-    public function unsetWorksheetCells() {
-        if(!is_null($this->_currentObject)) {
-            $this->_currentObject->detach();
-            $this->_currentObject = $this->_currentObjectID = null;
+    public function unsetWorksheetCells()
+    {
+        if(!is_null($this->currentObject)) {
+            $this->currentObject->detach();
+            $this->currentObject = $this->currentObjectID = null;
         }
 
         //    Flush the WinCache cache
         $this->__destruct();
 
-        $this->_cellCache = array();
+        $this->cellCache = array();
 
         //    detach ourself from the worksheet, so that it can then delete this object successfully
-        $this->_parent = null;
-    }    //    function unsetWorksheetCells()
-
+        $this->parent = null;
+    }
 
     /**
      * Initialise this new cell collection
@@ -255,29 +255,29 @@ class CachedObjectStorage_Wincache extends CachedObjectStorage_CacheBase impleme
      * @param    PHPExcel\Worksheet    $parent        The worksheet for this cell collection
      * @param    array of mixed        $arguments    Additional initialisation arguments
      */
-    public function __construct(Worksheet $parent, $arguments) {
-        $cacheTime    = (isset($arguments['cacheTime']))    ? $arguments['cacheTime']    : 600;
+    public function __construct(Worksheet $parent, $arguments)
+    {
+        $cacheTime = (isset($arguments['cacheTime'])) ? $arguments['cacheTime'] : 600;
 
-        if (is_null($this->_cachePrefix)) {
-            $baseUnique = $this->_getUniqueID();
-            $this->_cachePrefix = substr(md5($baseUnique),0,8).'.';
-            $this->_cacheTime = $cacheTime;
+        if (is_null($this->cachePrefix)) {
+            $baseUnique = $this->getUniqueID();
+            $this->cachePrefix = substr(md5($baseUnique), 0, 8).'.';
+            $this->cacheTime = $cacheTime;
 
             parent::__construct($parent);
         }
-    }    //    function __construct()
-
+    }
 
     /**
      * Destroy this cell collection
      */
-    public function __destruct() {
+    public function __destruct()
+    {
         $cacheList = $this->getCellList();
         foreach($cacheList as $cellID) {
-            wincache_ucache_delete($this->_cachePrefix.$cellID.'.cache');
+            wincache_ucache_delete($this->cachePrefix.$cellID.'.cache');
         }
-    }    //    function __destruct()
-
+    }
 
     /**
      * Identify whether the caching method is currently available
@@ -285,12 +285,8 @@ class CachedObjectStorage_Wincache extends CachedObjectStorage_CacheBase impleme
      *
      * @return    boolean
      */
-    public static function cacheMethodIsAvailable() {
-        if (!function_exists('wincache_ucache_add')) {
-            return false;
-        }
-
-        return true;
+    public static function cacheMethodIsAvailable()
+    {
+        return function_exists('wincache_ucache_add');
     }
-
 }

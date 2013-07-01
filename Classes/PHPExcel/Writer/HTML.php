@@ -570,8 +570,9 @@ class PHPExcel_Writer_HTML extends PHPExcel_Writer_Abstract implements PHPExcel_
 
 		// Write images
 		foreach ($pSheet->getDrawingCollection() as $drawing) {
-			if ($drawing instanceof PHPExcel_Worksheet_Drawing) {
-				if ($drawing->getCoordinates() == $coordinates) {
+			if ($drawing->getCoordinates() == $coordinates) {
+				$imageData = null;
+				if ($drawing instanceof PHPExcel_Worksheet_Drawing) {
 					$filename = $drawing->getPath();
 
 					// Strip off eventual '.'
@@ -590,7 +591,6 @@ class PHPExcel_Writer_HTML extends PHPExcel_Writer_Abstract implements PHPExcel_
 					// Convert UTF8 data to PCDATA
 					$filename = htmlspecialchars($filename);
 
-					$html .= PHP_EOL;
 					if ((!$this->_embedImages) || ($this->_isPdf)) {
 						$imageData = $filename;
 					} else {
@@ -607,6 +607,21 @@ class PHPExcel_Writer_HTML extends PHPExcel_Writer_Abstract implements PHPExcel_
 						}
 					}
 
+				}
+				else if ($drawing instanceof PHPExcel_Worksheet_MemoryDrawing) {
+					ob_start();
+					call_user_func($drawing->getRenderingFunction(), $drawing->getImageResource());
+					$data = ob_get_contents();
+					ob_end_clean();
+
+					// base64 encode the binary data, then break it
+					// into chunks according to RFC 2045 semantics
+					$base64 = chunk_split(base64_encode($data));
+					$imageData = 'data:'.$drawing->getMimeType().';base64,' . $base64;
+				}
+
+				if ($imageData) {
+					$html .= PHP_EOL;
 					$html .= '<div style="position: relative;">';
 					$html .= '<img style="position: absolute; z-index: 1; left: ' . $drawing->getOffsetX() . 'px; top: ' . $drawing->getOffsetY() . 'px; width: ' . $drawing->getWidth() . 'px; height: ' . $drawing->getHeight() . 'px;" src="' . $imageData . '" border="0" />' . PHP_EOL;
 					$html .= '</div>';

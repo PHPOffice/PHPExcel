@@ -3,7 +3,7 @@
 /**
  * PHPExcel
  *
- * Copyright (c) 2006 - 2012 PHPExcel
+ * Copyright (c) 2006 - 2013 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -21,7 +21,7 @@
  *
  * @category   PHPExcel
  * @package	PHPExcel_Shared
- * @copyright  Copyright (c) 2006 - 2012 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license	http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version	##VERSION##, ##DATE##
  */
@@ -32,7 +32,7 @@
  *
  * @category   PHPExcel
  * @package	PHPExcel_Shared
- * @copyright  Copyright (c) 2006 - 2012 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
 class PHPExcel_Shared_Date
 {
@@ -58,8 +58,21 @@ class PHPExcel_Shared_Date
 										'Sep' => 'September',
 										'Oct' => 'October',
 										'Nov' => 'November',
-										'Dec' => 'December'
+										'Dec' => 'December',
 									  );
+
+	/*
+	 * Names of the months of the year, indexed by shortname
+	 * Planned usage for locale settings
+	 *
+	 * @public
+	 * @var	string[]
+	 */
+	public static $_numberSuffixes = array(	'st',
+											'nd',
+											'rd',
+											'th',
+										  );
 
 	/*
 	 * Base calendar year to use for calculations
@@ -240,7 +253,7 @@ class PHPExcel_Shared_Date
 	 */
 	public static function isDateTime(PHPExcel_Cell $pCell) {
 		return self::isDateTimeFormat(
-			$pCell->getParent()->getStyle(
+			$pCell->getWorksheet()->getStyle(
 				$pCell->getCoordinate()
 			)->getNumberFormat()
 		);
@@ -354,5 +367,24 @@ class PHPExcel_Shared_Date
 
 
 	}
+
+    public static function monthStringToNumber($month) {
+        $monthIndex = 1;
+        foreach(self::$_monthNames as $shortMonthName => $longMonthName) {
+            if (($month === $longMonthName) || ($month === $shortMonthName)) {
+                return $monthIndex;
+            }
+            ++$monthIndex;
+        }
+        return $month;
+    }
+
+    public static function dayStringToNumber($day) {
+		$strippedDayValue = (str_replace(self::$_numberSuffixes,'',$day));
+		if (is_numeric($strippedDayValue)) {
+		    return $strippedDayValue;
+		}
+		return $day;
+    }
 
 }

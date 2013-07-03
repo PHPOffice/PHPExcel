@@ -2,7 +2,7 @@
 /**
  * PHPExcel
  *
- * Copyright (C) 2006 - 2012 PHPExcel
+ * Copyright (C) 2006 - 2013 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,7 +20,7 @@
  *
  * @category   PHPExcel
  * @package    PHPExcel
- * @copyright  Copyright (c) 2006 - 2012 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -38,7 +38,10 @@ date_default_timezone_set('Europe/London');
 require_once '../Classes/PHPExcel.php';
 
 $cacheMethod = PHPExcel_CachedObjectStorageFactory::cache_in_memory_gzip;
-PHPExcel_Settings::setCacheStorageMethod($cacheMethod);
+if (!PHPExcel_Settings::setCacheStorageMethod($cacheMethod)) {
+	die($cacheMethod . " caching method is not available" . EOL);
+}
+echo date('H:i:s') , " Enable Cell Caching using " , $cacheMethod , " method" , EOL;
 
 
 // Create new PHPExcel object
@@ -104,9 +107,17 @@ $objPHPExcel->setActiveSheetIndex(0);
 
 // Save Excel 2007 file
 echo date('H:i:s') , " Write to Excel2007 format" , EOL;
+$callStartTime = microtime(true);
+
 $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
 $objWriter->save(str_replace('.php', '.xlsx', __FILE__));
+$callEndTime = microtime(true);
+$callTime = $callEndTime - $callStartTime;
+
 echo date('H:i:s') , " File written to " , str_replace('.php', '.xlsx', pathinfo(__FILE__, PATHINFO_BASENAME)) , EOL;
+echo 'Call time to write Workbook was ' , sprintf('%.4f',$callTime) , " seconds" , EOL;
+// Echo memory usage
+echo date('H:i:s') , ' Current memory usage: ' , (memory_get_usage(true) / 1024 / 1024) , " MB" , EOL;
 
 
 // Echo memory peak usage

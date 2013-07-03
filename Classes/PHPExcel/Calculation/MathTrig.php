@@ -1,8 +1,8 @@
-﻿<?php
+<?php
 /**
  * PHPExcel
  *
- * Copyright (c) 2006 - 2012 PHPExcel
+ * Copyright (c) 2006 - 2013 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,7 +20,7 @@
  *
  * @category	PHPExcel
  * @package		PHPExcel_Calculation
- * @copyright	Copyright (c) 2006 - 2012 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright	Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license		http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version		##VERSION##, ##DATE##
  */
@@ -41,7 +41,7 @@ if (!defined('PHPEXCEL_ROOT')) {
  *
  * @category	PHPExcel
  * @package		PHPExcel_Calculation
- * @copyright	Copyright (c) 2006 - 2012 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright	Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
 class PHPExcel_Calculation_MathTrig {
 
@@ -495,13 +495,13 @@ class PHPExcel_Calculation_MathTrig {
 	 *
 	 * @access	public
 	 * @category Mathematical and Trigonometric Functions
-	 * @param	float	$value		The positive real number for which you want the logarithm
+	 * @param	float	$number		The positive real number for which you want the logarithm
 	 * @param	float	$base		The base of the logarithm. If base is omitted, it is assumed to be 10.
 	 * @return	float
 	 */
 	public static function LOG_BASE($number = NULL, $base = 10) {
 		$number	= PHPExcel_Calculation_Functions::flattenSingleValue($number);
-		$base	= (is_null($base))	? 10 :	(float) PHPExcel_Calculation_Functions::flattenSingleValue($base);
+		$base	= (is_null($base)) ? 10 : (float) PHPExcel_Calculation_Functions::flattenSingleValue($base);
 
 		if ((!is_numeric($base)) || (!is_numeric($number)))
 			return PHPExcel_Calculation_Functions::VALUE();
@@ -547,7 +547,7 @@ class PHPExcel_Calculation_MathTrig {
 		try {
 			$matrix = new PHPExcel_Shared_JAMA_Matrix($matrixData);
 			return $matrix->det();
-		} catch (Exception $ex) {
+		} catch (PHPExcel_Exception $ex) {
 			return PHPExcel_Calculation_Functions::VALUE();
 		}
 	}	//	function MDETERM()
@@ -589,7 +589,7 @@ class PHPExcel_Calculation_MathTrig {
 		try {
 			$matrix = new PHPExcel_Shared_JAMA_Matrix($matrixData);
 			return $matrix->inverse()->getArray();
-		} catch (Exception $ex) {
+		} catch (PHPExcel_Exception $ex) {
 			return PHPExcel_Calculation_Functions::VALUE();
 		}
 	}	//	function MINVERSE()
@@ -642,7 +642,7 @@ class PHPExcel_Calculation_MathTrig {
 			}
 
 			return $matrixA->times($matrixB)->getArray();
-		} catch (Exception $ex) {
+		} catch (PHPExcel_Exception $ex) {
 			return PHPExcel_Calculation_Functions::VALUE();
 		}
 	}	//	function MMULT()
@@ -1252,7 +1252,8 @@ class PHPExcel_Calculation_MathTrig {
 	/**
 	 * SUMX2MY2
 	 *
-	 * @param	mixed	$value	Value to check
+	 * @param	mixed[]	$matrixData1	Matrix #1
+	 * @param	mixed[]	$matrixData2	Matrix #2
 	 * @return	float
 	 */
 	public static function SUMX2MY2($matrixData1,$matrixData2) {
@@ -1281,7 +1282,8 @@ class PHPExcel_Calculation_MathTrig {
 	/**
 	 * SUMX2PY2
 	 *
-	 * @param	mixed	$value	Value to check
+	 * @param	mixed[]	$matrixData1	Matrix #1
+	 * @param	mixed[]	$matrixData2	Matrix #2
 	 * @return	float
 	 */
 	public static function SUMX2PY2($matrixData1,$matrixData2) {
@@ -1310,7 +1312,8 @@ class PHPExcel_Calculation_MathTrig {
 	/**
 	 * SUMXMY2
 	 *
-	 * @param	mixed	$value	Value to check
+	 * @param	mixed[]	$matrixData1	Matrix #1
+	 * @param	mixed[]	$matrixData2	Matrix #2
 	 * @return	float
 	 */
 	public static function SUMXMY2($matrixData1,$matrixData2) {

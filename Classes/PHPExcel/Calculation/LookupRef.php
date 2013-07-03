@@ -2,7 +2,7 @@
 /**
  * PHPExcel
  *
- * Copyright (c) 2006 - 2012 PHPExcel
+ * Copyright (c) 2006 - 2013 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,7 +20,7 @@
  *
  * @category	PHPExcel
  * @package		PHPExcel_Calculation
- * @copyright	Copyright (c) 2006 - 2012 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright	Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license		http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version		##VERSION##, ##DATE##
  */
@@ -41,7 +41,7 @@ if (!defined('PHPEXCEL_ROOT')) {
  *
  * @category	PHPExcel
  * @package		PHPExcel_Calculation
- * @copyright	Copyright (c) 2006 - 2012 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright	Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
 class PHPExcel_Calculation_LookupRef {
 
@@ -251,8 +251,9 @@ class PHPExcel_Calculation_LookupRef {
 	 *
 	 * @access	public
 	 * @category Logical Functions
-	 * @param	string	$linkURL		Value to check, is also the value returned when no error
-	 * @param	string	$displayName	Value to return when testValue is an error condition
+	 * @param	string			$linkURL		Value to check, is also the value returned when no error
+	 * @param	string			$displayName	Value to return when testValue is an error condition
+	 * @param	PHPExcel_Cell	$pCell			The cell to set the hyperlink in
 	 * @return	mixed	The value of $displayName (or $linkURL if $displayName was blank)
 	 */
 	public static function HYPERLINK($linkURL = '', $displayName = null, PHPExcel_Cell $pCell = null) {
@@ -287,13 +288,14 @@ class PHPExcel_Calculation_LookupRef {
 	 *
 	 * NOTE - INDIRECT() does not yet support the optional a1 parameter introduced in Excel 2010
 	 *
-	 * @param	cellAddress		An array or array formula, or a reference to a range of cells for which you want the number of rows
+	 * @param	cellAddress		$cellAddress	The cell address of the current cell (containing this formula)
+	 * @param	PHPExcel_Cell	$pCell			The current cell (containing this formula)
 	 * @return	mixed			The cells referenced by cellAddress
 	 *
 	 * @todo	Support for the optional a1 parameter introduced in Excel 2010
 	 *
 	 */
-	public static function INDIRECT($cellAddress=Null, PHPExcel_Cell $pCell = null) {
+	public static function INDIRECT($cellAddress = NULL, PHPExcel_Cell $pCell = NULL) {
 		$cellAddress	= PHPExcel_Calculation_Functions::flattenSingleValue($cellAddress);
 		if (is_null($cellAddress) || $cellAddress === '') {
 			return PHPExcel_Calculation_Functions::REF();
@@ -307,29 +309,30 @@ class PHPExcel_Calculation_LookupRef {
 
 		if ((!preg_match('/^'.PHPExcel_Calculation::CALCULATION_REGEXP_CELLREF.'$/i', $cellAddress1, $matches)) ||
 			((!is_null($cellAddress2)) && (!preg_match('/^'.PHPExcel_Calculation::CALCULATION_REGEXP_CELLREF.'$/i', $cellAddress2, $matches)))) {
-
 			if (!preg_match('/^'.PHPExcel_Calculation::CALCULATION_REGEXP_NAMEDRANGE.'$/i', $cellAddress1, $matches)) {
 				return PHPExcel_Calculation_Functions::REF();
 			}
 
-			if (strpos($cellAddress,'!') !== false) {
-				list($sheetName,$cellAddress) = explode('!',$cellAddress);
+			if (strpos($cellAddress,'!') !== FALSE) {
+				list($sheetName, $cellAddress) = explode('!',$cellAddress);
+				$sheetName = trim($sheetName, "'");
 				$pSheet = $pCell->getParent()->getParent()->getSheetByName($sheetName);
 			} else {
 				$pSheet = $pCell->getParent();
 			}
 
-			return PHPExcel_Calculation::getInstance()->extractNamedRange($cellAddress, $pSheet, False);
+			return PHPExcel_Calculation::getInstance()->extractNamedRange($cellAddress, $pSheet, FALSE);
 		}
 
-		if (strpos($cellAddress,'!') !== false) {
+		if (strpos($cellAddress,'!') !== FALSE) {
 			list($sheetName,$cellAddress) = explode('!',$cellAddress);
+			$sheetName = trim($sheetName, "'");
 			$pSheet = $pCell->getParent()->getParent()->getSheetByName($sheetName);
 		} else {
 			$pSheet = $pCell->getParent();
 		}
 
-		return PHPExcel_Calculation::getInstance()->extractCellRange($cellAddress, $pSheet, False);
+		return PHPExcel_Calculation::getInstance()->extractCellRange($cellAddress, $pSheet, FALSE);
 	}	//	function INDIRECT()
 
 
@@ -373,9 +376,10 @@ class PHPExcel_Calculation_LookupRef {
 			return PHPExcel_Calculation_Functions::REF();
 		}
 
-		$sheetName = null;
+		$sheetName = NULL;
 		if (strpos($cellAddress,"!")) {
 			list($sheetName,$cellAddress) = explode("!",$cellAddress);
+			$sheetName = trim($sheetName, "'");
 		}
 		if (strpos($cellAddress,":")) {
 			list($startCell,$endCell) = explode(":",$cellAddress);
@@ -416,7 +420,7 @@ class PHPExcel_Calculation_LookupRef {
 			$cellAddress .= ':'.$endCellColumn.$endCellRow;
 		}
 
-		if ($sheetName !== null) {
+		if ($sheetName !== NULL) {
 			$pSheet = $pCell->getParent()->getParent()->getSheetByName($sheetName);
 		} else {
 			$pSheet = $pCell->getParent();
@@ -717,7 +721,8 @@ class PHPExcel_Calculation_LookupRef {
 
 		$rowNumber = $rowValue = False;
 		foreach($lookup_array as $rowKey => $rowData) {
-			if (strtolower($rowData[$firstColumn]) > strtolower($lookup_value)) {
+			if ((is_numeric($lookup_value) && is_numeric($rowData[$firstColumn]) && ($rowData[$firstColumn] > $lookup_value)) ||
+				(!is_numeric($lookup_value) && !is_numeric($rowData[$firstColumn]) && (strtolower($rowData[$firstColumn]) > strtolower($lookup_value)))) {
 				break;
 			}
 			$rowNumber = $rowKey;
@@ -730,12 +735,80 @@ class PHPExcel_Calculation_LookupRef {
 				return PHPExcel_Calculation_Functions::NA();
 			} else {
 				//	otherwise return the appropriate value
-				return $lookup_array[$rowNumber][$returnColumn];
+				$result = $lookup_array[$rowNumber][$returnColumn];
+				if ((is_numeric($lookup_value) && is_numeric($result)) ||
+					(!is_numeric($lookup_value) && !is_numeric($result))) {
+					return $result;
+				}
 			}
 		}
 
 		return PHPExcel_Calculation_Functions::NA();
 	}	//	function VLOOKUP()
+
+
+/**
+    * HLOOKUP
+    * The HLOOKUP function searches for value in the top-most row of lookup_array and returns the value in the same column based on the index_number.
+    * @param    lookup_value    The value that you want to match in lookup_array
+    * @param    lookup_array    The range of cells being searched
+    * @param    index_number    The row number in table_array from which the matching value must be returned. The first row is 1.
+    * @param    not_exact_match Determines if you are looking for an exact match based on lookup_value.
+    * @return   mixed           The value of the found cell
+    */
+    public static function HLOOKUP($lookup_value, $lookup_array, $index_number, $not_exact_match=true) {
+        $lookup_value   = PHPExcel_Calculation_Functions::flattenSingleValue($lookup_value);
+        $index_number   = PHPExcel_Calculation_Functions::flattenSingleValue($index_number);
+        $not_exact_match    = PHPExcel_Calculation_Functions::flattenSingleValue($not_exact_match);
+
+        // index_number must be greater than or equal to 1
+        if ($index_number < 1) {
+            return PHPExcel_Calculation_Functions::VALUE();
+        }
+
+        // index_number must be less than or equal to the number of columns in lookup_array
+        if ((!is_array($lookup_array)) || (empty($lookup_array))) {
+            return PHPExcel_Calculation_Functions::REF();
+        } else {
+            $f = array_keys($lookup_array);
+            $firstRow = array_pop($f);
+            if ((!is_array($lookup_array[$firstRow])) || ($index_number > count($lookup_array[$firstRow]))) {
+                return PHPExcel_Calculation_Functions::REF();
+            } else {
+                $columnKeys = array_keys($lookup_array[$firstRow]);
+                                $firstkey = $f[0] - 1;
+                $returnColumn = $firstkey + $index_number;
+                $firstColumn = array_shift($f);
+            }
+        }
+
+        if (!$not_exact_match) {
+            $firstRowH = asort($lookup_array[$firstColumn]);
+        }
+
+        $rowNumber = $rowValue = False;
+        foreach($lookup_array[$firstColumn] as $rowKey => $rowData) {
+			if ((is_numeric($lookup_value) && is_numeric($rowData) && ($rowData > $lookup_value)) ||
+				(!is_numeric($lookup_value) && !is_numeric($rowData) && (strtolower($rowData) > strtolower($lookup_value)))) {
+                break;
+            }
+            $rowNumber = $rowKey;
+            $rowValue = $rowData;
+        }
+
+        if ($rowNumber !== false) {
+            if ((!$not_exact_match) && ($rowValue != $lookup_value)) {
+                //  if an exact match is required, we have what we need to return an appropriate response
+                return PHPExcel_Calculation_Functions::NA();
+            } else {
+                //  otherwise return the appropriate value
+                $result = $lookup_array[$returnColumn][$rowNumber];
+				return $result;
+            }
+        }
+
+        return PHPExcel_Calculation_Functions::NA();
+    }   //  function HLOOKUP()
 
 
 	/**

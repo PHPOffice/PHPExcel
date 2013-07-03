@@ -2,7 +2,7 @@
 /**
  * PHPExcel
  *
- * Copyright (c) 2006 - 2012 PHPExcel
+ * Copyright (c) 2006 - 2013 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,7 +20,7 @@
  *
  * @category   PHPExcel
  * @package    PHPExcel_Writer_Excel5
- * @copyright  Copyright (c) 2006 - 2012 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -66,7 +66,7 @@
  *
  * @category   PHPExcel
  * @package    PHPExcel_Writer_Excel5
- * @copyright  Copyright (c) 2006 - 2012 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
 class PHPExcel_Writer_Excel5_Xf
 {
@@ -179,7 +179,7 @@ class PHPExcel_Writer_Excel5_Xf
 		// Flags to indicate if attributes have been set.
 		$atr_num     = ($this->_numberFormatIndex != 0)?1:0;
 		$atr_fnt     = ($this->_fontIndex != 0)?1:0;
-		$atr_alc     = ((int) $this->_style->getAlignment()->getWrapText())?1:0;
+		$atr_alc     = ((int) $this->_style->getAlignment()->getWrapText()) ? 1 : 0;
 		$atr_bdr     = (self::_mapBorderStyle($this->_style->getBorders()->getBottom()->getBorderStyle())   ||
 						self::_mapBorderStyle($this->_style->getBorders()->getTop()->getBorderStyle())      ||
 						self::_mapBorderStyle($this->_style->getBorders()->getLeft()->getBorderStyle())     ||
@@ -457,6 +457,7 @@ class PHPExcel_Writer_Excel5_Xf
 										PHPExcel_Style_Alignment::HORIZONTAL_LEFT				=> 1,
 										PHPExcel_Style_Alignment::HORIZONTAL_CENTER				=> 2,
 										PHPExcel_Style_Alignment::HORIZONTAL_RIGHT				=> 3,
+										PHPExcel_Style_Alignment::HORIZONTAL_FILL				=> 4,
 										PHPExcel_Style_Alignment::HORIZONTAL_JUSTIFY			=> 5,
 										PHPExcel_Style_Alignment::HORIZONTAL_CENTER_CONTINUOUS	=> 6,
 									  );

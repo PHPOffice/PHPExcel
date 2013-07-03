@@ -2,7 +2,7 @@
 /**
  * PHPExcel
  *
- * Copyright (c) 2006 - 2012 PHPExcel
+ * Copyright (c) 2006 - 2013 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,7 +20,7 @@
  *
  * @category   PHPExcel
  * @package    PHPExcel_Shared
- * @copyright  Copyright (c) 2006 - 2012 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -31,7 +31,7 @@
  *
  * @category   PHPExcel
  * @package    PHPExcel_Shared
- * @copyright  Copyright (c) 2006 - 2012 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
 class PHPExcel_Shared_CodePage
 {
@@ -41,14 +41,14 @@ class PHPExcel_Shared_CodePage
 	 *
 	 * @param integer $codePage Microsoft Code Page Indentifier
 	 * @return string Code Page Name
-	 * @throws Exception
+	 * @throws PHPExcel_Exception
 	 */
 	public static function NumberToName($codePage = 1252)
 	{
 		switch ($codePage) {
 			case 367:	return 'ASCII';				break;	//	ASCII
 			case 437:	return 'CP437';				break;	//	OEM US
-			case 720:	throw new Exception('Code page 720 not supported.');
+			case 720:	throw new PHPExcel_Exception('Code page 720 not supported.');
 													break;	//	OEM Arabic
 			case 737:	return 'CP737';				break;	//	OEM Greek
 			case 775:	return 'CP775';				break;	//	OEM Baltic
@@ -89,13 +89,13 @@ class PHPExcel_Shared_CodePage
 			case 10079: return 'MACICELAND';		break;	//	Macintosh Icelandic
 			case 10081: return 'MACTURKISH';		break;	//	Macintosh Turkish
 			case 32768:	return 'MAC';				break;	//	Apple Roman
-			case 32769:	throw new Exception('Code page 32769 not supported.');
+			case 32769:	throw new PHPExcel_Exception('Code page 32769 not supported.');
 													break;	//	ANSI Latin I (BIFF2-BIFF3)
 			case 65000:	return 'UTF-7';				break;	//	Unicode (UTF-7)
 			case 65001:	return 'UTF-8';				break;	//	Unicode (UTF-8)
 		}
 
-		throw new Exception('Unknown codepage: ' . $codePage);
+		throw new PHPExcel_Exception('Unknown codepage: ' . $codePage);
 	}
 
 }

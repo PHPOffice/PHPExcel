@@ -13,7 +13,7 @@ date_default_timezone_set('Europe/London');
 /**
  * PHPExcel
  *
- * Copyright (C) 2006 - 2012 PHPExcel
+ * Copyright (C) 2006 - 2013 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -31,7 +31,7 @@ date_default_timezone_set('Europe/London');
  *
  * @category   PHPExcel
  * @package    PHPExcel
- * @copyright  Copyright (c) 2006 - 2012 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -68,7 +68,7 @@ $inputFileNames = 'templates/32readwrite*[0-9].xlsx';
 	if ((isset($argc)) && ($argc > 1)) {
 	$inputFileNames = array();
 	for($i = 1; $i < $argc; ++$i) {
-		$inputFileNames[] = __DIR__ . '/templates/' . $argv[$i];
+		$inputFileNames[] = dirname(__FILE__) . '/templates/' . $argv[$i];
 	}
 } else {
 	$inputFileNames = glob($inputFileNames);

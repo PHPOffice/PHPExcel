@@ -2,7 +2,7 @@
 /**
  * PHPExcel
  *
- * Copyright (c) 2006 - 2012 PHPExcel
+ * Copyright (c) 2006 - 2013 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,7 +20,7 @@
  *
  * @category   PHPExcel
  * @package    PHPExcel
- * @copyright  Copyright (c) 2006 - 2012 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -40,7 +40,7 @@ if (!defined('PHPEXCEL_ROOT')) {
  *
  * @category   PHPExcel
  * @package    PHPExcel
- * @copyright  Copyright (c) 2006 - 2012 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
 class PHPExcel_IOFactory
 {
@@ -183,7 +183,7 @@ class PHPExcel_IOFactory
 	 *
 	 * @static
 	 * @access public
-	 * @param 	string 		$pFileName		The name of the spreadsheet file
+	 * @param 	string 		$pFilename		The name of the spreadsheet file
 	 * @return	PHPExcel
 	 * @throws	PHPExcel_Reader_Exception
 	 */
@@ -197,7 +197,7 @@ class PHPExcel_IOFactory
 	 *
 	 * @static
 	 * @access public
-	 * @param 	string 		$pFileName		The name of the spreadsheet file to identify
+	 * @param 	string 		$pFilename		The name of the spreadsheet file to identify
 	 * @return	string
 	 * @throws	PHPExcel_Reader_Exception
 	 */
@@ -214,7 +214,7 @@ class PHPExcel_IOFactory
 	 *
 	 * @static
 	 * @access	public
-	 * @param 	string 		$pFileName		The name of the spreadsheet file
+	 * @param 	string 		$pFilename		The name of the spreadsheet file
 	 * @return	PHPExcel_Reader_IReader
 	 * @throws	PHPExcel_Reader_Exception
 	 */

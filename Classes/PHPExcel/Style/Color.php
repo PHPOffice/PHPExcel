@@ -2,7 +2,7 @@
 /**
  * PHPExcel
  *
- * Copyright (c) 2006 - 2012 PHPExcel
+ * Copyright (c) 2006 - 2013 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,7 +20,7 @@
  *
  * @category   PHPExcel
  * @package	PHPExcel_Style
- * @copyright Copyright (c) 2006 - 2012 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version ##VERSION##, ##DATE##
  */
@@ -31,7 +31,7 @@
  *
  * @category   PHPExcel
  * @package	PHPExcel_Style
- * @copyright  Copyright (c) 2006 - 2012 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
 class PHPExcel_Style_Color extends PHPExcel_Style_Supervisor implements PHPExcel_IComparable
 {
@@ -263,11 +263,7 @@ class PHPExcel_Style_Color extends PHPExcel_Style_Supervisor implements PHPExcel
 	 * @return	string		The red colour component
 	 */
 	public static function getRed($RGB,$hex=TRUE) {
-		if (strlen($RGB) == 8) {
-			return self::_getColourComponent($RGB, 2, $hex);
-		} elseif (strlen($RGB) == 6) {
-			return self::_getColourComponent($RGB, 0, $hex);
-		}
+		return self::_getColourComponent($RGB, strlen($RGB) - 6, $hex);
 	}
 
 	/**
@@ -279,11 +275,7 @@ class PHPExcel_Style_Color extends PHPExcel_Style_Supervisor implements PHPExcel
 	 * @return	string		The green colour component
 	 */
 	public static function getGreen($RGB,$hex=TRUE) {
-		if (strlen($RGB) == 8) {
-			return self::_getColourComponent($RGB, 4, $hex);
-		} elseif (strlen($RGB) == 6) {
-			return self::_getColourComponent($RGB, 2, $hex);
-		}
+		return self::_getColourComponent($RGB, strlen($RGB) - 4, $hex);
 	}
 
 	/**
@@ -295,11 +287,7 @@ class PHPExcel_Style_Color extends PHPExcel_Style_Supervisor implements PHPExcel
 	 * @return	string		The blue colour component
 	 */
 	public static function getBlue($RGB,$hex=TRUE) {
-		if (strlen($RGB) == 8) {
-			return self::_getColourComponent($RGB, 6, $hex);
-		} elseif (strlen($RGB) == 6) {
-			return self::_getColourComponent($RGB, 4, $hex);
-		}
+		return self::_getColourComponent($RGB, strlen($RGB) - 2, $hex);
 	}
 
 	/**

@@ -2,7 +2,7 @@
 /**
  * PHPExcel
  *
- * Copyright (c) 2006 - 2012 PHPExcel
+ * Copyright (c) 2006 - 2013 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,7 +20,7 @@
  *
  * @category   PHPExcel
  * @package    PHPExcel_Calculation
- * @copyright  Copyright (c) 2006 - 2012 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -31,7 +31,7 @@
  *
  * @category   PHPExcel
  * @package    PHPExcel_Calculation
- * @copyright  Copyright (c) 2006 - 2012 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
 class PHPExcel_Calculation_Function {
 	/* Function categories */
@@ -74,7 +74,7 @@ class PHPExcel_Calculation_Function {
      * @param 	string		$pCategory 		Category (represented by CATEGORY_*)
      * @param 	string		$pExcelName		Excel function name
      * @param 	string		$pPHPExcelName	PHPExcel function mapping
-     * @throws 	Exception
+     * @throws 	PHPExcel_Calculation_Exception
      */
     public function __construct($pCategory = NULL, $pExcelName = NULL, $pPHPExcelName = NULL)
     {
@@ -84,7 +84,7 @@ class PHPExcel_Calculation_Function {
     		$this->_excelName 		= $pExcelName;
     		$this->_phpExcelName 	= $pPHPExcelName;
     	} else {
-    		throw new Exception("Invalid parameters passed.");
+    		throw new PHPExcel_Calculation_Exception("Invalid parameters passed.");
     	}
     }
 
@@ -101,13 +101,13 @@ class PHPExcel_Calculation_Function {
      * Set Category (represented by CATEGORY_*)
      *
      * @param 	string		$value
-     * @throws 	Exception
+     * @throws 	PHPExcel_Calculation_Exception
      */
     public function setCategory($value = null) {
     	if (!is_null($value)) {
     		$this->_category = $value;
     	} else {
-    		throw new Exception("Invalid parameter passed.");
+    		throw new PHPExcel_Calculation_Exception("Invalid parameter passed.");
     	}
     }
 

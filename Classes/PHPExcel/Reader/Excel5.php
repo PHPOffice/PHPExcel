@@ -2,7 +2,7 @@
 /**
  * PHPExcel
  *
- * Copyright (c) 2006 - 2012 PHPExcel
+ * Copyright (c) 2006 - 2013 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,7 +20,7 @@
  *
  * @category   PHPExcel
  * @package    PHPExcel_Reader_Excel5
- * @copyright  Copyright (c) 2006 - 2012 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -73,7 +73,7 @@ if (!defined('PHPEXCEL_ROOT')) {
  *
  * @category	PHPExcel
  * @package		PHPExcel_Reader_Excel5
- * @copyright	Copyright (c) 2006 - 2012 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright	Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
 class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExcel_Reader_IReader
 {
@@ -156,6 +156,7 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
 	const XLS_Type_RANGEPROTECTION		= 0x0868;
 	const XLS_Type_SHEETLAYOUT			= 0x0862;
 	const XLS_Type_XFEXT				= 0x087d;
+	const XLS_Type_PAGELAYOUTVIEW		= 0x088b;
 	const XLS_Type_UNKNOWN				= 0xffff;
 
 
@@ -390,7 +391,7 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
 	/**
 	 * Can the current PHPExcel_Reader_IReader read the file?
 	 *
-	 * @param 	string 		$pFileName
+	 * @param 	string 		$pFilename
 	 * @return 	boolean
 	 * @throws PHPExcel_Reader_Exception
 	 */
@@ -408,7 +409,7 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
 			// get excel data
 			$res = $ole->read($pFilename);
 			return true;
-		} catch (PHPExcel_Reader_Exception $e) {
+		} catch (PHPExcel_Exception $e) {
 			return false;
 		}
 	}
@@ -784,6 +785,7 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
 					case self::XLS_Type_MSODRAWING:				$this->_readMsoDrawing();				break;
 					case self::XLS_Type_OBJ:					$this->_readObj();						break;
 					case self::XLS_Type_WINDOW2:				$this->_readWindow2();					break;
+					case self::XLS_Type_PAGELAYOUTVIEW:	$this->_readPageLayoutView();					break;
 					case self::XLS_Type_SCL:					$this->_readScl();						break;
 					case self::XLS_Type_PANE:					$this->_readPane();						break;
 					case self::XLS_Type_SELECTION:				$this->_readSelection();				break;
@@ -954,7 +956,6 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
 				case pack('C', 0x06):
 					// print area
 					//	in general, formula looks like this: Foo!$C$7:$J$66,Bar!$A$1:$IV$2
-
 					$ranges = explode(',', $definedName['formula']); // FIXME: what if sheetname contains comma?
 
 					$extractedRanges = array();
@@ -964,9 +965,12 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
 						//		Bar!$A$1:$IV$2
 
 						$explodes = explode('!', $range);	// FIXME: what if sheetname contains exclamation mark?
-						$sheetName = $explodes[0];
+						$sheetName = trim($explodes[0], "'");
 
 						if (count($explodes) == 2) {
+							if (strpos($explodes[1], ':') === FALSE) {
+								$explodes[1] = $explodes[1] . ':' . $explodes[1];
+							}
 							$extractedRanges[] = str_replace('$', '', $explodes[1]); // C7:J66
 						}
 					}
@@ -1565,11 +1569,15 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
 	private function _readFilepass()
 	{
 		$length = self::_GetInt2d($this->_data, $this->_pos + 2);
-//		$recordData = substr($this->_data, $this->_pos + 4, $length);
+		$recordData = substr($this->_data, $this->_pos + 4, $length);
 
 		// move stream pointer to next record
 		$this->_pos += 4 + $length;
 
+		if (!$this->_readDataOnly) {
+			// offset: 0; size: 2; 16-bit hash value of password
+			$password = strtoupper(dechex(self::_GetInt2d($recordData, 0))); // the hashed password
+        }
 		throw new PHPExcel_Reader_Exception('Cannot read encrypted file');
 	}
 
@@ -1831,6 +1839,9 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
 					break;
 				case 3:
 					$objStyle->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+					break;
+				case 4:
+					$objStyle->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_FILL);
 					break;
 				case 5:
 					$objStyle->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_JUSTIFY);
@@ -2516,7 +2527,7 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
 
 			try {
 				$formula = $this->_getFormulaFromStructure($formulaStructure);
-			} catch (PHPExcel_Reader_Exception $e) {
+			} catch (PHPExcel_Exception $e) {
 				$formula = '';
 			}
 
@@ -3663,7 +3674,7 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
 					$formula = $this->_getFormulaFromStructure($formulaStructure); // get formula in human language
 					$cell->setValueExplicit('=' . $formula, PHPExcel_Cell_DataType::TYPE_FORMULA);
 
-				} catch (PHPExcel_Reader_Exception $e) {
+				} catch (PHPExcel_Exception $e) {
 					$cell->setValueExplicit($value, $dataType);
 				}
 			} else {
@@ -3993,6 +4004,22 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
 		// offset: 0; size: 2; option flags
 		$options = self::_GetInt2d($recordData, 0);
 
+		// offset: 2; size: 2; index to first visible row
+		$firstVisibleRow = self::_GetInt2d($recordData, 2);
+
+		// offset: 4; size: 2; index to first visible colum
+		$firstVisibleColumn = self::_GetInt2d($recordData, 4);
+		if ($this->_version === self::XLS_BIFF8) {
+			// offset:  8; size: 2; not used
+			// offset: 10; size: 2; cached magnification factor in page break preview (in percent); 0 = Default (60%)
+			// offset: 12; size: 2; cached magnification factor in normal view (in percent); 0 = Default (100%)
+			// offset: 14; size: 4; not used
+			$zoomscaleInPageBreakPreview = self::_GetInt2d($recordData, 10);
+			if ($zoomscaleInPageBreakPreview === 0) $zoomscaleInPageBreakPreview = 60;
+			$zoomscaleInNormalView = self::_GetInt2d($recordData, 12);
+			if ($zoomscaleInNormalView === 0) $zoomscaleInNormalView = 100;
+		}
+
 		// bit: 1; mask: 0x0002; 0 = do not show gridlines, 1 = show gridlines
 		$showGridlines = (bool) ((0x0002 & $options) >> 1);
 		$this->_phpSheet->setShowGridlines($showGridlines);
@@ -4012,8 +4039,62 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
 		if ($isActive) {
 			$this->_phpExcel->setActiveSheetIndex($this->_phpExcel->getIndex($this->_phpSheet));
 		}
+
+		// bit: 11; mask: 0x0800; 0 = normal view, 1 = page break view
+		$isPageBreakPreview = (bool) ((0x0800 & $options) >> 11);
+
+		//FIXME: set $firstVisibleRow and $firstVisibleColumn
+
+		if ($this->_phpSheet->getSheetView()->getView() !== PHPExcel_Worksheet_SheetView::SHEETVIEW_PAGE_LAYOUT) {
+			//NOTE: this setting is inferior to page layout view(Excel2007-)
+			$view = $isPageBreakPreview? PHPExcel_Worksheet_SheetView::SHEETVIEW_PAGE_BREAK_PREVIEW :
+				PHPExcel_Worksheet_SheetView::SHEETVIEW_NORMAL;
+			$this->_phpSheet->getSheetView()->setView($view);
+			if ($this->_version === self::XLS_BIFF8) {
+				$zoomScale = $isPageBreakPreview? $zoomscaleInPageBreakPreview : $zoomscaleInNormalView;
+				$this->_phpSheet->getSheetView()->setZoomScale($zoomScale);
+				$this->_phpSheet->getSheetView()->setZoomScaleNormal($zoomscaleInNormalView);
+			}
+		}
 	}
 
+	/**
+	 * Read PLV Record(Created by Excel2007 or upper)
+	 */
+	private function _readPageLayoutView(){
+		$length = self::_GetInt2d($this->_data, $this->_pos + 2);
+		$recordData = substr($this->_data, $this->_pos + 4, $length);
+
+		// move stream pointer to next record
+		$this->_pos += 4 + $length;
+
+		//var_dump(unpack("vrt/vgrbitFrt/V2reserved/vwScalePLV/vgrbit", $recordData));
+
+		// offset: 0; size: 2; rt
+		//->ignore
+		$rt = self::_GetInt2d($recordData, 0);
+		// offset: 2; size: 2; grbitfr
+		//->ignore
+		$grbitFrt = self::_GetInt2d($recordData, 2);
+		// offset: 4; size: 8; reserved
+		//->ignore
+
+		// offset: 12; size 2; zoom scale
+		$wScalePLV = self::_GetInt2d($recordData, 12);
+		// offset: 14; size 2; grbit
+		$grbit = self::_GetInt2d($recordData, 14);
+
+		// decomprise grbit
+		$fPageLayoutView   = $grbit & 0x01;
+		$fRulerVisible     = ($grbit >> 1) & 0x01; //no support
+		$fWhitespaceHidden = ($grbit >> 3) & 0x01; //no support
+
+		if ($fPageLayoutView === 1) {
+			$this->_phpSheet->getSheetView()->setView(PHPExcel_Worksheet_SheetView::SHEETVIEW_PAGE_LAYOUT);
+			$this->_phpSheet->getSheetView()->setZoomScale($wScalePLV); //set by Excel2007 only if SHEETVIEW_PAGE_LAYOUT
+		}
+		//otherwise, we cannot know whether SHEETVIEW_PAGE_LAYOUT or SHEETVIEW_PAGE_BREAK_PREVIEW.
+	}
 
 	/**
 	 * Read SCL record
@@ -4180,7 +4261,7 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
 			// offset: 0; size: 8; cell range address of all cells containing this hyperlink
 			try {
 				$cellRange = $this->_readBIFF8CellRangeAddressFixed($recordData, 0, 8);
-			} catch (PHPExcel_Reader_Exception $e) {
+			} catch (PHPExcel_Exception $e) {
 				return;
 			}
 
@@ -4464,7 +4545,7 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
 			if ($type == PHPExcel_Cell_DataValidation::TYPE_LIST) {
 				$formula1 = str_replace(chr(0), ',', $formula1);
 			}
-		} catch (PHPExcel_Reader_Exception $e) {
+		} catch (PHPExcel_Exception $e) {
 			return;
 		}
 		$offset += $sz1;
@@ -4481,7 +4562,7 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
 		$formula2 = pack('v', $sz2) . $formula2; // prepend the length
 		try {
 			$formula2 = $this->_getFormulaFromStructure($formula2);
-		} catch (PHPExcel_Reader_Exception $e) {
+		} catch (PHPExcel_Exception $e) {
 			return;
 		}
 		$offset += $sz2;
@@ -4693,7 +4774,7 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
 			for ($i = 0; $i < $cref; ++$i) {
 				try {
 					$cellRange = $this->_readBIFF8CellRangeAddressFixed(substr($recordData, 27 + 8 * $i, 8));
-				} catch (PHPExcel_Reader_Exception $e) {
+				} catch (PHPExcel_Exception $e) {
 					return;
 				}
 				$cellRanges[] = $cellRange;
@@ -5645,7 +5726,7 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
 				$cellAddress = $this->_readBIFF8CellAddress(substr($formulaData, 3, 4));
 
 				$data = "$sheetRange!$cellAddress";
-			} catch (PHPExcel_Reader_Exception $e) {
+			} catch (PHPExcel_Exception $e) {
 				// deleted sheet reference
 				$data = '#REF!';
 			}
@@ -5664,7 +5745,7 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
 				$cellRangeAddress = $this->_readBIFF8CellRangeAddress(substr($formulaData, 3, 8));
 
 				$data = "$sheetRange!$cellRangeAddress";
-			} catch (PHPExcel_Reader_Exception $e) {
+			} catch (PHPExcel_Exception $e) {
 				// deleted sheet reference
 				$data = '#REF!';
 			}

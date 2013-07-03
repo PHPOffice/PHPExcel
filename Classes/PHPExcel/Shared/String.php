@@ -2,7 +2,7 @@
 /**
  * PHPExcel
  *
- * Copyright (c) 2006 - 2012 PHPExcel
+ * Copyright (c) 2006 - 2013 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,7 +20,7 @@
  *
  * @category   PHPExcel
  * @package    PHPExcel_Shared
- * @copyright  Copyright (c) 2006 - 2012 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -31,7 +31,7 @@
  *
  * @category   PHPExcel
  * @package    PHPExcel_Shared
- * @copyright  Copyright (c) 2006 - 2012 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
 class PHPExcel_Shared_String
 {
@@ -427,14 +427,14 @@ class PHPExcel_Shared_String
 	 * although this will give wrong results for non-ASCII strings
 	 * see OpenOffice.org's Documentation of the Microsoft Excel File Format, sect. 2.5.3
 	 *
-	 * @param string $value UTF-8 encoded string
+	 * @param string  $value    UTF-8 encoded string
+	 * @param mixed[] $arrcRuns Details of rich text runs in $value
 	 * @return string
 	 */
 	public static function UTF8toBIFF8UnicodeShort($value, $arrcRuns = array())
 	{
 		// character count
 		$ln = self::CountCharacters($value, 'UTF-8');
-
 		// option flags
 		if(empty($arrcRuns)){
 			$opt = (self::getIsIconvEnabled() || self::getIsMbstringEnabled()) ?
@@ -444,10 +444,10 @@ class PHPExcel_Shared_String
 			$data .= self::ConvertEncoding($value, 'UTF-16LE', 'UTF-8');
 		}
 		else {
-			$data = pack('vC', $ln, 0x08);
+			$data = pack('vC', $ln, 0x09);
 			$data .= pack('v', count($arrcRuns));
 			// characters
-			$data .= $value;
+			$data .= self::ConvertEncoding($value, 'UTF-16LE', 'UTF-8');
 			foreach ($arrcRuns as $cRun){
 				$data .= pack('v', $cRun['strlen']);
 				$data .= pack('v', $cRun['fontidx']);
@@ -483,7 +483,7 @@ class PHPExcel_Shared_String
 	}
 
 	/**
-	 * Convert string from one encoding to another. First try iconv, then mbstring, or no convertion
+	 * Convert string from one encoding to another. First try mbstring, then iconv, finally strlen
 	 *
 	 * @param string $value
 	 * @param string $to Encoding to convert to, e.g. 'UTF-8'
@@ -524,7 +524,7 @@ class PHPExcel_Shared_String
 	 * @author  Rasmus Andersson {@link http://rasmusandersson.se/}
 	 * @author vadik56
 	 */
-	public static function utf16_decode( $str, $bom_be=true ) {
+	public static function utf16_decode($str, $bom_be = TRUE) {
 		if( strlen($str) < 2 ) return $str;
 		$c0 = ord($str{0});
 		$c1 = ord($str{1});
@@ -549,12 +549,12 @@ class PHPExcel_Shared_String
 	 */
 	public static function CountCharacters($value, $enc = 'UTF-8')
 	{
-		if (self::getIsIconvEnabled()) {
-			return iconv_strlen($value, $enc);
-		}
-
 		if (self::getIsMbstringEnabled()) {
 			return mb_strlen($value, $enc);
+		}
+
+		if (self::getIsIconvEnabled()) {
+			return iconv_strlen($value, $enc);
 		}
 
 		// else strlen
@@ -562,21 +562,21 @@ class PHPExcel_Shared_String
 	}
 
 	/**
-	 * Get a substring of a UTF-8 encoded string
+	 * Get a substring of a UTF-8 encoded string. First try mbstring, then iconv, finally strlen
 	 *
 	 * @param string $pValue UTF-8 encoded string
-	 * @param int $start Start offset
-	 * @param int $length Maximum number of characters in substring
+	 * @param int $pStart Start offset
+	 * @param int $pLength Maximum number of characters in substring
 	 * @return string
 	 */
 	public static function Substring($pValue = '', $pStart = 0, $pLength = 0)
 	{
-		if (self::getIsIconvEnabled()) {
-			return iconv_substr($pValue, $pStart, $pLength, 'UTF-8');
-		}
-
 		if (self::getIsMbstringEnabled()) {
 			return mb_substr($pValue, $pStart, $pLength, 'UTF-8');
+		}
+
+		if (self::getIsIconvEnabled()) {
+			return iconv_substr($pValue, $pStart, $pLength, 'UTF-8');
 		}
 
 		// else substr
@@ -687,6 +687,11 @@ class PHPExcel_Shared_String
 			$localeconv = localeconv();
 			self::$_thousandsSeparator = ($localeconv['thousands_sep'] != '')
 				? $localeconv['thousands_sep'] : $localeconv['mon_thousands_sep'];
+
+			if (self::$_thousandsSeparator == '') {
+				// Default to .
+				self::$_thousandsSeparator = ',';
+			}
 		}
 		return self::$_thousandsSeparator;
 	}

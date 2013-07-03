@@ -2,7 +2,7 @@
 /**
  * PHPExcel
  *
- * Copyright (c) 2006 - 2012 PHPExcel
+ * Copyright (c) 2006 - 2013 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,7 +20,7 @@
  *
  * @category   PHPExcel
  * @package    PHPExcel_Writer_Excel2007
- * @copyright  Copyright (c) 2006 - 2012 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -31,7 +31,7 @@
  *
  * @category   PHPExcel
  * @package    PHPExcel_Writer_2007
- * @copyright  Copyright (c) 2006 - 2012 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
 class PHPExcel_Writer_Excel2007 extends PHPExcel_Writer_Abstract implements PHPExcel_Writer_IWriter
 {
@@ -69,6 +69,13 @@ class PHPExcel_Writer_Excel2007 extends PHPExcel_Writer_Abstract implements PHPE
 	 * @var PHPExcel_HashTable
 	 */
 	private $_stylesConditionalHashTable;
+
+	/**
+	 * Private unique PHPExcel_Style HashTable
+	 *
+	 * @var PHPExcel_HashTable
+	 */
+	private $_styleHashTable;
 
 	/**
 	 * Private unique PHPExcel_Style_Fill HashTable
@@ -135,7 +142,8 @@ class PHPExcel_Writer_Excel2007 extends PHPExcel_Writer_Abstract implements PHPE
 		}
 
     	$hashTablesArray = array( '_stylesConditionalHashTable',	'_fillHashTable',		'_fontHashTable',
-								  '_bordersHashTable',				'_numFmtHashTable',		'_drawingHashTable'
+								  '_bordersHashTable',				'_numFmtHashTable',		'_drawingHashTable',
+                                  '_styleHashTable'
 							    );
 
 		// Set HashTable variables
@@ -179,8 +187,8 @@ class PHPExcel_Writer_Excel2007 extends PHPExcel_Writer_Abstract implements PHPE
 				}
 			}
 
-			$saveDebugLog = PHPExcel_Calculation::getInstance()->writeDebugLog;
-			PHPExcel_Calculation::getInstance()->writeDebugLog = false;
+			$saveDebugLog = PHPExcel_Calculation::getInstance($this->_spreadSheet)->getDebugLog()->getWriteDebugLog();
+			PHPExcel_Calculation::getInstance($this->_spreadSheet)->getDebugLog()->setWriteDebugLog(FALSE);
 			$saveDateReturnType = PHPExcel_Calculation_Functions::getReturnDateType();
 			PHPExcel_Calculation_Functions::setReturnDateType(PHPExcel_Calculation_Functions::RETURNDATE_EXCEL);
 
@@ -191,6 +199,7 @@ class PHPExcel_Writer_Excel2007 extends PHPExcel_Writer_Abstract implements PHPE
 			}
 
 			// Create styles dictionaries
+			$this->_styleHashTable->addFromSource( 	            $this->getWriterPart('Style')->allStyles($this->_spreadSheet) 			);
 			$this->_stylesConditionalHashTable->addFromSource( 	$this->getWriterPart('Style')->allConditionalStyles($this->_spreadSheet) 			);
 			$this->_fillHashTable->addFromSource( 				$this->getWriterPart('Style')->allFills($this->_spreadSheet) 			);
 			$this->_fontHashTable->addFromSource( 				$this->getWriterPart('Style')->allFonts($this->_spreadSheet) 			);
@@ -313,7 +322,6 @@ class PHPExcel_Writer_Excel2007 extends PHPExcel_Writer_Abstract implements PHPE
 				if ($this->getDrawingHashTable()->getByIndex($i) instanceof PHPExcel_Worksheet_Drawing) {
 					$imageContents = null;
 					$imagePath = $this->getDrawingHashTable()->getByIndex($i)->getPath();
-
 					if (strpos($imagePath, 'zip://') !== false) {
 						$imagePath = substr($imagePath, 6);
 						$imagePathSplitted = explode('#', $imagePath);
@@ -342,7 +350,7 @@ class PHPExcel_Writer_Excel2007 extends PHPExcel_Writer_Abstract implements PHPE
 			}
 
 			PHPExcel_Calculation_Functions::setReturnDateType($saveDateReturnType);
-			PHPExcel_Calculation::getInstance()->writeDebugLog = $saveDebugLog;
+			PHPExcel_Calculation::getInstance($this->_spreadSheet)->getDebugLog()->setWriteDebugLog($saveDebugLog);
 
 			// Close file
 			if ($objZip->close() === false) {
@@ -394,6 +402,15 @@ class PHPExcel_Writer_Excel2007 extends PHPExcel_Writer_Abstract implements PHPE
      */
     public function getStringTable() {
     	return $this->_stringTable;
+    }
+
+    /**
+     * Get PHPExcel_Style HashTable
+     *
+     * @return PHPExcel_HashTable
+     */
+    public function getStyleHashTable() {
+    	return $this->_styleHashTable;
     }
 
     /**

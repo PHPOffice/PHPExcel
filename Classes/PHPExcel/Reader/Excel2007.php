@@ -2,7 +2,7 @@
 /**
  * PHPExcel
  *
- * Copyright (c) 2006 - 2012 PHPExcel
+ * Copyright (c) 2006 - 2013 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,7 +20,7 @@
  *
  * @category   PHPExcel
  * @package    PHPExcel_Reader
- * @copyright  Copyright (c) 2006 - 2012 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -40,7 +40,7 @@ if (!defined('PHPEXCEL_ROOT')) {
  *
  * @category	PHPExcel
  * @package	PHPExcel_Reader
- * @copyright	Copyright (c) 2006 - 2012 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright	Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
 class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPExcel_Reader_IReader
 {
@@ -71,7 +71,7 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 	/**
 	 * Can the current PHPExcel_Reader_IReader read the file?
 	 *
-	 * @param 	string 		$pFileName
+	 * @param 	string 		$pFilename
 	 * @return 	boolean
 	 * @throws PHPExcel_Reader_Exception
 	 */
@@ -113,6 +113,50 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 
 
 	/**
+	 * Reads names of the worksheets from a file, without parsing the whole file to a PHPExcel object
+	 *
+	 * @param 	string 		$pFilename
+	 * @throws 	PHPExcel_Reader_Exception
+	 */
+	public function listWorksheetNames($pFilename)
+	{
+		// Check if file exists
+		if (!file_exists($pFilename)) {
+			throw new PHPExcel_Reader_Exception("Could not open " . $pFilename . " for reading! File does not exist.");
+		}
+
+		$worksheetNames = array();
+
+		$zip = new ZipArchive;
+		$zip->open($pFilename);
+
+		//	The files we're looking at here are small enough that simpleXML is more efficient than XMLReader
+		$rels = simplexml_load_string(
+		    $this->_getFromZipArchive($zip, "_rels/.rels")
+		); //~ http://schemas.openxmlformats.org/package/2006/relationships");
+		foreach ($rels->Relationship as $rel) {
+			switch ($rel["Type"]) {
+				case "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument":
+					$xmlWorkbook = simplexml_load_string(
+					    $this->_getFromZipArchive($zip, "{$rel['Target']}")
+					);  //~ http://schemas.openxmlformats.org/spreadsheetml/2006/main");
+
+					if ($xmlWorkbook->sheets) {
+						foreach ($xmlWorkbook->sheets->sheet as $eleSheet) {
+							// Check if sheet should be skipped
+							$worksheetNames[] = (string) $eleSheet["name"];
+						}
+					}
+			}
+		}
+
+		$zip->close();
+
+		return $worksheetNames;
+	}
+
+
+	/**
 	 * Return worksheet info (Name, Last Column Letter, Last Column Index, Total Rows, Total Columns)
 	 *
 	 * @param   string     $pFilename
@@ -148,32 +192,36 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 				if ($xmlWorkbook->sheets) {
 					$dir = dirname($rel["Target"]);
 					foreach ($xmlWorkbook->sheets->sheet as $eleSheet) {
-						$tmpInfo = array();
-						$tmpInfo['worksheetName'] = (string) $eleSheet["name"];
-						$tmpInfo['lastColumnLetter'] = 'A';
-						$tmpInfo['lastColumnIndex'] = 0;
-						$tmpInfo['totalRows'] = 0;
-						$tmpInfo['totalColumns'] = 0;
+						$tmpInfo = array(
+							'worksheetName' => (string) $eleSheet["name"],
+							'lastColumnLetter' => 'A',
+							'lastColumnIndex' => 0,
+							'totalRows' => 0,
+							'totalColumns' => 0,
+						);
 
 						$fileWorksheet = $worksheets[(string) self::array_item($eleSheet->attributes("http://schemas.openxmlformats.org/officeDocument/2006/relationships"), "id")];
-						$xmlSheet = simplexml_load_string($this->_getFromZipArchive($zip, "$dir/$fileWorksheet"));  //~ http://schemas.openxmlformats.org/spreadsheetml/2006/main");
-						if ($xmlSheet && $xmlSheet->sheetData && $xmlSheet->sheetData->row) {
-							foreach ($xmlSheet->sheetData->row as $row) {
-								foreach ($row->c as $c) {
-									$r = (string) $c["r"];
-									$coordinates = PHPExcel_Cell::coordinateFromString($r);
 
-									$rowIndex = $coordinates[1];
-									$columnIndex = PHPExcel_Cell::columnIndexFromString($coordinates[0]) - 1;
+						$xml = new XMLReader();
+						$res = $xml->open('zip://'.PHPExcel_Shared_File::realpath($pFilename).'#'."$dir/$fileWorksheet");
+						$xml->setParserProperty(2,true);
 
-									$tmpInfo['totalRows'] = max($tmpInfo['totalRows'], $rowIndex);
-									$tmpInfo['lastColumnIndex'] = max($tmpInfo['lastColumnIndex'], $columnIndex);
-								}
+						$currCells = 0;
+						while ($xml->read()) {
+							if ($xml->name == 'row' && $xml->nodeType == XMLReader::ELEMENT) {
+								$row = $xml->getAttribute('r');
+								$tmpInfo['totalRows'] = $row;
+								$tmpInfo['totalColumns'] = max($tmpInfo['totalColumns'],$currCells);
+								$currCells = 0;
+							} elseif ($xml->name == 'c' && $xml->nodeType == XMLReader::ELEMENT) {
+								$currCells++;
 							}
 						}
+						$tmpInfo['totalColumns'] = max($tmpInfo['totalColumns'],$currCells);
+						$xml->close();
 
+						$tmpInfo['lastColumnIndex'] = $tmpInfo['totalColumns'] - 1;
 						$tmpInfo['lastColumnLetter'] = PHPExcel_Cell::stringFromColumnIndex($tmpInfo['lastColumnIndex']);
-						$tmpInfo['totalColumns'] = $tmpInfo['lastColumnIndex'] + 1;
 
 						$worksheetInfo[] = $tmpInfo;
 					}
@@ -279,45 +327,6 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 		}
 
 		return $contents;
-	}
-
-
-	/**
-	 * Reads names of the worksheets from a file, without parsing the whole file to a PHPExcel object
-	 *
-	 * @param 	string 		$pFilename
-	 * @throws 	PHPExcel_Reader_Exception
-	 */
-	public function listWorksheetNames($pFilename)
-	{
-		// Check if file exists
-		if (!file_exists($pFilename)) {
-			throw new PHPExcel_Reader_Exception("Could not open " . $pFilename . " for reading! File does not exist.");
-		}
-
-		$worksheetNames = array();
-
-		$zip = new ZipArchive;
-		$zip->open($pFilename);
-
-		$rels = simplexml_load_string($this->_getFromZipArchive($zip, "_rels/.rels")); //~ http://schemas.openxmlformats.org/package/2006/relationships");
-		foreach ($rels->Relationship as $rel) {
-			switch ($rel["Type"]) {
-				case "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument":
-					$xmlWorkbook = simplexml_load_string($this->_getFromZipArchive($zip, "{$rel['Target']}"));  //~ http://schemas.openxmlformats.org/spreadsheetml/2006/main");
-
-					if ($xmlWorkbook->sheets) {
-						foreach ($xmlWorkbook->sheets->sheet as $eleSheet) {
-							// Check if sheet should be skipped
-							$worksheetNames[] = (string) $eleSheet["name"];
-						}
-					}
-			}
-		}
-
-		$zip->close();
-
-		return $worksheetNames;
 	}
 
 
@@ -487,6 +496,10 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 									$numFmt = PHPExcel_Style_NumberFormat::builtInFormatCode((int)$xf["numFmtId"]);
 								}
 							}
+                            $quotePrefix = false;
+							if (isset($xf["quotePrefix"])) {
+                                $quotePrefix = (boolean) $xf["quotePrefix"];
+                            }
 							//$numFmt = str_replace('mm', 'i', $numFmt);
 							//$numFmt = str_replace('h', 'H', $numFmt);
 
@@ -497,6 +510,7 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 								"border" => $xmlStyles->borders->border[intval($xf["borderId"])],
 								"alignment" => $xf->alignment,
 								"protection" => $xf->protection,
+								"quotePrefix" => $quotePrefix,
 							);
 							$styles[] = $style;
 
@@ -524,6 +538,7 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 								"border" => $xmlStyles->borders->border[intval($xf["borderId"])],
 								"alignment" => $xf->alignment,
 								"protection" => $xf->protection,
+								"quotePrefix" => $quotePrefix,
 							);
 							$cellStyles[] = $cellStyle;
 
@@ -1202,9 +1217,12 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 										foreach (PHPExcel_Cell::extractAllCellReferencesInRange($hyperlink['ref']) as $cellReference) {
 											$cell = $docSheet->getCell( $cellReference );
 											if (isset($linkRel['id'])) {
-												$cell->getHyperlink()->setUrl( $hyperlinks[ (string)$linkRel['id'] ] );
-											}
-											if (isset($hyperlink['location'])) {
+												$hyperlinkUrl = $hyperlinks[ (string)$linkRel['id'] ];
+												if (isset($hyperlink['location'])) {
+													$hyperlinkUrl .= '#' . (string) $hyperlink['location'];
+												}
+												$cell->getHyperlink()->setUrl($hyperlinkUrl);
+											} elseif (isset($hyperlink['location'])) {
 												$cell->getHyperlink()->setUrl( 'sheet://' . (string)$hyperlink['location'] );
 											}
 
@@ -1349,7 +1367,7 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 													$hfImages[ (string)$shape['id'] ]->setName( (string)$imageData['title'] );
 												}
 
-												$hfImages[ (string)$shape['id'] ]->setPath("zip://$pFilename#" . $drawings[(string)$imageData['relid']], false);
+												$hfImages[ (string)$shape['id'] ]->setPath("zip://".PHPExcel_Shared_File::realpath($pFilename)."#" . $drawings[(string)$imageData['relid']], false);
 												$hfImages[ (string)$shape['id'] ]->setResizeProportional(false);
 												$hfImages[ (string)$shape['id'] ]->setWidth($style['width']);
 												$hfImages[ (string)$shape['id'] ]->setHeight($style['height']);
@@ -1404,7 +1422,7 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 													$objDrawing = new PHPExcel_Worksheet_Drawing;
 													$objDrawing->setName((string) self::array_item($oneCellAnchor->pic->nvPicPr->cNvPr->attributes(), "name"));
 													$objDrawing->setDescription((string) self::array_item($oneCellAnchor->pic->nvPicPr->cNvPr->attributes(), "descr"));
-													$objDrawing->setPath("zip://$pFilename#" . $images[(string) self::array_item($blip->attributes("http://schemas.openxmlformats.org/officeDocument/2006/relationships"), "embed")], false);
+													$objDrawing->setPath("zip://".PHPExcel_Shared_File::realpath($pFilename)."#" . $images[(string) self::array_item($blip->attributes("http://schemas.openxmlformats.org/officeDocument/2006/relationships"), "embed")], false);
 													$objDrawing->setCoordinates(PHPExcel_Cell::stringFromColumnIndex((string) $oneCellAnchor->from->col) . ($oneCellAnchor->from->row + 1));
 													$objDrawing->setOffsetX(PHPExcel_Shared_Drawing::EMUToPixels($oneCellAnchor->from->colOff));
 													$objDrawing->setOffsetY(PHPExcel_Shared_Drawing::EMUToPixels($oneCellAnchor->from->rowOff));
@@ -1444,7 +1462,7 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 													$objDrawing = new PHPExcel_Worksheet_Drawing;
 													$objDrawing->setName((string) self::array_item($twoCellAnchor->pic->nvPicPr->cNvPr->attributes(), "name"));
 													$objDrawing->setDescription((string) self::array_item($twoCellAnchor->pic->nvPicPr->cNvPr->attributes(), "descr"));
-													$objDrawing->setPath("zip://$pFilename#" . $images[(string) self::array_item($blip->attributes("http://schemas.openxmlformats.org/officeDocument/2006/relationships"), "embed")], false);
+													$objDrawing->setPath("zip://".PHPExcel_Shared_File::realpath($pFilename)."#" . $images[(string) self::array_item($blip->attributes("http://schemas.openxmlformats.org/officeDocument/2006/relationships"), "embed")], false);
 													$objDrawing->setCoordinates(PHPExcel_Cell::stringFromColumnIndex((string) $twoCellAnchor->from->col) . ($twoCellAnchor->from->row + 1));
 													$objDrawing->setOffsetX(PHPExcel_Shared_Drawing::EMUToPixels($twoCellAnchor->from->colOff));
 													$objDrawing->setOffsetY(PHPExcel_Shared_Drawing::EMUToPixels($twoCellAnchor->from->rowOff));
@@ -1530,13 +1548,14 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 												// Set print titles
 												foreach ($extractedRange as $range) {
 													$matches = array();
+													$range = str_replace('$', '', $range);
 
 													// check for repeating columns, e g. 'A:A' or 'A:D'
-													if (preg_match('/^([A-Z]+)\:([A-Z]+)$/', $range, $matches)) {
+													if (preg_match('/!?([A-Z]+)\:([A-Z]+)$/', $range, $matches)) {
 														$docSheet->getPageSetup()->setColumnsToRepeatAtLeft(array($matches[1], $matches[2]));
 													}
 													// check for repeating rows, e.g. '1:1' or '1:5'
-													elseif (preg_match('/^(\d+)\:(\d+)$/', $range, $matches)) {
+													elseif (preg_match('/!?(\d+)\:(\d+)$/', $range, $matches)) {
 														$docSheet->getPageSetup()->setRowsToRepeatAtTop(array($matches[1], $matches[2]));
 													}
 												}
@@ -1548,6 +1567,9 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 												foreach($rangeSets as $rangeSet) {
 													$range = explode('!', $rangeSet);	// FIXME: what if sheetname contains exclamation mark?
 													$rangeSet = isset($range[1]) ? $range[1] : $range[0];
+													if (strpos($rangeSet, ':') === FALSE) {
+														$rangeSet = $rangeSet . ':' . $rangeSet;
+													}
 													$newRangeSets[] = str_replace('$', '', $rangeSet);
 												}
 												$docSheet->getPageSetup()->setPrintArea(implode(',',$newRangeSets));
@@ -1593,15 +1615,16 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 											break;
 
 										default:
-											$range = explode('!', (string)$definedName);
-											if (count($range) == 2) {
-												$range[0] = str_replace("''", "'", $range[0]);
-												$range[0] = str_replace("'", "", $range[0]);
-												if ($worksheet = $docSheet->getParent()->getSheetByName($range[0])) {
-													$extractedRange = str_replace('$', '', $range[1]);
-													$scope = $docSheet->getParent()->getSheet((string)$definedName['localSheetId']);
-
-													$excel->addNamedRange( new PHPExcel_NamedRange((string)$definedName['name'], $worksheet, $extractedRange, true, $scope) );
+											if ($mapSheetId[(integer) $definedName['localSheetId']] !== null) {
+												$range = explode('!', (string)$definedName);
+												if (count($range) == 2) {
+													$range[0] = str_replace("''", "'", $range[0]);
+													$range[0] = str_replace("'", "", $range[0]);
+													if ($worksheet = $docSheet->getParent()->getSheetByName($range[0])) {
+														$extractedRange = str_replace('$', '', $range[1]);
+														$scope = $docSheet->getParent()->getSheet($mapSheetId[(integer) $definedName['localSheetId']]);
+														$excel->addNamedRange( new PHPExcel_NamedRange((string)$definedName['name'], $worksheet, $extractedRange, true, $scope) );
+													}
 												}
 											}
 											break;
@@ -1631,7 +1654,7 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 						}
 					}
 
-					if (!$this->_readDataOnly) {
+					if ((!$this->_readDataOnly) || (!empty($this->_loadSheetsOnly))) {
 						// active sheet index
 						$activeTab = intval($xmlWorkbook->bookViews->workbookView["activeTab"]); // refers to old sheet index
 
@@ -1839,6 +1862,11 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 				}
 			}
 		}
+
+		// top-level style settings
+		if (isset($style->quotePrefix)) {
+			$docStyle->setQuotePrefix($style->quotePrefix);
+        }
 	}
 
 

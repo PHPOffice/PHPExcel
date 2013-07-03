@@ -2,7 +2,7 @@
 /**
  * PHPExcel
  *
- * Copyright (c) 2006 - 2012 PHPExcel
+ * Copyright (c) 2006 - 2013 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,7 +20,7 @@
  *
  * @category   PHPExcel
  * @package    PHPExcel_CachedObjectStorage
- * @copyright  Copyright (c) 2006 - 2012 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -31,20 +31,32 @@
  *
  * @category   PHPExcel
  * @package    PHPExcel_CachedObjectStorage
- * @copyright  Copyright (c) 2006 - 2012 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
 class PHPExcel_CachedObjectStorage_Memory extends PHPExcel_CachedObjectStorage_CacheBase implements PHPExcel_CachedObjectStorage_ICache {
+
+    /**
+     * Dummy method callable from CacheBase, but unused by Memory cache
+     *
+	 * @return	void
+     */
+	protected function _storeData() {
+	}	//	function _storeData()
 
     /**
      * Add or Update a cell in cache identified by coordinate address
      *
      * @param	string			$pCoord		Coordinate address of the cell to update
      * @param	PHPExcel_Cell	$cell		Cell to update
-	 * @return	void
-     * @throws	Exception
+	 * @return	PHPExcel_Cell
+     * @throws	PHPExcel_Exception
      */
 	public function addCacheData($pCoord, PHPExcel_Cell $cell) {
 		$this->_cellCache[$pCoord] = $cell;
+
+		//	Set current entry to the new/updated entry
+		$this->_currentObjectID = $pCoord;
+
 		return $cell;
 	}	//	function addCacheData()
 
@@ -53,15 +65,19 @@ class PHPExcel_CachedObjectStorage_Memory extends PHPExcel_CachedObjectStorage_C
      * Get cell at a specific coordinate
      *
      * @param 	string 			$pCoord		Coordinate of the cell
-     * @throws 	Exception
+     * @throws 	PHPExcel_Exception
      * @return 	PHPExcel_Cell 	Cell that was found, or null if not found
      */
 	public function getCacheData($pCoord) {
 		//	Check if the entry that has been requested actually exists
 		if (!isset($this->_cellCache[$pCoord])) {
+			$this->_currentObjectID = NULL;
 			//	Return null if requested entry doesn't exist in cache
 			return null;
 		}
+
+		//	Set current entry to the requested entry
+		$this->_currentObjectID = $pCoord;
 
 		//	Return requested entry
 		return $this->_cellCache[$pCoord];
@@ -80,7 +96,7 @@ class PHPExcel_CachedObjectStorage_Memory extends PHPExcel_CachedObjectStorage_C
 		$newCollection = array();
 		foreach($this->_cellCache as $k => &$cell) {
 			$newCollection[$k] = clone $cell;
-			$newCollection[$k]->attach($parent);
+			$newCollection[$k]->attach($this);
 		}
 
 		$this->_cellCache = $newCollection;

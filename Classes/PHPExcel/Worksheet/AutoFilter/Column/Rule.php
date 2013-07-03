@@ -2,7 +2,7 @@
 /**
  * PHPExcel
  *
- * Copyright (c) 2006 - 2012 PHPExcel
+ * Copyright (c) 2006 - 2013 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,7 +20,7 @@
  *
  * @category	PHPExcel
  * @package		PHPExcel_Worksheet
- * @copyright	Copyright (c) 2006 - 2012 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright	Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license		http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version		##VERSION##, ##DATE##
  */
@@ -31,7 +31,7 @@
  *
  * @category	PHPExcel
  * @package		PHPExcel_Worksheet
- * @copyright	Copyright (c) 2006 - 2012 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright	Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
 class PHPExcel_Worksheet_AutoFilter_Column_Rule
 {
@@ -269,6 +269,8 @@ class PHPExcel_Worksheet_AutoFilter_Column_Rule
 
 	/**
 	 * Create a new PHPExcel_Worksheet_AutoFilter_Column_Rule
+	 *
+	 * @param PHPExcel_Worksheet_AutoFilter_Column $pParent
 	 */
 	public function __construct(PHPExcel_Worksheet_AutoFilter_Column $pParent = NULL)
 	{
@@ -288,7 +290,7 @@ class PHPExcel_Worksheet_AutoFilter_Column_Rule
 	 *	Set AutoFilter Rule Type
 	 *
 	 *	@param	string		$pRuleType
-	 *	@throws	Exception
+	 *	@throws	PHPExcel_Exception
 	 *	@return PHPExcel_Worksheet_AutoFilter_Column
 	 */
 	public function setRuleType($pRuleType = self::AUTOFILTER_RULETYPE_FILTER) {
@@ -314,7 +316,7 @@ class PHPExcel_Worksheet_AutoFilter_Column_Rule
 	 *	Set AutoFilter Rule Value
 	 *
 	 *	@param	string|string[]		$pValue
-	 *	@throws	Exception
+	 *	@throws	PHPExcel_Exception
 	 *	@return PHPExcel_Worksheet_AutoFilter_Column_Rule
 	 */
 	public function setValue($pValue = '') {
@@ -354,7 +356,7 @@ class PHPExcel_Worksheet_AutoFilter_Column_Rule
 	 *	Set AutoFilter Rule Operator
 	 *
 	 *	@param	string		$pOperator
-	 *	@throws	Exception
+	 *	@throws	PHPExcel_Exception
 	 *	@return PHPExcel_Worksheet_AutoFilter_Column_Rule
 	 */
 	public function setOperator($pOperator = self::AUTOFILTER_COLUMN_RULE_EQUAL) {
@@ -382,7 +384,7 @@ class PHPExcel_Worksheet_AutoFilter_Column_Rule
 	 *	Set AutoFilter Rule Grouping
 	 *
 	 *	@param	string		$pGrouping
-	 *	@throws	Exception
+	 *	@throws	PHPExcel_Exception
 	 *	@return PHPExcel_Worksheet_AutoFilter_Column_Rule
 	 */
 	public function setGrouping($pGrouping = NULL) {
@@ -404,7 +406,7 @@ class PHPExcel_Worksheet_AutoFilter_Column_Rule
 	 *	@param	string				$pOperator
 	 *	@param	string|string[]		$pValue
 	 *	@param	string				$pGrouping
-	 *	@throws	Exception
+	 *	@throws	PHPExcel_Exception
 	 *	@return PHPExcel_Worksheet_AutoFilter_Column_Rule
 	 */
 	public function setRule($pOperator = self::AUTOFILTER_COLUMN_RULE_EQUAL, $pValue = '', $pGrouping = NULL) {

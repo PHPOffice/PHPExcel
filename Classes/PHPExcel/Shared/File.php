@@ -2,7 +2,7 @@
 /**
  * PHPExcel
  *
- * Copyright (c) 2006 - 2012 PHPExcel
+ * Copyright (c) 2006 - 2013 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,7 +20,7 @@
  *
  * @category   PHPExcel
  * @package    PHPExcel_Shared
- * @copyright  Copyright (c) 2006 - 2012 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -31,10 +31,39 @@
  *
  * @category   PHPExcel
  * @package    PHPExcel_Shared
- * @copyright  Copyright (c) 2006 - 2012 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
 class PHPExcel_Shared_File
 {
+	/*
+	 * Use Temp or File Upload Temp for temporary files
+	 *
+	 * @protected
+	 * @var	boolean
+	 */
+	protected static $_useUploadTempDirectory	= FALSE;
+
+
+	/**
+	 * Set the flag indicating whether the File Upload Temp directory should be used for temporary files
+	 *
+	 * @param	 boolean	$useUploadTempDir		Use File Upload Temporary directory (true or false)
+	 */
+	public static function setUseUploadTempDirectory($useUploadTempDir = FALSE) {
+		self::$_useUploadTempDirectory = (boolean) $useUploadTempDir;
+	}	//	function setUseUploadTempDirectory()
+
+
+	/**
+	 * Get the flag indicating whether the File Upload Temp directory should be used for temporary files
+	 *
+	 * @return	 boolean	Use File Upload Temporary directory (true or false)
+	 */
+	public static function getUseUploadTempDirectory() {
+		return self::$_useUploadTempDirectory;
+	}	//	function getUseUploadTempDirectory()
+
+
 	/**
 	  * Verify if a file exists
 	  *
@@ -105,9 +134,19 @@ class PHPExcel_Shared_File
 	 */
 	public static function sys_get_temp_dir()
 	{
+		if (self::$_useUploadTempDirectory) {
+			//  use upload-directory when defined to allow running on environments having very restricted
+			//      open_basedir configs
+			if (ini_get('upload_tmp_dir') !== FALSE) {
+				if ($temp = ini_get('upload_tmp_dir')) {
+					if (file_exists($temp))
+						return realpath($temp);
+				}
+			}
+		}
+
 		// sys_get_temp_dir is only available since PHP 5.2.1
 		// http://php.net/manual/en/function.sys-get-temp-dir.php#94119
-
 		if ( !function_exists('sys_get_temp_dir')) {
 			if ($temp = getenv('TMP') ) {
 				if ((!empty($temp)) && (file_exists($temp))) { return realpath($temp); }

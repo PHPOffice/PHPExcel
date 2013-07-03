@@ -2,7 +2,7 @@
 /**
  *  PHPExcel
  *
- *  Copyright (c) 2006 - 2012 PHPExcel
+ *  Copyright (c) 2006 - 2013 PHPExcel
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -20,7 +20,7 @@
  *
  *  @category    PHPExcel
  *  @package     PHPExcel_Writer_PDF
- *  @copyright   Copyright (c) 2006 - 2012 PHPExcel (http://www.codeplex.com/PHPExcel)
+ *  @copyright   Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  *  @license     http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  *  @version     ##VERSION##, ##DATE##
  */
@@ -39,14 +39,14 @@ if (file_exists($pdfRendererClassFile)) {
  *
  *  @category    PHPExcel
  *  @package     PHPExcel_Writer_PDF
- *  @copyright   Copyright (c) 2006 - 2012 PHPExcel (http://www.codeplex.com/PHPExcel)
+ *  @copyright   Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
 class PHPExcel_Writer_PDF_DomPDF extends PHPExcel_Writer_PDF_Core implements PHPExcel_Writer_IWriter
 {
     /**
      *  Create a new PHPExcel_Writer_PDF
      *
-     *  @param     PHPExcel    $phpExcel    PHPExcel object
+     *  @param   PHPExcel    $phpExcel    PHPExcel object
      */
     public function __construct(PHPExcel $phpExcel)
     {
@@ -56,8 +56,8 @@ class PHPExcel_Writer_PDF_DomPDF extends PHPExcel_Writer_PDF_Core implements PHP
     /**
      *  Save PHPExcel to file
      *
-     *  @param     string         $pFileName
-     *  @throws    PHPExcel_Writer_Exception
+     *  @param   string     $pFilename   Name of the file to save as
+     *  @throws  PHPExcel_Writer_Exception
      */
     public function save($pFilename = NULL)
     {

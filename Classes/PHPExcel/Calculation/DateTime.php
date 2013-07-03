@@ -2,7 +2,7 @@
 /**
  * PHPExcel
  *
- * Copyright (c) 2006 - 2012 PHPExcel
+ * Copyright (c) 2006 - 2013 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,7 +20,7 @@
  *
  * @category	PHPExcel
  * @package		PHPExcel_Calculation
- * @copyright	Copyright (c) 2006 - 2012 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright	Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license		http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version		##VERSION##, ##DATE##
  */
@@ -41,7 +41,7 @@ if (!defined('PHPEXCEL_ROOT')) {
  *
  * @category	PHPExcel
  * @package		PHPExcel_Calculation
- * @copyright	Copyright (c) 2006 - 2012 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright	Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
 class PHPExcel_Calculation_DateTime {
 
@@ -56,6 +56,18 @@ class PHPExcel_Calculation_DateTime {
 	}	//	function _isLeapYear()
 
 
+	/**
+	 * Return the number of days between two dates based on a 360 day calendar
+	 *
+	 * @param	integer	$startDay		Day of month of the start date
+	 * @param	integer	$startMonth		Month of the start date
+	 * @param	integer	$startYear		Year of the start date
+	 * @param	integer	$endDay			Day of month of the start date
+	 * @param	integer	$endMonth		Month of the start date
+	 * @param	integer	$endYear		Year of the start date
+	 * @param	boolean $methodUS		Whether to use the US method or the European method of calculation
+	 * @return	integer	Number of days between the start date and the end date
+	 */
 	private static function _dateDiff360($startDay, $startMonth, $startYear, $endDay, $endMonth, $endYear, $methodUS) {
 		if ($startDay == 31) {
 			--$startDay;
@@ -238,6 +250,10 @@ class PHPExcel_Calculation_DateTime {
 	 * Excel Function:
 	 *		DATE(year,month,day)
 	 *
+	 * PHPExcel is a lot more forgiving than MS Excel when passing non numeric values to this function.
+	 * A Month name or abbreviation (English only at this point) such as 'January' or 'Jan' will still be accepted,
+	 *     as will a day value with a suffix (e.g. '21st' rather than simply 21); again only English language.
+	 *
 	 * @access	public
 	 * @category Date/Time Functions
 	 * @param	integer		$year	The value of the year argument can include one to four digits.
@@ -277,6 +293,14 @@ class PHPExcel_Calculation_DateTime {
 		$year	= PHPExcel_Calculation_Functions::flattenSingleValue($year);
 		$month	= PHPExcel_Calculation_Functions::flattenSingleValue($month);
 		$day	= PHPExcel_Calculation_Functions::flattenSingleValue($day);
+
+		if (($month !== NULL) && (!is_numeric($month))) {
+            $month = PHPExcel_Shared_Date::monthStringToNumber($month);
+		}
+
+		if (($day !== NULL) && (!is_numeric($day))) {
+            $day = PHPExcel_Shared_Date::dayStringToNumber($day);
+		}
 
 		$year	= ($year !== NULL)	? PHPExcel_Shared_String::testStringAsNumeric($year) : 0;
 		$month	= ($month !== NULL)	? PHPExcel_Shared_String::testStringAsNumeric($month) : 0;
@@ -717,6 +741,10 @@ class PHPExcel_Calculation_DateTime {
 			return PHPExcel_Calculation_Functions::VALUE();
 		}
 		if (is_string($endDate = self::_getDateValue($endDate))) {
+			return PHPExcel_Calculation_Functions::VALUE();
+		}
+
+		if (!is_bool($method)) {
 			return PHPExcel_Calculation_Functions::VALUE();
 		}
 

@@ -1,7 +1,7 @@
 **************************************************************************************
 * PHPExcel
 *
-* Copyright (c) 2006 - 2012 PHPExcel
+* Copyright (c) 2006 - 2013 PHPExcel
 *
 * This library is free software; you can redistribute it and/or
 * modify it under the terms of the GNU Lesser General Public
@@ -17,29 +17,65 @@
 * License along with this library; if not, write to the Free Software
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 *
-* @copyright  Copyright (c) 2006 - 2012 PHPExcel (http://www.codeplex.com/PHPExcel)
+* @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
 * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
 * @version    ##VERSION##, ##DATE##
 **************************************************************************************
 
 
-Fixed in develop branch:
-- Feature:  (MBaker)   Include charts option for HTML Writer
-- Bugfix:   (Asker)    Work item 18777 - Error in PHPEXCEL/Calculation.php script on line 2976 (stack pop check)
-- Bugfix:   (MBaker)   Work item 18794 - CSV files without a file extension being identified as HTML
-- Bugfix:   (AndreKR)  Work item GH-66 - Wrong check for maximum number of rows in Excel5 Writer
-- General:  (kea)      Work item GH-69 - Improved AdvancedValueBinder for currency
-- Bugfix:   (techhead) Work item GH-70 - Fixed formula/formatting bug when removing rows
-- Bugfix:   (alexgann) Work item GH-63 - Fix to cellExists for non-existent namedRanges
-- Bugfix:   (MBaker)   Work item 18844 - cache_in_memory_gzip "eats" last worksheet line, cache_in_memory doesn't
+Fixed in develop branch for release v1.7.9a:
+- Bugfix:   (MBaker)    Work item 19830  - Undefined variable: fileHandle in CSV Reader
+- Bugfix:   (MBaker)                     - Style error with merged cells in PDF Writer
+- Bugfix:   (MBaker)                     - Problem with cloning worksheets
+- Feature:  (amerov)                     - Implementation of the Excel HLOOKUP() function
+- Feature:  (MBaker)                     - Added "Quote Prefix" to style settings (Excel2007 Reader and Writer only)
+- Feature:  (MBaker)                     - Added Horizontal FILL alignment for Excel5 and Excel2007 Readers/Writers, and Horizontal DISTRIBUTED alignment for Excel2007 Reader/Writer
+
+Fixed in develop branch for release v1.7.9:
+- Feature:  (MBaker)    Include charts option for HTML Writer
+- Feature:  (MBaker)    Added composer file
+- Feature:  (MBaker)    Added getStyle() method to Cell object
+- Bugfix:   (Asker)     Work item 18777  - Error in PHPEXCEL/Calculation.php script on line 2976 (stack pop check)
+- Bugfix:   (MBaker)    Work item 18794  - CSV files without a file extension being identified as HTML
+- Bugfix:   (AndreKR)   Work item GH-66  - Wrong check for maximum number of rows in Excel5 Writer
+- Bugfix:   (MBaker)    Work item GH-67  - Cache directory for DiscISAM cache storage cannot be set
+- Bugfix:   (MBaker)    Work item 17976  - Fix to Excel2007 Reader for hyperlinks with an anchor fragment (following a #), otherwise they were treated as sheet references
+- Bugfix:   (MBaker)    Work item 18963  - getSheetNames() fails on numeric (floating point style) names with trailing zeroes
+- Bugfix:   (MBaker)    Work item GH-130 - Single cell print area
+- General:  (kea)       Work item GH-69  - Improved AdvancedValueBinder for currency
+- General:  (MBaker)    Work items 17936 and 17840 - Fix for environments where there is no access to /tmp but to upload_tmp_dir
+                        Provided an option to set the sys_get_temp_dir() call to use the upload_tmp_dir; though by default the standard temp directory will still be used
+- General:  (amironov ) Work item GH-84  - Search style by identity in PHPExcel_Worksheet::duplicateStyle()
+- General:  (karak)     Work item GH-85  - Fill SheetView IO in Excel5
+- General:  (cfhay)     Work item 18958  - Memory and Speed improvements in PHPExcel_Reader_Excel5
+- General:  (MBaker)    Work item GH-78  - Modify listWorksheetNames() and listWorksheetInfo to use XMLReader with streamed XML rather than SimpleXML
+- General:  (dbonsch)                      Restructuring of PHPExcel Exceptions
+- General:  (MBaker)    Work items 16926 and 15145 - Refactor Calculation Engine from singleton to a Multiton
+                        Ensures that calculation cache is maintained independently for different workbooks
+- General:  (MBaker)                       Modify cell's getCalculatedValue() method to return the content of RichText objects rather than the RichText object itself
+- Bugfix:   (techhead)  Work item GH-70  - Fixed formula/formatting bug when removing rows
+- Bugfix:   (alexgann)  Work item GH-63  - Fix to cellExists for non-existent namedRanges
+- Bugfix:   (MBaker)    Work item 18844  - cache_in_memory_gzip "eats" last worksheet line, cache_in_memory doesn't
+- Feature:  (Progi1984) Work item GH-22  - Sheet View in Excel5 Writer
+- Bugfix:   (amironov)  Work item GH-82  - PHPExcel_Worksheet::getCellCollection() may not return last cached cell
+- Bugfix:   (teso)      Work item 18551  - Rich Text containing UTF-8 characters creating unreadable content with Excel5 Writer
+- Bugfix:   (MBaker)    Work item GH-104 - echo statements in HTML.php
+- Feature:  (Progi1984) Work item GH-8/CP11704 : Conditional formatting in Excel 5 Writer
+- Bugfix:   (MBaker)    Work item GH-113 - canRead() Error for GoogleDocs ODS files: in ODS files from Google Docs there is no mimetype file
+- Bugfix:   (MBaker)    Work item GH-80  - "Sheet index is out of bounds." Exception
+- Bugfix:   (ccorliss)  Work item GH-105 - Fixed number format fatal error
+- Bugfix:   (MBaker)                     - Add DROP TABLE in destructor for SQLite and SQLite3 cache controllers
+- Bugfix:   (alexgann)  Work item GH-154 - Fix merged-cell borders on HTML/PDF output
+- Bugfix:   (Shanto)    Work item GH-161 - Fix: Hyperlinks break when removing rows
+- Bugfix:   (neclimdul) Work item GH-166 - Fix Extra Table Row From Images and Charts
 
 
 --------------------------------------------------------------------------------
 BREAKING CHANGE! As part of the planned changes for handling array formulae in
-workbooks, there are some changes that will affect the PHPExcel_Cell object 
+workbooks, there are some changes that will affect the PHPExcel_Cell object
 methods.
 
-The following methods are now deprecated, and will be removed in version 1.7.9:
+The following methods are now deprecated, and will be removed in or after version 1.8.0:
     getCalculatedValue()      The getValue() method will return calculated
                                   values for cells containing formulae instead.
     setCalculatedValue()      The cell value will always contain the result of a
@@ -49,29 +85,29 @@ The following methods are now deprecated, and will be removed in version 1.7.9:
     getFormulaAttributes()    This will be replaced by the getArrayFormulaRange()
                                   method.
 
-The following methods will be added in version 1.7.9
+The following methods will be added in version 1.8.0
     getFormula()              Use to retrieve a cell formula, will return the cell
                                   value if the cell doesn't contain a formula, or
                                   is not part of an array formula range.
     setFormula()              Use to set a cell formula. It will still be possible
-                                  to set formulae using the setValue() and 
+                                  to set formulae using the setValue() and
                                   setValueExplicit() methods.
     calculate()               Use to execute a formula calculation to update the
                                   cell value.
     isFormula()               Use to determine if a cell contains a formula, or is
                                   part of an array formula range or not.
-    isArrayFormula()          Use to determine if a cell contains an array formula, 
+    isArrayFormula()          Use to determine if a cell contains an array formula,
                                  or is part of an array formula range or not.
     getArrayFormulaRange()    Use to retrieve an array formula range.
 
-The following methods will be changed in version 1.7.9
+The following methods will be changed in version 1.8.0
     setValue()                The logic behind this will be modified to store
                                   formula values in the new cell property structure,
                                   but it will still perform the same function.
     setValueExplicit()        The logic behind this will be modified to store
                                   formula values in the new cell property structure,
                                   but it will still perform the same function.
-    getValue()                Will no longer return a formula if the cell contains 
+    getValue()                Will no longer return a formula if the cell contains
                                   a formula, but will return the calculated value
                                   instead. For cells that don't contain a formula,
                                   it will still return the stored value.
@@ -151,7 +187,7 @@ The following methods will be changed in version 1.7.9
 - General:  (MBaker)    Reduce cell caching overhead using dirty flag to ensure that cells are only rewritten to the cache if they have actually been changed
 - General:  (MBaker)    Improved memory usage in CSV Writer
 - General:  (MBaker)    Improved speed and memory usage in Excel5 Writer
-- General:  (MBaker)    Experimental - 
+- General:  (MBaker)    Experimental -
                         Added getHighestDataColumn(), getHighestDataRow(), getHighestRowAndColumn() and calculateWorksheetDataDimension() methods for the worksheet that return the highest row and column that have cell records
 - General:  (MBaker)    Change iterators to implement Iterator rather than extend CachingIterator, as a fix for PHP 5.4. changes in SPL
 - Bugfix:   (MBaker)    Work item 15459 - Invalid cell coordinate in Autofilter for Excel2007 Writer

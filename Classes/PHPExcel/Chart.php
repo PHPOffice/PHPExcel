@@ -2,7 +2,7 @@
 /**
  * PHPExcel
  *
- * Copyright (c) 2006 - 2012 PHPExcel
+ * Copyright (c) 2006 - 2013 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,7 +20,7 @@
  *
  * @category	PHPExcel
  * @package		PHPExcel_Chart
- * @copyright	Copyright (c) 2006 - 2012 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright	Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license		http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version		##VERSION##, ##DATE##
  */
@@ -31,7 +31,7 @@
  *
  * @category	PHPExcel
  * @package		PHPExcel_Chart
- * @copyright	Copyright (c) 2006 - 2012 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright	Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
 class PHPExcel_Chart
 {
@@ -184,7 +184,7 @@ class PHPExcel_Chart
 	 * Set Worksheet
 	 *
 	 * @param	PHPExcel_Worksheet	$pValue
-	 * @throws	Exception
+	 * @throws	PHPExcel_Chart_Exception
 	 * @return PHPExcel_Chart
 	 */
 	public function setWorksheet(PHPExcel_Worksheet $pValue = null) {
@@ -378,6 +378,13 @@ class PHPExcel_Chart
 		return $this;
 	}
 
+	/**
+	 * Set the offset position within the Top Left cell for the chart
+	 *
+	 * @param	integer	$xOffset
+	 * @param	integer	$yOffset
+	 * @return PHPExcel_Chart
+	 */
 	public function setTopLeftOffset($xOffset=null,$yOffset=null) {
 		if (!is_null($xOffset))
 			$this->setTopLeftXOffset($xOffset);
@@ -387,6 +394,11 @@ class PHPExcel_Chart
 		return $this;
 	}
 
+	/**
+	 * Get the offset position within the Top Left cell for the chart
+	 *
+	 * @return integer[]
+	 */
 	public function getTopLeftOffset() {
 		return array( 'X' => $this->_topLeftXOffset,
 					  'Y' => $this->_topLeftYOffset
@@ -458,6 +470,13 @@ class PHPExcel_Chart
 		return $this->_bottomRightCellRef;
 	}
 
+	/**
+	 * Set the offset position within the Bottom Right cell for the chart
+	 *
+	 * @param	integer	$xOffset
+	 * @param	integer	$yOffset
+	 * @return PHPExcel_Chart
+	 */
 	public function setBottomRightOffset($xOffset=null,$yOffset=null) {
 		if (!is_null($xOffset))
 			$this->setBottomRightXOffset($xOffset);
@@ -467,6 +486,11 @@ class PHPExcel_Chart
 		return $this;
 	}
 
+	/**
+	 * Get the offset position within the Bottom Right cell for the chart
+	 *
+	 * @return integer[]
+	 */
 	public function getBottomRightOffset() {
 		return array( 'X' => $this->_bottomRightXOffset,
 					  'Y' => $this->_bottomRightYOffset

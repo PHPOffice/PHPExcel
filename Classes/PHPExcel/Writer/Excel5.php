@@ -103,11 +103,36 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExce
 	 *
 	 * @param	PHPExcel	$phpExcel	PHPExcel object
 	 */
-	public function __construct(PHPExcel $phpExcel) {
-		$this->_phpExcel	= $phpExcel;
+	public function __construct(PHPExcel $phpExcel = null) {
+		$this->setPHPExcel($phpExcel);
 
 		$this->_parser		= new PHPExcel_Writer_Excel5_Parser();
 	}
+
+    /**
+     * Get PHPExcel object
+     *
+     * @return PHPExcel
+     * @throws PHPExcel_Writer_Exception
+     */
+    public function getPHPExcel() {
+        if ($this->_phpExcel !== null) {
+            return $this->_phpExcel;
+        } else {
+            throw new PHPExcel_Writer_Exception("No PHPExcel assigned.");
+        }
+    }
+
+    /**
+     * Set PHPExcel object
+     *
+     * @param 	PHPExcel 	$pPHPExcel	PHPExcel object
+     * @return PHPExcel_Writer_Excel5
+     */
+    public function setPHPExcel(PHPExcel $pPHPExcel = null) {
+        $this->_phpExcel = $pPHPExcel;
+        return $this;
+    }
 
 	/**
 	 * Save PHPExcel to file
@@ -118,10 +143,10 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExce
 	public function save($pFilename = null) {
 
 		// garbage collect
-		$this->_phpExcel->garbageCollect();
+		$this->getPHPExcel()->garbageCollect();
 
-		$saveDebugLog = PHPExcel_Calculation::getInstance($this->_phpExcel)->getDebugLog()->getWriteDebugLog();
-		PHPExcel_Calculation::getInstance($this->_phpExcel)->getDebugLog()->setWriteDebugLog(FALSE);
+		$saveDebugLog = PHPExcel_Calculation::getInstance($this->getPHPExcel())->getDebugLog()->getWriteDebugLog();
+		PHPExcel_Calculation::getInstance($this->getPHPExcel())->getDebugLog()->setWriteDebugLog(FALSE);
 		$saveDateReturnType = PHPExcel_Calculation_Functions::getReturnDateType();
 		PHPExcel_Calculation_Functions::setReturnDateType(PHPExcel_Calculation_Functions::RETURNDATE_EXCEL);
 
@@ -129,18 +154,18 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExce
 		$this->_colors          = array();
 
 		// Initialise workbook writer
-		$this->_writerWorkbook = new PHPExcel_Writer_Excel5_Workbook($this->_phpExcel,
+		$this->_writerWorkbook = new PHPExcel_Writer_Excel5_Workbook($this->getPHPExcel(),
 																	 $this->_str_total, $this->_str_unique, $this->_str_table,
 																	 $this->_colors, $this->_parser);
 
 		// Initialise worksheet writers
-		$countSheets = $this->_phpExcel->getSheetCount();
+		$countSheets = $this->getPHPExcel()->getSheetCount();
 		for ($i = 0; $i < $countSheets; ++$i) {
 			$this->_writerWorksheets[$i] = new PHPExcel_Writer_Excel5_Worksheet($this->_str_total, $this->_str_unique,
 																			   $this->_str_table, $this->_colors,
 																			   $this->_parser,
 																			   $this->_preCalculateFormulas,
-																			   $this->_phpExcel->getSheet($i));
+																			   $this->getPHPExcel()->getSheet($i));
 		}
 
 		// build Escher objects. Escher objects for workbooks needs to be build before Escher object for workbook.
@@ -149,13 +174,13 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExce
 
 		// add 15 identical cell style Xfs
 		// for now, we use the first cellXf instead of cellStyleXf
-		$cellXfCollection = $this->_phpExcel->getCellXfCollection();
+		$cellXfCollection = $this->getPHPExcel()->getCellXfCollection();
 		for ($i = 0; $i < 15; ++$i) {
 			$this->_writerWorkbook->addXfWriter($cellXfCollection[0], true);
 		}
 
 		// add all the cell Xfs
-		foreach ($this->_phpExcel->getCellXfCollection() as $style) {
+		foreach ($this->getPHPExcel()->getCellXfCollection() as $style) {
 			$this->_writerWorkbook->addXfWriter($style, false);
 		}
 
@@ -226,7 +251,7 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExce
 		$res = $root->save($pFilename);
 
 		PHPExcel_Calculation_Functions::setReturnDateType($saveDateReturnType);
-		PHPExcel_Calculation::getInstance($this->_phpExcel)->getDebugLog()->setWriteDebugLog($saveDebugLog);
+		PHPExcel_Calculation::getInstance($this->getPHPExcel())->getDebugLog()->setWriteDebugLog($saveDebugLog);
 	}
 
 	/**
@@ -252,7 +277,7 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExce
 		$lastReducedSpId = 0;
 		$lastSpId = 0;
 
-		foreach ($this->_phpExcel->getAllsheets() as $sheet) {
+		foreach ($this->getPHPExcel()->getAllsheets() as $sheet) {
 			// sheet index
 			$sheetIndex = $sheet->getParent()->getIndex($sheet);
 
@@ -415,7 +440,7 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExce
 
 		// any drawings in this workbook?
 		$found = false;
-		foreach ($this->_phpExcel->getAllSheets() as $sheet) {
+		foreach ($this->getPHPExcel()->getAllSheets() as $sheet) {
 			if (count($sheet->getDrawingCollection()) > 0) {
 				$found = true;
 				break;
@@ -442,7 +467,7 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExce
 		$totalCountShapes = 0;
 		$countDrawings = 0;
 
-		foreach ($this->_phpExcel->getAllsheets() as $sheet) {
+		foreach ($this->getPHPExcel()->getAllsheets() as $sheet) {
 			$sheetCountShapes = 0; // count number of shapes (minus group shape), in sheet
 
 			if (count($sheet->getDrawingCollection()) > 0) {
@@ -453,7 +478,7 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExce
 					++$totalCountShapes;
 
 					$spId = $sheetCountShapes
-						| ($this->_phpExcel->getIndex($sheet) + 1) << 10;
+						| ($this->getPHPExcel()->getIndex($sheet) + 1) << 10;
 					$spIdMax = max($spId, $spIdMax);
 				}
 			}
@@ -468,7 +493,7 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExce
 		$dggContainer->setBstoreContainer($bstoreContainer);
 
 		// the BSE's (all the images)
-		foreach ($this->_phpExcel->getAllsheets() as $sheet) {
+		foreach ($this->getPHPExcel()->getAllsheets() as $sheet) {
 			foreach ($sheet->getDrawingCollection() as $drawing) {
 				if ($drawing instanceof PHPExcel_Worksheet_Drawing) {
 
@@ -594,8 +619,8 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExce
 		$dataSection_NumProps++;
 
 		// GKPIDDSI_CATEGORY : Category
-		if($this->_phpExcel->getProperties()->getCategory()){
-			$dataProp = $this->_phpExcel->getProperties()->getCategory();
+		if($this->getPHPExcel()->getProperties()->getCategory()){
+			$dataProp = $this->getPHPExcel()->getProperties()->getCategory();
 			$dataSection[] = array('summary'=> array('pack' => 'V', 'data' => 0x02),
 								   'offset' => array('pack' => 'V'),
 								   'type' 	=> array('pack' => 'V', 'data' => 0x1E),
@@ -794,8 +819,8 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExce
 		$dataSection_NumProps++;
 
 		//	Title
-		if($this->_phpExcel->getProperties()->getTitle()){
-			$dataProp = $this->_phpExcel->getProperties()->getTitle();
+		if($this->getPHPExcel()->getProperties()->getTitle()){
+			$dataProp = $this->getPHPExcel()->getProperties()->getTitle();
 			$dataSection[] = array('summary'=> array('pack' => 'V', 'data' => 0x02),
 								   'offset' => array('pack' => 'V'),
 								   'type' 	=> array('pack' => 'V', 'data' => 0x1E), // null-terminated string prepended by dword string length
@@ -803,8 +828,8 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExce
 			$dataSection_NumProps++;
 		}
 		//	Subject
-		if($this->_phpExcel->getProperties()->getSubject()){
-			$dataProp = $this->_phpExcel->getProperties()->getSubject();
+		if($this->getPHPExcel()->getProperties()->getSubject()){
+			$dataProp = $this->getPHPExcel()->getProperties()->getSubject();
 			$dataSection[] = array('summary'=> array('pack' => 'V', 'data' => 0x03),
 								   'offset' => array('pack' => 'V'),
 								   'type' 	=> array('pack' => 'V', 'data' => 0x1E), // null-terminated string prepended by dword string length
@@ -812,8 +837,8 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExce
 			$dataSection_NumProps++;
 		}
 		//	Author (Creator)
-		if($this->_phpExcel->getProperties()->getCreator()){
-			$dataProp = $this->_phpExcel->getProperties()->getCreator();
+		if($this->getPHPExcel()->getProperties()->getCreator()){
+			$dataProp = $this->getPHPExcel()->getProperties()->getCreator();
 			$dataSection[] = array('summary'=> array('pack' => 'V', 'data' => 0x04),
 								   'offset' => array('pack' => 'V'),
 								   'type' 	=> array('pack' => 'V', 'data' => 0x1E), // null-terminated string prepended by dword string length
@@ -821,8 +846,8 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExce
 			$dataSection_NumProps++;
 		}
 		//	Keywords
-		if($this->_phpExcel->getProperties()->getKeywords()){
-			$dataProp = $this->_phpExcel->getProperties()->getKeywords();
+		if($this->getPHPExcel()->getProperties()->getKeywords()){
+			$dataProp = $this->getPHPExcel()->getProperties()->getKeywords();
 			$dataSection[] = array('summary'=> array('pack' => 'V', 'data' => 0x05),
 								   'offset' => array('pack' => 'V'),
 								   'type' 	=> array('pack' => 'V', 'data' => 0x1E), // null-terminated string prepended by dword string length
@@ -830,8 +855,8 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExce
 			$dataSection_NumProps++;
 		}
 		//	Comments (Description)
-		if($this->_phpExcel->getProperties()->getDescription()){
-			$dataProp = $this->_phpExcel->getProperties()->getDescription();
+		if($this->getPHPExcel()->getProperties()->getDescription()){
+			$dataProp = $this->getPHPExcel()->getProperties()->getDescription();
 			$dataSection[] = array('summary'=> array('pack' => 'V', 'data' => 0x06),
 								   'offset' => array('pack' => 'V'),
 								   'type' 	=> array('pack' => 'V', 'data' => 0x1E), // null-terminated string prepended by dword string length
@@ -839,8 +864,8 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExce
 			$dataSection_NumProps++;
 		}
 		//	Last Saved By (LastModifiedBy)
-		if($this->_phpExcel->getProperties()->getLastModifiedBy()){
-			$dataProp = $this->_phpExcel->getProperties()->getLastModifiedBy();
+		if($this->getPHPExcel()->getProperties()->getLastModifiedBy()){
+			$dataProp = $this->getPHPExcel()->getProperties()->getLastModifiedBy();
 			$dataSection[] = array('summary'=> array('pack' => 'V', 'data' => 0x08),
 								   'offset' => array('pack' => 'V'),
 								   'type' 	=> array('pack' => 'V', 'data' => 0x1E), // null-terminated string prepended by dword string length
@@ -848,8 +873,8 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExce
 			$dataSection_NumProps++;
 		}
 		//	Created Date/Time
-		if($this->_phpExcel->getProperties()->getCreated()){
-			$dataProp = $this->_phpExcel->getProperties()->getCreated();
+		if($this->getPHPExcel()->getProperties()->getCreated()){
+			$dataProp = $this->getPHPExcel()->getProperties()->getCreated();
 			$dataSection[] = array('summary'=> array('pack' => 'V', 'data' => 0x0C),
 								   'offset' => array('pack' => 'V'),
 								   'type' 	=> array('pack' => 'V', 'data' => 0x40), // Filetime (64-bit value representing the number of 100-nanosecond intervals since January 1, 1601)
@@ -857,8 +882,8 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExce
 			$dataSection_NumProps++;
 		}
 		//	Modified Date/Time
-		if($this->_phpExcel->getProperties()->getModified()){
-			$dataProp = $this->_phpExcel->getProperties()->getModified();
+		if($this->getPHPExcel()->getProperties()->getModified()){
+			$dataProp = $this->getPHPExcel()->getProperties()->getModified();
 			$dataSection[] = array('summary'=> array('pack' => 'V', 'data' => 0x0D),
 								   'offset' => array('pack' => 'V'),
 								   'type' 	=> array('pack' => 'V', 'data' => 0x40), // Filetime (64-bit value representing the number of 100-nanosecond intervals since January 1, 1601)

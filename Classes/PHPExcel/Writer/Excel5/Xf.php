@@ -416,28 +416,29 @@ class Writer_Excel5_Xf
      * @static    array of int
      *
      */
-    private static $_mapFillType = array( Style_Fill::FILL_NONE                    => 0x00,
-                                          Style_Fill::FILL_SOLID                    => 0x01,
-                                          Style_Fill::FILL_PATTERN_MEDIUMGRAY        => 0x02,
-                                          Style_Fill::FILL_PATTERN_DARKGRAY        => 0x03,
-                                          Style_Fill::FILL_PATTERN_LIGHTGRAY        => 0x04,
-                                          Style_Fill::FILL_PATTERN_DARKHORIZONTAL    => 0x05,
-                                          Style_Fill::FILL_PATTERN_DARKVERTICAL    => 0x06,
-                                          Style_Fill::FILL_PATTERN_DARKDOWN        => 0x07,
-                                          Style_Fill::FILL_PATTERN_DARKUP            => 0x08,
-                                          Style_Fill::FILL_PATTERN_DARKGRID        => 0x09,
-                                          Style_Fill::FILL_PATTERN_DARKTRELLIS        => 0x0A,
-                                          Style_Fill::FILL_PATTERN_LIGHTHORIZONTAL    => 0x0B,
-                                          Style_Fill::FILL_PATTERN_LIGHTVERTICAL    => 0x0C,
-                                          Style_Fill::FILL_PATTERN_LIGHTDOWN        => 0x0D,
-                                          Style_Fill::FILL_PATTERN_LIGHTUP            => 0x0E,
-                                          Style_Fill::FILL_PATTERN_LIGHTGRID        => 0x0F,
-                                          Style_Fill::FILL_PATTERN_LIGHTTRELLIS    => 0x10,
-                                          Style_Fill::FILL_PATTERN_GRAY125            => 0x11,
-                                          Style_Fill::FILL_PATTERN_GRAY0625        => 0x12,
-                                          Style_Fill::FILL_GRADIENT_LINEAR            => 0x00,    // does not exist in BIFF8
-                                          Style_Fill::FILL_GRADIENT_PATH            => 0x00,    // does not exist in BIFF8
-                                        );
+    private static $_mapFillType = array(
+        Style_Fill::FILL_NONE                     => 0x00,
+        Style_Fill::FILL_SOLID                    => 0x01,
+        Style_Fill::FILL_PATTERN_MEDIUMGRAY       => 0x02,
+        Style_Fill::FILL_PATTERN_DARKGRAY         => 0x03,
+        Style_Fill::FILL_PATTERN_LIGHTGRAY        => 0x04,
+        Style_Fill::FILL_PATTERN_DARKHORIZONTAL   => 0x05,
+        Style_Fill::FILL_PATTERN_DARKVERTICAL     => 0x06,
+        Style_Fill::FILL_PATTERN_DARKDOWN         => 0x07,
+        Style_Fill::FILL_PATTERN_DARKUP           => 0x08,
+        Style_Fill::FILL_PATTERN_DARKGRID         => 0x09,
+        Style_Fill::FILL_PATTERN_DARKTRELLIS      => 0x0A,
+        Style_Fill::FILL_PATTERN_LIGHTHORIZONTAL  => 0x0B,
+        Style_Fill::FILL_PATTERN_LIGHTVERTICAL    => 0x0C,
+        Style_Fill::FILL_PATTERN_LIGHTDOWN        => 0x0D,
+        Style_Fill::FILL_PATTERN_LIGHTUP          => 0x0E,
+        Style_Fill::FILL_PATTERN_LIGHTGRID        => 0x0F,
+        Style_Fill::FILL_PATTERN_LIGHTTRELLIS     => 0x10,
+        Style_Fill::FILL_PATTERN_GRAY125          => 0x11,
+        Style_Fill::FILL_PATTERN_GRAY0625         => 0x12,
+        Style_Fill::FILL_GRADIENT_LINEAR          => 0x00,    // does not exist in BIFF8
+        Style_Fill::FILL_GRADIENT_PATH            => 0x00,    // does not exist in BIFF8
+    );
     /**
      * Map fill type
      *
@@ -455,13 +456,16 @@ class Writer_Excel5_Xf
      * @static    array of int
      *
      */
-    private static $_mapHAlign = array( Style_Alignment::HORIZONTAL_GENERAL            => 0,
-                                        Style_Alignment::HORIZONTAL_LEFT                => 1,
-                                        Style_Alignment::HORIZONTAL_CENTER                => 2,
-                                        Style_Alignment::HORIZONTAL_RIGHT                => 3,
-                                        Style_Alignment::HORIZONTAL_JUSTIFY            => 5,
-                                        Style_Alignment::HORIZONTAL_CENTER_CONTINUOUS    => 6,
-                                      );
+    private static $_mapHAlign = array(
+        Style_Alignment::HORIZONTAL_GENERAL            => 0,
+        Style_Alignment::HORIZONTAL_LEFT               => 1,
+        Style_Alignment::HORIZONTAL_CENTER             => 2,
+        Style_Alignment::HORIZONTAL_RIGHT              => 3,
+        Style_Alignment::HORIZONTAL_FILL			   => 4,
+        Style_Alignment::HORIZONTAL_JUSTIFY            => 5,
+        Style_Alignment::HORIZONTAL_CENTER_CONTINUOUS  => 6,
+    );
+
     /**
      * Map to BIFF2-BIFF8 codes for horizontal alignment
      *

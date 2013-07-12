@@ -1562,11 +1562,15 @@ class Reader_Excel5 extends Reader_Abstract implements Reader_IReader
     private function _readFilepass()
     {
         $length = self::_GetInt2d($this->_data, $this->_pos + 2);
-//        $recordData = substr($this->_data, $this->_pos + 4, $length);
+        $recordData = substr($this->_data, $this->_pos + 4, $length);
 
         // move stream pointer to next record
         $this->_pos += 4 + $length;
 
+        if (!$this->_readDataOnly) {
+            // offset: 0; size: 2; 16-bit hash value of password
+            $password = strtoupper(dechex(self::_GetInt2d($recordData, 0))); // the hashed password
+        }
         throw new Reader_Exception('Cannot read encrypted file');
     }
 
@@ -1829,6 +1833,9 @@ class Reader_Excel5 extends Reader_Abstract implements Reader_IReader
                 case 3:
                     $objStyle->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_RIGHT);
                     break;
+				case 4:
+					$objStyle->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_FILL);
+					break;
                 case 5:
                     $objStyle->getAlignment()->setHorizontal(Style_Alignment::HORIZONTAL_JUSTIFY);
                     break;

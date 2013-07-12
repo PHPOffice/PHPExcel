@@ -65,6 +65,13 @@ class Writer_Excel2007 extends Writer_Abstract implements Writer_IWriter
      */
     private $_stringTable    = array();
 
+	/**
+	 * Private unique PHPExcel_Style HashTable
+	 *
+	 * @var PHPExcel_HashTable
+	 */
+	private $_styleHashTable;
+
     /**
      * Private unique PHPExcel\Style_Conditional HashTable
      *
@@ -117,18 +124,19 @@ class Writer_Excel2007 extends Writer_Abstract implements Writer_IWriter
         // Assign PHPExcel
         $this->setPHPExcel($pPHPExcel);
 
-        $writerPartsArray = array(    'stringtable'    => __NAMESPACE__ . '\Writer_Excel2007_StringTable',
-                                    'contenttypes'    => __NAMESPACE__ . '\Writer_Excel2007_ContentTypes',
-                                    'docprops'         => __NAMESPACE__ . '\Writer_Excel2007_DocProps',
-                                    'rels'            => __NAMESPACE__ . '\Writer_Excel2007_Rels',
-                                    'theme'         => __NAMESPACE__ . '\Writer_Excel2007_Theme',
-                                    'style'         => __NAMESPACE__ . '\Writer_Excel2007_Style',
-                                    'workbook'         => __NAMESPACE__ . '\Writer_Excel2007_Workbook',
-                                    'worksheet'     => __NAMESPACE__ . '\Writer_Excel2007_Worksheet',
-                                    'drawing'         => __NAMESPACE__ . '\Writer_Excel2007_Drawing',
-                                    'comments'         => __NAMESPACE__ . '\Writer_Excel2007_Comments',
-                                    'chart'            => __NAMESPACE__ . '\Writer_Excel2007_Chart',
-                                 );
+        $writerPartsArray = array(
+            'stringtable'   => __NAMESPACE__ . '\Writer_Excel2007_StringTable',
+            'contenttypes'  => __NAMESPACE__ . '\Writer_Excel2007_ContentTypes',
+            'docprops'      => __NAMESPACE__ . '\Writer_Excel2007_DocProps',
+            'rels'          => __NAMESPACE__ . '\Writer_Excel2007_Rels',
+            'theme'         => __NAMESPACE__ . '\Writer_Excel2007_Theme',
+            'style'         => __NAMESPACE__ . '\Writer_Excel2007_Style',
+            'workbook'      => __NAMESPACE__ . '\Writer_Excel2007_Workbook',
+            'worksheet'     => __NAMESPACE__ . '\Writer_Excel2007_Worksheet',
+            'drawing'       => __NAMESPACE__ . '\Writer_Excel2007_Drawing',
+            'comments'      => __NAMESPACE__ . '\Writer_Excel2007_Comments',
+            'chart'         => __NAMESPACE__ . '\Writer_Excel2007_Chart',
+        );
 
         //    Initialise writer parts
         //        and Assign their parent IWriters
@@ -136,8 +144,9 @@ class Writer_Excel2007 extends Writer_Abstract implements Writer_IWriter
             $this->_writerParts[$writer] = new $class($this);
         }
 
-        $hashTablesArray = array( '_stylesConditionalHashTable',    '_fillHashTable',        '_fontHashTable',
-                                  '_bordersHashTable',                '_numFmtHashTable',        '_drawingHashTable'
+        $hashTablesArray = array( '_stylesConditionalHashTable',  '_fillHashTable',    '_fontHashTable',
+                                  '_bordersHashTable',            '_numFmtHashTable',  '_drawingHashTable',
+                                  '_styleHashTable'
                                 );
 
         // Set HashTable variables
@@ -193,6 +202,7 @@ class Writer_Excel2007 extends Writer_Abstract implements Writer_IWriter
             }
 
             // Create styles dictionaries
+            $this->_styleHashTable->addFromSource( 	            $this->getWriterPart('Style')->allStyles($this->_spreadSheet) 			);
             $this->_stylesConditionalHashTable->addFromSource(     $this->getWriterPart('Style')->allConditionalStyles($this->_spreadSheet)             );
             $this->_fillHashTable->addFromSource(                 $this->getWriterPart('Style')->allFills($this->_spreadSheet)             );
             $this->_fontHashTable->addFromSource(                 $this->getWriterPart('Style')->allFonts($this->_spreadSheet)             );
@@ -395,6 +405,15 @@ class Writer_Excel2007 extends Writer_Abstract implements Writer_IWriter
      */
     public function getStringTable() {
         return $this->_stringTable;
+    }
+
+    /**
+     * Get PHPExcel_Style HashTable
+     *
+     * @return PHPExcel_HashTable
+     */
+    public function getStyleHashTable() {
+    	return $this->_styleHashTable;
     }
 
     /**

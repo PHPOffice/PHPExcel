@@ -400,6 +400,9 @@ class Writer_Excel2007_Style extends Writer_Excel2007_WriterPart
             $objWriter->writeAttribute('xfId', 0);
             $objWriter->writeAttribute('fontId',             (int)$this->getParentWriter()->getFontHashTable()->getIndexForHashCode($pStyle->getFont()->getHashCode()));
 
+            if ($pStyle->getQuotePrefix()) {
+                $objWriter->writeAttribute('quotePrefix', 	    1);
+            }
             if ($pStyle->getNumberFormat()->getBuiltInFormatCode() === false) {
                 $objWriter->writeAttribute('numFmtId',             (int)($this->getParentWriter()->getNumFmtHashTable()->getIndexForHashCode($pStyle->getNumberFormat()->getHashCode()) + 164)   );
             } else {

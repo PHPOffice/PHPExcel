@@ -471,7 +471,7 @@ class Cell
     /**
      *    Get parent worksheet
      *
-     *    @return PHPExcel\Worksheet
+     *    @return PHPExcel\CachedObjectStorage_CacheBase
      */
     public function getParent() {
         return $this->_parent;

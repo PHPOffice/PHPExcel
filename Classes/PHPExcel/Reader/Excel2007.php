@@ -492,6 +492,10 @@ class Reader_Excel2007 extends Reader_Abstract implements Reader_IReader
                             //$numFmt = str_replace('mm', 'i', $numFmt);
                             //$numFmt = str_replace('h', 'H', $numFmt);
 
+                            $quotePrefix = false;
+                            if (isset($xf["quotePrefix"])) {
+                                $quotePrefix = (boolean) $xf["quotePrefix"];
+                            }
                             $style = (object) array(
                                 "numFmt" => $numFmt,
                                 "font" => $xmlStyles->fonts->font[intval($xf["fontId"])],
@@ -499,6 +503,7 @@ class Reader_Excel2007 extends Reader_Abstract implements Reader_IReader
                                 "border" => $xmlStyles->borders->border[intval($xf["borderId"])],
                                 "alignment" => $xf->alignment,
                                 "protection" => $xf->protection,
+                                "quotePrefix" => $quotePrefix,
                             );
                             $styles[] = $style;
 
@@ -526,6 +531,7 @@ class Reader_Excel2007 extends Reader_Abstract implements Reader_IReader
                                 "border" => $xmlStyles->borders->border[intval($xf["borderId"])],
                                 "alignment" => $xf->alignment,
                                 "protection" => $xf->protection,
+                                "quotePrefix" => $quotePrefix,
                             );
                             $cellStyles[] = $cellStyle;
 
@@ -1848,6 +1854,11 @@ class Reader_Excel2007 extends Reader_Abstract implements Reader_IReader
                     $docStyle->getProtection()->setHidden(Style_Protection::PROTECTION_UNPROTECTED);
                 }
             }
+        }
+
+		// top-level style settings
+		if (isset($style->quotePrefix)) {
+			$docStyle->setQuotePrefix($style->quotePrefix);
         }
     }
 

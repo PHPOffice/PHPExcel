@@ -37,9 +37,9 @@ date_default_timezone_set('Europe/London');
 /** Include PHPExcel Bootstrap */
 require_once '../Classes/Bootstrap.php';
 
-$cacheMethod = PHPExcel\CachedObjectStorageFactory::cache_in_memory_gzip;
+$cacheMethod = PHPExcel\CachedObjectStorageFactory::MEMORY_GZIP;
 if (!PHPExcel\Settings::setCacheStorageMethod($cacheMethod)) {
-	die($cacheMethod . " caching method is not available" . EOL);
+    die(date('H:i:s') . " $cacheMethod Cell Caching method is not available" . EOL);
 }
 echo date('H:i:s') , " Enable Cell Caching using " , $cacheMethod , " method" , EOL;
 

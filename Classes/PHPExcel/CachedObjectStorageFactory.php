@@ -38,17 +38,17 @@ namespace PHPExcel;
  */
 class CachedObjectStorageFactory
 {
-    const cache_in_memory               = 'Memory';
-    const cache_in_memory_gzip          = 'MemoryGZip';
-    const cache_in_memory_serialized    = 'MemorySerialized';
-    const cache_igbinary                = 'Igbinary';
-    const cache_to_discISAM             = 'DiscISAM';
-    const cache_to_apc                  = 'APC';
-    const cache_to_memcache             = 'Memcache';
-    const cache_to_phpTemp              = 'PHPTemp';
-    const cache_to_wincache             = 'Wincache';
-    const cache_to_sqlite               = 'SQLite';
-    const cache_to_sqlite3              = 'SQLite3';
+    const MEMORY             = 'Memory';
+    const MEMORY_GZIP        = 'MemoryGZip';
+    const MEMORY_SERIALIZED  = 'MemorySerialized';
+    const IGBINARY           = 'Igbinary';
+    const DISCISAM           = 'DiscISAM';
+    const APC                = 'APC';
+    const MEMCACHE           = 'Memcache';
+    const PHPTEMP            = 'PHPTemp';
+    const WINCACHE           = 'Wincache';
+    const SQLITE             = 'SQLite';
+    const SQLITE3            = 'SQLite3';
 
 
     /**
@@ -72,17 +72,17 @@ class CachedObjectStorageFactory
      * @var string[]
      */
     protected static $storageMethods = array(
-        self::cache_in_memory,
-        self::cache_in_memory_gzip,
-        self::cache_in_memory_serialized,
-        self::cache_igbinary,
-        self::cache_to_phpTemp,
-        self::cache_to_discISAM,
-        self::cache_to_apc,
-        self::cache_to_memcache,
-        self::cache_to_wincache,
-        self::cache_to_sqlite,
-        self::cache_to_sqlite3,
+        self::MEMORY,
+        self::MEMORY_GZIP,
+        self::MEMORY_SERIALIZED,
+        self::IGBINARY,
+        self::PHPTEMP,
+        self::DISCISAM,
+        self::APC,
+        self::MEMCACHE,
+        self::WINCACHE,
+        self::SQLITE,
+        self::SQLITE3,
     );
 
 
@@ -92,33 +92,33 @@ class CachedObjectStorageFactory
      * @var array of mixed array
      */
     protected static $storageMethodDefaultParameters = array(
-        self::cache_in_memory => array(
+        self::MEMORY => array(
         ),
-        self::cache_in_memory_gzip => array(
+        self::MEMORY_GZIP => array(
         ),
-        self::cache_in_memory_serialized => array(
+        self::MEMORY_SERIALIZED => array(
         ),
-        self::cache_igbinary => array(
+        self::IGBINARY => array(
         ),
-        self::cache_to_phpTemp => array( 'memoryCacheSize' => '1MB'
+        self::PHPTEMP => array( 'memoryCacheSize' => '1MB'
         ),
-        self::cache_to_discISAM => array(
+        self::DISCISAM => array(
             'dir'             => null
         ),
-        self::cache_to_apc => array(
+        self::APC => array(
             'cacheTime' => 600
         ),
-        self::cache_to_memcache => array(
+        self::MEMCACHE => array(
             'memcacheServer' => 'localhost',
             'memcachePort' => 11211,
             'cacheTime' => 600
         ),
-        self::cache_to_wincache => array(
+        self::WINCACHE => array(
             'cacheTime' => 600
         ),
-        self::cache_to_sqlite => array(
+        self::SQLITE => array(
         ),
-        self::cache_to_sqlite3 => array(
+        self::SQLITE3 => array(
         ),
     );
 
@@ -190,7 +190,7 @@ class CachedObjectStorageFactory
      *                                               when instantiating
      * @return boolean
      **/
-    public static function initialize($method = self::cache_in_memory, $arguments = array())
+    public static function initialize($method = self::MEMORY, $arguments = array())
     {
         if (!in_array($method, self::$storageMethods)) {
             return false;
@@ -229,9 +229,13 @@ class CachedObjectStorageFactory
             $cacheMethodIsAvailable = self::initialize();
         }
 
-        $cacheStorageClass = __NAMESPACE__ . '\\' . self::$cacheStorageClass;
         if ($cacheMethodIsAvailable) {
-            $instance = new $cacheStorageClass( $parent,
+            echo 'CLASS: '; var_dump(self::$cacheStorageClass);
+            echo 'METHOD: '; var_dump(self::$cacheStorageMethod);
+            $cacheStorageClass = __NAMESPACE__ . '\\' . self::$cacheStorageClass;
+            echo 'NAMESPACED: '; var_dump($cacheStorageClass);
+            $instance = new $cacheStorageClass(
+                $parent,
                 self::$storageMethodParameters[self::$cacheStorageMethod]
             );
             if ($instance !== null) {

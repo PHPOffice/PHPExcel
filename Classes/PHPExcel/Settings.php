@@ -161,8 +161,8 @@ class Settings
      * @return boolean Success or failure
      */
     public static function setCacheStorageMethod(
-        $method = CachedObjectStorageFactory::cache_in_memory,
-      $arguments = array()
+        $method = CachedObjectStorageFactory::MEMORY,
+        $arguments = array()
     )
     {
         return CachedObjectStorageFactory::initialize($method, $arguments);

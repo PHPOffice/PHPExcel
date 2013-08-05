@@ -44,7 +44,7 @@ class PHPExcel_Writer_Excel2007_Worksheet extends PHPExcel_Writer_Excel2007_Writ
 	 * @return	string					XML Output
 	 * @throws	PHPExcel_Writer_Exception
 	 */
-	public function writeWorksheet($pSheet = null, $pStringTable = null, $includeCharts = FALSE)
+	public function writeWorksheet($pSheet = null, $pStringTable = null, $includeCharts = FALSE,$includePivotTable = FALSE)
 	{
 		if (!is_null($pSheet)) {
 			// Create XML writer
@@ -60,10 +60,16 @@ class PHPExcel_Writer_Excel2007_Worksheet extends PHPExcel_Writer_Excel2007_Writ
 
 			// Worksheet
 			$objWriter->startElement('worksheet');
-			$objWriter->writeAttribute('xml:space', 'preserve');
-			$objWriter->writeAttribute('xmlns', 'http://schemas.openxmlformats.org/spreadsheetml/2006/main');
+      if(!$includePivotTable){
+			  $objWriter->writeAttribute('xml:space', 'preserve');
+      }
+      $objWriter->writeAttribute('xmlns', 'http://schemas.openxmlformats.org/spreadsheetml/2006/main');
 			$objWriter->writeAttribute('xmlns:r', 'http://schemas.openxmlformats.org/officeDocument/2006/relationships');
-
+      if($includePivotTable){
+        $objWriter->writeAttribute('xmlns:mc', 'http://schemas.openxmlformats.org/markup-compatibility/2006'); 
+        $objWriter->writeAttribute('mc:Ignorable', 'x14ac');
+        $objWriter->writeAttribute('xmlns:x14ac', 'http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac');
+      }
 				// sheetPr
 				$this->_writeSheetPr($objWriter, $pSheet);
 
@@ -347,6 +353,10 @@ class PHPExcel_Writer_Excel2007_Worksheet extends PHPExcel_Writer_Excel2007_Writ
 				}
 			}
 			$objWriter->writeAttribute('outlineLevelCol',	(int)$outlineLevelCol);
+      
+      if($pSheet->getDefaultRowDimension()->getX14ac()){
+        $objWriter->writeAttribute('x14ac:dyDescent',	$pSheet->getDefaultRowDimension()->getX14ac());
+      }
 
 		$objWriter->endElement();
 	}
@@ -990,6 +1000,9 @@ class PHPExcel_Writer_Excel2007_Worksheet extends PHPExcel_Writer_Excel2007_Writ
 						$objWriter->startElement('row');
 						$objWriter->writeAttribute('r',	$currentRow);
 						$objWriter->writeAttribute('spans',	'1:' . $colCount);
+            if($rowDimension->getX14ac()){
+              $objWriter->writeAttribute('x14ac:dyDescent',	$rowDimension->getX14ac());
+            }
 
 						// Row dimensions
 						if ($rowDimension->getRowHeight() >= 0) {

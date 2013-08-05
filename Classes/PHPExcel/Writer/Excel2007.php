@@ -259,7 +259,7 @@ class PHPExcel_Writer_Excel2007 extends PHPExcel_Writer_Abstract implements PHPE
 			$chartCount = 0;
 			// Add worksheets
 			for ($i = 0; $i < $this->_spreadSheet->getSheetCount(); ++$i) {
-				$objZip->addFromString('xl/worksheets/sheet' . ($i + 1) . '.xml', $this->getWriterPart('Worksheet')->writeWorksheet($this->_spreadSheet->getSheet($i), $this->_stringTable, $this->_includeCharts));
+				$objZip->addFromString('xl/worksheets/sheet' . ($i + 1) . '.xml', $this->getWriterPart('Worksheet')->writeWorksheet($this->_spreadSheet->getSheet($i), $this->_stringTable, $this->_includeCharts,$this->_includePivotTable));
 				if ($this->_includeCharts) {
 					$charts = $this->_spreadSheet->getSheet($i)->getChartCollection();
 					if (count($charts) > 0) {
@@ -269,6 +269,53 @@ class PHPExcel_Writer_Excel2007 extends PHPExcel_Writer_Abstract implements PHPE
 						}
 					}
 				}
+        // Add pivot table
+        if ($this->_includePivotTable) {
+          $pivotTables = $this->_spreadSheet->getSheet($i)->getPivotTableCollection();
+					if (count($pivotTables) > 0) {
+						foreach($pivotTables as $pivotTable) {
+							$objZip->addFromString(
+                PHPExcel_PivotTable::normalizePath('xl/worksheets/' . $pivotTable->getTarget()),
+                $pivotTable->getXmlData()
+              );
+              
+              // Add pivot table relationships
+              $objZip->addFromString(
+                'xl/pivotTables/_rels/'.$pivotTable->getName().'.rels',
+                $this->getWriterPart('Rels')->writePivotTableRelationships($this->_spreadSheet->getSheet($i))
+              );
+              
+              $pivotCacheDefinitions = $pivotTable->getPivotCacheDefinitionCollection();
+    					if (count($pivotCacheDefinitions) > 0) {
+    						foreach($pivotCacheDefinitions as $pivotCacheDefinition) {
+    							$objZip->addFromString(
+                    PHPExcel_PivotTable::normalizePath('xl/worksheets/' . $pivotCacheDefinition->getTarget()),
+                    $pivotCacheDefinition->getXmlData()
+                  );
+    						}
+                
+                // Add pivot cache relationships
+                $objZip->addFromString(
+                  'xl/pivotCache/_rels/'.$pivotCacheDefinition->getName().'.rels',
+                  $this->getWriterPart('Rels')->writePivotCacheRelationships($this->_spreadSheet->getSheet($i))
+                );
+                
+                $pivotCacheRecordsCollection = $pivotCacheDefinition->getPivotCacheRecordsCollection();
+      					if (count($pivotCacheRecordsCollection) > 0) {
+      						foreach($pivotCacheRecordsCollection as $pivotCacheRecords) {
+//                   var_dump($pivotCacheRecords->getName());
+//                   var_dump( $pivotCacheRecords->getXmlData());
+//                   var_dump(PHPExcel_PivotTable::normalizePath('/xl/worksheets/' . dirname($pivotCacheDefinition->getTarget())."/". $pivotCacheRecords->getTarget()));
+      							$objZip->addFromString(
+                      PHPExcel_PivotTable::normalizePath('xl/worksheets/' . dirname($pivotCacheDefinition->getTarget())."/". $pivotCacheRecords->getTarget()),
+                      $pivotCacheRecords->getXmlData()
+                    );
+      						}
+      					}
+    					}
+						}
+					}
+        }
 			}
 
 			$chartRef1 = $chartRef2 = 0;
@@ -276,7 +323,7 @@ class PHPExcel_Writer_Excel2007 extends PHPExcel_Writer_Abstract implements PHPE
 			for ($i = 0; $i < $this->_spreadSheet->getSheetCount(); ++$i) {
 
 				// Add relationships
-				$objZip->addFromString('xl/worksheets/_rels/sheet' . ($i + 1) . '.xml.rels', 	$this->getWriterPart('Rels')->writeWorksheetRelationships($this->_spreadSheet->getSheet($i), ($i + 1), $this->_includeCharts));
+				$objZip->addFromString('xl/worksheets/_rels/sheet' . ($i + 1) . '.xml.rels', 	$this->getWriterPart('Rels')->writeWorksheetRelationships($this->_spreadSheet->getSheet($i), ($i + 1), $this->_includeCharts,$this->_includePivotTable));
 
 				$drawings = $this->_spreadSheet->getSheet($i)->getDrawingCollection();
 				$drawingCount = count($drawings);

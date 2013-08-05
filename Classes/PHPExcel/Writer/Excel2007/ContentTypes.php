@@ -107,12 +107,52 @@ class PHPExcel_Writer_Excel2007_ContentTypes extends PHPExcel_Writer_Excel2007_W
 			}
 
 			// Worksheets
+      $relsPivotTable = array();
+      $relsPivotCache = array();
+      $relsPivotRecords = array();
 			$sheetCount = $pPHPExcel->getSheetCount();
 			for ($i = 0; $i < $sheetCount; ++$i) {
 				$this->_writeOverrideContentType(
 					$objWriter, '/xl/worksheets/sheet' . ($i + 1) . '.xml', 'application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml'
 				);
+        
+        $pivotTables =  $pPHPExcel->getSheet($i)->getPivotTableCollection();
+        if(count($pivotTables)>0){
+          foreach($pivotTables as $pivotTable){
+            $relsPivotTable[$pivotTable->getName()] = $pivotTable->getName();
+            $pivotCaches = $pivotTable->getPivotCacheDefinitionCollection();
+            foreach($pivotCaches as $pivotCache){
+              $relsPivotCache[$pivotCache->getName()] = $pivotCache->getName();
+              $pivotRecordsCol = $pivotCache->getPivotCacheRecordsCollection();
+              foreach($pivotRecordsCol as $pivotRecords){
+                $relsPivotRecords[$pivotRecords->getName()] = $pivotRecords->getName();
+              }
+            } 
+          }
+        }
 			}
+      
+      foreach($relsPivotCache as $key => $value){
+        $this->_writeOverrideContentType(
+				  $objWriter, 
+          '/xl/pivotCache/'.$value, 
+          'application/vnd.openxmlformats-officedocument.spreadsheetml.pivotCacheDefinition+xml'
+		  	);
+      }
+      foreach($relsPivotRecords as $key => $value){
+        $this->_writeOverrideContentType(
+				  $objWriter, 
+          '/xl/pivotCache/'.$value, 
+          'application/vnd.openxmlformats-officedocument.spreadsheetml.pivotCacheRecords+xml'
+		  	);
+      }
+      foreach($relsPivotTable as $key => $value){
+        $this->_writeOverrideContentType(
+				  $objWriter, 
+          '/xl/pivotTables/'.$value, 
+          'application/vnd.openxmlformats-officedocument.spreadsheetml.pivotTable+xml'
+		  	);
+      }
 
 			// Shared strings
 			$this->_writeOverrideContentType(

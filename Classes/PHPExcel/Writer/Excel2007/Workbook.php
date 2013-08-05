@@ -84,6 +84,9 @@ class PHPExcel_Writer_Excel2007_Workbook extends PHPExcel_Writer_Excel2007_Write
 
 			// calcPr
 			$this->_writeCalcPr($objWriter,$recalcRequired);
+      
+      // pivot cache
+			$this->_writePivotCaches($objWriter, $pPHPExcel);
 
 		$objWriter->endElement();
 
@@ -253,6 +256,63 @@ class PHPExcel_Writer_Excel2007_Workbook extends PHPExcel_Writer_Excel2007_Write
 		} else {
 			throw new PHPExcel_Writer_Exception("Invalid parameters passed.");
 		}
+	}
+  
+  /**
+	 * Write pivotCaches
+	 *
+	 * @param 	PHPExcel_Shared_XMLWriter 	$objWriter 		XML Writer
+	 * @param 	PHPExcel					$pPHPExcel
+	 * @throws 	PHPExcel_Writer_Exception
+	 */
+	private function _writePivotCaches(PHPExcel_Shared_XMLWriter $objWriter = null, PHPExcel $pPHPExcel = null)
+	{
+		// Write sheets
+		$objWriter->startElement('pivotCaches');
+		$sheetCount = $pPHPExcel->getSheetCount();
+    $relsPivotCache = array();
+		for ($i = 0; $i < $sheetCount; ++$i) {
+      $pivotTables =  $pPHPExcel->getSheet($i)->getPivotTableCollection();
+      if(count($pivotTables)>0){
+        foreach($pivotTables as $pivotTable){
+          $xmlPivotTable = simplexml_load_string($pivotTable->getXmlData());
+          //var_dump($xmlPivotTable->attributes()['cacheId']);  exit;
+          $pivotCaches = $pivotTable->getPivotCacheDefinitionCollection();
+          foreach($pivotCaches as $pivotCache){
+            $relsPivotCache[$pivotCache->getName()] = (string)$xmlPivotTable->attributes()['cacheId'];
+          } 
+        }   
+      }
+    }
+    $i=0;
+    $iCache = count($relsPivotCache)-1;
+    foreach($relsPivotCache as $key => $val){
+			// sheet
+			$this->_writePivotCache(
+				$objWriter,
+				$val,
+				($sheetCount + 4 + $i++)
+			);
+		}
+
+		$objWriter->endElement();
+	}
+  
+  /**
+	 * Write sheet
+	 *
+	 * @param 	PHPExcel_Shared_XMLWriter 	$objWriter 		XML Writer
+	 * @param 	int							$pSheetId	 		Sheet id
+	 * @param 	int							$pRelId				Relationship ID
+	 * @throws 	PHPExcel_Writer_Exception
+	 */
+	private function _writePivotCache(PHPExcel_Shared_XMLWriter $objWriter = null, $pcacheId = 1, $pRelId = 1)
+	{
+			// Write sheet
+		$objWriter->startElement('pivotCache');
+		$objWriter->writeAttribute('cacheId', 	$pcacheId);
+		$objWriter->writeAttribute('r:id', 		'rId' . $pRelId);
+		$objWriter->endElement();
 	}
 
 	/**

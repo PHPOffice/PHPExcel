@@ -107,6 +107,13 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
      * @var PHPExcel_Chart[]
      */
     private $_chartCollection = array();
+    
+    /**
+     * Collection of PivotTable objects
+     *
+     * @var PHPExcel_PivotTable[]
+     */
+    private $_pivotTableCollection = array();
 
     /**
      * Worksheet title
@@ -616,6 +623,36 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
             }
         }
         return false;
+    }
+    
+    /**
+     * Get collection of PivotTable
+     *
+     * @return PHPExcel_PivotTable[]
+     */
+    public function getPivotTableCollection()
+    {
+        return $this->_pivotTableCollection;
+    }
+    
+    /**
+     * Add PivotTable
+     *
+     * @param PHPExcel_PivotTable $pPivotTable
+     * @param int|null $iPivotTableIndex Index where PivotTable should go (0,1,..., or null for last)
+     * @return PHPExcel_PivotTable
+     */
+    public function addPivotTable(PHPExcel_PivotTable $pPivotTable = null, $iPivotTableIndex = null)
+    {
+        $pPivotTable->setWorksheet($this);
+        if (is_null($iPivotTableIndex)) {
+            $this->_pivotTableCollection[] = $pPivotTable;
+        } else {
+            // Insert the chart at the requested index
+            array_splice($this->_pivotTableCollection, $iPivotTableIndex, 0, array($pPivotTable));
+        }
+
+        return $pPivotTable;
     }
 
     /**

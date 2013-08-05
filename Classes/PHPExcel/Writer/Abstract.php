@@ -42,6 +42,14 @@ abstract class PHPExcel_Writer_Abstract implements PHPExcel_Writer_IWriter
 	 * @var	boolean
 	 */
 	protected $_includeCharts = FALSE;
+  
+  /**
+	 * Read Pivottable that are defined in the workbook?
+	 * Identifies whether the Reader should read the definitions for any Pivottable that exist in the workbook;
+	 *
+	 * @var	boolean
+	 */
+	protected $_includePivotTable = FALSE;
 
 	/**
 	 * Pre-calculate formulas
@@ -87,6 +95,33 @@ abstract class PHPExcel_Writer_Abstract implements PHPExcel_Writer_IWriter
 	 */
 	public function setIncludeCharts($pValue = FALSE) {
 		$this->_includeCharts = (boolean) $pValue;
+		return $this;
+	}
+  
+  /**
+	 * Read Pivottable in workbook?
+	 *		If this is true, then the Reader will include any Pivottable that exist in the workbook.
+	 *      Note that a ReadDataOnly value of false overrides, and Pivottable won't be read regardless of the IncludePivottable value.
+	 *		If false (the default) it will ignore any Pivottable defined in the workbook file.
+	 *
+	 * @return	boolean
+	 */
+	public function getIncludePivotTable() {
+		return $this->_includePivotTable;
+	}
+  
+  /**
+	 * Set read Pivottable in workbook
+	 *		Set to true, to advise the Reader to include any Pivottable that exist in the workbook.
+	 *      Note that a ReadDataOnly value of false overrides, and Pivottable won't be read regardless of the IncludePivottable value.
+	 *		Set to false (the default) to discard Pivottable.
+	 *
+	 * @param	boolean	$pValue
+	 *
+	 * @return	PHPExcel_Reader_IReader
+	 */
+	public function setIncludePivotTable($pValue = FALSE) {
+		$this->_includePivotTable = (boolean) $pValue;
 		return $this;
 	}
 

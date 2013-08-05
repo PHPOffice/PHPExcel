@@ -85,6 +85,8 @@ class PHPExcel_Worksheet_RowDimension
 	 * @var int|null
 	 */
 	private $_xfIndex;
+  
+  private $_x14ac =null;
 
     /**
      * Create a new PHPExcel_Worksheet_RowDimension
@@ -98,6 +100,14 @@ class PHPExcel_Worksheet_RowDimension
 
 		// set row dimension as unformatted by default
 		$this->_xfIndex = null;
+    }
+    
+    public function setX14ac($x14ac){
+      $this->_x14ac = $x14ac;
+    }
+    
+    public function getX14ac(){
+      return $this->_x14ac;
     }
 
     /**

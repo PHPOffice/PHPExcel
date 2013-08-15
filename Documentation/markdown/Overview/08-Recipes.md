@@ -101,13 +101,13 @@ This is regardless of which language version of Microsoft Office Excel may have 
 
 When the final workbook is opened by the user, Microsoft Office Excel will take care of displaying the formula according the applications language. Translation is taken care of by the application!
 
-The following line of code writes the formula '=IF(C4>500,"profit","loss")'ù into the cell B8. Note that the formula must start with "=" to make PHPExcel recognise this as a formula.
+The following line of code writes the formula '=IF(C4>500,"profit","loss")'ÔøΩ into the cell B8. Note that the formula must start with "=" to make PHPExcel recognise this as a formula.
 
 ```php
 $objPHPExcel->getActiveSheet()->setCellValue('B8','=IF(C4>500,"profit","loss")');
 ```
 
-If you want to write a string beginning with an "="ù character to a cell, then you should use the setCellValueExplicit() method.
+If you want to write a string beginning with an "="ÔøΩ character to a cell, then you should use the setCellValueExplicit() method.
 
 ```php
 $objPHPExcel->getActiveSheet()
@@ -165,22 +165,22 @@ At present, the following locale settings are supported:
 
     Language             |                      | Locale Code
     ---------------------|----------------------|-------------
-    Czech                | Ceötina              | cs
+    Czech                | CeÔøΩtina              | cs
     Danish               | Dansk                | da
     German               | Deutsch              | de
-    Spanish              | EspaÒol              | es
+    Spanish              | EspaÔøΩol              | es
     Finnish              | Suomi                | fi
-    French               | FranÁais             | fr
+    French               | FranÔøΩais             | fr
     Hungarian            | Magyar               | hu
     Italian              | Italiano             | it
     Dutch                | Nederlands           | nl
     Norwegian            | Norsk                | no
     Polish               | Jezyk polski         | pl
-    Portuguese           | PortuguÍs            | pt
-    Brazilian Portuguese | PortuguÍs Brasileiro | pt_br
+    Portuguese           | PortuguÔøΩs            | pt
+    Brazilian Portuguese | PortuguÔøΩs Brasileiro | pt_br
     Russian              | ??????? ????         | ru
     Swedish              | Svenska              | sv
-    Turkish              | T¸rkÁe               | tr
+    Turkish              | TÔøΩrkÔøΩe               | tr
 
 ### Write a newline character "\n" in a cell (ALT+"Enter")
 
@@ -731,8 +731,12 @@ An example on setting cell security:
 $objPHPExcel->getActiveSheet()->getStyle('B1')
     ->getProtection()
     ->setLocked(PHPExcel_Style_Protection::PROTECTION_UNPROTECTED);
+```
 
-__Make sure you enable worksheet protection if you need any of the worksheet protection features!__ This can be done using the following code: $objPHPExcel->getActiveSheet()->getProtection()->setSheet(true);
+__Make sure you enable worksheet protection if you need any of the worksheet protection features!__ This can be done using the following code:
+```php
+$objPHPExcel->getActiveSheet()->getProtection()->setSheet(true);
+```
 
 ### Setting data validation on a cell
 
@@ -1050,7 +1054,7 @@ Sometimes, one really wants to output a file to a client''s browser, especially 
  2. Output HTTP headers for the type of document you wish to output
  3. Use the PHPExcel_Writer_* of your choice, and save to "php://output" 
 
-ùPHPExcel_Writer_Excel2007 uses temporary storage when writing to php://output. By default, temporary files are stored in the script's working directory. When there is no access, it falls back to the operating system's temporary files location.
+ÔøΩPHPExcel_Writer_Excel2007 uses temporary storage when writing to php://output. By default, temporary files are stored in the script's working directory. When there is no access, it falls back to the operating system's temporary files location.
 
 __This may not be safe for unauthorized viewing!__ 
 Depending on the configuration of your operating system, temporary storage can be read by anyone using the same temporary storage folder. When confidentiality of your document is needed, it is recommended not to use php://output.

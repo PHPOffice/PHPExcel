@@ -115,10 +115,11 @@ class Writer_CSV extends Writer_Abstract implements Writer_IWriter {
         }
 
         if ($this->_excelCompatibility) {
-            // Write the UTF-16LE BOM code
-            fwrite($fileHandle, "\xFF\xFE");    //    Excel uses UTF-16LE encoding
-            $this->setEnclosure();                //    Default enclosure is "
-            $this->setDelimiter("\t");            //    Excel delimiter is a TAB
+			fwrite($fileHandle, "\xEF\xBB\xBF");	//	Enforce UTF-8 BOM Header
+			$this->setEnclosure('"');				//	Set enclosure to "
+			$this->setDelimiter(";");			    //	Set delimiter to a semi-colon
+            $this->setLineEnding("\r\n");
+			fwrite($fileHandle, 'sep=' . $this->getDelimiter() . $this->_lineEnding);
         } elseif ($this->_useBOM) {
             // Write the UTF-8 BOM code
             fwrite($fileHandle, "\xEF\xBB\xBF");
@@ -301,11 +302,7 @@ class Writer_CSV extends Writer_Abstract implements Writer_IWriter {
             $line .= $this->_lineEnding;
 
             // Write to file
-            if ($this->_excelCompatibility) {
-                fwrite($pFileHandle, mb_convert_encoding($line,"UTF-16LE","UTF-8"));
-            } else {
-                fwrite($pFileHandle, $line);
-            }
+            fwrite($pFileHandle, $line);
         } else {
             throw new Writer_Exception("Invalid data row passed to CSV writer.");
         }

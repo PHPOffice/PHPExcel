@@ -355,6 +355,8 @@ class PHPExcel_Writer_Excel2007 extends PHPExcel_Writer_Abstract implements PHPE
 			// Close file
 			if ($objZip->close() === false) {
 				throw new PHPExcel_Writer_Exception("Could not close zip file $pFilename.");
+			} else {
+				return true;
 			}
 
 			// If a temporary file was used, copy it to the correct file stream

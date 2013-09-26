@@ -544,7 +544,7 @@ class Writer_HTML extends Writer_Abstract implements Writer_IWriter
     {
         $rowMax = $row;
         $colMax = 'A';
-        if ($this->includeCharts) {
+        if ($this->_includeCharts) {
             foreach ($pSheet->getChartCollection() as $chart) {
                 if ($chart instanceof Chart) {
                     $chartCoordinates = $chart->getTopLeftPosition();
@@ -1224,7 +1224,7 @@ class Writer_HTML extends Writer_Abstract implements Writer_IWriter
                             }
                         }
                     } else {
-                        if ($this->preCalculateFormulas) {
+                        if ($this->_preCalculateFormulas) {
                             $cellData = Style_NumberFormat::toFormattedString(
                                 $cell->getCalculatedValue(),
                                 $pSheet->getParent()->getCellXfByIndex($cell->getXfIndex())
@@ -1348,7 +1348,7 @@ class Writer_HTML extends Writer_Abstract implements Writer_IWriter
                     $html .= $this->writeImageInCell($pSheet, $coordinate);
 
                     // Chart?
-                    if ($this->includeCharts) {
+                    if ($this->_includeCharts) {
                         $html .= $this->writeChartInCell($pSheet, $coordinate);
                     }
 

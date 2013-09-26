@@ -28,6 +28,8 @@
 
 namespace PHPExcel;
 
+use DOMPDF;
+
 /**  Require DomPDF library */
 $pdfRendererClassFile = Settings::getPdfRendererPath() . '/dompdf_config.inc.php';
 if (file_exists($pdfRendererClassFile)) {
@@ -50,7 +52,7 @@ class Writer_PDF_DomPDF extends Writer_PDF_Core implements Writer_IWriter
      *
      *  @param   PHPExcel    $phpExcel    PHPExcel object
      */
-    public function __construct(PHPExcel $phpExcel)
+    public function __construct(Workbook $phpExcel)
     {
         parent::__construct($phpExcel);
     }
@@ -70,19 +72,19 @@ class Writer_PDF_DomPDF extends Writer_PDF_Core implements Writer_IWriter
 
         //  Check for paper size and page orientation
         if (is_null($this->getSheetIndex())) {
-            $orientation = ($this->_phpExcel->getSheet(0)->getPageSetup()->getOrientation()
+            $orientation = ($this->phpExcel->getSheet(0)->getPageSetup()->getOrientation()
                 == Worksheet_PageSetup::ORIENTATION_LANDSCAPE)
                     ? 'L'
                     : 'P';
-            $printPaperSize = $this->_phpExcel->getSheet(0)->getPageSetup()->getPaperSize();
-            $printMargins = $this->_phpExcel->getSheet(0)->getPageMargins();
+            $printPaperSize = $this->phpExcel->getSheet(0)->getPageSetup()->getPaperSize();
+            $printMargins = $this->phpExcel->getSheet(0)->getPageMargins();
         } else {
-            $orientation = ($this->_phpExcel->getSheet($this->getSheetIndex())->getPageSetup()->getOrientation()
+            $orientation = ($this->phpExcel->getSheet($this->getSheetIndex())->getPageSetup()->getOrientation()
                 == Worksheet_PageSetup::ORIENTATION_LANDSCAPE)
                     ? 'L'
                     : 'P';
-            $printPaperSize = $this->_phpExcel->getSheet($this->getSheetIndex())->getPageSetup()->getPaperSize();
-            $printMargins = $this->_phpExcel->getSheet($this->getSheetIndex())->getPageMargins();
+            $printPaperSize = $this->phpExcel->getSheet($this->getSheetIndex())->getPageSetup()->getPaperSize();
+            $printMargins = $this->phpExcel->getSheet($this->getSheetIndex())->getPageMargins();
         }
 
         //  Override Page Orientation
@@ -96,8 +98,8 @@ class Writer_PDF_DomPDF extends Writer_PDF_Core implements Writer_IWriter
             $printPaperSize = $this->getPaperSize();
         }
 
-        if (isset(self::$_paperSizes[$printPaperSize])) {
-            $paperSize = self::$_paperSizes[$printPaperSize];
+        if (isset(self::$paperSizes[$printPaperSize])) {
+            $paperSize = self::$paperSizes[$printPaperSize];
         }
 
         $orientation = ($orientation == 'L') ? 'landscape' : 'portrait';

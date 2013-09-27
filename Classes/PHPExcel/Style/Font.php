@@ -512,7 +512,7 @@ class PHPExcel_Style_Font extends PHPExcel_Style_Supervisor implements PHPExcel_
 	 * @return string	Hash code
 	 */
 	public function getHashCode() {
-		if ($this->_isSupervisor) {
+		if ($this->_isSupervisor && $this->getSharedComponent() !== $this) {
 			return $this->getSharedComponent()->getHashCode();
 		}
 		return md5(

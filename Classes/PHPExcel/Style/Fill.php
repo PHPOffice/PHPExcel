@@ -192,7 +192,7 @@ class PHPExcel_Style_Fill extends PHPExcel_Style_Supervisor implements PHPExcel_
 	 * @return string
 	 */
 	public function getFillType() {
-		if ($this->_isSupervisor) {
+		if ($this->_isSupervisor && $this->getSharedComponent() !== $this) {
 			return $this->getSharedComponent()->getFillType();
 		}
 		return $this->_fillType;
@@ -220,7 +220,7 @@ class PHPExcel_Style_Fill extends PHPExcel_Style_Supervisor implements PHPExcel_
 	 * @return double
 	 */
 	public function getRotation() {
-		if ($this->_isSupervisor) {
+		if ($this->_isSupervisor && $this->getSharedComponent() !== $this) {
 			return $this->getSharedComponent()->getRotation();
 		}
 		return $this->_rotation;
@@ -306,7 +306,7 @@ class PHPExcel_Style_Fill extends PHPExcel_Style_Supervisor implements PHPExcel_
 	 * @return string	Hash code
 	 */
 	public function getHashCode() {
-		if ($this->_isSupervisor) {
+		if ($this->_isSupervisor && $this->getSharedComponent() !== $this) {
 			return $this->getSharedComponent()->getHashCode();
 		}
 		return md5(

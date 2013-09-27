@@ -281,7 +281,7 @@ class PHPExcel_Style_Border extends PHPExcel_Style_Supervisor implements PHPExce
 	 * @return string	Hash code
 	 */
 	public function getHashCode() {
-		if ($this->_isSupervisor) {
+		if ($this->_isSupervisor && $this->getSharedComponent() !== $this) {
 			return $this->getSharedComponent()->getHashCode();
 		}
 		return md5(

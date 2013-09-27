@@ -376,7 +376,7 @@ class PHPExcel_Style_Borders extends PHPExcel_Style_Supervisor implements PHPExc
      * @return int
      */
     public function getDiagonalDirection() {
-		if ($this->_isSupervisor) {
+		if ($this->_isSupervisor && $this->getSharedComponent() !== $this) {
 			return $this->getSharedComponent()->getDiagonalDirection();
 		}
     	return $this->_diagonalDirection;
@@ -407,7 +407,7 @@ class PHPExcel_Style_Borders extends PHPExcel_Style_Supervisor implements PHPExc
 	 * @return string	Hash code
 	 */
 	public function getHashCode() {
-		if ($this->_isSupervisor) {
+		if ($this->_isSupervisor && $this->getSharedComponent() !== $this) {
 			return $this->getSharedComponent()->getHashcode();
 		}
     	return md5(

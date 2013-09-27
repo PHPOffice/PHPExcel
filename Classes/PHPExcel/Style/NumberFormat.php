@@ -221,7 +221,7 @@ class PHPExcel_Style_NumberFormat extends PHPExcel_Style_Supervisor implements P
 	 */
 	public function getBuiltInFormatCode()
 	{
-		if ($this->_isSupervisor) {
+		if ($this->_isSupervisor && $this->getSharedComponent() !== $this) {
 			return $this->getSharedComponent()->getBuiltInFormatCode();
 		}
 		return $this->_builtInFormatCode;
@@ -359,7 +359,7 @@ class PHPExcel_Style_NumberFormat extends PHPExcel_Style_Supervisor implements P
 	 */
 	public function getHashCode()
 	{
-		if ($this->_isSupervisor) {
+		if ($this->_isSupervisor && $this->getSharedComponent() !== $this) {
 			return $this->getSharedComponent()->getHashCode();
 		}
 		return md5(

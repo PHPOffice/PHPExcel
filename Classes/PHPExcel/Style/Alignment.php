@@ -193,7 +193,7 @@ class PHPExcel_Style_Alignment extends PHPExcel_Style_Supervisor implements PHPE
 	 * @return string
 	 */
 	public function getHorizontal() {
-		if ($this->_isSupervisor) {
+		if ($this->_isSupervisor && $this->getSharedComponent() !== $this) {
 			return $this->getSharedComponent()->getHorizontal();
 		}
 		return $this->_horizontal;
@@ -226,7 +226,7 @@ class PHPExcel_Style_Alignment extends PHPExcel_Style_Supervisor implements PHPE
 	 * @return string
 	 */
 	public function getVertical() {
-		if ($this->_isSupervisor) {
+		if ($this->_isSupervisor && $this->getSharedComponent() !== $this) {
 			return $this->getSharedComponent()->getVertical();
 		}
 		return $this->_vertical;
@@ -258,7 +258,7 @@ class PHPExcel_Style_Alignment extends PHPExcel_Style_Supervisor implements PHPE
 	 * @return int
 	 */
 	public function getTextRotation() {
-		if ($this->_isSupervisor) {
+		if ($this->_isSupervisor && $this->getSharedComponent() !== $this) {
 			return $this->getSharedComponent()->getTextRotation();
 		}
 		return $this->_textRotation;
@@ -298,7 +298,7 @@ class PHPExcel_Style_Alignment extends PHPExcel_Style_Supervisor implements PHPE
 	 * @return boolean
 	 */
 	public function getWrapText() {
-		if ($this->_isSupervisor) {
+		if ($this->_isSupervisor && $this->getSharedComponent() !== $this) {
 			return $this->getSharedComponent()->getWrapText();
 		}
 		return $this->_wrapText;
@@ -329,7 +329,7 @@ class PHPExcel_Style_Alignment extends PHPExcel_Style_Supervisor implements PHPE
 	 * @return boolean
 	 */
 	public function getShrinkToFit() {
-		if ($this->_isSupervisor) {
+		if ($this->_isSupervisor && $this->getSharedComponent() !== $this) {
 			return $this->getSharedComponent()->getShrinkToFit();
 		}
 		return $this->_shrinkToFit;
@@ -360,7 +360,7 @@ class PHPExcel_Style_Alignment extends PHPExcel_Style_Supervisor implements PHPE
 	 * @return int
 	 */
 	public function getIndent() {
-		if ($this->_isSupervisor) {
+		if ($this->_isSupervisor && $this->getSharedComponent() !== $this) {
 			return $this->getSharedComponent()->getIndent();
 		}
 		return $this->_indent;
@@ -395,7 +395,7 @@ class PHPExcel_Style_Alignment extends PHPExcel_Style_Supervisor implements PHPE
 	 * @return string	Hash code
 	 */
 	public function getHashCode() {
-		if ($this->_isSupervisor) {
+		if ($this->_isSupervisor && $this->getSharedComponent() !== $this) {
 			return $this->getSharedComponent()->getHashCode();
 		}
 		return md5(

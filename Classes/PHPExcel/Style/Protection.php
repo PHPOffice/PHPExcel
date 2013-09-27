@@ -138,7 +138,7 @@ class PHPExcel_Style_Protection extends PHPExcel_Style_Supervisor implements PHP
      * @return string
      */
     public function getLocked() {
-		if ($this->_isSupervisor) {
+		if ($this->_isSupervisor && $this->getSharedComponent() !== $this) {
 			return $this->getSharedComponent()->getLocked();
 		}
     	return $this->_locked;
@@ -166,7 +166,7 @@ class PHPExcel_Style_Protection extends PHPExcel_Style_Supervisor implements PHP
      * @return string
      */
     public function getHidden() {
-		if ($this->_isSupervisor) {
+		if ($this->_isSupervisor && $this->getSharedComponent() !== $this) {
 			return $this->getSharedComponent()->getHidden();
 		}
     	return $this->_hidden;
@@ -194,7 +194,7 @@ class PHPExcel_Style_Protection extends PHPExcel_Style_Supervisor implements PHP
 	 * @return string	Hash code
 	 */
 	public function getHashCode() {
-		if ($this->_isSupervisor) {
+		if ($this->_isSupervisor && $this->getSharedComponent() !== $this) {
 			return $this->getSharedComponent()->getHashCode();
 		}
     	return md5(

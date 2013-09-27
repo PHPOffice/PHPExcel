@@ -595,7 +595,7 @@ class PHPExcel_Style extends PHPExcel_Style_Supervisor implements PHPExcel_IComp
      */
     public function getQuotePrefix()
     {
-		if ($this->_isSupervisor) {
+		if ($this->_isSupervisor && $this->getSharedComponent() !== $this) {
 			return $this->getSharedComponent()->getQuotePrefix();
 		}
         return $this->_quotePrefix;

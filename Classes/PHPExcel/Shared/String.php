@@ -397,13 +397,13 @@ class PHPExcel_Shared_String
 	}
 
 	/**
-	 * Check if a string contains UTF8 data
+	 * Check if a string contains UTF-8 data
 	 *
 	 * @param string $value
 	 * @return boolean
 	 */
 	public static function IsUTF8($value = '') {
-		return utf8_encode(utf8_decode($value)) === $value;
+		return $value === '' || preg_match('/^./su', $value) === 1;
 	}
 
 	/**

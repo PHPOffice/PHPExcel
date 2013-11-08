@@ -22,7 +22,7 @@
  * @package    PHPExcel_CachedObjectStorage
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
- * @version    ##VERSION##, ##DATE##
+ * @version    1.7.9, 2013-06-02
  */
 
 
@@ -273,6 +273,27 @@ abstract class PHPExcel_CachedObjectStorage_CacheBase {
 		return $colRow['row'];
 	}
 
+
+	/**
+	 * it returns the highest row in a specific column
+	 * getHighestRowSlow('C');
+	 */
+	public function getHighestRowbyColumn($column)
+	{
+		$rowList = array(0);
+
+		foreach ($this->getCellList() as $coord) {
+			sscanf($coord,'%[A-Z]%d', $c, $r);
+
+			if ($c != $column) {
+				continue;
+			}
+
+			$rowList[] = $r;
+		}
+
+		return max($rowList);
+	}
 
 	/**
 	 * Generate a unique ID for cache referencing

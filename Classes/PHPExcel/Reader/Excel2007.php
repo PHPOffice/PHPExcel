@@ -262,36 +262,34 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 
 
 	private function _castToFormula($c,$r,&$cellDataType,&$value,&$calculatedValue,&$sharedFormulas,$castBaseType) {
-//		echo 'Formula<br />';
-//		echo '$c->f is '.$c->f.'<br />';
+//		echo 'Formula',PHP_EOL;
+//		echo '$c->f is '.$c->f.PHP_EOL;
 		$cellDataType 		= 'f';
 		$value 				= "={$c->f}";
 		$calculatedValue 	= self::$castBaseType($c);
 
 		// Shared formula?
 		if (isset($c->f['t']) && strtolower((string)$c->f['t']) == 'shared') {
-//			echo 'SHARED FORMULA<br />';
+//			echo 'SHARED FORMULA'.PHP_EOL;
 			$instance = (string)$c->f['si'];
 
-//			echo 'Instance ID = '.$instance.'<br />';
+//			echo 'Instance ID = '.$instance.PHP_EOL;
 //
-//			echo 'Shared Formula Array:<pre>';
+//			echo 'Shared Formula Array:'.PHP_EOL;
 //			print_r($sharedFormulas);
-//			echo '</pre>';
 			if (!isset($sharedFormulas[(string)$c->f['si']])) {
-//				echo 'SETTING NEW SHARED FORMULA<br />';
-//				echo 'Master is '.$r.'<br />';
-//				echo 'Formula is '.$value.'<br />';
+//				echo 'SETTING NEW SHARED FORMULA'.PHP_EOL;
+//				echo 'Master is '.$r.PHP_EOL;
+//				echo 'Formula is '.$value.PHP_EOL;
 				$sharedFormulas[$instance] = array(	'master' => $r,
 													'formula' => $value
 												  );
-//				echo 'New Shared Formula Array:<pre>';
+//				echo 'New Shared Formula Array:'.PHP_EOL;
 //				print_r($sharedFormulas);
-//				echo '</pre>';
 			} else {
-//				echo 'GETTING SHARED FORMULA<br />';
-//				echo 'Master is '.$sharedFormulas[$instance]['master'].'<br />';
-//				echo 'Formula is '.$sharedFormulas[$instance]['formula'].'<br />';
+//				echo 'GETTING SHARED FORMULA'.PHP_EOL;
+//				echo 'Master is '.$sharedFormulas[$instance]['master'].PHP_EOL;
+//				echo 'Formula is '.$sharedFormulas[$instance]['formula'].PHP_EOL;
 				$master = PHPExcel_Cell::coordinateFromString($sharedFormulas[$instance]['master']);
 				$current = PHPExcel_Cell::coordinateFromString($r);
 
@@ -304,7 +302,7 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 																			$difference[0],
 																			$difference[1]
 																		 );
-//				echo 'Adjusted Formula is '.$value.'<br />';
+//				echo 'Adjusted Formula is '.$value.PHP_EOL;
 			}
 		}
 	}
@@ -1354,10 +1352,10 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 											$hfImages = array();
 
 											$shapes = $vmlDrawing->xpath('//v:shape');
-											foreach ($shapes as $shape) {
+											foreach ($shapes as $idx => $shape) {
 												$shape->registerXPathNamespace('v', 'urn:schemas-microsoft-com:vml');
 												$imageData = $shape->xpath('//v:imagedata');
-												$imageData = $imageData[0];
+												$imageData = $imageData[$idx];
 
 												$imageData = $imageData->attributes('urn:schemas-microsoft-com:office:office');
 												$style = self::toCSSArray( (string)$shape['style'] );
@@ -1371,7 +1369,9 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 												$hfImages[ (string)$shape['id'] ]->setResizeProportional(false);
 												$hfImages[ (string)$shape['id'] ]->setWidth($style['width']);
 												$hfImages[ (string)$shape['id'] ]->setHeight($style['height']);
-												$hfImages[ (string)$shape['id'] ]->setOffsetX($style['margin-left']);
+												if (isset($style['margin-left'])) {
+													$hfImages[ (string)$shape['id'] ]->setOffsetX($style['margin-left']);
+												}
 												$hfImages[ (string)$shape['id'] ]->setOffsetY($style['margin-top']);
 												$hfImages[ (string)$shape['id'] ]->setResizeProportional(true);
 											}

@@ -34,7 +34,7 @@ date_default_timezone_set('Europe/London');
 define('EOL',(PHP_SAPI == 'cli') ? PHP_EOL : '<br />');
 
 /** Include PHPExcel */
-require_once '../Classes/PHPExcel.php';
+require_once dirname(__FILE__) . '/../Classes/PHPExcel.php';
 
 
 // Create new PHPExcel object
@@ -122,7 +122,17 @@ $objRichText->createText(', unless specified otherwise on the invoice.');
 $objPHPExcel->getActiveSheet()->setCellValue('A13', 'Rich Text')
                               ->setCellValue('C13', $objRichText);
 
-							  
+
+$objRichText2 = new PHPExcel_RichText();
+$objRichText2->createText("black text\n");
+
+$objRed = $objRichText2->createTextRun("red text");
+$objRed->getFont()->setColor( new PHPExcel_Style_Color(PHPExcel_Style_Color::COLOR_RED  ) );
+
+$objPHPExcel->getActiveSheet()->getCell("C14")->setValue($objRichText2);
+$objPHPExcel->getActiveSheet()->getStyle("C14")->getAlignment()->setWrapText(true);
+
+
 $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
 $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
 

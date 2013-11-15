@@ -370,6 +370,16 @@ class PHPExcel_Cell
 		return $this->notifyCacheController();
 	}
 
+    /**
+     *  Identify if the cell contains a formula
+     *
+     *  @return boolean
+     */
+    public function isFormula()
+    {
+        return $this->_dataType == PHPExcel_Cell_DataType::TYPE_FORMULA;
+    }
+    
 	/**
 	 *	Does this cell contain Data validation rules?
 	 *
@@ -469,7 +479,7 @@ class PHPExcel_Cell
 	/**
 	 *	Get parent worksheet
 	 *
-	 *	@return PHPExcel_Worksheet
+	 *	@return PHPExcel_CachedObjectStorage_CacheBase
 	 */
 	public function getParent() {
 		return $this->_parent;

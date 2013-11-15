@@ -982,41 +982,55 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
     /**
      * Get highest worksheet column
      *
+     * @param   string     $row        Return the data highest column for the specified row,
+     *                                     or the highest column of any row if no row number is passed
      * @return string Highest column name
      */
-    public function getHighestColumn()
+    public function getHighestColumn($row = null)
     {
-        return $this->_cachedHighestColumn;
+        if ($row == null) {
+            return $this->_cachedHighestColumn;
+        }
+        return $this->getHighestDataColumn($row);
     }
 
     /**
      * Get highest worksheet column that contains data
      *
+     * @param   string     $row        Return the highest data column for the specified row,
+     *                                     or the highest data column of any row if no row number is passed
      * @return string Highest column name that contains data
      */
-    public function getHighestDataColumn()
+    public function getHighestDataColumn($row = null)
     {
-        return $this->_cellCollection->getHighestColumn();
+        return $this->_cellCollection->getHighestColumn($row);
     }
 
     /**
      * Get highest worksheet row
      *
+     * @param   string     $column     Return the highest data row for the specified column,
+     *                                     or the highest row of any column if no column letter is passed
      * @return int Highest row number
      */
-    public function getHighestRow()
+    public function getHighestRow($column = null)
     {
-        return $this->_cachedHighestRow;
+        if ($column == null) {
+            return $this->_cachedHighestRow;
+        }
+        return $this->getHighestDataRow($column);
     }
 
     /**
      * Get highest worksheet row that contains data
      *
+     * @param   string     $column     Return the highest data row for the specified column,
+     *                                     or the highest data row of any column if no column letter is passed
      * @return string Highest row number that contains data
      */
-    public function getHighestDataRow()
+    public function getHighestDataRow($column = null)
     {
-        return $this->_cellCollection->getHighestRow();
+        return $this->_cellCollection->getHighestRow($column);
     }
 
     /**
@@ -1476,35 +1490,17 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
 
         // Add the style to the workbook if necessary
         $workbook = $this->_parent;
-        if ($this->_parent->cellXfExists($pCellStyle)) {
-            // there is already this cell Xf in our collection
-            $xfIndex = $pCellStyle->getIndex();
+		if ($existingStyle = $this->_parent->getCellXfByHashCode($pCellStyle->getHashCode())) {
+            // there is already such cell Xf in our collection
+            $xfIndex = $existingStyle->getIndex();
         } else {
             // we don't have such a cell Xf, need to add
             $workbook->addCellXf($pCellStyle);
             $xfIndex = $pCellStyle->getIndex();
         }
 
-        // Uppercase coordinate
-        $pRange = strtoupper($pRange);
-
-        // Is it a cell range or a single cell?
-        $rangeA    = '';
-        $rangeB    = '';
-        if (strpos($pRange, ':') === false) {
-            $rangeA = $pRange;
-            $rangeB = $pRange;
-        } else {
-            list($rangeA, $rangeB) = explode(':', $pRange);
-        }
-
         // Calculate range outer borders
-        $rangeStart = PHPExcel_Cell::coordinateFromString($rangeA);
-        $rangeEnd    = PHPExcel_Cell::coordinateFromString($rangeB);
-
-        // Translate column into index
-        $rangeStart[0]    = PHPExcel_Cell::columnIndexFromString($rangeStart[0]) - 1;
-        $rangeEnd[0]    = PHPExcel_Cell::columnIndexFromString($rangeEnd[0]) - 1;
+        list($rangeStart, $rangeEnd) = PHPExcel_Cell::rangeBoundaries($pRange . ':' . $pRange);
 
         // Make sure we can loop upwards on rows and columns
         if ($rangeStart[0] > $rangeEnd[0] && $rangeStart[1] > $rangeEnd[1]) {
@@ -1541,26 +1537,8 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
             }
         }
 
-        // Uppercase coordinate
-        $pRange = strtoupper($pRange);
-
-        // Is it a cell range or a single cell?
-        $rangeA    = '';
-        $rangeB    = '';
-        if (strpos($pRange, ':') === false) {
-            $rangeA = $pRange;
-            $rangeB = $pRange;
-        } else {
-            list($rangeA, $rangeB) = explode(':', $pRange);
-        }
-
         // Calculate range outer borders
-        $rangeStart = PHPExcel_Cell::coordinateFromString($rangeA);
-        $rangeEnd    = PHPExcel_Cell::coordinateFromString($rangeB);
-
-        // Translate column into index
-        $rangeStart[0]    = PHPExcel_Cell::columnIndexFromString($rangeStart[0]) - 1;
-        $rangeEnd[0]    = PHPExcel_Cell::columnIndexFromString($rangeEnd[0]) - 1;
+        list($rangeStart, $rangeEnd) = PHPExcel_Cell::rangeBoundaries($pRange . ':' . $pRange);
 
         // Make sure we can loop upwards on rows and columns
         if ($rangeStart[0] > $rangeEnd[0] && $rangeStart[1] > $rangeEnd[1]) {

@@ -33,7 +33,7 @@
  * @package    PHPExcel_Worksheet
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Worksheet implements PHPExcel_IComparable
+class PHPExcel_Worksheet implements PHPExcel_IComparable, ArrayAccess
 {
     /* Break types */
     const BREAK_NONE   = 0;
@@ -439,17 +439,17 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
             throw new PHPExcel_Exception('Sheet code name cannot be empty.');
         }
         // Some of the printable ASCII characters are invalid:  * : / \ ? [ ] and  first and last characters cannot be a "'"
-        if ((str_replace(self::$_invalidCharacters, '', $pValue) !== $pValue) || 
-            (PHPExcel_Shared_String::Substring($pValue,-1,1)=='\'') || 
+        if ((str_replace(self::$_invalidCharacters, '', $pValue) !== $pValue) ||
+            (PHPExcel_Shared_String::Substring($pValue,-1,1)=='\'') ||
             (PHPExcel_Shared_String::Substring($pValue,0,1)=='\'')) {
             throw new PHPExcel_Exception('Invalid character found in sheet code name');
         }
- 
+
         // Maximum 31 characters allowed for sheet title
         if ($CharCount > 31) {
             throw new PHPExcel_Exception('Maximum 31 characters allowed in sheet code name.');
         }
- 
+
         return $pValue;
     }
 
@@ -1214,8 +1214,8 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
 		$cell = $this->_cellCollection->addCacheData(
 			$pCoordinate,
 			new PHPExcel_Cell(
-				NULL, 
-				PHPExcel_Cell_DataType::TYPE_NULL, 
+				NULL,
+				PHPExcel_Cell_DataType::TYPE_NULL,
 				$this
 			)
 		);
@@ -1242,7 +1242,7 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
 
         return $cell;
 	}
-	
+
     /**
      * Does the cell at a specific coordinate exist?
      *
@@ -2839,7 +2839,8 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
             }
         }
     }
-/**
+
+    /**
 	 * Define the code name of the sheet
 	 *
 	 * @param null|string Same rule as Title minus space not allowed (but, like Excel, change silently space to underscore)
@@ -2857,7 +2858,7 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
 		self::_checkSheetCodeName($pValue);
 
 		// We use the same code that setTitle to find a valid codeName else not using a space (Excel don't like) but a '_'
-		
+
         if ($this->getParent()) {
 			// Is there already such sheet name?
 			if ($this->getParent()->sheetCodeNameExists($pValue)) {
@@ -2904,4 +2905,66 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
 	public function hasCodeName(){
 		return !(is_null($this->_codeName));
 	}
+
+    /**
+     * (PHP 5 &gt;= 5.0.0)<br/>
+     * Whether a offset exists
+     * @link http://php.net/manual/en/arrayaccess.offsetexists.php
+     * @param mixed $offset <p>
+     * An offset to check for.
+     * </p>
+     * @return boolean true on success or false on failure.
+     * </p>
+     * <p>
+     * The return value will be casted to boolean if non-boolean was returned.
+     */
+    public function offsetExists($offset)
+    {
+        return $this->cellExists($offset);
+    }
+
+    /**
+     * (PHP 5 &gt;= 5.0.0)<br/>
+     * Offset to retrieve
+     * @link http://php.net/manual/en/arrayaccess.offsetget.php
+     * @param mixed $offset <p>
+     * The offset to retrieve.
+     * </p>
+     * @return mixed Can return all value types.
+     */
+    public function offsetGet($offset)
+    {
+        return $this->getCell($offset)->getValue();
+    }
+
+    /**
+     * (PHP 5 &gt;= 5.0.0)<br/>
+     * Offset to set
+     * @link http://php.net/manual/en/arrayaccess.offsetset.php
+     * @param mixed $offset <p>
+     * The offset to assign the value to.
+     * </p>
+     * @param mixed $value <p>
+     * The value to set.
+     * </p>
+     * @return void
+     */
+    public function offsetSet($offset, $value)
+    {
+        $this->setCellValue($offset, $value);
+    }
+
+    /**
+     * (PHP 5 &gt;= 5.0.0)<br/>
+     * Offset to unset
+     * @link http://php.net/manual/en/arrayaccess.offsetunset.php
+     * @param mixed $offset <p>
+     * The offset to unset.
+     * </p>
+     * @return void
+     */
+    public function offsetUnset($offset)
+    {
+        $this->setCellValue($offset);
+    }
 }

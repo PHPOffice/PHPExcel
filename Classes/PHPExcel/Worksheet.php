@@ -326,6 +326,13 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable, ArrayAccess
     private $_hash    = null;
 
     /**
+    * CodeName
+    *
+    * @var string
+    */
+    private $_codeName = null;
+
+	/**
      * Create a new worksheet
      *
      * @param PHPExcel        $pParent
@@ -336,6 +343,8 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable, ArrayAccess
         // Set parent and title
         $this->_parent = $pParent;
         $this->setTitle($pTitle, FALSE);
+        // setTitle can change $pTitle
+	    $this->setCodeName($this->getTitle());
         $this->setSheetState(PHPExcel_Worksheet::SHEETSTATE_VISIBLE);
 
         $this->_cellCollection        = PHPExcel_CachedObjectStorageFactory::getInstance($this);
@@ -417,6 +426,34 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable, ArrayAccess
     }
 
     /**
+     * Check sheet code name for valid Excel syntax
+     *
+     * @param string $pValue The string to check
+     * @return string The valid string
+     * @throws Exception
+     */
+    private static function _checkSheetCodeName($pValue)
+    {
+        $CharCount = PHPExcel_Shared_String::CountCharacters($pValue);
+        if ($CharCount == 0) {
+            throw new PHPExcel_Exception('Sheet code name cannot be empty.');
+        }
+        // Some of the printable ASCII characters are invalid:  * : / \ ? [ ] and  first and last characters cannot be a "'"
+        if ((str_replace(self::$_invalidCharacters, '', $pValue) !== $pValue) ||
+            (PHPExcel_Shared_String::Substring($pValue,-1,1)=='\'') ||
+            (PHPExcel_Shared_String::Substring($pValue,0,1)=='\'')) {
+            throw new PHPExcel_Exception('Invalid character found in sheet code name');
+        }
+
+        // Maximum 31 characters allowed for sheet title
+        if ($CharCount > 31) {
+            throw new PHPExcel_Exception('Maximum 31 characters allowed in sheet code name.');
+        }
+
+        return $pValue;
+    }
+
+   /**
      * Check sheet title for valid Excel syntax
      *
      * @param string $pValue The string to check
@@ -982,41 +1019,55 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable, ArrayAccess
     /**
      * Get highest worksheet column
      *
+     * @param   string     $row        Return the data highest column for the specified row,
+     *                                     or the highest column of any row if no row number is passed
      * @return string Highest column name
      */
-    public function getHighestColumn()
+    public function getHighestColumn($row = null)
     {
-        return $this->_cachedHighestColumn;
+        if ($row == null) {
+            return $this->_cachedHighestColumn;
+        }
+        return $this->getHighestDataColumn($row);
     }
 
     /**
      * Get highest worksheet column that contains data
      *
+     * @param   string     $row        Return the highest data column for the specified row,
+     *                                     or the highest data column of any row if no row number is passed
      * @return string Highest column name that contains data
      */
-    public function getHighestDataColumn()
+    public function getHighestDataColumn($row = null)
     {
-        return $this->_cellCollection->getHighestColumn();
+        return $this->_cellCollection->getHighestColumn($row);
     }
 
     /**
      * Get highest worksheet row
      *
+     * @param   string     $column     Return the highest data row for the specified column,
+     *                                     or the highest row of any column if no column letter is passed
      * @return int Highest row number
      */
-    public function getHighestRow()
+    public function getHighestRow($column = null)
     {
-        return $this->_cachedHighestRow;
+        if ($column == null) {
+            return $this->_cachedHighestRow;
+        }
+        return $this->getHighestDataRow($column);
     }
 
     /**
      * Get highest worksheet row that contains data
      *
+     * @param   string     $column     Return the highest data row for the specified column,
+     *                                     or the highest data row of any column if no column letter is passed
      * @return string Highest row number that contains data
      */
-    public function getHighestDataRow()
+    public function getHighestDataRow($column = null)
     {
-        return $this->_cellCollection->getHighestRow();
+        return $this->_cellCollection->getHighestRow($column);
     }
 
     /**
@@ -1498,7 +1549,7 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable, ArrayAccess
         // Loop through cells and apply styles
         for ($col = $rangeStart[0]; $col <= $rangeEnd[0]; ++$col) {
             for ($row = $rangeStart[1]; $row <= $rangeEnd[1]; ++$row) {
-                $this->getCell(PHPExcel_Cell::stringFromColumnIndex($col) . $row)->setXfIndex($xfIndex);
+                $this->getCell(PHPExcel_Cell::stringFromColumnIndex($col - 1) . $row)->setXfIndex($xfIndex);
             }
         }
 
@@ -1536,7 +1587,7 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable, ArrayAccess
         // Loop through cells and apply styles
         for ($col = $rangeStart[0]; $col <= $rangeEnd[0]; ++$col) {
             for ($row = $rangeStart[1]; $row <= $rangeEnd[1]; ++$row) {
-                $this->setConditionalStyles(PHPExcel_Cell::stringFromColumnIndex($col) . $row, $pCellStyle);
+                $this->setConditionalStyles(PHPExcel_Cell::stringFromColumnIndex($col - 1) . $row, $pCellStyle);
             }
         }
 
@@ -2412,7 +2463,7 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable, ArrayAccess
                             $style = $this->_parent->getCellXfByIndex($cell->getXfIndex());
                             $returnValue[$rRef][$cRef] = PHPExcel_Style_NumberFormat::toFormattedString(
                             	$returnValue[$rRef][$cRef],
-								($style->getNumberFormat()) ?
+								($style && $style->getNumberFormat()) ?
 									$style->getNumberFormat()->getFormatCode() :
 									PHPExcel_Style_NumberFormat::FORMAT_GENERAL
                             );
@@ -2788,6 +2839,72 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable, ArrayAccess
             }
         }
     }
+
+    /**
+	 * Define the code name of the sheet
+	 *
+	 * @param null|string Same rule as Title minus space not allowed (but, like Excel, change silently space to underscore)
+	 * @return objWorksheet
+	 * @throws PHPExcel_Exception
+	*/
+	public function setCodeName($pValue=null){
+		// Is this a 'rename' or not?
+		if ($this->getCodeName() == $pValue) {
+			return $this;
+		}
+		$pValue = str_replace(' ', '_', $pValue);//Excel does this automatically without flinching, we are doing the same
+		// Syntax check
+        // throw an exception if not valid
+		self::_checkSheetCodeName($pValue);
+
+		// We use the same code that setTitle to find a valid codeName else not using a space (Excel don't like) but a '_'
+
+        if ($this->getParent()) {
+			// Is there already such sheet name?
+			if ($this->getParent()->sheetCodeNameExists($pValue)) {
+				// Use name, but append with lowest possible integer
+
+				if (PHPExcel_Shared_String::CountCharacters($pValue) > 29) {
+					$pValue = PHPExcel_Shared_String::Substring($pValue,0,29);
+				}
+				$i = 1;
+				while ($this->getParent()->sheetCodeNameExists($pValue . '_' . $i)) {
+					++$i;
+					if ($i == 10) {
+						if (PHPExcel_Shared_String::CountCharacters($pValue) > 28) {
+							$pValue = PHPExcel_Shared_String::Substring($pValue,0,28);
+						}
+					} elseif ($i == 100) {
+						if (PHPExcel_Shared_String::CountCharacters($pValue) > 27) {
+							$pValue = PHPExcel_Shared_String::Substring($pValue,0,27);
+						}
+					}
+				}
+
+				$pValue = $pValue . '_' . $i;// ok, we have a valid name
+				//codeName is'nt used in formula : no need to call for an update
+				//return $this->setTitle($altTitle,$updateFormulaCellReferences);
+			}
+		}
+
+		$this->_codeName=$pValue;
+		return $this;
+	}
+	/**
+	 * Return the code name of the sheet
+	 *
+	 * @return null|string
+	*/
+	public function getCodeName(){
+		return $this->_codeName;
+	}
+	/**
+	 * Sheet has a code name ?
+	 * @return boolean
+	*/
+	public function hasCodeName(){
+		return !(is_null($this->_codeName));
+	}
 
     /**
      * (PHP 5 &gt;= 5.0.0)<br/>

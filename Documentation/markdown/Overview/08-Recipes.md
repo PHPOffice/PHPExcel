@@ -195,7 +195,9 @@ $objPHPExcel->getActiveSheet()->getStyle('A1')->getAlignment()->setWrapText(true
 
 __Tip__
 
-Read more about formatting cells using getStyle() elsewhere.__Tip__
+Read more about formatting cells using getStyle() elsewhere.
+
+__Tip__
 
 AdvancedValuebinder.php automatically turns on "wrap text" for the cell when it sees a newline character in a string that you are inserting in a cell. Just like Microsoft Office Excel. Try this:
 
@@ -731,8 +733,13 @@ An example on setting cell security:
 $objPHPExcel->getActiveSheet()->getStyle('B1')
     ->getProtection()
     ->setLocked(PHPExcel_Style_Protection::PROTECTION_UNPROTECTED);
+```
 
-__Make sure you enable worksheet protection if you need any of the worksheet protection features!__ This can be done using the following code: $objPHPExcel->getActiveSheet()->getProtection()->setSheet(true);
+__Make sure you enable worksheet protection if you need any of the worksheet protection features!__ This can be done using the following code:
+
+```php
+$objPHPExcel->getActiveSheet()->getProtection()->setSheet(true);
+```
 
 ### Setting data validation on a cell
 

@@ -35,6 +35,7 @@ if (PHP_SAPI != 'cli') {
 // List of tests
 $aTests = array(
 	  '01simple.php'
+	, '01simplePCLZip.php'
 	, '02types.php'
 	, '02types-xls.php'
 	, '03formulas.php'
@@ -44,6 +45,7 @@ $aTests = array(
 	, '06largescale-with-cellcaching.php'
 	, '06largescale-xls.php'
 	, '07reader.php'
+	, '07readerPCLZip.php'
 	, '08conditionalformatting.php'
 	, '08conditionalformatting2.php'
 	, '09pagebreaks.php'
@@ -94,6 +96,7 @@ $aTests = array(
 	, '38cloneWorksheet.php'
 	, '40duplicateStyle.php'
 	, 'OOCalcReader.php'
+	, 'OOCalcReaderPCLZip.php'
 	, 'SylkReader.php'
 	, 'Excel2003XMLReader.php'
 	, 'XMLReader.php'

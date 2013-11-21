@@ -33,7 +33,7 @@
  * @package    PHPExcel_Worksheet
  * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Worksheet implements PHPExcel_IComparable
+class PHPExcel_Worksheet implements PHPExcel_IComparable, ArrayAccess
 {
     /* Break types */
     const BREAK_NONE   = 0;
@@ -1163,8 +1163,8 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
 		$cell = $this->_cellCollection->addCacheData(
 			$pCoordinate,
 			new PHPExcel_Cell(
-				NULL, 
-				PHPExcel_Cell_DataType::TYPE_NULL, 
+				NULL,
+				PHPExcel_Cell_DataType::TYPE_NULL,
 				$this
 			)
 		);
@@ -1191,7 +1191,7 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
 
         return $cell;
 	}
-	
+
     /**
      * Does the cell at a specific coordinate exist?
      *
@@ -2787,5 +2787,67 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
                 }
             }
         }
+    }
+
+    /**
+     * (PHP 5 &gt;= 5.0.0)<br/>
+     * Whether a offset exists
+     * @link http://php.net/manual/en/arrayaccess.offsetexists.php
+     * @param mixed $offset <p>
+     * An offset to check for.
+     * </p>
+     * @return boolean true on success or false on failure.
+     * </p>
+     * <p>
+     * The return value will be casted to boolean if non-boolean was returned.
+     */
+    public function offsetExists($offset)
+    {
+        return $this->cellExists($offset);
+    }
+
+    /**
+     * (PHP 5 &gt;= 5.0.0)<br/>
+     * Offset to retrieve
+     * @link http://php.net/manual/en/arrayaccess.offsetget.php
+     * @param mixed $offset <p>
+     * The offset to retrieve.
+     * </p>
+     * @return mixed Can return all value types.
+     */
+    public function offsetGet($offset)
+    {
+        return $this->getCell($offset)->getValue();
+    }
+
+    /**
+     * (PHP 5 &gt;= 5.0.0)<br/>
+     * Offset to set
+     * @link http://php.net/manual/en/arrayaccess.offsetset.php
+     * @param mixed $offset <p>
+     * The offset to assign the value to.
+     * </p>
+     * @param mixed $value <p>
+     * The value to set.
+     * </p>
+     * @return void
+     */
+    public function offsetSet($offset, $value)
+    {
+        $this->setCellValue($offset, $value);
+    }
+
+    /**
+     * (PHP 5 &gt;= 5.0.0)<br/>
+     * Offset to unset
+     * @link http://php.net/manual/en/arrayaccess.offsetunset.php
+     * @param mixed $offset <p>
+     * The offset to unset.
+     * </p>
+     * @return void
+     */
+    public function offsetUnset($offset)
+    {
+        $this->setCellValue($offset);
     }
 }

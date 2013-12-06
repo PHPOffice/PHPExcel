@@ -58,6 +58,13 @@ class PHPExcel_Cell
 	private $_value;
 
 	/**
+	 *	Coordination of the cell
+	 *
+	 *	@var	string
+	 */
+	private $_coordination;
+
+	/**
 	 *	Calculated value of the cell (used for caching)
 	 *	This returns the value last calculated by MS Excel or whichever spreadsheet program was used to
 	 *		create the original spreadsheet file.
@@ -134,7 +141,7 @@ class PHPExcel_Cell
 
 		// Set worksheet cache
 		$this->_parent = $pSheet->getCellCacheController();
-
+                
 		// Set datatype?
 		if ($pDataType !== NULL) {
 			if ($pDataType == PHPExcel_Cell_DataType::TYPE_STRING2)
@@ -157,7 +164,8 @@ class PHPExcel_Cell
 	 */
 	public function getColumn()
 	{
-		return $this->_parent->getCurrentColumn();
+		sscanf($this->getCoordinate(), '%[A-Z]%d', $column, $row);
+		return $column;
 	}
 
 	/**
@@ -167,7 +175,8 @@ class PHPExcel_Cell
 	 */
 	public function getRow()
 	{
-		return $this->_parent->getCurrentRow();
+                sscanf($this->getCoordinate(), '%[A-Z]%d', $column, $row);
+		return $row;
 	}
 
 	/**
@@ -177,7 +186,17 @@ class PHPExcel_Cell
 	 */
 	public function getCoordinate()
 	{
-		return $this->_parent->getCurrentAddress();
+		return $this->_coordination;
+	}
+
+	/**
+	 *	Change cell coordinate
+	 *
+	 *	@param  string      $address      new cell coordination
+	 */
+	public function setCoordinate($address)
+	{
+		$this->_coordination = $address;
 	}
 
 	/**

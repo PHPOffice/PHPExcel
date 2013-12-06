@@ -126,6 +126,7 @@ abstract class PHPExcel_CachedObjectStorage_CacheBase {
 		if (isset($this->_cellCache[$fromAddress])) {
 			$this->_cellCache[$toAddress] = &$this->_cellCache[$fromAddress];
 			unset($this->_cellCache[$fromAddress]);
+                        $this->_cellCache[$toAddress]->setCoordinate($toAddress);
 		}
 
 		return TRUE;

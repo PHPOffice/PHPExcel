@@ -124,7 +124,7 @@ class PHPExcel_Calculation_TextData {
 		}
 
 		if (is_string($stringValue) || is_numeric($stringValue)) {
-			return trim(preg_replace('/ +/',' ',trim($stringValue,' ')));
+			return trim(preg_replace('/ +/',' ',trim($stringValue,' ')),' ');
 		}
 		return NULL;
 	}	//	function TRIMSPACES()
@@ -358,7 +358,7 @@ class PHPExcel_Calculation_TextData {
 	 * @param	int		$chars	Number of characters
 	 * @return	string
 	 */
-	public static function MID($value = '', $start = 1, $chars = null) {
+	public static function MID($value = '', $start = 1, $chars = 0) {
 		$value		= PHPExcel_Calculation_Functions::flattenSingleValue($value);
 		$start		= PHPExcel_Calculation_Functions::flattenSingleValue($start);
 		$chars		= PHPExcel_Calculation_Functions::flattenSingleValue($chars);

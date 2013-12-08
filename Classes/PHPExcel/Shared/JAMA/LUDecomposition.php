@@ -98,6 +98,9 @@ class PHPExcel_Shared_JAMA_LUDecomposition {
 				}
 				if ($p != $j) {
 					for ($k = 0; $k < $this->n; ++$k) {
+                                                if (!isset($this->LU[$p][$k])) {
+                                                    throw new PHPExcel_Calculation_Exception(self::MatrixSquareException);
+                                                }
 						$t = $this->LU[$p][$k];
 						$this->LU[$p][$k] = $this->LU[$j][$k];
 						$this->LU[$j][$k] = $t;

@@ -82,14 +82,16 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 			throw new PHPExcel_Reader_Exception("Could not open " . $pFilename . " for reading! File does not exist.");
 		}
 
+        $zipClass = PHPExcel_Settings::getZipClass();
+
 		// Check if zip class exists
-		if (!class_exists('ZipArchive',FALSE)) {
-			throw new PHPExcel_Reader_Exception("ZipArchive library is not enabled");
-		}
+//		if (!class_exists($zipClass, FALSE)) {
+//			throw new PHPExcel_Reader_Exception($zipClass . " library is not enabled");
+//		}
 
 		$xl = false;
 		// Load file
-		$zip = new ZipArchive;
+		$zip = new $zipClass;
 		if ($zip->open($pFilename) === true) {
 			// check if it is an OOXML archive
 			$rels = simplexml_load_string($this->_getFromZipArchive($zip, "_rels/.rels"));
@@ -127,7 +129,9 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 
 		$worksheetNames = array();
 
-		$zip = new ZipArchive;
+        $zipClass = PHPExcel_Settings::getZipClass();
+
+		$zip = new $zipClass;
 		$zip->open($pFilename);
 
 		//	The files we're looking at here are small enough that simpleXML is more efficient than XMLReader
@@ -171,7 +175,9 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 
 		$worksheetInfo = array();
 
-		$zip = new ZipArchive;
+        $zipClass = PHPExcel_Settings::getZipClass();
+
+		$zip = new $zipClass;
 		$zip->open($pFilename);
 
 		$rels = simplexml_load_string($this->_getFromZipArchive($zip, "_rels/.rels")); //~ http://schemas.openxmlformats.org/package/2006/relationships");
@@ -262,36 +268,34 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 
 
 	private function _castToFormula($c,$r,&$cellDataType,&$value,&$calculatedValue,&$sharedFormulas,$castBaseType) {
-//		echo 'Formula<br />';
-//		echo '$c->f is '.$c->f.'<br />';
+//		echo 'Formula',PHP_EOL;
+//		echo '$c->f is '.$c->f.PHP_EOL;
 		$cellDataType 		= 'f';
 		$value 				= "={$c->f}";
 		$calculatedValue 	= self::$castBaseType($c);
 
 		// Shared formula?
 		if (isset($c->f['t']) && strtolower((string)$c->f['t']) == 'shared') {
-//			echo 'SHARED FORMULA<br />';
+//			echo 'SHARED FORMULA'.PHP_EOL;
 			$instance = (string)$c->f['si'];
 
-//			echo 'Instance ID = '.$instance.'<br />';
+//			echo 'Instance ID = '.$instance.PHP_EOL;
 //
-//			echo 'Shared Formula Array:<pre>';
+//			echo 'Shared Formula Array:'.PHP_EOL;
 //			print_r($sharedFormulas);
-//			echo '</pre>';
 			if (!isset($sharedFormulas[(string)$c->f['si']])) {
-//				echo 'SETTING NEW SHARED FORMULA<br />';
-//				echo 'Master is '.$r.'<br />';
-//				echo 'Formula is '.$value.'<br />';
+//				echo 'SETTING NEW SHARED FORMULA'.PHP_EOL;
+//				echo 'Master is '.$r.PHP_EOL;
+//				echo 'Formula is '.$value.PHP_EOL;
 				$sharedFormulas[$instance] = array(	'master' => $r,
 													'formula' => $value
 												  );
-//				echo 'New Shared Formula Array:<pre>';
+//				echo 'New Shared Formula Array:'.PHP_EOL;
 //				print_r($sharedFormulas);
-//				echo '</pre>';
 			} else {
-//				echo 'GETTING SHARED FORMULA<br />';
-//				echo 'Master is '.$sharedFormulas[$instance]['master'].'<br />';
-//				echo 'Formula is '.$sharedFormulas[$instance]['formula'].'<br />';
+//				echo 'GETTING SHARED FORMULA'.PHP_EOL;
+//				echo 'Master is '.$sharedFormulas[$instance]['master'].PHP_EOL;
+//				echo 'Formula is '.$sharedFormulas[$instance]['formula'].PHP_EOL;
 				$master = PHPExcel_Cell::coordinateFromString($sharedFormulas[$instance]['master']);
 				$current = PHPExcel_Cell::coordinateFromString($r);
 
@@ -304,13 +308,13 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 																			$difference[0],
 																			$difference[1]
 																		 );
-//				echo 'Adjusted Formula is '.$value.'<br />';
+//				echo 'Adjusted Formula is '.$value.PHP_EOL;
 			}
 		}
 	}
 
 
-	public function _getFromZipArchive(ZipArchive $archive, $fileName = '')
+	public function _getFromZipArchive($archive, $fileName = '')
 	{
 		// Root-relative paths
 		if (strpos($fileName, '//') !== false)
@@ -350,7 +354,10 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 			$excel->removeCellStyleXfByIndex(0); // remove the default style
 			$excel->removeCellXfByIndex(0); // remove the default style
 		}
-		$zip = new ZipArchive;
+
+        $zipClass = PHPExcel_Settings::getZipClass();
+
+		$zip = new $zipClass;
 		$zip->open($pFilename);
 
 		//	Read the theme first, because we need the colour scheme when reading the styles
@@ -442,7 +449,13 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 						}
 					}
 				break;
-
+				//Ribbon
+				case "http://schemas.microsoft.com/office/2006/relationships/ui/extensibility":
+					$customUI = $rel['Target'];
+					if(!is_null($customUI)){
+						$this->_readRibbon($excel, $customUI, $zip);
+					}
+				break;
 				case "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument":
 					$dir = dirname($rel["Target"]);
 					$relsWorkbook = simplexml_load_string($this->_getFromZipArchive($zip, "$dir/_rels/" . basename($rel["Target"]) . ".rels"));  //~ http://schemas.openxmlformats.org/package/2006/relationships");
@@ -462,12 +475,30 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 					}
 
 					$worksheets = array();
+                    $macros = $customUI = NULL;
 					foreach ($relsWorkbook->Relationship as $ele) {
-						if ($ele["Type"] == "http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet") {
+						switch($ele['Type']){
+						case "http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet": 
 							$worksheets[(string) $ele["Id"]] = $ele["Target"];
+							break;
+						// a vbaProject ? (: some macros)
+						case "http://schemas.microsoft.com/office/2006/relationships/vbaProject":
+							$macros = $ele["Target"];
+							break;
 						}
 					}
 
+					if(!is_null($macros)){
+						$macrosCode = $this->_getFromZipArchive($zip, 'xl/vbaProject.bin');//vbaProject.bin always in 'xl' dir and always named vbaProject.bin
+						if($macrosCode !== false){
+							$excel->setMacrosCode($macrosCode);
+							$excel->setHasMacros(true);
+							//short-circuit : not reading vbaProject.bin.rel to get Signature =>allways vbaProjectSignature.bin in 'xl' dir
+							$Certificate = $this->_getFromZipArchive($zip, 'xl/vbaProjectSignature.bin');
+							if($Certificate !== false)
+								$excel->setMacrosCertificate($Certificate);
+						}
+					}
 					$styles 	= array();
 					$cellStyles = array();
 					$xpath = self::array_item($relsWorkbook->xpath("rel:Relationship[@Type='http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles']"));
@@ -496,6 +527,10 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 									$numFmt = PHPExcel_Style_NumberFormat::builtInFormatCode((int)$xf["numFmtId"]);
 								}
 							}
+                            $quotePrefix = false;
+							if (isset($xf["quotePrefix"])) {
+                                $quotePrefix = (boolean) $xf["quotePrefix"];
+                            }
 							//$numFmt = str_replace('mm', 'i', $numFmt);
 							//$numFmt = str_replace('h', 'H', $numFmt);
 
@@ -506,6 +541,7 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 								"border" => $xmlStyles->borders->border[intval($xf["borderId"])],
 								"alignment" => $xf->alignment,
 								"protection" => $xf->protection,
+								"quotePrefix" => $quotePrefix,
 							);
 							$styles[] = $style;
 
@@ -533,6 +569,7 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 								"border" => $xmlStyles->borders->border[intval($xf["borderId"])],
 								"alignment" => $xf->alignment,
 								"protection" => $xf->protection,
+								"quotePrefix" => $quotePrefix,
 							);
 							$cellStyles[] = $cellStyle;
 
@@ -680,7 +717,9 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 									$docSheet->getTabColor()->setARGB( (string)$xmlSheet->sheetPr->tabColor['rgb'] );
 								}
 							}
-
+							if (isset($xmlSheet->sheetPr) && isset($xmlSheet->sheetPr['codeName'])) {
+								$docSheet->setCodeName((string) $xmlSheet->sheetPr['codeName']);
+							}
 							if (isset($xmlSheet->sheetPr) && isset($xmlSheet->sheetPr->outlinePr)) {
 								if (isset($xmlSheet->sheetPr->outlinePr['summaryRight']) &&
 									!self::boolean((string) $xmlSheet->sheetPr->outlinePr['summaryRight'])) {
@@ -1348,10 +1387,10 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 											$hfImages = array();
 
 											$shapes = $vmlDrawing->xpath('//v:shape');
-											foreach ($shapes as $shape) {
+											foreach ($shapes as $idx => $shape) {
 												$shape->registerXPathNamespace('v', 'urn:schemas-microsoft-com:vml');
 												$imageData = $shape->xpath('//v:imagedata');
-												$imageData = $imageData[0];
+												$imageData = $imageData[$idx];
 
 												$imageData = $imageData->attributes('urn:schemas-microsoft-com:office:office');
 												$style = self::toCSSArray( (string)$shape['style'] );
@@ -1365,7 +1404,9 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 												$hfImages[ (string)$shape['id'] ]->setResizeProportional(false);
 												$hfImages[ (string)$shape['id'] ]->setWidth($style['width']);
 												$hfImages[ (string)$shape['id'] ]->setHeight($style['height']);
-												$hfImages[ (string)$shape['id'] ]->setOffsetX($style['margin-left']);
+												if (isset($style['margin-left'])) {
+													$hfImages[ (string)$shape['id'] ]->setOffsetX($style['margin-left']);
+												}
 												$hfImages[ (string)$shape['id'] ]->setOffsetY($style['margin-top']);
 												$hfImages[ (string)$shape['id'] ]->setResizeProportional(true);
 											}
@@ -1377,7 +1418,7 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 
 							}
 
-// TODO: Autoshapes from twoCellAnchors!
+                            // TODO: Autoshapes from twoCellAnchors!
 							if ($zip->locateName(dirname("$dir/$fileWorksheet") . "/_rels/" . basename($fileWorksheet) . ".rels")) {
 								$relsWorksheet = simplexml_load_string($this->_getFromZipArchive($zip,  dirname("$dir/$fileWorksheet") . "/_rels/" . basename($fileWorksheet) . ".rels") ); //~ http://schemas.openxmlformats.org/package/2006/relationships");
 								$drawings = array();
@@ -1856,6 +1897,11 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 				}
 			}
 		}
+
+		// top-level style settings
+		if (isset($style->quotePrefix)) {
+			$docStyle->setQuotePrefix($style->quotePrefix);
+        }
 	}
 
 
@@ -1931,6 +1977,43 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 		return $value;
 	}
 
+	private function _readRibbon($excel, $customUITarget, $zip)
+    {
+		$baseDir = dirname($customUITarget);
+		$nameCustomUI = basename($customUITarget);
+        // get the xml file (ribbon)
+		$localRibbon = $this->_getFromZipArchive($zip, $customUITarget);
+		$customUIImagesNames = array(); 
+        $customUIImagesBinaries = array();
+        // something like customUI/_rels/customUI.xml.rels
+		$pathRels = $baseDir . '/_rels/' . $nameCustomUI . '.rels';
+		$dataRels = $this->_getFromZipArchive($zip, $pathRels);
+		if ($dataRels) {
+            // exists and not empty if the ribbon have some pictures (other than internal MSO)
+			$UIRels = simplexml_load_string($dataRels);
+			if ($UIRels) {
+				// we need to save id and target to avoid parsing customUI.xml and "guess" if it's a pseudo callback who load the image
+				foreach ($UIRels->Relationship as $ele) {
+					if ($ele["Type"] == 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/image') {
+                        // an image ?
+						$customUIImagesNames[(string) $ele['Id']] = (string)$ele['Target'];
+						$customUIImagesBinaries[(string)$ele['Target']] = $this->_getFromZipArchive($zip, $baseDir . '/' . (string) $ele['Target']);
+					}
+				}
+			}
+		}
+		if ($localRibbon) {
+			$excel->setRibbonXMLData($customUITarget, $localRibbon);
+			if (count($customUIImagesNames) > 0 && count($customUIImagesBinaries) > 0) {
+				$excel->setRibbonBinObjects($customUIImagesNames, $customUIImagesBinaries);
+			} else {
+				$excel->setRibbonBinObjects(NULL);
+			}
+		} else {
+			$excel->setRibbonXMLData(NULL);
+			$excel->setRibbonBinObjects(NULL);
+		}
+	}
 
 	private static function array_item($array, $key = 0) {
 		return (isset($array[$key]) ? $array[$key] : null);

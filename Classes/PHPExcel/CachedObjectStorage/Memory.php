@@ -53,7 +53,8 @@ class PHPExcel_CachedObjectStorage_Memory extends PHPExcel_CachedObjectStorage_C
      */
 	public function addCacheData($pCoord, PHPExcel_Cell $cell) {
 		$this->_cellCache[$pCoord] = $cell;
-
+                $this->_cellCache[$pCoord]->setCoordinate($pCoord);
+                
 		//	Set current entry to the new/updated entry
 		$this->_currentObjectID = $pCoord;
 
@@ -96,7 +97,7 @@ class PHPExcel_CachedObjectStorage_Memory extends PHPExcel_CachedObjectStorage_C
 		$newCollection = array();
 		foreach($this->_cellCache as $k => &$cell) {
 			$newCollection[$k] = clone $cell;
-			$newCollection[$k]->attach($parent);
+			$newCollection[$k]->attach($this);
 		}
 
 		$this->_cellCache = $newCollection;

@@ -36,6 +36,17 @@
 class PHPExcel_Writer_Excel2007 extends PHPExcel_Writer_Abstract implements PHPExcel_Writer_IWriter
 {
 	/**
+	 * Pre-calculate formulas
+	 * Forces PHPExcel to recalculate all formulae in a workbook when saving, so that the pre-calculated values are
+	 *    immediately available to MS Excel or other office spreadsheet viewer when opening the file
+	 *
+     * Overrides the default TRUE for this specific writer for performance reasons
+     *
+	 * @var boolean
+	 */
+	protected $_preCalculateFormulas = FALSE;
+
+	/**
 	 * Office2003 compatibility
 	 *
 	 * @var boolean
@@ -69,6 +80,13 @@ class PHPExcel_Writer_Excel2007 extends PHPExcel_Writer_Abstract implements PHPE
 	 * @var PHPExcel_HashTable
 	 */
 	private $_stylesConditionalHashTable;
+
+	/**
+	 * Private unique PHPExcel_Style HashTable
+	 *
+	 * @var PHPExcel_HashTable
+	 */
+	private $_styleHashTable;
 
 	/**
 	 * Private unique PHPExcel_Style_Fill HashTable
@@ -126,6 +144,8 @@ class PHPExcel_Writer_Excel2007 extends PHPExcel_Writer_Abstract implements PHPE
 									'drawing' 		=> 'PHPExcel_Writer_Excel2007_Drawing',
 									'comments' 		=> 'PHPExcel_Writer_Excel2007_Comments',
 									'chart'			=> 'PHPExcel_Writer_Excel2007_Chart',
+									'relsvba'		=> 'PHPExcel_Writer_Excel2007_RelsVBA',
+									'relsribbonobjects' => 'PHPExcel_Writer_Excel2007_RelsRibbon'
 								 );
 
     	//	Initialise writer parts
@@ -135,7 +155,8 @@ class PHPExcel_Writer_Excel2007 extends PHPExcel_Writer_Abstract implements PHPE
 		}
 
     	$hashTablesArray = array( '_stylesConditionalHashTable',	'_fillHashTable',		'_fontHashTable',
-								  '_bordersHashTable',				'_numFmtHashTable',		'_drawingHashTable'
+								  '_bordersHashTable',				'_numFmtHashTable',		'_drawingHashTable',
+                                  '_styleHashTable'
 							    );
 
 		// Set HashTable variables
@@ -191,6 +212,7 @@ class PHPExcel_Writer_Excel2007 extends PHPExcel_Writer_Abstract implements PHPE
 			}
 
 			// Create styles dictionaries
+			$this->_styleHashTable->addFromSource( 	            $this->getWriterPart('Style')->allStyles($this->_spreadSheet) 			);
 			$this->_stylesConditionalHashTable->addFromSource( 	$this->getWriterPart('Style')->allConditionalStyles($this->_spreadSheet) 			);
 			$this->_fillHashTable->addFromSource( 				$this->getWriterPart('Style')->allFills($this->_spreadSheet) 			);
 			$this->_fontHashTable->addFromSource( 				$this->getWriterPart('Style')->allFonts($this->_spreadSheet) 			);
@@ -223,6 +245,35 @@ class PHPExcel_Writer_Excel2007 extends PHPExcel_Writer_Abstract implements PHPE
 			// Add [Content_Types].xml to ZIP file
 			$objZip->addFromString('[Content_Types].xml', 			$this->getWriterPart('ContentTypes')->writeContentTypes($this->_spreadSheet, $this->_includeCharts));
 
+			//if hasMacros, add the vbaProject.bin file, Certificate file(if exists)
+			if($this->_spreadSheet->hasMacros()){
+				$macrosCode=$this->_spreadSheet->getMacrosCode();
+				if(!is_null($macrosCode)){// we have the code ?
+					$objZip->addFromString('xl/vbaProject.bin', $macrosCode);//allways in 'xl', allways named vbaProject.bin
+					if($this->_spreadSheet->hasMacrosCertificate()){//signed macros ?
+						// Yes : add the certificate file and the related rels file
+						$objZip->addFromString('xl/vbaProjectSignature.bin', $this->_spreadSheet->getMacrosCertificate());
+						$objZip->addFromString('xl/_rels/vbaProject.bin.rels',
+							$this->getWriterPart('RelsVBA')->writeVBARelationships($this->_spreadSheet));
+					}
+				}
+			}
+			//a custom UI in this workbook ? add it ("base" xml and additional objects (pictures) and rels)
+			if($this->_spreadSheet->hasRibbon()){
+				$tmpRibbonTarget=$this->_spreadSheet->getRibbonXMLData('target');
+				$objZip->addFromString($tmpRibbonTarget, $this->_spreadSheet->getRibbonXMLData('data'));
+				if($this->_spreadSheet->hasRibbonBinObjects()){
+					$tmpRootPath=dirname($tmpRibbonTarget).'/';
+					$ribbonBinObjects=$this->_spreadSheet->getRibbonBinObjects('data');//the files to write
+					foreach($ribbonBinObjects as $aPath=>$aContent){
+						$objZip->addFromString($tmpRootPath.$aPath, $aContent);
+					}
+					//the rels for files
+					$objZip->addFromString($tmpRootPath.'_rels/'.basename($tmpRibbonTarget).'.rels',
+						$this->getWriterPart('RelsRibbonObjects')->writeRibbonRelationships($this->_spreadSheet));
+				}
+			}
+			
 			// Add relationships to ZIP file
 			$objZip->addFromString('_rels/.rels', 					$this->getWriterPart('Rels')->writeRelationships($this->_spreadSheet));
 			$objZip->addFromString('xl/_rels/workbook.xml.rels', 	$this->getWriterPart('Rels')->writeWorkbookRelationships($this->_spreadSheet));
@@ -393,6 +444,15 @@ class PHPExcel_Writer_Excel2007 extends PHPExcel_Writer_Abstract implements PHPE
      */
     public function getStringTable() {
     	return $this->_stringTable;
+    }
+
+    /**
+     * Get PHPExcel_Style HashTable
+     *
+     * @return PHPExcel_HashTable
+     */
+    public function getStyleHashTable() {
+    	return $this->_styleHashTable;
     }
 
     /**

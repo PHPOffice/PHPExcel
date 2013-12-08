@@ -841,7 +841,7 @@ class PHPExcel_Calculation {
 												 'argumentCount'	=>	'1,2'
 												),
 				'HLOOKUP'				=> array('category'			=>	PHPExcel_Calculation_Function::CATEGORY_LOOKUP_AND_REFERENCE,
-												 'functionCall'		=>	'PHPExcel_Calculation_Functions::DUMMY',
+												 'functionCall'		=>	'PHPExcel_Calculation_LookupRef::HLOOKUP',
 												 'argumentCount'	=>	'3,4'
 												),
 				'HOUR'					=> array('category'			=>	PHPExcel_Calculation_Function::CATEGORY_DATE_AND_TIME,
@@ -2738,10 +2738,10 @@ class PHPExcel_Calculation {
 		$pCellParent = ($pCell !== NULL) ? $pCell->getWorksheet() : NULL;
 
 		$regexpMatchString = '/^('.self::CALCULATION_REGEXP_FUNCTION.
+							   '|'.self::CALCULATION_REGEXP_CELLREF.
 							   '|'.self::CALCULATION_REGEXP_NUMBER.
 							   '|'.self::CALCULATION_REGEXP_STRING.
 							   '|'.self::CALCULATION_REGEXP_OPENBRACE.
-							   '|'.self::CALCULATION_REGEXP_CELLREF.
 							   '|'.self::CALCULATION_REGEXP_NAMEDRANGE.
 							   '|'.self::CALCULATION_REGEXP_ERROR.
 							 ')/si';
@@ -3486,6 +3486,13 @@ class PHPExcel_Calculation {
 
 
 	private function _validateBinaryOperand($cellID, &$operand, &$stack) {
+		if (is_array($operand)) {
+			if ((count($operand, COUNT_RECURSIVE) - count($operand)) == 1) {
+				do {
+					$operand = array_pop($operand);
+				} while (is_array($operand));
+			}
+		}
 		//	Numbers, matrices and booleans can pass straight through, as they're already valid
 		if (is_string($operand)) {
 			//	We only need special validations for the operand if it is a string
@@ -3550,15 +3557,37 @@ class PHPExcel_Calculation {
 		if (is_string($operand1) && $operand1 > '' && $operand1{0} == '"') { $operand1 = self::_unwrapResult($operand1); }
 		if (is_string($operand2) && $operand2 > '' && $operand2{0} == '"') { $operand2 = self::_unwrapResult($operand2); }
 
+		// Use case insensitive comparaison if not OpenOffice mode
+		if (PHPExcel_Calculation_Functions::getCompatibilityMode() != PHPExcel_Calculation_Functions::COMPATIBILITY_OPENOFFICE)
+		{
+			if (is_string($operand1)) {
+				$operand1 = strtoupper($operand1);
+			}
+
+			if (is_string($operand2)) {
+				$operand2 = strtoupper($operand2);
+			}
+		}
+
+		$useLowercaseFirstComparison = is_string($operand1) && is_string($operand2) && PHPExcel_Calculation_Functions::getCompatibilityMode() == PHPExcel_Calculation_Functions::COMPATIBILITY_OPENOFFICE;
+
 		//	execute the necessary operation
 		switch ($operation) {
 			//	Greater than
 			case '>':
-				$result = ($operand1 > $operand2);
+				if ($useLowercaseFirstComparison) {
+					$result = $this->strcmpLowercaseFirst($operand1, $operand2) > 0;
+				} else {
+					$result = ($operand1 > $operand2);
+				}
 				break;
 			//	Less than
 			case '<':
-				$result = ($operand1 < $operand2);
+				if ($useLowercaseFirstComparison) {
+					$result = $this->strcmpLowercaseFirst($operand1, $operand2) < 0;
+				} else {
+					$result = ($operand1 < $operand2);
+				}
 				break;
 			//	Equality
 			case '=':
@@ -3566,11 +3595,19 @@ class PHPExcel_Calculation {
 				break;
 			//	Greater than or equal
 			case '>=':
-				$result = ($operand1 >= $operand2);
+				if ($useLowercaseFirstComparison) {
+					$result = $this->strcmpLowercaseFirst($operand1, $operand2) >= 0;
+				} else {
+					$result = ($operand1 >= $operand2);
+				}
 				break;
 			//	Less than or equal
 			case '<=':
-				$result = ($operand1 <= $operand2);
+				if ($useLowercaseFirstComparison) {
+					$result = $this->strcmpLowercaseFirst($operand1, $operand2) <= 0;
+				} else {
+					$result = ($operand1 <= $operand2);
+				}
 				break;
 			//	Inequality
 			case '<>':
@@ -3585,31 +3622,34 @@ class PHPExcel_Calculation {
 		return TRUE;
 	}	//	function _executeBinaryComparisonOperation()
 
+	/**
+	 * Compare two strings in the same way as strcmp() except that lowercase come before uppercase letters
+	 * @param string $str1
+	 * @param string $str2
+	 * @return integer
+	 */
+	private function strcmpLowercaseFirst($str1, $str2)
+	{
+		$from = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+		$to = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		$inversedStr1 = strtr($str1, $from, $to);
+		$inversedStr2 = strtr($str2, $from, $to);
+
+		return strcmp($inversedStr1, $inversedStr2);
+	}
 
 	private function _executeNumericBinaryOperation($cellID,$operand1,$operand2,$operation,$matrixFunction,&$stack) {
 		//	Validate the two operands
 		if (!$this->_validateBinaryOperand($cellID,$operand1,$stack)) return FALSE;
 		if (!$this->_validateBinaryOperand($cellID,$operand2,$stack)) return FALSE;
 
-		$executeMatrixOperation = FALSE;
 		//	If either of the operands is a matrix, we need to treat them both as matrices
 		//		(converting the other operand to a matrix if need be); then perform the required
 		//		matrix operation
 		if ((is_array($operand1)) || (is_array($operand2))) {
-			//	Ensure that both operands are arrays/matrices
-			$executeMatrixOperation = TRUE;
-			$mSize = array();
-			list($mSize[],$mSize[],$mSize[],$mSize[]) = self::_checkMatrixOperands($operand1,$operand2,2);
+			//	Ensure that both operands are arrays/matrices of the same size
+			self::_checkMatrixOperands($operand1, $operand2, 2);
 
-			//	But if they're both single cell matrices, then we can treat them as simple values
-			if (array_sum($mSize) == 4) {
-				$executeMatrixOperation = FALSE;
-				$operand1 = $operand1[0][0];
-				$operand2 = $operand2[0][0];
-			}
-		}
-
-		if ($executeMatrixOperation) {
 			try {
 				//	Convert operand 1 from a PHP array to a matrix
 				$matrix = new PHPExcel_Shared_JAMA_Matrix($operand1);

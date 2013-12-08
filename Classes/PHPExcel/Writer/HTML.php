@@ -608,7 +608,10 @@ class PHPExcel_Writer_HTML extends PHPExcel_Writer_Abstract implements PHPExcel_
 					}
 
 					$html .= '<div style="position: relative;">';
-					$html .= '<img style="position: absolute; z-index: 1; left: ' . $drawing->getOffsetX() . 'px; top: ' . $drawing->getOffsetY() . 'px; width: ' . $drawing->getWidth() . 'px; height: ' . $drawing->getHeight() . 'px;" src="' . $imageData . '" border="0" />' . PHP_EOL;
+					$html .= '<img style="position: absolute; z-index: 1; left: ' . 
+                        $drawing->getOffsetX() . 'px; top: ' . $drawing->getOffsetY() . 'px; width: ' . 
+                        $drawing->getWidth() . 'px; height: ' . $drawing->getHeight() . 'px;" src="' . 
+                        $imageData . '" border="0" />';
 					$html .= '</div>';
 				}
 			}
@@ -1019,13 +1022,13 @@ class PHPExcel_Writer_HTML extends PHPExcel_Writer_Abstract implements PHPExcel_
 		$html .= $this->_setMargins($pSheet);
 			
 		if (!$this->_useInlineCss) {
-			$gridlines = $pSheet->getShowGridLines() ? ' gridlines' : '';
+			$gridlines = $pSheet->getShowGridlines() ? ' gridlines' : '';
 			$html .= '	<table border="0" cellpadding="0" cellspacing="0" id="sheet' . $sheetIndex . '" class="sheet' . $sheetIndex . $gridlines . '">' . PHP_EOL;
 		} else {
 			$style = isset($this->_cssStyles['table']) ?
 				$this->_assembleCSS($this->_cssStyles['table']) : '';
 
-			if ($this->_isPdf && $pSheet->getShowGridLines()) {
+			if ($this->_isPdf && $pSheet->getShowGridlines()) {
 				$html .= '	<table border="1" cellpadding="1" id="sheet' . $sheetIndex . '" cellspacing="1" style="' . $style . '">' . PHP_EOL;
 			} else {
 				$html .= '	<table border="0" cellpadding="1" id="sheet' . $sheetIndex . '" cellspacing="0" style="' . $style . '">' . PHP_EOL;
@@ -1233,7 +1236,9 @@ class PHPExcel_Writer_HTML extends PHPExcel_Writer_Abstract implements PHPExcel_
 					//	Also apply style from last cell in merge to fix borders -
 					//		relies on !important for non-none border declarations in _createCSSStyleBorder
 					$endCellCoord = PHPExcel_Cell::stringFromColumnIndex($colNum + $colSpan - 1) . ($pRow + $rowSpan);
-					$cssClass .= ' style' . $pSheet->getCell($endCellCoord)->getXfIndex();
+					if (!$this->_useInlineCss) {
+						$cssClass .= ' style' . $pSheet->getCell($endCellCoord)->getXfIndex();
+					}
 				}
 
 				// Write

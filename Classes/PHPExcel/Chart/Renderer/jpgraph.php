@@ -517,19 +517,37 @@ class PHPExcel_Chart_Renderer_jpgraph
 	private function _renderPlotStock($groupID) {
 		$seriesCount = $this->_chart->getPlotArea()->getPlotGroupByIndex($groupID)->getPlotSeriesCount();
 		$plotOrder = $this->_chart->getPlotArea()->getPlotGroupByIndex($groupID)->getPlotOrder();
-		$seriesPlots = array();
 
 		$dataValues = array();
-		//	Loop through each data series in turn
-		for($i = 0; $i < $seriesCount; ++$i) {
-			$dataValuesY = $this->_chart->getPlotArea()->getPlotGroupByIndex($groupID)->getPlotCategoryByIndex($i)->getDataValues();
-			$dataValuesX = $this->_chart->getPlotArea()->getPlotGroupByIndex($groupID)->getPlotValuesByIndex($i)->getDataValues();
-
-			foreach($dataValuesX as $j => $dataValueX)
-			$dataValues[$j][$plotOrder[$i]] = $dataValueX;
+		//	Loop through each data series in turn and build the plot arrays
+		foreach($plotOrder as $i => $v) {
+			$dataValuesX = $this->_chart->getPlotArea()->getPlotGroupByIndex($groupID)->getPlotValuesByIndex($v)->getDataValues();
+			foreach($dataValuesX as $j => $dataValueX) {
+				$dataValues[$plotOrder[$i]][$j] = $dataValueX;
+			}
+		}
+		if(empty($dataValues)) {
+			return;
 		}
 
-		$seriesPlot = new StockPlot($dataValues);
+		$dataValuesPlot = array();
+        // Flatten the plot arrays to a single dimensional array to work with jpgraph
+		for($j = 0; $j < count($dataValues[0]); $j++) {
+			for($i = 0; $i < $seriesCount; $i++) {
+				$dataValuesPlot[] = $dataValues[$i][$j];
+			}
+		}
+
+        // Set the x-axis labels
+        $labelCount = count($this->_chart->getPlotArea()->getPlotGroupByIndex($groupID)->getPlotValuesByIndex(0)->getPointCount());
+		if ($labelCount > 0) {
+			$datasetLabels = $this->_chart->getPlotArea()->getPlotGroupByIndex($groupID)->getPlotCategoryByIndex(0)->getDataValues();
+			$datasetLabels = $this->_formatDataSetLabels($groupID, $datasetLabels, $labelCount);
+			$this->_graph->xaxis->SetTickLabels($datasetLabels);
+		}
+
+		$seriesPlot = new StockPlot($dataValuesPlot);
+		$seriesPlot->SetWidth(20);
 
 		$this->_graph->Add($seriesPlot);
 	}	//	function _renderPlotStock()
@@ -681,9 +699,9 @@ class PHPExcel_Chart_Renderer_jpgraph
 	private function _renderStockChart($groupCount) {
 		require_once('jpgraph_stock.php');
 
-		$this->_renderCartesianPlotArea();
+		$this->_renderCartesianPlotArea('intint');
 
-		for($groupID = 0; $groupID < $groupCount; ++$i) {
+		for($groupID = 0; $groupID < $groupCount; ++$groupID) {
 			$this->_renderPlotStock($groupID);
 		}
 	}	//	function _renderStockChart()

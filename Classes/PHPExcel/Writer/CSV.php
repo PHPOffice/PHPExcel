@@ -56,6 +56,13 @@ class PHPExcel_Writer_CSV extends PHPExcel_Writer_Abstract implements PHPExcel_W
 	private $_enclosure	= '"';
 
 	/**
+	 * Whether the enclosure is optional
+	 *
+	 * @var boolean
+	 */
+	private $_enclosureIsOptional	= false;
+
+	/**
 	 * Line ending
 	 *
 	 * @var string
@@ -187,6 +194,26 @@ class PHPExcel_Writer_CSV extends PHPExcel_Writer_Abstract implements PHPExcel_W
 	}
 
 	/**
+	 * Get whether the enclosure is optional
+	 *
+	 * @return boolean
+	 */
+	public function getEnclosureIsOptional() {
+		return $this->_enclosureIsOptional;
+	}
+
+	/**
+	 * Set whether the enclosure is optional
+	 *
+	 * @param	boolean	$pValue		Make the enclosure optional (i.e. avoid adding enclosure if the delimeter is not present in the cell value)? Defaults to false
+	 * @return PHPExcel_Writer_CSV
+	 */
+	public function setEnclosureIsOptional($pValue = false) {
+		$this->_enclosureIsOptional = $pValue;
+		return $this;
+	}
+
+	/**
 	 * Get line ending
 	 *
 	 * @return string
@@ -293,8 +320,16 @@ class PHPExcel_Writer_CSV extends PHPExcel_Writer_Abstract implements PHPExcel_W
 					$writeDelimiter = true;
 				}
 
+				// Set the enclosure for this cell; if set to optional, do not add the enclosure if the delimeter is not present in the cell value
+				$enclosure = $this->_enclosure;
+				if ($this->_enclosureIsOptional) {
+					if (strpos ($element, $this->_delimiter) === false) {
+						$enclosure = '';
+					}
+				}
+				
 				// Add enclosed string
-				$line .= $this->_enclosure . $element . $this->_enclosure;
+				$line .= $enclosure . $element . $enclosure;
 			}
 
 			// Add line ending

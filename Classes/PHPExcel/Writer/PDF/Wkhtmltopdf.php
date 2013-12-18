@@ -1,45 +1,46 @@
 <?php
 /**
- * PHPExcel
+ *  PHPExcel
  *
- * Copyright (c) 2006 - 2013 PHPExcel
+ *  Copyright (c) 2006 - 2013 PHPExcel
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License as published by the Free Software Foundation; either
+ *  version 2.1 of the License, or (at your option) any later version.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
- * @author      Artur Kozubski <a.kozubski@synerway.pl> - SYNERWAY S.A. (http://synerwaygroup.pl) [Dec 18, 2013 2:13:07 PM]
- * @category    PHPExcel
- * @package     PHPExcel_Writer_PDF
- * @copyright   Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
- * @license     http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
- * @version     $Id: Wkhtmltopdf.php 36 2013-12-18 15:02:10Z akozubski $
+ *  @author      Artur Kozubski <a.kozubski@synerway.pl> - SYNERWAY S.A. (http://synerwaygroup.pl) [Dec 18, 2013 2:13:07 PM]
+ *  @category    PHPExcel
+ *  @package     PHPExcel_Writer_PDF
+ *  @copyright   Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
+ *  @license     http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
+ *  @version     ##VERSION##, ##DATE##
  */
 
 /**
- * PHPExcel_Writer_PDF_Wkhtmltopdf
+ *  PHPExcel_Writer_PDF_Wkhtmltopdf
  *
- * @author      Artur Kozubski <a.kozubski@synerway.pl> - SYNERWAY S.A. (http://synerwaygroup.pl) [Dec 18, 2013 2:13:07 PM]
- * @category    PHPExcel
- * @package     PHPExcel_Writer_PDF
- * @copyright   Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
+ *  @author      Artur Kozubski <a.kozubski@synerway.pl> - SYNERWAY S.A. (http://synerwaygroup.pl) [Dec 18, 2013 2:13:07 PM]
+ *  @category    PHPExcel
+ *  @package     PHPExcel_Writer_PDF
+ *  @copyright   Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
+ *  @todo        Add compatibility with the Windows version of wkhtmltopdf (streams)
  */
 class PHPExcel_Writer_PDF_Wkhtmltopdf extends PHPExcel_Writer_PDF_Core implements PHPExcel_Writer_IWriter
 {
     /**
-     * Create a new PHPExcel_Writer_PDF
+     *  Create a new PHPExcel_Writer_PDF
      *
-     * @param PHPExcel $phpExcel PHPExcel object
+     *  @param PHPExcel $phpExcel PHPExcel object
      */
     public function __construct(PHPExcel $phpExcel)
     {
@@ -47,10 +48,10 @@ class PHPExcel_Writer_PDF_Wkhtmltopdf extends PHPExcel_Writer_PDF_Core implement
     }
 
     /**
-     * Save PHPExcel to file
+     *  Save PHPExcel to file
      *
-     * @param     string     $pFilename   Name of the file to save as
-     * @throws    PHPExcel_Writer_Exception
+     *  @param     string     $pFilename   Name of the file to save as
+     *  @throws    PHPExcel_Writer_Exception
      */
     public function save($pFilename = NULL)
     {

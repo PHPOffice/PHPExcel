@@ -64,6 +64,7 @@ class StringTest extends PHPUnit_Framework_TestCase
 
 	public function testGetCurrencyCode()
 	{
+		PHPExcel_Shared_String::setCurrencyCode(null);
 		$localeconv = localeconv();
 
 		$expectedResult = (!empty($localeconv['currency_symbol'])) ? $localeconv['currency_symbol'] : '$';

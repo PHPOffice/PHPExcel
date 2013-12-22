@@ -8,7 +8,7 @@ php:
   - 5.5
 
 script:
- - phpunit -c ./unitTests/
+ - phpunit -c ./tests/
 
 notifications:
   email: false

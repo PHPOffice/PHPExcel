@@ -2055,11 +2055,11 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 		return $style;
 	}
 
-	private static function boolean($value = NULL)
+	private static function boolean($value = null)
 	{
-		if (is_numeric($value)) {
+		if (is_numeric($value) || is_object($value)) {
 			return (bool) $value;
 		}
-		return ($value === 'true' || $value === 'TRUE') ? TRUE : FALSE;
+		return ($value === 'true' || $value === 'TRUE') ? true : false;
 	}
 }

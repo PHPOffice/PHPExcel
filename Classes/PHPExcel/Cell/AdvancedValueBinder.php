@@ -81,8 +81,15 @@ class PHPExcel_Cell_AdvancedValueBinder extends PHPExcel_Cell_DefaultValueBinder
 
             // Check for fraction
             if (preg_match('/^([+-]?) *([0-9]*)\s?\/\s*([0-9]*)$/', $value, $matches)) {
+                foreach (array($matches[2], $matches[3]) as $value) {
+                    if (!is_numeric($value)) {
+                        return true;
+                    }
+                }
+                
                 // Convert value to number
                 $value = $matches[2] / $matches[3];
+                
                 if ($matches[1] == '-') $value = 0 - $value;
                 $cell->setValueExplicit( (float) $value, PHPExcel_Cell_DataType::TYPE_NUMERIC);
                 // Set style
@@ -90,6 +97,12 @@ class PHPExcel_Cell_AdvancedValueBinder extends PHPExcel_Cell_DefaultValueBinder
                     ->getNumberFormat()->setFormatCode( '??/??' );
                 return true;
             } elseif (preg_match('/^([+-]?)([0-9]*) +([0-9]*)\s?\/\s*([0-9]*)$/', $value, $matches)) {
+                foreach (array($matches[2], $matches[3], $matches[4]) as $value) {
+                    if (!is_numeric($value)) {
+                        return true;
+                    }
+                }
+                
                 // Convert value to number
                 $value = $matches[2] + ($matches[3] / $matches[4]);
                 if ($matches[1] == '-') $value = 0 - $value;

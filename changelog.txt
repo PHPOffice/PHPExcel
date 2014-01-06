@@ -44,6 +44,7 @@ Fixed in develop branch for release v1.8.0:
 - Feature:  (MBaker)                            - Added Horizontal FILL alignment for Excel5 and Excel2007 Readers/Writers, and Horizontal DISTRIBUTED alignment for Excel2007 Reader/Writer
 - Feature:  (trvrnrth)        Work Item GH-261  - Add support for reading protected (RC4 encrypted) .xls files
 - Feature:  (LWol)            Work Item GH-252  - Adding support for macros, Ribbon in Excel 2007
+- Feature:  (EPlaut)          Work Item GH-278  - Automatically fall back to PCLZip if ZipArchive not available
 - General:  (cdhutch)         Work item 20055   - Remove array_shift in ReferenceHelper::insertNewBefore improves column or row delete speed
 - General:  (MBaker)                            - Improve stock chart handling and rendering, with help from Swashata Ghosh
 - General:  (MBaker)                            - Fix to calculation properties for Excel2007 so that the opening application will only recalculate on load if it's actually required

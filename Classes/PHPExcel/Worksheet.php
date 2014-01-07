@@ -2839,6 +2839,16 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
             }
         }
     }
+    
+    public function setCachedHighestColumn($val) {
+        $this->_cachedHighestColumn = $val;
+    }
+    
+    public function setCachedHighestRow($val) {
+        $this->_cachedHighestRow = $val;
+    }
+    
+    
 /**
 	 * Define the code name of the sheet
 	 *

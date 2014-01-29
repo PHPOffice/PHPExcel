@@ -925,6 +925,7 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 										$objConditional->setConditionType((string)$cfRule["type"]);
 										$objConditional->setOperatorType((string)$cfRule["operator"]);
 
+										$objConditional->setPriority((int)$cfRule["priority"]);
 										$objConditional->setStopIfTrue((string)$cfRule["stopIfTrue"]);
 
 										if ((string)$cfRule["text"] != '') {
@@ -938,7 +939,11 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 										} else {
 											$objConditional->addCondition((string)$cfRule->formula);
 										}
-										$objConditional->setStyle(clone $dxfs[intval($cfRule["dxfId"])]);
+
+										// the rule may unset formatting in which case dxfId will not be present
+										if(isset($cfRule["dxfId"]])){
+											$objConditional->setStyle(clone $dxfs[(int)$cfRule["dxfId"]]);
+										}
 										$conditionalStyles[] = $objConditional;
 									}
 

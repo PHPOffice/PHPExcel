@@ -177,6 +177,8 @@ class PHPExcel_Style_Conditional implements PHPExcel_IComparable
     /**
      * Get Stop If True
      *
+     * Whether to stop processing conditional formatting rules for a given cell if this rule evaluates to true.
+     *
      * @return string
      */
      public function getStopIfTrue() {
@@ -196,6 +198,28 @@ class PHPExcel_Style_Conditional implements PHPExcel_IComparable
 	    // treat all unknown as "unset"
 	    $this->_stopIfTrue = '';
 	}
+	return $this;
+    }
+
+    /**
+     * Get Priority
+     *
+     * Priority is the order in which conditional formatting rules will apply to the affected range(s). Lower priority values run first.
+     *
+     * @return int
+     */
+     public function getPriority() {
+     	 return $this->_priority;
+     }
+
+    /**
+     * Set Priority
+     *
+     * @param int $pValue
+     * @return PHPExcel_Style_Conditional
+     */
+    public function setStopIfTrue($pValue = 0) {
+    	$this->_priority = $pValue;
 	return $this;
     }
 

@@ -346,6 +346,9 @@ class PHPExcel_Reader_OOCalc extends PHPExcel_Reader_Abstract implements PHPExce
 
 //		echo '<h1>Meta Information</h1>';
 		$xml = simplexml_load_string($zip->getFromName("meta.xml"));
+//Fatal Error is generates if you accidentally load a xls file 
+//but select PHPExcel_IOFactory::CreateReader("OOcalc")
+if (is_object($xml) {
 		$namespacesMeta = $xml->getNamespaces(true);
 //		echo '<pre>';
 //		print_r($namespacesMeta);
@@ -687,6 +690,8 @@ class PHPExcel_Reader_OOCalc extends PHPExcel_Reader_Abstract implements PHPExce
 				}
 				++$worksheetID;
 			}
+// return here
+}
 		}
 
 		// Return

@@ -175,4 +175,24 @@ class PHPExcel_Shared_File
 		return realpath(sys_get_temp_dir());
 	}
 
+	/**
+	 * Create a unique temporary directory.
+	 *
+	 * @return string
+	 */
+	public static function mkdtemp($prefix)
+	{
+		$tempname = tempnam(PHPExcel_Shared_File::sys_get_temp_dir(), $prefix);
+
+		if (file_exists($tempname)) {
+			unlink($tempname);
+		}
+
+		$ret = mkdir($tempname, 0700);
+		if (!$ret) {
+			throw new Exception("Error creating directory: " . $tempname);
+		}
+
+		return $tempname;
+	}
 }

@@ -49,6 +49,7 @@ class PHPExcel_Settings
     const PDF_RENDERER_TCPDF		= 'tcPDF';
     const PDF_RENDERER_DOMPDF		= 'DomPDF';
     const PDF_RENDERER_MPDF 		= 'mPDF';
+    const PDF_RENDERER_WKHTMLTOPDF	= 'Wkhtmltopdf';
 
 
     private static $_chartRenderers = array(
@@ -59,6 +60,7 @@ class PHPExcel_Settings
         self::PDF_RENDERER_TCPDF,
         self::PDF_RENDERER_DOMPDF,
         self::PDF_RENDERER_MPDF,
+        self::PDF_RENDERER_WKHTMLTOPDF,
     );
 
 

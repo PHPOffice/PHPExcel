@@ -134,6 +134,10 @@ class PHPExcel_Settings
      */
     public static function getZipClass()
     {
+        // Auto fall back to PCLZip if ZipArchive not available
+        if (!class_exists(self::$_zipClass)) {
+            self::$_zipClass = self::PCLZIP;
+        }
         return self::$_zipClass;
     } // function getZipClass()
 

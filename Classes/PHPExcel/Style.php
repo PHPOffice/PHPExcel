@@ -99,6 +99,13 @@ class PHPExcel_Style extends PHPExcel_Style_Supervisor implements PHPExcel_IComp
     protected $_quotePrefix = false;
 
     /**
+     * Previously created styles indexed by xfIndex and hash of the array containing style information
+     *
+     * @var PHPExcel_Style[][]
+     */
+    protected $_appliedStyles;
+
+    /**
      * Create a new PHPExcel_Style
      *
      * @param boolean $isSupervisor Flag indicating if this is a supervisor or not
@@ -218,6 +225,9 @@ class PHPExcel_Style extends PHPExcel_Style_Supervisor implements PHPExcel_IComp
     {
         if (is_array($pStyles)) {
             if ($this->_isSupervisor) {
+                // Performance optimization
+                $pStylesHash = md5(serialize($pStyles));
+                $activeSheet = $this->getActiveSheet();
 
                 $pRange = $this->getSelectedCells();
 
@@ -368,7 +378,7 @@ class PHPExcel_Style extends PHPExcel_Style_Supervisor implements PHPExcel_IComp
                             }
 
                             // apply region style to region by calling applyFromArray() in simple mode
-                            $this->getActiveSheet()->getStyle($range)->applyFromArray($regionStyles, false);
+                            $activeSheet->getStyle($range)->applyFromArray($regionStyles, false);
                         }
                     }
                     return $this;
@@ -390,17 +400,17 @@ class PHPExcel_Style extends PHPExcel_Style_Supervisor implements PHPExcel_IComp
                     case 'COLUMN':
                         $oldXfIndexes = array();
                         for ($col = $rangeStart[0]; $col <= $rangeEnd[0]; ++$col) {
-                            $oldXfIndexes[$this->getActiveSheet()->getColumnDimensionByColumn($col)->getXfIndex()] = true;
+                            $oldXfIndexes[$activeSheet->getColumnDimensionByColumn($col)->getXfIndex()] = true;
                         }
                         break;
 
                     case 'ROW':
                         $oldXfIndexes = array();
                         for ($row = $rangeStart[1]; $row <= $rangeEnd[1]; ++$row) {
-                            if ($this->getActiveSheet()->getRowDimension($row)->getXfIndex() == null) {
+                            if ($activeSheet->getRowDimension($row)->getXfIndex() == null) {
                                 $oldXfIndexes[0] = true; // row without explicit style should be formatted based on default style
                             } else {
-                                $oldXfIndexes[$this->getActiveSheet()->getRowDimension($row)->getXfIndex()] = true;
+                                $oldXfIndexes[$activeSheet->getRowDimension($row)->getXfIndex()] = true;
                             }
                         }
                         break;
@@ -409,18 +419,23 @@ class PHPExcel_Style extends PHPExcel_Style_Supervisor implements PHPExcel_IComp
                         $oldXfIndexes = array();
                         for ($col = $rangeStart[0]; $col <= $rangeEnd[0]; ++$col) {
                             for ($row = $rangeStart[1]; $row <= $rangeEnd[1]; ++$row) {
-                                $oldXfIndexes[$this->getActiveSheet()->getCellByColumnAndRow($col, $row)->getXfIndex()] = true;
+                                $oldXfIndexes[$activeSheet->getCellByColumnAndRow($col, $row)->getXfIndex()] = true;
                             }
                         }
                         break;
                 }
 
                 // clone each of the affected styles, apply the style array, and add the new styles to the workbook
-                $workbook = $this->getActiveSheet()->getParent();
+                $workbook = $activeSheet->getParent();
                 foreach ($oldXfIndexes as $oldXfIndex => $dummy) {
                     $style = $workbook->getCellXfByIndex($oldXfIndex);
-                    $newStyle = clone $style;
-                    $newStyle->applyFromArray($pStyles);
+                    if (isset($this->_appliedStyles[$oldXfIndex][$pStylesHash])) {
+                        $newStyle = $this->_appliedStyles[$oldXfIndex][$pStylesHash];
+                    } else {
+                        $newStyle = clone $style;
+                        $newStyle->applyFromArray($pStyles);
+                        $this->_appliedStyles[$oldXfIndex][$pStylesHash] = $newStyle;
+                    }
 
                     if ($existingStyle = $workbook->getCellXfByHashCode($newStyle->getHashCode())) {
                         // there is already such cell Xf in our collection
@@ -436,7 +451,7 @@ class PHPExcel_Style extends PHPExcel_Style_Supervisor implements PHPExcel_IComp
                 switch ($selectionType) {
                     case 'COLUMN':
                         for ($col = $rangeStart[0]; $col <= $rangeEnd[0]; ++$col) {
-                            $columnDimension = $this->getActiveSheet()->getColumnDimensionByColumn($col);
+                            $columnDimension = $activeSheet->getColumnDimensionByColumn($col);
                             $oldXfIndex = $columnDimension->getXfIndex();
                             $columnDimension->setXfIndex($newXfIndexes[$oldXfIndex]);
                         }
@@ -444,7 +459,7 @@ class PHPExcel_Style extends PHPExcel_Style_Supervisor implements PHPExcel_IComp
 
                     case 'ROW':
                         for ($row = $rangeStart[1]; $row <= $rangeEnd[1]; ++$row) {
-                            $rowDimension = $this->getActiveSheet()->getRowDimension($row);
+                            $rowDimension = $activeSheet->getRowDimension($row);
                             $oldXfIndex = $rowDimension->getXfIndex() === null ?
                                 0 : $rowDimension->getXfIndex(); // row without explicit style should be formatted based on default style
                             $rowDimension->setXfIndex($newXfIndexes[$oldXfIndex]);
@@ -454,7 +469,7 @@ class PHPExcel_Style extends PHPExcel_Style_Supervisor implements PHPExcel_IComp
                     case 'CELL':
                         for ($col = $rangeStart[0]; $col <= $rangeEnd[0]; ++$col) {
                             for ($row = $rangeStart[1]; $row <= $rangeEnd[1]; ++$row) {
-                                $cell = $this->getActiveSheet()->getCellByColumnAndRow($col, $row);
+                                $cell = $activeSheet->getCellByColumnAndRow($col, $row);
                                 $oldXfIndex = $cell->getXfIndex();
                                 $cell->setXfIndex($newXfIndexes[$oldXfIndex]);
                             }

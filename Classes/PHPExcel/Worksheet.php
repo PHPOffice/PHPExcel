@@ -1361,7 +1361,8 @@ class Worksheet implements IComparable
     public function getStyle($pCellCoordinate = 'A1')
     {
         // set this sheet as active
-        $this->_parent->setActiveSheetIndex($this->_parent->getIndex($this));
+        #$this->_parent->setActiveSheetIndex($this->_parent->getIndex($this));
+        #will be activated every time, once is enough! 
 
         // set cell coordinate as active
         $this->setSelectedCells($pCellCoordinate);
@@ -2227,9 +2228,7 @@ class Worksheet implements IComparable
             if (isset($this->_comments[$pCellCoordinate])) {
                 return $this->_comments[$pCellCoordinate];
             } else {
-                $newComment = new Comment();
-                $this->_comments[$pCellCoordinate] = $newComment;
-                return $newComment;
+                return $this->_comments[$pCellCoordinate] = new Comment();
             }
         }
     }
@@ -2628,8 +2627,7 @@ class Worksheet implements IComparable
         }
 
         // else create hyperlink
-        $this->_hyperlinkCollection[$pCellCoordinate] = new Cell_Hyperlink();
-        return $this->_hyperlinkCollection[$pCellCoordinate];
+        return $this->_hyperlinkCollection[$pCellCoordinate] = new Cell_Hyperlink();
     }
 
     /**

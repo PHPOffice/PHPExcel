@@ -26,6 +26,9 @@
         "ext-xml": "*",
         "ext-xmlwriter": "*"
     },
+    "require-dev": {
+        "phpunit/phpunit": "4.0.*"
+    },    
     "recommend": {
         "ext-zip": "*",
         "ext-gd2": "*"

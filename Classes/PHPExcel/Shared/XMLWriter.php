@@ -46,12 +46,16 @@ class PHPExcel_Shared_XMLWriter extends XMLWriter {
 	const STORAGE_MEMORY	= 1;
 	const STORAGE_DISK		= 2;
 
+	const FLUSH_FREQUENCY = 100;
+
 	/**
 	 * Temporary filename
 	 *
 	 * @var string
 	 */
 	private $_tempFileName = '';
+
+	private $counter;
 
 	/**
 	 * Create a new PHPExcel_Shared_XMLWriter instance
@@ -72,6 +76,7 @@ class PHPExcel_Shared_XMLWriter extends XMLWriter {
 			// Open storage
 			if ($this->openUri($this->_tempFileName) === false) {
 				// Fallback to memory...
+				$this->_tempFileName = '';
 				$this->openMemory();
 			}
 		}
@@ -80,6 +85,7 @@ class PHPExcel_Shared_XMLWriter extends XMLWriter {
 		if (DEBUGMODE_ENABLED) {
 			$this->setIndent(true);
 		}
+		$this->counter = self::FLUSH_FREQUENCY;
 	}
 
 	/**
@@ -90,6 +96,43 @@ class PHPExcel_Shared_XMLWriter extends XMLWriter {
 		if ($this->_tempFileName != '') {
 			@unlink($this->_tempFileName);
 		}
+	}
+
+	public function flush($empty=true)
+	{
+		parent::flush($empty);
+		$this->counter = self::FLUSH_FREQUENCY;
+	}
+
+	private function flushIfNecessary()
+	{
+		if ($this->_tempFileName == '')
+			return;
+
+		--$this->counter;
+		if ($this->counter <= 0)
+			$this->flush();
+	}
+
+	public function endElement()
+	{
+		$ret = parent::endElement();
+		$this->flushIfNecessary();
+		return $ret;
+	}
+
+	public function writeElement($name, $content=null)
+	{
+		$ret = parent::writeElement($name, $content);
+		$this->flushIfNecessary();
+		return $ret;
+	}
+
+	public function writeAttribute($name, $value)
+	{
+		$ret = parent::writeAttribute($name, $value);
+		$this->flushIfNecessary();
+		return $ret;
 	}
 
 	/**

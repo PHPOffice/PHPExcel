@@ -133,10 +133,11 @@ class PHPExcel_Writer_Excel2007_Theme extends PHPExcel_Writer_Excel2007_WriterPa
 	 * Write theme to XML format
 	 *
 	 * @param 	PHPExcel	$pPHPExcel
-	 * @return 	string 		XML Output
+	 * @param	ZipArchive	$objZip
+	 * @param	string		$filename
 	 * @throws 	PHPExcel_Writer_Exception
 	 */
-	public function writeTheme(PHPExcel $pPHPExcel = null)
+	public function addThemeToZip(PHPExcel $pPHPExcel, $objZip, $filename)
 	{
 			// Create XML writer
 			$objWriter = null;
@@ -809,8 +810,8 @@ class PHPExcel_Writer_Excel2007_Theme extends PHPExcel_Writer_Excel2007_WriterPa
 
 			$objWriter->endElement();
 
-			// Return
-			return $objWriter->getData();
+			// Add the generated file to the Zip file.
+			$this->addXMLToZip($objWriter, $objZip, $filename);
 	}
 
 	/**

@@ -39,10 +39,11 @@ class PHPExcel_Writer_Excel2007_RelsRibbon extends PHPExcel_Writer_Excel2007_Wri
 	 * Write relationships for additional objects of custom UI (ribbon)
 	 *
 	 * @param 	PHPExcel	$pPHPExcel
-	 * @return 	string 		XML Output
+	 * @param	ZipArchive	$objZip
+	 * @param	string		$filename
 	 * @throws 	PHPExcel_Writer_Exception
 	 */
-	public function writeRibbonRelationships(PHPExcel $pPHPExcel = null){
+	public function addRibbonRelationshipsToZip(PHPExcel $pPHPExcel, $objZip, $filename) {
 		// Create XML writer
 		$objWriter = null;
 		if ($this->getParentWriter()->getUseDiskCaching()) {
@@ -69,9 +70,8 @@ class PHPExcel_Writer_Excel2007_RelsRibbon extends PHPExcel_Writer_Excel2007_Wri
 		}
 		$objWriter->endElement();//Relationships
 
-		// Return
-		return $objWriter->getData();
-
+		// Add the generated file to the Zip file.
+		$this->addXMLToZip($objWriter, $objZip, $filename);
 	}
 
 }

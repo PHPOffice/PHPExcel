@@ -78,4 +78,16 @@ abstract class PHPExcel_Writer_Excel2007_WriterPart
 		}
 	}
 
+	protected function addXMLToZip($objWriter, $objZip, $filename) {
+		// Add the generated file to the Zip file.
+		$tempFileName = $objWriter->getFileName();
+
+		if ($tempFileName) {
+			$objZip->addFile($tempFileName, $filename);
+			$this->getParentWriter()->getTempFileTracker()->registerFile($tempFileName);
+		}
+		else {
+			$objZip->addFromString($filename, $objWriter->getData());
+		}
+	}
 }

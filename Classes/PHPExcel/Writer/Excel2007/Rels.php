@@ -39,10 +39,11 @@ class PHPExcel_Writer_Excel2007_Rels extends PHPExcel_Writer_Excel2007_WriterPar
 	 * Write relationships to XML format
 	 *
 	 * @param 	PHPExcel	$pPHPExcel
-	 * @return 	string 		XML Output
+	 * @param	ZipArchive	$objZip
+	 * @param	string		$filename
 	 * @throws 	PHPExcel_Writer_Exception
 	 */
-	public function writeRelationships(PHPExcel $pPHPExcel = null)
+	public function addRelationshipsToZip(PHPExcel $pPHPExcel, $objZip, $filename)
 	{
 		// Create XML writer
 		$objWriter = null;
@@ -106,18 +107,19 @@ class PHPExcel_Writer_Excel2007_Rels extends PHPExcel_Writer_Excel2007_WriterPar
 
 		$objWriter->endElement();
 
-		// Return
-		return $objWriter->getData();
+		// Add the generated file to the Zip file.
+		$this->addXMLToZip($objWriter, $objZip, $filename);
 	}
 
 	/**
 	 * Write workbook relationships to XML format
 	 *
 	 * @param 	PHPExcel	$pPHPExcel
-	 * @return 	string 		XML Output
+	 * @param	ZipArchive	$objZip
+	 * @param	string		$filename
 	 * @throws 	PHPExcel_Writer_Exception
 	 */
-	public function writeWorkbookRelationships(PHPExcel $pPHPExcel = null)
+	public function addWorkbookRelationshipsToZip(PHPExcel $pPHPExcel, $objZip, $filename)
 	{
 		// Create XML writer
 		$objWriter = null;
@@ -182,8 +184,8 @@ class PHPExcel_Writer_Excel2007_Rels extends PHPExcel_Writer_Excel2007_WriterPar
 
 		$objWriter->endElement();
 
-		// Return
-		return $objWriter->getData();
+		// Add the generated file to the Zip file.
+		$this->addXMLToZip($objWriter, $objZip, $filename);
 	}
 
 	/**
@@ -194,12 +196,13 @@ class PHPExcel_Writer_Excel2007_Rels extends PHPExcel_Writer_Excel2007_WriterPar
 	 *  rId_hyperlink_x 	- Hyperlinks
 	 *
 	 * @param 	PHPExcel_Worksheet	$pWorksheet
+	 * @param	ZipArchive			$objZip
+	 * @param	string				$filename
 	 * @param 	int					$pWorksheetId
 	 * @param	boolean				$includeCharts	Flag indicating if we should write charts
-	 * @return 	string 				XML Output
 	 * @throws 	PHPExcel_Writer_Exception
 	 */
-	public function writeWorksheetRelationships(PHPExcel_Worksheet $pWorksheet = null, $pWorksheetId = 1, $includeCharts = FALSE)
+	public function addWorksheetRelationshipsToZip(PHPExcel_Worksheet $pWorksheet, $objZip, $filename, $pWorksheetId = 1, $includeCharts = FALSE)
 	{
 		// Create XML writer
 		$objWriter = null;
@@ -295,8 +298,8 @@ class PHPExcel_Writer_Excel2007_Rels extends PHPExcel_Writer_Excel2007_WriterPar
 
 		$objWriter->endElement();
 
-		// Return
-		return $objWriter->getData();
+		// Add the generated file to the Zip file.
+		$this->addXMLToZip($objWriter, $objZip, $filename);
 	}
 
 	/**
@@ -304,11 +307,12 @@ class PHPExcel_Writer_Excel2007_Rels extends PHPExcel_Writer_Excel2007_WriterPar
 	 *
 	 * @param 	PHPExcel_Worksheet	$pWorksheet
 	 * @param	int					&$chartRef		Chart ID
+	 * @param	ZipArchive			$objZip
+	 * @param	string				$filename
 	 * @param	boolean				$includeCharts	Flag indicating if we should write charts
-	 * @return 	string 				XML Output
 	 * @throws 	PHPExcel_Writer_Exception
 	 */
-	public function writeDrawingRelationships(PHPExcel_Worksheet $pWorksheet = null, &$chartRef, $includeCharts = FALSE)
+	public function addDrawingRelationshipsToZip(PHPExcel_Worksheet $pWorksheet = null, &$chartRef, $objZip, $filename, $includeCharts = FALSE)
 	{
 		// Create XML writer
 		$objWriter = null;
@@ -361,18 +365,19 @@ class PHPExcel_Writer_Excel2007_Rels extends PHPExcel_Writer_Excel2007_WriterPar
 
 		$objWriter->endElement();
 
-		// Return
-		return $objWriter->getData();
+		// Add the generated file to the Zip file.
+		$this->addXMLToZip($objWriter, $objZip, $filename);
 	}
 
 	/**
 	 * Write header/footer drawing relationships to XML format
 	 *
-	 * @param 	PHPExcel_Worksheet			$pWorksheet
-	 * @return 	string 						XML Output
+	 * @param 	PHPExcel_Worksheet	$pWorksheet
+	 * @param	ZipArchive			$objZip
+	 * @param	string				$filename
 	 * @throws 	PHPExcel_Writer_Exception
 	 */
-	public function writeHeaderFooterDrawingRelationships(PHPExcel_Worksheet $pWorksheet = null)
+	public function addHeaderFooterDrawingRelationshipsToZip(PHPExcel_Worksheet $pWorksheet, $objZip, $filename)
 	{
 		// Create XML writer
 		$objWriter = null;
@@ -402,8 +407,8 @@ class PHPExcel_Writer_Excel2007_Rels extends PHPExcel_Writer_Excel2007_WriterPar
 
 		$objWriter->endElement();
 
-		// Return
-		return $objWriter->getData();
+		// Add the generated file to the Zip file.
+		$this->addXMLToZip($objWriter, $objZip, $filename);
 	}
 
 	/**

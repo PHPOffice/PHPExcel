@@ -39,10 +39,11 @@ class PHPExcel_Writer_Excel2007_RelsVBA extends PHPExcel_Writer_Excel2007_Writer
 	 * Write relationships for a signed VBA Project
 	 *
 	 * @param 	PHPExcel	$pPHPExcel
-	 * @return 	string 		XML Output
+	 * @param	ZipArchive	$objZip
+	 * @param	string		$filename
 	 * @throws 	PHPExcel_Writer_Exception
 	 */
-	public function writeVBARelationships(PHPExcel $pPHPExcel = null){
+	public function addVBARelationshipsToZip(PHPExcel $pPHPExcel, $objZip, $filename) {
 		// Create XML writer
 		$objWriter = null;
 		if ($this->getParentWriter()->getUseDiskCaching()) {
@@ -64,9 +65,8 @@ class PHPExcel_Writer_Excel2007_RelsVBA extends PHPExcel_Writer_Excel2007_Writer
 		$objWriter->endElement();//Relationship
 		$objWriter->endElement();//Relationships
 
-		// Return
-		return $objWriter->getData();
-
+		// Add the generated file to the Zip file.
+		$this->addXMLToZip($objWriter, $objZip, $filename);
 	}
 
 }

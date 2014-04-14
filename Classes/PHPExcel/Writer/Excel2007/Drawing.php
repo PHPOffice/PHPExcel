@@ -40,11 +40,12 @@ class PHPExcel_Writer_Excel2007_Drawing extends PHPExcel_Writer_Excel2007_Writer
 	 *
 	 * @param 	PHPExcel_Worksheet	$pWorksheet
 	 * @param	int					&$chartRef		Chart ID
+	 * @param	ZipArchive			$objZip
+	 * @param	string				$filename
 	 * @param	boolean				$includeCharts	Flag indicating if we should include drawing details for charts
-	 * @return 	string 				XML Output
 	 * @throws 	PHPExcel_Writer_Exception
 	 */
-	public function writeDrawings(PHPExcel_Worksheet $pWorksheet = null, &$chartRef, $includeCharts = FALSE)
+	public function addDrawingsToZip(PHPExcel_Worksheet $pWorksheet, &$chartRef, $objZip, $filename, $includeCharts = FALSE)
 	{
 		// Create XML writer
 		$objWriter = null;
@@ -85,8 +86,8 @@ class PHPExcel_Writer_Excel2007_Drawing extends PHPExcel_Writer_Excel2007_Writer
 
 		$objWriter->endElement();
 
-		// Return
-		return $objWriter->getData();
+		// Add the generated file to the Zip file.
+		$this->addXMLToZip($objWriter, $objZip, $filename);
 	}
 
 	/**
@@ -382,11 +383,12 @@ class PHPExcel_Writer_Excel2007_Drawing extends PHPExcel_Writer_Excel2007_Writer
 	/**
 	 * Write VML header/footer images to XML format
 	 *
-	 * @param 	PHPExcel_Worksheet				$pWorksheet
-	 * @return 	string 								XML Output
+	 * @param 	PHPExcel_Worksheet	$pWorksheet
+	 * @param	ZipArchive			$objZip
+	 * @param	string				$filename
 	 * @throws 	PHPExcel_Writer_Exception
 	 */
-	public function writeVMLHeaderFooterImages(PHPExcel_Worksheet $pWorksheet = null)
+	public function addVMLHeaderFooterImagesToZip(PHPExcel_Worksheet $pWorksheet, $objZip, $filename)
 	{
 		// Create XML writer
 		$objWriter = null;
@@ -522,8 +524,8 @@ class PHPExcel_Writer_Excel2007_Drawing extends PHPExcel_Writer_Excel2007_Writer
 
 		$objWriter->endElement();
 
-		// Return
-		return $objWriter->getData();
+		// Add the generated file to the Zip file.
+		$this->addXMLToZip($objWriter, $objZip, $filename);
 	}
 
 	/**

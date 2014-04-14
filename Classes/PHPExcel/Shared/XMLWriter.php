@@ -93,9 +93,9 @@ class PHPExcel_Shared_XMLWriter extends XMLWriter {
 	 */
 	public function __destruct() {
 		// Unlink temporary files
-		if ($this->_tempFileName != '') {
-			@unlink($this->_tempFileName);
-		}
+#		if ($this->_tempFileName != '') {
+#			@unlink($this->_tempFileName);
+#		}
 	}
 
 	public function flush($empty=true)
@@ -147,6 +147,15 @@ class PHPExcel_Shared_XMLWriter extends XMLWriter {
 			$this->flush();
 			return file_get_contents($this->_tempFileName);
 		}
+	}
+
+	/**
+	 * Get the temporary file name.
+	 *
+	 * @return filename;
+	 */
+	public function getFileName() {
+		return $this->_tempFileName;
 	}
 
 	/**

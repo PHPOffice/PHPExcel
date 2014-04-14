@@ -252,7 +252,7 @@ class PHPExcel_Writer_Excel2007 extends PHPExcel_Writer_Abstract implements PHPE
 			}
 
 			// Add [Content_Types].xml to ZIP file
-			$objZip->addFromString('[Content_Types].xml', 			$this->getWriterPart('ContentTypes')->writeContentTypes($this->_spreadSheet, $this->_includeCharts));
+			$this->getWriterPart('ContentTypes')->addContentTypesToZip($this->_spreadSheet, $objZip, '[Content_Types].xml', $this->_includeCharts);
 
 			//if hasMacros, add the vbaProject.bin file, Certificate file(if exists)
 			if($this->_spreadSheet->hasMacros()){
@@ -262,8 +262,7 @@ class PHPExcel_Writer_Excel2007 extends PHPExcel_Writer_Abstract implements PHPE
 					if($this->_spreadSheet->hasMacrosCertificate()){//signed macros ?
 						// Yes : add the certificate file and the related rels file
 						$objZip->addFromString('xl/vbaProjectSignature.bin', $this->_spreadSheet->getMacrosCertificate());
-						$objZip->addFromString('xl/_rels/vbaProject.bin.rels',
-							$this->getWriterPart('RelsVBA')->writeVBARelationships($this->_spreadSheet));
+						$this->getWriterPart('RelsVBA')->addVBARelationshipsToZip($this->_spreadSheet, $objZip, 'xl/_rels/vbaProject.bin.rels');
 					}
 				}
 			}
@@ -278,44 +277,42 @@ class PHPExcel_Writer_Excel2007 extends PHPExcel_Writer_Abstract implements PHPE
 						$objZip->addFromString($tmpRootPath.$aPath, $aContent);
 					}
 					//the rels for files
-					$objZip->addFromString($tmpRootPath.'_rels/'.basename($tmpRibbonTarget).'.rels',
-						$this->getWriterPart('RelsRibbonObjects')->writeRibbonRelationships($this->_spreadSheet));
+					$this->getWriterPart('RelsRibbonObjects')->addRibbonRelationshipsToZip($this->_spreadSheet, $objZip,
+																						   $tmpRootPath.'_rels/'.basename($tmpRibbonTarget).'.rels');
 				}
 			}
 			
 			// Add relationships to ZIP file
-			$objZip->addFromString('_rels/.rels', 					$this->getWriterPart('Rels')->writeRelationships($this->_spreadSheet));
-			$objZip->addFromString('xl/_rels/workbook.xml.rels', 	$this->getWriterPart('Rels')->writeWorkbookRelationships($this->_spreadSheet));
+			$this->getWriterPart('Rels')->addRelationshipsToZip($this->_spreadSheet, $objZip, '_rels/.rels');
+			$this->getWriterPart('Rels')->addWorkbookRelationshipsToZip($this->_spreadSheet, $objZip, 'xl/_rels/workbook.xml.rels');
 
 			// Add document properties to ZIP file
-			$objZip->addFromString('docProps/app.xml', 				$this->getWriterPart('DocProps')->writeDocPropsApp($this->_spreadSheet));
-			$objZip->addFromString('docProps/core.xml', 			$this->getWriterPart('DocProps')->writeDocPropsCore($this->_spreadSheet));
-			$customPropertiesPart = $this->getWriterPart('DocProps')->writeDocPropsCustom($this->_spreadSheet);
-			if ($customPropertiesPart !== NULL) {
-				$objZip->addFromString('docProps/custom.xml', 		$customPropertiesPart);
-			}
+			$this->getWriterPart('DocProps')->addDocPropsAppToZip($this->_spreadSheet, $objZip, 'docProps/app.xml');
+			$this->getWriterPart('DocPRops')->addDocPropsCoreToZip($this->_spreadSheet, $objZip, 'docProps/core.xml');
+			$this->getWriterPart('DocProps')->addDocPropsCustomToZip($this->_spreadSheet, $objZip, 'docProps/custom.xml');
 
 			// Add theme to ZIP file
-			$objZip->addFromString('xl/theme/theme1.xml', 			$this->getWriterPart('Theme')->writeTheme($this->_spreadSheet));
+			$this->getWriterPart('Theme')->addThemeToZip($this->_spreadSheet, $objZip, 'xl/theme/theme1.xml');
 
 			// Add string table to ZIP file
-			$objZip->addFromString('xl/sharedStrings.xml', 			$this->getWriterPart('StringTable')->writeStringTable($this->_stringTable));
+			$this->getWriterPart('StringTable')->addStringTableToZip($this->_stringTable, $objZip, 'xl/sharedStrings.xml');
 
 			// Add styles to ZIP file
-			$objZip->addFromString('xl/styles.xml', 				$this->getWriterPart('Style')->writeStyles($this->_spreadSheet));
+			$this->getWriterPart('Style')->addStylesToZip($this->_spreadSheet, $objZip, 'xl/styles.xml');
 
 			// Add workbook to ZIP file
-			$objZip->addFromString('xl/workbook.xml', 				$this->getWriterPart('Workbook')->writeWorkbook($this->_spreadSheet, $this->_preCalculateFormulas));
+			$this->getWriterPart('Workbook')->addWorkbookToZip($this->_spreadSheet, $objZip, 'xl/workbook.xml', $this->_preCalculateFormulas);
 
 			$chartCount = 0;
 			// Add worksheets
 			for ($i = 0; $i < $this->_spreadSheet->getSheetCount(); ++$i) {
-				$objZip->addFromString('xl/worksheets/sheet' . ($i + 1) . '.xml', $this->getWriterPart('Worksheet')->writeWorksheet($this->_spreadSheet->getSheet($i), $this->_stringTable, $this->_includeCharts));
+				$this->getWriterPart('Worksheet')->addWorksheetToZip($this->_spreadSheet->getSheet($i), $objZip, 'xl/worksheets/sheet'.($i+1).'.xml',
+				                                                     $this->_stringTable, $this->_includeCharts);
 				if ($this->_includeCharts) {
 					$charts = $this->_spreadSheet->getSheet($i)->getChartCollection();
 					if (count($charts) > 0) {
 						foreach($charts as $chart) {
-							$objZip->addFromString('xl/charts/chart' . ($chartCount + 1) . '.xml', $this->getWriterPart('Chart')->writeChart($chart));
+							$this->getWriterPart('Chart')->addChartToZip($chart, $objZip, 'xl/charts/chart' . ($chartCount + 1) . '.xml');
 							$chartCount++;
 						}
 					}
@@ -327,7 +324,9 @@ class PHPExcel_Writer_Excel2007 extends PHPExcel_Writer_Abstract implements PHPE
 			for ($i = 0; $i < $this->_spreadSheet->getSheetCount(); ++$i) {
 
 				// Add relationships
-				$objZip->addFromString('xl/worksheets/_rels/sheet' . ($i + 1) . '.xml.rels', 	$this->getWriterPart('Rels')->writeWorksheetRelationships($this->_spreadSheet->getSheet($i), ($i + 1), $this->_includeCharts));
+				$this->getWriterPart('Rels')->addWorksheetRelationshipsToZip($this->_spreadSheet->getSheet($i), $objZip,
+																			 'xl/worksheets/_rels/sheet' . ($i + 1) . '.xml.rels', 
+																			 ($i + 1), $this->_includeCharts);
 
 				$drawings = $this->_spreadSheet->getSheet($i)->getDrawingCollection();
 				$drawingCount = count($drawings);
@@ -338,28 +337,30 @@ class PHPExcel_Writer_Excel2007 extends PHPExcel_Writer_Abstract implements PHPE
 				// Add drawing and image relationship parts
 				if (($drawingCount > 0) || ($chartCount > 0)) {
 					// Drawing relationships
-					$objZip->addFromString('xl/drawings/_rels/drawing' . ($i + 1) . '.xml.rels', $this->getWriterPart('Rels')->writeDrawingRelationships($this->_spreadSheet->getSheet($i),$chartRef1, $this->_includeCharts));
+					$this->getWriterPart('Rels')->addDrawingRelationshipsToZip($this->_spreadSheet->getSheet($i), $chartRef1, $objZip,
+																			   'xl/drawings/_rels/drawing' . ($i + 1) . '.xml.rels', $this->_includeCharts);
 
 					// Drawings
-					$objZip->addFromString('xl/drawings/drawing' . ($i + 1) . '.xml', $this->getWriterPart('Drawing')->writeDrawings($this->_spreadSheet->getSheet($i),$chartRef2,$this->_includeCharts));
+					$this->getWriterPart('Drawing')->addDrawingsToZip($this->_spreadSheet->getSheet($i), $chartRef2, $objZip,
+																	  'xl/drawings/drawing' . ($i + 1) . '.xml', $this->_includeCharts);
 				}
 
 				// Add comment relationship parts
 				if (count($this->_spreadSheet->getSheet($i)->getComments()) > 0) {
 					// VML Comments
-					$objZip->addFromString('xl/drawings/vmlDrawing' . ($i + 1) . '.vml', $this->getWriterPart('Comments')->writeVMLComments($this->_spreadSheet->getSheet($i)));
+					$this->getWriterPart('Comments')->addVMLCommentsToZip($this->_spreadSheet->getSheet($i), $objZip, 'xl/drawings/vmlDrawing' . ($i + 1) . '.vml');
 
 					// Comments
-					$objZip->addFromString('xl/comments' . ($i + 1) . '.xml', $this->getWriterPart('Comments')->writeComments($this->_spreadSheet->getSheet($i)));
+					$this->getWriterPart('Comments')->addCommentsToZip($this->_spreadSheet->getSheet($i), $objZip, 'xl/comments' . ($i + 1) . '.xml');
 				}
 
 				// Add header/footer relationship parts
 				if (count($this->_spreadSheet->getSheet($i)->getHeaderFooter()->getImages()) > 0) {
 					// VML Drawings
-					$objZip->addFromString('xl/drawings/vmlDrawingHF' . ($i + 1) . '.vml', $this->getWriterPart('Drawing')->writeVMLHeaderFooterImages($this->_spreadSheet->getSheet($i)));
+					$this->getWriterPart('Drawing')->addVMLHeaderFooterImagesToZip($this->_spreadSheet->getSheet($i), $objZip, 'xl/drawings/vmlDrawingHF' . ($i + 1) . '.vml');
 
 					// VML Drawing relationships
-					$objZip->addFromString('xl/drawings/_rels/vmlDrawingHF' . ($i + 1) . '.vml.rels', $this->getWriterPart('Rels')->writeHeaderFooterDrawingRelationships($this->_spreadSheet->getSheet($i)));
+					$this->getWriterPart('Rels')->addHeaderFooterDrawingRelationshipsToZip($this->_spreadSheet->getSheet($i), $objZip, 'xl/drawings/_rels/vmlDrawingHF' . ($i + 1) . '.vml.rels');
 
 					// Media
 					foreach ($this->_spreadSheet->getSheet($i)->getHeaderFooter()->getImages() as $image) {

@@ -36,14 +36,15 @@
 class PHPExcel_Writer_Excel2007_Workbook extends PHPExcel_Writer_Excel2007_WriterPart
 {
 	/**
-	 * Write workbook to XML format
+	 * Write workbook to XML format into the ZIP file.
 	 *
 	 * @param 	PHPExcel	$pPHPExcel
+	 * @param	ZipArchive	$objZip
+	 * @param	string		$filename
 	 * @param	boolean		$recalcRequired	Indicate whether formulas should be recalculated before writing
-	 * @return 	string 		XML Output
-	 * @throws 	PHPExcel_Writer_Exception
+	 * @throws	PHPExcel_Writer_Exception
 	 */
-	public function writeWorkbook(PHPExcel $pPHPExcel = null, $recalcRequired = FALSE)
+	public function addWorkbookToZip(PHPExcel $pPHPExcel, $objZip, $filename, $recalcRequired = FALSE)
 	{
 		// Create XML writer
 		$objWriter = null;
@@ -87,8 +88,8 @@ class PHPExcel_Writer_Excel2007_Workbook extends PHPExcel_Writer_Excel2007_Write
 
 		$objWriter->endElement();
 
-		// Return
-		return $objWriter->getData();
+		// Add the generated file to the Zip file.
+		$this->addXMLToZip($objWriter, $objZip, $filename);
 	}
 
 	/**

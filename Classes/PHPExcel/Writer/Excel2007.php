@@ -123,6 +123,13 @@ class PHPExcel_Writer_Excel2007 extends PHPExcel_Writer_Abstract implements PHPE
 	 */
 	private $_drawingHashTable;
 
+	/**
+	 * Private temporary file list.
+	 *
+	 * @var PHPExcel_Shared_TempFileTracker
+	 */
+	private $_tempFileTracker;
+
     /**
      * Create a new PHPExcel_Writer_Excel2007
      *
@@ -163,6 +170,8 @@ class PHPExcel_Writer_Excel2007 extends PHPExcel_Writer_Abstract implements PHPE
 		foreach ($hashTablesArray as $tableName) {
 			$this->$tableName 	= new PHPExcel_HashTable();
 		}
+
+		$this->_tempFileTracker = new PHPExcel_Shared_TempFileTracker();
     }
 
 	/**
@@ -396,12 +405,14 @@ class PHPExcel_Writer_Excel2007 extends PHPExcel_Writer_Abstract implements PHPE
 
 			// Close file
 			if ($objZip->close() === false) {
+				$this->_tempFileTracker->removeAllFiles ();
 				throw new PHPExcel_Writer_Exception("Could not close zip file $pFilename.");
 			}
 
 			// If a temporary file was used, copy it to the correct file stream
 			if ($originalFilename != $pFilename) {
 				if (copy($pFilename, $originalFilename) === false) {
+					$this->_tempFileTracker->removeAllFiles ();
 					throw new PHPExcel_Writer_Exception("Could not copy temporary zip file $pFilename to $originalFilename.");
 				}
 				@unlink($pFilename);
@@ -409,6 +420,8 @@ class PHPExcel_Writer_Excel2007 extends PHPExcel_Writer_Abstract implements PHPE
 		} else {
 			throw new PHPExcel_Writer_Exception("PHPExcel object unassigned.");
 		}
+
+		$this->_tempFileTracker->removeAllFiles ();
 	}
 
 	/**
@@ -529,4 +542,12 @@ class PHPExcel_Writer_Excel2007 extends PHPExcel_Writer_Abstract implements PHPE
     	return $this;
     }
 
+    /**
+     * Get the temporary file tracker.
+     *
+     * @return PHPExcel_Shared_TempFileTracker
+     */
+    public function getTempFileTracker() {
+        return $this->_tempFileTracker;
+    }
 }

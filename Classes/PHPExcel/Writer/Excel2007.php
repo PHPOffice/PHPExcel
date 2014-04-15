@@ -364,15 +364,15 @@ class PHPExcel_Writer_Excel2007 extends PHPExcel_Writer_Abstract implements PHPE
 
 					// Media
 					foreach ($this->_spreadSheet->getSheet($i)->getHeaderFooter()->getImages() as $image) {
-						$objZip->addFromString('xl/media/' . $image->getIndexedFilename(), file_get_contents($image->getPath()));
+						$objZip->addFile($image->getPath(), 'xl/media/' . $image->getIndexedFilename());
 					}
 				}
 			}
 
 			// Add media
 			for ($i = 0; $i < $this->getDrawingHashTable()->count(); ++$i) {
+				$imageName = str_replace(' ', '_', $this->getDrawingHashTable()->getByIndex($i)->getIndexedFilename());
 				if ($this->getDrawingHashTable()->getByIndex($i) instanceof PHPExcel_Worksheet_Drawing) {
-					$imageContents = null;
 					$imagePath = $this->getDrawingHashTable()->getByIndex($i)->getPath();
 					if (strpos($imagePath, 'zip://') !== false) {
 						$imagePath = substr($imagePath, 6);
@@ -383,11 +383,11 @@ class PHPExcel_Writer_Excel2007 extends PHPExcel_Writer_Abstract implements PHPE
 						$imageContents = $imageZip->getFromName($imagePathSplitted[1]);
 						$imageZip->close();
 						unset($imageZip);
+						$objzip->addFromString('xl/media/' . $imagename, $imagecontents);
 					} else {
-						$imageContents = file_get_contents($imagePath);
+						$objZip->addFile($imagePath, 'xl/media/' . $imageName);
 					}
 
-					$objZip->addFromString('xl/media/' . str_replace(' ', '_', $this->getDrawingHashTable()->getByIndex($i)->getIndexedFilename()), $imageContents);
 				} else if ($this->getDrawingHashTable()->getByIndex($i) instanceof PHPExcel_Worksheet_MemoryDrawing) {
 					ob_start();
 					call_user_func(
@@ -397,7 +397,7 @@ class PHPExcel_Writer_Excel2007 extends PHPExcel_Writer_Abstract implements PHPE
 					$imageContents = ob_get_contents();
 					ob_end_clean();
 
-					$objZip->addFromString('xl/media/' . str_replace(' ', '_', $this->getDrawingHashTable()->getByIndex($i)->getIndexedFilename()), $imageContents);
+					$objZip->addFromString('xl/media/' . $imageName, $imageContents);
 				}
 			}
 

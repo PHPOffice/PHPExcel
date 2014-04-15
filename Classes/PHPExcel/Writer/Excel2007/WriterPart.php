@@ -78,6 +78,14 @@ abstract class PHPExcel_Writer_Excel2007_WriterPart
 		}
 	}
 
+	protected function createXMLWriter() {
+		if ($this->getParentWriter()->getUseDiskCaching()) {
+			return new PHPExcel_Shared_XMLWriter(PHPExcel_Shared_XMLWriter::STORAGE_DISK, $this->getParentWriter()->getDiskCachingDirectory());
+		} else {
+			return new PHPExcel_Shared_XMLWriter(PHPExcel_Shared_XMLWriter::STORAGE_MEMORY);
+		}
+	}
+
 	protected function addXMLToZip($objWriter, $objZip, $filename) {
 		// Add the generated file to the Zip file.
 		$tempFileName = $objWriter->getFileName();

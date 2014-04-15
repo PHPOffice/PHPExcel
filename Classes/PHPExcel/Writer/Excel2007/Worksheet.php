@@ -49,12 +49,7 @@ class PHPExcel_Writer_Excel2007_Worksheet extends PHPExcel_Writer_Excel2007_Writ
 	{
 		if (!is_null($pSheet)) {
 			// Create XML writer
-			$objWriter = null;
-			if ($this->getParentWriter()->getUseDiskCaching()) {
-				$objWriter = new PHPExcel_Shared_XMLWriter(PHPExcel_Shared_XMLWriter::STORAGE_DISK, $this->getParentWriter()->getDiskCachingDirectory());
-			} else {
-				$objWriter = new PHPExcel_Shared_XMLWriter(PHPExcel_Shared_XMLWriter::STORAGE_MEMORY);
-			}
+			$objWriter = $this->createXMLWriter();
 
 			// XML header
 			$objWriter->startDocument('1.0','UTF-8','yes');

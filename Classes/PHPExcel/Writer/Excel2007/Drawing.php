@@ -48,12 +48,7 @@ class PHPExcel_Writer_Excel2007_Drawing extends PHPExcel_Writer_Excel2007_Writer
 	public function addDrawingsToZip(PHPExcel_Worksheet $pWorksheet, &$chartRef, $objZip, $filename, $includeCharts = FALSE)
 	{
 		// Create XML writer
-		$objWriter = null;
-		if ($this->getParentWriter()->getUseDiskCaching()) {
-			$objWriter = new PHPExcel_Shared_XMLWriter(PHPExcel_Shared_XMLWriter::STORAGE_DISK, $this->getParentWriter()->getDiskCachingDirectory());
-		} else {
-			$objWriter = new PHPExcel_Shared_XMLWriter(PHPExcel_Shared_XMLWriter::STORAGE_MEMORY);
-		}
+		$objWriter = $this->createXMLWriter();
 
 		// XML header
 		$objWriter->startDocument('1.0','UTF-8','yes');
@@ -391,12 +386,7 @@ class PHPExcel_Writer_Excel2007_Drawing extends PHPExcel_Writer_Excel2007_Writer
 	public function addVMLHeaderFooterImagesToZip(PHPExcel_Worksheet $pWorksheet, $objZip, $filename)
 	{
 		// Create XML writer
-		$objWriter = null;
-		if ($this->getParentWriter()->getUseDiskCaching()) {
-			$objWriter = new PHPExcel_Shared_XMLWriter(PHPExcel_Shared_XMLWriter::STORAGE_DISK, $this->getParentWriter()->getDiskCachingDirectory());
-		} else {
-			$objWriter = new PHPExcel_Shared_XMLWriter(PHPExcel_Shared_XMLWriter::STORAGE_MEMORY);
-		}
+		$objWriter = $this->createXMLWriter();
 
 		// XML header
 		$objWriter->startDocument('1.0','UTF-8','yes');

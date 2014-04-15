@@ -80,9 +80,10 @@ abstract class PHPExcel_Writer_Excel2007_WriterPart
 
 	protected function createXMLWriter() {
 		if ($this->getParentWriter()->getUseDiskCaching()) {
-			return new PHPExcel_Shared_XMLWriter(PHPExcel_Shared_XMLWriter::STORAGE_DISK, $this->getParentWriter()->getDiskCachingDirectory());
+			$filename = $this->getParentWriter()->getTempFileTracker()->getNewFile('xmlw');
+			return new PHPExcel_Shared_XMLWriter($filename);
 		} else {
-			return new PHPExcel_Shared_XMLWriter(PHPExcel_Shared_XMLWriter::STORAGE_MEMORY);
+			return new PHPExcel_Shared_XMLWriter(NULL);
 		}
 	}
 
@@ -92,7 +93,6 @@ abstract class PHPExcel_Writer_Excel2007_WriterPart
 
 		if ($tempFileName) {
 			$objZip->addFile($tempFileName, $filename);
-			$this->getParentWriter()->getTempFileTracker()->registerFile($tempFileName);
 		}
 		else {
 			$objZip->addFromString($filename, $objWriter->getData());

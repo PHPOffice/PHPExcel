@@ -42,10 +42,6 @@ if (!defined('DEBUGMODE_ENABLED')) {
  * @copyright  Copyright (c) 2006 - 2014 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
 class PHPExcel_Shared_XMLWriter extends XMLWriter {
-	/** Temporary storage method */
-	const STORAGE_MEMORY	= 1;
-	const STORAGE_DISK		= 2;
-
 	const FLUSH_FREQUENCY = 100;
 
 	/**
@@ -53,30 +49,26 @@ class PHPExcel_Shared_XMLWriter extends XMLWriter {
 	 *
 	 * @var string
 	 */
-	private $_tempFileName = '';
+	private $_filename = '';
 
 	private $counter;
 
 	/**
 	 * Create a new PHPExcel_Shared_XMLWriter instance
 	 *
-	 * @param int		$pTemporaryStorage			Temporary storage location
-	 * @param string	$pTemporaryStorageFolder	Temporary storage folder
+	 * @param string	$filename	Temporary storage filename (empty to use memory)
 	 */
-	public function __construct($pTemporaryStorage = self::STORAGE_MEMORY, $pTemporaryStorageFolder = NULL) {
+	public function __construct($filename = NULL) {
 		// Open temporary storage
-		if ($pTemporaryStorage == self::STORAGE_MEMORY) {
+		if (!$filename) {
 			$this->openMemory();
 		} else {
-			// Create temporary filename
-			if ($pTemporaryStorageFolder === NULL)
-				$pTemporaryStorageFolder = PHPExcel_Shared_File::sys_get_temp_dir();
-			$this->_tempFileName = @tempnam($pTemporaryStorageFolder, 'xml');
+			$this->_filename = $filename;
 
 			// Open storage
-			if ($this->openUri($this->_tempFileName) === false) {
+			if ($this->openUri($this->_filename) === false) {
 				// Fallback to memory...
-				$this->_tempFileName = '';
+				$this->_filename = '';
 				$this->openMemory();
 			}
 		}
@@ -88,16 +80,6 @@ class PHPExcel_Shared_XMLWriter extends XMLWriter {
 		$this->counter = self::FLUSH_FREQUENCY;
 	}
 
-	/**
-	 * Destructor
-	 */
-	public function __destruct() {
-		// Unlink temporary files
-#		if ($this->_tempFileName != '') {
-#			@unlink($this->_tempFileName);
-#		}
-	}
-
 	public function flush($empty=true)
 	{
 		parent::flush($empty);
@@ -106,7 +88,7 @@ class PHPExcel_Shared_XMLWriter extends XMLWriter {
 
 	private function flushIfNecessary()
 	{
-		if ($this->_tempFileName == '')
+		if ($this->_filename == '')
 			return;
 
 		--$this->counter;
@@ -141,11 +123,11 @@ class PHPExcel_Shared_XMLWriter extends XMLWriter {
 	 * @return $data
 	 */
 	public function getData() {
-		if ($this->_tempFileName == '') {
+		if ($this->_filename == '') {
 			return $this->outputMemory(true);
 		} else {
 			$this->flush();
-			return file_get_contents($this->_tempFileName);
+			return file_get_contents($this->_filename);
 		}
 	}
 
@@ -155,7 +137,7 @@ class PHPExcel_Shared_XMLWriter extends XMLWriter {
 	 * @return filename;
 	 */
 	public function getFileName() {
-		return $this->_tempFileName;
+		return $this->_filename;
 	}
 
 	/**

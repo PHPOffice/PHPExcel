@@ -306,10 +306,12 @@ class PHPExcel_Writer_Excel2007 extends PHPExcel_Writer_Abstract implements PHPE
 			$chartCount = 0;
 			// Add worksheets
 			for ($i = 0; $i < $this->_spreadSheet->getSheetCount(); ++$i) {
-				$this->getWriterPart('Worksheet')->addWorksheetToZip($this->_spreadSheet->getSheet($i), $objZip, 'xl/worksheets/sheet'.($i+1).'.xml',
+				$currentSheet = $this->_spreadSheet->getSheet($i);
+
+				$this->getWriterPart('Worksheet')->addWorksheetToZip($currentSheet, $objZip, 'xl/worksheets/sheet'.($i+1).'.xml',
 				                                                     $this->_stringTable, $this->_includeCharts);
 				if ($this->_includeCharts) {
-					$charts = $this->_spreadSheet->getSheet($i)->getChartCollection();
+					$charts = $currentSheet->getChartCollection();
 					if (count($charts) > 0) {
 						foreach($charts as $chart) {
 							$this->getWriterPart('Chart')->addChartToZip($chart, $objZip, 'xl/charts/chart' . ($chartCount + 1) . '.xml');
@@ -322,48 +324,49 @@ class PHPExcel_Writer_Excel2007 extends PHPExcel_Writer_Abstract implements PHPE
 			$chartRef1 = $chartRef2 = 0;
 			// Add worksheet relationships (drawings, ...)
 			for ($i = 0; $i < $this->_spreadSheet->getSheetCount(); ++$i) {
+				$currentSheet = $this->_spreadSheet->getSheet($i);
 
 				// Add relationships
-				$this->getWriterPart('Rels')->addWorksheetRelationshipsToZip($this->_spreadSheet->getSheet($i), $objZip,
+				$this->getWriterPart('Rels')->addWorksheetRelationshipsToZip($currentSheet, $objZip,
 																			 'xl/worksheets/_rels/sheet' . ($i + 1) . '.xml.rels', 
 																			 ($i + 1), $this->_includeCharts);
 
-				$drawings = $this->_spreadSheet->getSheet($i)->getDrawingCollection();
+				$drawings = $currentSheet->getDrawingCollection();
 				$drawingCount = count($drawings);
 				if ($this->_includeCharts) {
-					$chartCount = $this->_spreadSheet->getSheet($i)->getChartCount();
+					$chartCount = $currentSheet->getChartCount();
 				}
 
 				// Add drawing and image relationship parts
 				if (($drawingCount > 0) || ($chartCount > 0)) {
 					// Drawing relationships
-					$this->getWriterPart('Rels')->addDrawingRelationshipsToZip($this->_spreadSheet->getSheet($i), $chartRef1, $objZip,
+					$this->getWriterPart('Rels')->addDrawingRelationshipsToZip($currentSheet, $chartRef1, $objZip,
 																			   'xl/drawings/_rels/drawing' . ($i + 1) . '.xml.rels', $this->_includeCharts);
 
 					// Drawings
-					$this->getWriterPart('Drawing')->addDrawingsToZip($this->_spreadSheet->getSheet($i), $chartRef2, $objZip,
+					$this->getWriterPart('Drawing')->addDrawingsToZip($currentSheet, $chartRef2, $objZip,
 																	  'xl/drawings/drawing' . ($i + 1) . '.xml', $this->_includeCharts);
 				}
 
 				// Add comment relationship parts
-				if (count($this->_spreadSheet->getSheet($i)->getComments()) > 0) {
+				if (count($currentSheet->getComments()) > 0) {
 					// VML Comments
-					$this->getWriterPart('Comments')->addVMLCommentsToZip($this->_spreadSheet->getSheet($i), $objZip, 'xl/drawings/vmlDrawing' . ($i + 1) . '.vml');
+					$this->getWriterPart('Comments')->addVMLCommentsToZip($currentSheet, $objZip, 'xl/drawings/vmlDrawing' . ($i + 1) . '.vml');
 
 					// Comments
-					$this->getWriterPart('Comments')->addCommentsToZip($this->_spreadSheet->getSheet($i), $objZip, 'xl/comments' . ($i + 1) . '.xml');
+					$this->getWriterPart('Comments')->addCommentsToZip($currentSheet, $objZip, 'xl/comments' . ($i + 1) . '.xml');
 				}
 
 				// Add header/footer relationship parts
-				if (count($this->_spreadSheet->getSheet($i)->getHeaderFooter()->getImages()) > 0) {
+				if (count($currentSheet->getHeaderFooter()->getImages()) > 0) {
 					// VML Drawings
-					$this->getWriterPart('Drawing')->addVMLHeaderFooterImagesToZip($this->_spreadSheet->getSheet($i), $objZip, 'xl/drawings/vmlDrawingHF' . ($i + 1) . '.vml');
+					$this->getWriterPart('Drawing')->addVMLHeaderFooterImagesToZip($currentSheet, $objZip, 'xl/drawings/vmlDrawingHF' . ($i + 1) . '.vml');
 
 					// VML Drawing relationships
-					$this->getWriterPart('Rels')->addHeaderFooterDrawingRelationshipsToZip($this->_spreadSheet->getSheet($i), $objZip, 'xl/drawings/_rels/vmlDrawingHF' . ($i + 1) . '.vml.rels');
+					$this->getWriterPart('Rels')->addHeaderFooterDrawingRelationshipsToZip($currentSheet, $objZip, 'xl/drawings/_rels/vmlDrawingHF' . ($i + 1) . '.vml.rels');
 
 					// Media
-					foreach ($this->_spreadSheet->getSheet($i)->getHeaderFooter()->getImages() as $image) {
+					foreach ($currentSheet->getHeaderFooter()->getImages() as $image) {
 						$objZip->addFile($image->getPath(), 'xl/media/' . $image->getIndexedFilename());
 					}
 				}

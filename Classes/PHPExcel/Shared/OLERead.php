@@ -75,14 +75,14 @@ class PHPExcel_Shared_OLERead {
 	 */
 	public function read($sFileName)
 	{
-		// Check if file exists and is readable
-		if(!is_readable($sFileName)) {
-			throw new PHPExcel_Reader_Exception("Could not open " . $sFileName . " for reading! File does not exist, or it is not readable.");
-		}
-
 		// Get the file identifier
 		// Don't bother reading the whole file until we know it's a valid OLE file
-		$this->data = file_get_contents($sFileName, FALSE, NULL, 0, 8);
+		$this->data = @file_get_contents($sFileName, FALSE, NULL, 0, 8);
+
+		// Check if file exists and is readable
+		if (null === $this->data) {
+			throw new PHPExcel_Reader_Exception("Could not open " . $sFileName . " for reading! File does not exist, or it is not readable.");
+		}
 
 		// Check OLE identifier
 		if ($this->data != self::IDENTIFIER_OLE) {

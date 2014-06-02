@@ -35,6 +35,8 @@
  */
 class PHPExcel_Writer_Excel2007_Worksheet extends PHPExcel_Writer_Excel2007_WriterPart
 {
+    const MAX_NAME_LENGTH = 31;
+
 	/**
 	 * Write worksheet to XML format
 	 *
@@ -147,10 +149,10 @@ class PHPExcel_Writer_Excel2007_Worksheet extends PHPExcel_Writer_Excel2007_Writ
 	{
 		// sheetPr
 		$objWriter->startElement('sheetPr');
-		//$objWriter->writeAttribute('codeName',		$pSheet->getTitle());
+		//$objWriter->writeAttribute('codeName',		PHPExcel_Writer_Excel2007_Worksheet::prepareSheetName($pSheet->getTitle()));
 		if($pSheet->getParent()->hasMacros()){//if the workbook have macros, we need to have codeName for the sheet
 			if($pSheet->hasCodeName()==false){
-				$pSheet->setCodeName($pSheet->getTitle());
+				$pSheet->setCodeName(PHPExcel_Writer_Excel2007_Worksheet::prepareSheetName($pSheet->getTitle()));
 			}
 			$objWriter->writeAttribute('codeName',		$pSheet->getCodeName());
 		}
@@ -1216,5 +1218,20 @@ class PHPExcel_Writer_Excel2007_Worksheet extends PHPExcel_Writer_Excel2007_Writ
 			$objWriter->writeAttribute('r:id', 'rId_headerfooter_vml1');
 			$objWriter->endElement();
 		}
+	}
+
+	/**
+	 * Prepare name to write to a file
+	 *
+	 * @param string $name
+	 * @return string
+	 */
+	public static function prepareSheetName($name)
+	{
+        if (mb_strlen($name) > self::MAX_NAME_LENGTH) {
+            return mb_substr($name, 0, self::MAX_NAME_LENGTH);
+        }
+
+        return $name;
 	}
 }

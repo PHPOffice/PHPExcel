@@ -366,7 +366,7 @@ class PHPExcel_Settings
         if (is_null($options)) {
             $options = LIBXML_DTDLOAD | LIBXML_DTDATTR;
         }
-        @libxml_disable_entity_loader($options == (LIBXML_DTDLOAD | LIBXML_DTDATTR)); 
+        @libxml_disable_entity_loader($options == (LIBXML_DTDLOAD | LIBXML_DTDATTR));
         self::$_libXmlLoaderOptions = $options;
     } // function setLibXmlLoaderOptions
 

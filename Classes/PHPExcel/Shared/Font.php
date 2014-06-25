@@ -352,8 +352,8 @@ class PHPExcel_Shared_Font
 				break;
 
 			case 'Arial':
-				// value 7 was found via interpolation by inspecting real Excel files with Arial 10 font.
-				$columnWidth = (int) (7 * PHPExcel_Shared_String::CountCharacters($columnText));
+				// value 8 was set because of experience in different exports at Arial 10 font.
+				$columnWidth = (int) (8 * PHPExcel_Shared_String::CountCharacters($columnText));
 				$columnWidth = $columnWidth * $fontSize / 10; // extrapolate from font size
 				break;
 

@@ -463,17 +463,11 @@ class PHPExcel_Writer_Excel2007_Chart extends PHPExcel_Writer_Excel2007_WriterPa
 							$objWriter->endElement();
 
 							$objWriter->startElement('a:p');
-								$objWriter->startElement('a:r');
+								$caption = $xAxisLabel->getCaption();
+								if ((is_array($caption)) && (count($caption) > 0))
+									$caption = $caption[0];
 
-									$caption = $xAxisLabel->getCaption();
-									if (is_array($caption))
-										$caption = $caption[0];
-									$objWriter->startElement('a:t');
-//										$objWriter->writeAttribute('xml:space', 'preserve');
-										$objWriter->writeRawData(PHPExcel_Shared_String::ControlCharacterPHP2OOXML( $caption ));
-									$objWriter->endElement();
-
-								$objWriter->endElement();
+								$this->getParentWriter()->getWriterPart('stringtable')->writeRichTextForCharts($objWriter, $caption, 'a');
 							$objWriter->endElement();
 						$objWriter->endElement();
 					$objWriter->endElement();
@@ -514,6 +508,14 @@ class PHPExcel_Writer_Excel2007_Chart extends PHPExcel_Writer_Excel2007_WriterPa
 					$objWriter->startElement('c:crosses');
 						$objWriter->writeAttribute('val', "autoZero");
 					$objWriter->endElement();
+			}
+
+			$plotCategories = $plotArea->getPlotCategories();
+			if ($plotCategories !== null && $plotCategories->getTickLabelSkip() !== null)
+			{
+				$objWriter->startElement('c:tickLblSkip');
+					$objWriter->writeAttribute('val', $plotCategories->getTickLabelSkip());
+				$objWriter->endElement();
 			}
 
 			$objWriter->startElement('c:auto');
@@ -589,17 +591,12 @@ class PHPExcel_Writer_Excel2007_Chart extends PHPExcel_Writer_Excel2007_WriterPa
 							$objWriter->endElement();
 
 							$objWriter->startElement('a:p');
-								$objWriter->startElement('a:r');
+								$caption = $yAxisLabel->getCaption();
+								if ((is_array($caption)) && (count($caption) > 0))
+									$caption = $caption[0];
 
-									$caption = $yAxisLabel->getCaption();
-									if (is_array($caption))
-										$caption = $caption[0];
-									$objWriter->startElement('a:t');
-//										$objWriter->writeAttribute('xml:space', 'preserve');
-										$objWriter->writeRawData(PHPExcel_Shared_String::ControlCharacterPHP2OOXML( $caption ));
-									$objWriter->endElement();
+								$this->getParentWriter()->getWriterPart('stringtable')->writeRichTextForCharts($objWriter, $caption, 'a');
 
-								$objWriter->endElement();
 							$objWriter->endElement();
 						$objWriter->endElement();
 					$objWriter->endElement();

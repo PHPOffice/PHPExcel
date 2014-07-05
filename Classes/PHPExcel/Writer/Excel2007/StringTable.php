@@ -266,6 +266,9 @@ class PHPExcel_Writer_Excel2007_StringTable extends PHPExcel_Writer_Excel2007_Wr
 					// Strikethrough
 					$objWriter->writeAttribute('strike', ($element->getFont()->getStrikethrough() ? 'sngStrike' : 'noStrike'));
 
+					// Size
+					$objWriter->writeAttribute('sz', intval($element->getFont()->getSize() * 100.0));
+
 					// rFont
 					$objWriter->startElement($prefix.'latin');
 						$objWriter->writeAttribute('typeface', $element->getFont()->getName());

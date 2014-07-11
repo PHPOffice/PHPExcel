@@ -66,6 +66,13 @@ abstract class PHPExcel_Writer_Abstract implements PHPExcel_Writer_IWriter
 	 */
 	protected $_diskCachingDirectory	= './';
 
+    /**
+     * PHPExcel instance
+     *
+     * @var PHPExcel
+     */
+    protected $_spreadSheet;
+
 	/**
 	 * Write charts in workbook?
 	 *		If this is true, then the Writer will write definitions for any charts that exist in the PHPExcel object.
@@ -155,4 +162,32 @@ abstract class PHPExcel_Writer_Abstract implements PHPExcel_Writer_IWriter
 	public function getDiskCachingDirectory() {
 		return $this->_diskCachingDirectory;
 	}
+
+    /**
+     * Get PHPExcel object
+     *
+     * @return PHPExcel
+     * @throws PHPExcel_Writer_Exception
+     */
+    public function getPHPExcel()
+    {
+        if ($this->_spreadSheet !== null) {
+            return $this->_spreadSheet;
+        } else {
+            throw new PHPExcel_Writer_Exception('No PHPExcel assigned.');
+        }
+    }
+
+    /**
+     * Set PHPExcel object
+     *
+     * @param  PHPExcel  $pPHPExcel  PHPExcel object
+     * @throws PHPExcel_Writer_Exception
+     * @return PHPExcel_Writer_IWriter
+     */
+    public function setPHPExcel(PHPExcel $pPHPExcel = null)
+    {
+        $this->_spreadSheet = $pPHPExcel;
+        return $this;
+    }
 }

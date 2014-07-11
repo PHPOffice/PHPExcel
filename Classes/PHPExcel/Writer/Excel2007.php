@@ -61,13 +61,6 @@ class PHPExcel_Writer_Excel2007 extends PHPExcel_Writer_Abstract implements PHPE
 	private $_writerParts	= array();
 
 	/**
-	 * Private PHPExcel
-	 *
-	 * @var PHPExcel
-	 */
-	private $_spreadSheet;
-
-	/**
 	 * Private string table
 	 *
 	 * @var string[]
@@ -273,7 +266,7 @@ class PHPExcel_Writer_Excel2007 extends PHPExcel_Writer_Abstract implements PHPE
 						$this->getWriterPart('RelsRibbonObjects')->writeRibbonRelationships($this->_spreadSheet));
 				}
 			}
-			
+
 			// Add relationships to ZIP file
 			$objZip->addFromString('_rels/.rels', 					$this->getWriterPart('Rels')->writeRelationships($this->_spreadSheet));
 			$objZip->addFromString('xl/_rels/workbook.xml.rels', 	$this->getWriterPart('Rels')->writeWorkbookRelationships($this->_spreadSheet));
@@ -409,32 +402,6 @@ class PHPExcel_Writer_Excel2007 extends PHPExcel_Writer_Abstract implements PHPE
 		} else {
 			throw new PHPExcel_Writer_Exception("PHPExcel object unassigned.");
 		}
-	}
-
-	/**
-	 * Get PHPExcel object
-	 *
-	 * @return PHPExcel
-	 * @throws PHPExcel_Writer_Exception
-	 */
-	public function getPHPExcel() {
-		if ($this->_spreadSheet !== null) {
-			return $this->_spreadSheet;
-		} else {
-			throw new PHPExcel_Writer_Exception("No PHPExcel assigned.");
-		}
-	}
-
-	/**
-	 * Set PHPExcel object
-	 *
-	 * @param 	PHPExcel 	$pPHPExcel	PHPExcel object
-	 * @throws	PHPExcel_Writer_Exception
-	 * @return PHPExcel_Writer_Excel2007
-	 */
-	public function setPHPExcel(PHPExcel $pPHPExcel = null) {
-		$this->_spreadSheet = $pPHPExcel;
-		return $this;
 	}
 
     /**

@@ -71,7 +71,7 @@ abstract class PHPExcel_Writer_Abstract implements PHPExcel_Writer_IWriter
      *
      * @var PHPExcel
      */
-    protected $_spreadSheet;
+    protected $_phpExcel;
 
 	/**
 	 * Write charts in workbook?
@@ -171,8 +171,8 @@ abstract class PHPExcel_Writer_Abstract implements PHPExcel_Writer_IWriter
      */
     public function getPHPExcel()
     {
-        if ($this->_spreadSheet !== null) {
-            return $this->_spreadSheet;
+        if ($this->_phpExcel !== null) {
+            return $this->_phpExcel;
         } else {
             throw new PHPExcel_Writer_Exception('No PHPExcel assigned.');
         }
@@ -187,7 +187,7 @@ abstract class PHPExcel_Writer_Abstract implements PHPExcel_Writer_IWriter
      */
     public function setPHPExcel(PHPExcel $pPHPExcel = null)
     {
-        $this->_spreadSheet = $pPHPExcel;
+        $this->_phpExcel = $pPHPExcel;
         return $this;
     }
 }

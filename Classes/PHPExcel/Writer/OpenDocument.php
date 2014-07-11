@@ -91,12 +91,12 @@ class PHPExcel_Writer_OpenDocument extends PHPExcel_Writer_Abstract
      */
     public function save($pFilename = NULL)
     {
-        if (!$this->_spreadSheet) {
+        if (!$this->_phpExcel) {
             throw new PHPExcel_Writer_Exception('PHPExcel object unassigned.');
         }
 
         // garbage collect
-        $this->_spreadSheet->garbageCollect();
+        $this->_phpExcel->garbageCollect();
 
         // If $pFilename is php://output or php://stdout, make it a temporary file...
         $originalFilename = $pFilename;

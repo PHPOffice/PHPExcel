@@ -36,13 +36,6 @@
 class PHPExcel_Writer_HTML extends PHPExcel_Writer_Abstract
 {
 	/**
-	 * PHPExcel object
-	 *
-	 * @var PHPExcel
-	 */
-	protected $_phpExcel;
-
-	/**
 	 * Sheet index to write
 	 *
 	 * @var int

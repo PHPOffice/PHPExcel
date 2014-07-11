@@ -36,13 +36,6 @@
 class PHPExcel_Writer_CSV extends PHPExcel_Writer_Abstract
 {
 	/**
-	 * PHPExcel object
-	 *
-	 * @var PHPExcel
-	 */
-	private $_phpExcel;
-
-	/**
 	 * Delimiter
 	 *
 	 * @var string

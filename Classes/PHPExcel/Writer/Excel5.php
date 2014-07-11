@@ -36,13 +36,6 @@
 class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract
 {
 	/**
-	 * PHPExcel object
-	 *
-	 * @var PHPExcel
-	 */
-	private $_phpExcel;
-
-	/**
 	 * Total number of shared strings in workbook
 	 *
 	 * @var int

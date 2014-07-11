@@ -83,7 +83,7 @@ class PHPExcel_Writer_CSV extends PHPExcel_Writer_Abstract
 	 * @param	PHPExcel	$phpExcel	PHPExcel object
 	 */
 	public function __construct(PHPExcel $phpExcel) {
-		$this->_phpExcel	= $phpExcel;
+		$this->setPHPExcel($phpExcel);
 	}
 
 	/**

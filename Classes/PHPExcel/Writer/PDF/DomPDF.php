@@ -61,6 +61,10 @@ class PHPExcel_Writer_PDF_DomPDF extends PHPExcel_Writer_PDF_Core implements PHP
      */
     public function save($pFilename = NULL)
     {
+        if (!$this->_phpExcel) {
+            throw new PHPExcel_Writer_Exception('PHPExcel object unassigned.');
+        }
+
         $fileHandle = parent::prepareForSave($pFilename);
 
         //  Default PDF paper size
@@ -83,7 +87,7 @@ class PHPExcel_Writer_PDF_DomPDF extends PHPExcel_Writer_PDF_Core implements PHP
             $printMargins = $this->_phpExcel->getSheet($this->getSheetIndex())->getPageMargins();
         }
 
-        
+
         $orientation = ($orientation == 'L') ? 'landscape' : 'portrait';
 
         //  Override Page Orientation

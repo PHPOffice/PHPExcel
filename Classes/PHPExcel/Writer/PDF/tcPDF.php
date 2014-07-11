@@ -62,6 +62,10 @@ class PHPExcel_Writer_PDF_tcPDF extends PHPExcel_Writer_PDF_Core implements PHPE
      */
     public function save($pFilename = NULL)
     {
+        if (!$this->_phpExcel) {
+            throw new PHPExcel_Writer_Exception('PHPExcel object unassigned.');
+        }
+
         $fileHandle = parent::prepareForSave($pFilename);
 
         //  Default PDF paper size

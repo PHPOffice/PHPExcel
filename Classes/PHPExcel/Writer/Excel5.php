@@ -108,7 +108,11 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract
 	 * @param	string		$pFilename
 	 * @throws	PHPExcel_Writer_Exception
 	 */
-	public function save($pFilename = null) {
+	public function save($pFilename = null)
+	{
+        if (!$this->_phpExcel) {
+            throw new PHPExcel_Writer_Exception('PHPExcel object unassigned.');
+        }
 
 		// garbage collect
 		$this->_phpExcel->garbageCollect();

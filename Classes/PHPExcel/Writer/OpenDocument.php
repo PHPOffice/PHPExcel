@@ -35,7 +35,7 @@
  * @author     Alexander Pervakov <frost-nzcr4@jagmort.com>
  * @link       http://docs.oasis-open.org/office/v1.2/os/OpenDocument-v1.2-os.html
  */
-class PHPExcel_Writer_OpenDocument extends PHPExcel_Writer_Abstract implements PHPExcel_Writer_IWriter
+class PHPExcel_Writer_OpenDocument extends PHPExcel_Writer_Abstract
 {
     /**
      * Private writer parts

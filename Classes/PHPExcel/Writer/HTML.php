@@ -33,7 +33,8 @@
  * @package	PHPExcel_Writer_HTML
  * @copyright  Copyright (c) 2006 - 2014 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Writer_HTML extends PHPExcel_Writer_Abstract implements PHPExcel_Writer_IWriter {
+class PHPExcel_Writer_HTML extends PHPExcel_Writer_Abstract
+{
 	/**
 	 * PHPExcel object
 	 *

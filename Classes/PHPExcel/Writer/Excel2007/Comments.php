@@ -38,19 +38,15 @@ class PHPExcel_Writer_Excel2007_Comments extends PHPExcel_Writer_Excel2007_Write
 	/**
 	 * Write comments to XML format
 	 *
-	 * @param 	PHPExcel_Worksheet				$pWorksheet
-	 * @return 	string 								XML Output
+	 * @param 	PHPExcel_Worksheet	$pWorksheet
+	 * @param	ZipArchive			$objZip
+	 * @param	string				$filename
 	 * @throws 	PHPExcel_Writer_Exception
 	 */
-	public function writeComments(PHPExcel_Worksheet $pWorksheet = null)
+	public function addCommentsToZip(PHPExcel_Worksheet $pWorksheet, $objZip, $filename)
 	{
 		// Create XML writer
-		$objWriter = null;
-		if ($this->getParentWriter()->getUseDiskCaching()) {
-			$objWriter = new PHPExcel_Shared_XMLWriter(PHPExcel_Shared_XMLWriter::STORAGE_DISK, $this->getParentWriter()->getDiskCachingDirectory());
-		} else {
-			$objWriter = new PHPExcel_Shared_XMLWriter(PHPExcel_Shared_XMLWriter::STORAGE_MEMORY);
-		}
+		$objWriter = $this->createXMLWriter();
 
 		// XML header
 		$objWriter->startDocument('1.0','UTF-8','yes');
@@ -87,8 +83,8 @@ class PHPExcel_Writer_Excel2007_Comments extends PHPExcel_Writer_Excel2007_Write
 
 		$objWriter->endElement();
 
-		// Return
-		return $objWriter->getData();
+		// Add the generated file to the Zip file.
+		$this->addXMLToZip($objWriter, $objZip, $filename);
 	}
 
 	/**
@@ -118,19 +114,15 @@ class PHPExcel_Writer_Excel2007_Comments extends PHPExcel_Writer_Excel2007_Write
 	/**
 	 * Write VML comments to XML format
 	 *
-	 * @param 	PHPExcel_Worksheet				$pWorksheet
-	 * @return 	string 								XML Output
+	 * @param 	PHPExcel_Worksheet	$pWorksheet
+	 * @param	ZipArchive			$objZip
+	 * @param	string				$filename
 	 * @throws 	PHPExcel_Writer_Exception
 	 */
-	public function writeVMLComments(PHPExcel_Worksheet $pWorksheet = null)
+	public function writeVMLComments(PHPExcel_Worksheet $pWorksheet, $objZip, $filename)
 	{
 		// Create XML writer
-		$objWriter = null;
-		if ($this->getParentWriter()->getUseDiskCaching()) {
-			$objWriter = new PHPExcel_Shared_XMLWriter(PHPExcel_Shared_XMLWriter::STORAGE_DISK, $this->getParentWriter()->getDiskCachingDirectory());
-		} else {
-			$objWriter = new PHPExcel_Shared_XMLWriter(PHPExcel_Shared_XMLWriter::STORAGE_MEMORY);
-		}
+		$objWriter = $this->createXMLWriter();
 
 		// XML header
 		$objWriter->startDocument('1.0','UTF-8','yes');
@@ -183,8 +175,8 @@ class PHPExcel_Writer_Excel2007_Comments extends PHPExcel_Writer_Excel2007_Write
 
 		$objWriter->endElement();
 
-		// Return
-		return $objWriter->getData();
+		// Add the generated file to the Zip file.
+		$this->addXMLToZip($objWriter, $objZip, $filename);
 	}
 
 	/**

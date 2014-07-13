@@ -89,19 +89,15 @@ class PHPExcel_Writer_Excel2007_StringTable extends PHPExcel_Writer_Excel2007_Wr
 	 * Write string table to XML format
 	 *
 	 * @param 	string[] 	$pStringTable
-	 * @return 	string 		XML Output
+	 * @param	ZipArchive	$objZip
+	 * @param	string		$filename
 	 * @throws 	PHPExcel_Writer_Exception
 	 */
-	public function writeStringTable($pStringTable = null)
+	public function addStringTableToZip($pStringTable, $objZip, $filename)
 	{
 		if ($pStringTable !== NULL) {
 			// Create XML writer
-			$objWriter = null;
-			if ($this->getParentWriter()->getUseDiskCaching()) {
-				$objWriter = new PHPExcel_Shared_XMLWriter(PHPExcel_Shared_XMLWriter::STORAGE_DISK, $this->getParentWriter()->getDiskCachingDirectory());
-			} else {
-				$objWriter = new PHPExcel_Shared_XMLWriter(PHPExcel_Shared_XMLWriter::STORAGE_MEMORY);
-			}
+			$objWriter = $this->createXMLWriter();
 
 			// XML header
 			$objWriter->startDocument('1.0','UTF-8','yes');
@@ -132,8 +128,8 @@ class PHPExcel_Writer_Excel2007_StringTable extends PHPExcel_Writer_Excel2007_Wr
 
 			$objWriter->endElement();
 
-			// Return
-			return $objWriter->getData();
+			// Add the generated file to the Zip file.
+			$this->addXMLToZip($objWriter, $objZip, $filename);
 		} else {
 			throw new PHPExcel_Writer_Exception("Invalid string table array passed.");
 		}

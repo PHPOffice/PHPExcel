@@ -42,36 +42,33 @@ if (!defined('DEBUGMODE_ENABLED')) {
  * @copyright  Copyright (c) 2006 - 2014 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
 class PHPExcel_Shared_XMLWriter extends XMLWriter {
-	/** Temporary storage method */
-	const STORAGE_MEMORY	= 1;
-	const STORAGE_DISK		= 2;
+	const FLUSH_FREQUENCY = 100;
 
 	/**
 	 * Temporary filename
 	 *
 	 * @var string
 	 */
-	private $_tempFileName = '';
+	private $_filename = '';
+
+	private $counter;
 
 	/**
 	 * Create a new PHPExcel_Shared_XMLWriter instance
 	 *
-	 * @param int		$pTemporaryStorage			Temporary storage location
-	 * @param string	$pTemporaryStorageFolder	Temporary storage folder
+	 * @param string	$filename	Temporary storage filename (empty to use memory)
 	 */
-	public function __construct($pTemporaryStorage = self::STORAGE_MEMORY, $pTemporaryStorageFolder = NULL) {
+	public function __construct($filename = NULL) {
 		// Open temporary storage
-		if ($pTemporaryStorage == self::STORAGE_MEMORY) {
+		if (!$filename) {
 			$this->openMemory();
 		} else {
-			// Create temporary filename
-			if ($pTemporaryStorageFolder === NULL)
-				$pTemporaryStorageFolder = PHPExcel_Shared_File::sys_get_temp_dir();
-			$this->_tempFileName = @tempnam($pTemporaryStorageFolder, 'xml');
+			$this->_filename = $filename;
 
 			// Open storage
-			if ($this->openUri($this->_tempFileName) === false) {
+			if ($this->openUri($this->_filename) === false) {
 				// Fallback to memory...
+				$this->_filename = '';
 				$this->openMemory();
 			}
 		}
@@ -80,16 +77,44 @@ class PHPExcel_Shared_XMLWriter extends XMLWriter {
 		if (DEBUGMODE_ENABLED) {
 			$this->setIndent(true);
 		}
+		$this->counter = self::FLUSH_FREQUENCY;
 	}
 
-	/**
-	 * Destructor
-	 */
-	public function __destruct() {
-		// Unlink temporary files
-		if ($this->_tempFileName != '') {
-			@unlink($this->_tempFileName);
-		}
+	public function flush($empty=true)
+	{
+		parent::flush($empty);
+		$this->counter = self::FLUSH_FREQUENCY;
+	}
+
+	private function flushIfNecessary()
+	{
+		if ($this->_filename == '')
+			return;
+
+		--$this->counter;
+		if ($this->counter <= 0)
+			$this->flush();
+	}
+
+	public function endElement()
+	{
+		$ret = parent::endElement();
+		$this->flushIfNecessary();
+		return $ret;
+	}
+
+	public function writeElement($name, $content=null)
+	{
+		$ret = parent::writeElement($name, $content);
+		$this->flushIfNecessary();
+		return $ret;
+	}
+
+	public function writeAttribute($name, $value)
+	{
+		$ret = parent::writeAttribute($name, $value);
+		$this->flushIfNecessary();
+		return $ret;
 	}
 
 	/**
@@ -98,12 +123,21 @@ class PHPExcel_Shared_XMLWriter extends XMLWriter {
 	 * @return $data
 	 */
 	public function getData() {
-		if ($this->_tempFileName == '') {
+		if ($this->_filename == '') {
 			return $this->outputMemory(true);
 		} else {
 			$this->flush();
-			return file_get_contents($this->_tempFileName);
+			return file_get_contents($this->_filename);
 		}
+	}
+
+	/**
+	 * Get the temporary file name.
+	 *
+	 * @return filename;
+	 */
+	public function getFileName() {
+		return $this->_filename;
 	}
 
 	/**

@@ -85,6 +85,30 @@ class PHPExcel_Shared_ZipArchive
 	{
 	}
 
+    /**
+     * Add a new file to the zip archive.
+     *
+     * @param	string	$filename		The path to the file to add to the zip archive
+     * @param	string	$localname		Directory/Name of the file to add to the zip archive
+     */
+    public function addFile($filename, $localname=null)
+    {
+        if (is_null ($localname))
+            $localname = $filename;
+
+        $filenameParts = pathinfo($localname);
+        copy($filename, $this->_tempDir.'/'.$filenameParts["basename"]);
+
+		$res = $this->_zip->add($this->_tempDir.'/'.$filenameParts["basename"],
+								PCLZIP_OPT_REMOVE_PATH, $this->_tempDir,
+								PCLZIP_OPT_ADD_PATH, $filenameParts["dirname"]
+							   );
+		if ($res == 0) {
+			throw new PHPExcel_Writer_Exception("Error zipping files : " . $this->_zip->errorInfo(true));
+		}
+
+		unlink($this->_tempDir.'/'.$filenameParts["basename"]);
+    }
 
     /**
 	 * Add a new file to the zip archive from a string of raw data.

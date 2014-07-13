@@ -36,24 +36,20 @@
 class PHPExcel_Writer_Excel2007_Worksheet extends PHPExcel_Writer_Excel2007_WriterPart
 {
 	/**
-	 * Write worksheet to XML format
+	 * Write worksheet to XML format into the ZIP file.
 	 *
 	 * @param	PHPExcel_Worksheet		$pSheet
+	 * @param	ZipArchive				$objZip
+	 * @param	string					$filename
 	 * @param	string[]				$pStringTable
 	 * @param	boolean					$includeCharts	Flag indicating if we should write charts
-	 * @return	string					XML Output
 	 * @throws	PHPExcel_Writer_Exception
 	 */
-	public function writeWorksheet($pSheet = null, $pStringTable = null, $includeCharts = FALSE)
+	public function addWorksheetToZip($pSheet, $objZip, $filename, $pStringTable = null, $includeCharts = FALSE)
 	{
 		if (!is_null($pSheet)) {
 			// Create XML writer
-			$objWriter = null;
-			if ($this->getParentWriter()->getUseDiskCaching()) {
-				$objWriter = new PHPExcel_Shared_XMLWriter(PHPExcel_Shared_XMLWriter::STORAGE_DISK, $this->getParentWriter()->getDiskCachingDirectory());
-			} else {
-				$objWriter = new PHPExcel_Shared_XMLWriter(PHPExcel_Shared_XMLWriter::STORAGE_MEMORY);
-			}
+			$objWriter = $this->createXMLWriter();
 
 			// XML header
 			$objWriter->startDocument('1.0','UTF-8','yes');
@@ -129,8 +125,8 @@ class PHPExcel_Writer_Excel2007_Worksheet extends PHPExcel_Writer_Excel2007_Writ
 
 			$objWriter->endElement();
 
-			// Return
-			return $objWriter->getData();
+			// Add the generated file to the Zip file.
+			$this->addXMLToZip($objWriter, $objZip, $filename);
 		} else {
 			throw new PHPExcel_Writer_Exception("Invalid PHPExcel_Worksheet object passed.");
 		}

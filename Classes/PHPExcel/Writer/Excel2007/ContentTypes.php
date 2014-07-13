@@ -39,19 +39,15 @@ class PHPExcel_Writer_Excel2007_ContentTypes extends PHPExcel_Writer_Excel2007_W
 	 * Write content types to XML format
 	 *
 	 * @param 	PHPExcel	$pPHPExcel
+	 * @param	ZipArchive	$objZip
+	 * @param	string		$filename
 	 * @param	boolean		$includeCharts	Flag indicating if we should include drawing details for charts
-	 * @return 	string 						XML Output
 	 * @throws 	PHPExcel_Writer_Exception
 	 */
-	public function writeContentTypes(PHPExcel $pPHPExcel = null, $includeCharts = FALSE)
+	public function addContentTypesToZip(PHPExcel $pPHPExcel, $objZip, $filename, $includeCharts = FALSE)
 	{
 		// Create XML writer
-		$objWriter = null;
-		if ($this->getParentWriter()->getUseDiskCaching()) {
-			$objWriter = new PHPExcel_Shared_XMLWriter(PHPExcel_Shared_XMLWriter::STORAGE_DISK, $this->getParentWriter()->getDiskCachingDirectory());
-		} else {
-			$objWriter = new PHPExcel_Shared_XMLWriter(PHPExcel_Shared_XMLWriter::STORAGE_MEMORY);
-		}
+		$objWriter = $this->createXMLWriter();
 
 		// XML header
 		$objWriter->startDocument('1.0','UTF-8','yes');
@@ -222,8 +218,8 @@ class PHPExcel_Writer_Excel2007_ContentTypes extends PHPExcel_Writer_Excel2007_W
 
 		$objWriter->endElement();
 
-		// Return
-		return $objWriter->getData();
+		// Add the generated file to the Zip file.
+		$this->addXMLToZip($objWriter, $objZip, $filename);
 	}
 
 	/**

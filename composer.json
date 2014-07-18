@@ -31,8 +31,6 @@
         "ext-gd2": "*"
     },
     "autoload": {
-        "psr-0": {
-            "PHPExcel": "Classes/"
-        }
+        "classmap": ["Classes/"]
     }
 }

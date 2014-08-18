@@ -2,7 +2,7 @@
 /**
  * PHPExcel
  *
- * Copyright (C) 2006 - 2013 PHPExcel
+ * Copyright (C) 2006 - 2014 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,7 +20,7 @@
  *
  * @category   PHPExcel
  * @package    PHPExcel
- * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2014 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -62,7 +62,15 @@ $objPHPExcel->getActiveSheet()->setCellValue('A1', "Cell B3 and B5 contain data 
                               ->setCellValue('A3', "Number:")
                               ->setCellValue('B3', "10")
                               ->setCellValue('A5', "List:")
-                              ->setCellValue('B5', "Item A");
+                              ->setCellValue('B5', "Item A")
+                              ->setCellValue('A7', "List #2:")
+                              ->setCellValue('B7', "Item #2")
+                              ->setCellValue('D2', "Item #1")
+                              ->setCellValue('D3', "Item #2")
+                              ->setCellValue('D4', "Item #3")
+                              ->setCellValue('D5', "Item #4")
+                              ->setCellValue('D6', "Item #5")
+                              ;
 
 
 // Set data validation
@@ -92,6 +100,19 @@ $objValidation->setError('Value is not in list.');
 $objValidation->setPromptTitle('Pick from list');
 $objValidation->setPrompt('Please pick a value from the drop-down list.');
 $objValidation->setFormula1('"Item A,Item B,Item C"');	// Make sure to put the list items between " and "  !!!
+
+$objValidation = $objPHPExcel->getActiveSheet()->getCell('B7')->getDataValidation();
+$objValidation->setType( PHPExcel_Cell_DataValidation::TYPE_LIST );
+$objValidation->setErrorStyle( PHPExcel_Cell_DataValidation::STYLE_INFORMATION );
+$objValidation->setAllowBlank(false);
+$objValidation->setShowInputMessage(true);
+$objValidation->setShowErrorMessage(true);
+$objValidation->setShowDropDown(true);
+$objValidation->setErrorTitle('Input error');
+$objValidation->setError('Value is not in list.');
+$objValidation->setPromptTitle('Pick from list');
+$objValidation->setPrompt('Please pick a value from the drop-down list.');
+$objValidation->setFormula1('$D$2:$D$6');	// Make sure NOT to put a range of cells or a formula between " and "  !!!
 
 
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet

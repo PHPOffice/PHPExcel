@@ -2,7 +2,7 @@
 /**
  * PHPExcel
  *
- * Copyright (C) 2006 - 2013 PHPExcel
+ * Copyright (C) 2006 - 2014 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,7 +20,7 @@
  *
  * @category   PHPExcel
  * @package    PHPExcel
- * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2014 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -38,8 +38,11 @@ date_default_timezone_set('Europe/London');
 require_once dirname(__FILE__) . '/../Classes/PHPExcel.php';
 
 $cacheMethod = PHPExcel_CachedObjectStorageFactory::cache_to_sqlite;
-PHPExcel_Settings::setCacheStorageMethod($cacheMethod);
-echo date('H:i:s') , " Enable Cell Caching using " , $cacheMethod , " method" , EOL;
+if (PHPExcel_Settings::setCacheStorageMethod($cacheMethod)) {
+    echo date('H:i:s') , " Enable Cell Caching using " , $cacheMethod , " method" , EOL;
+} else {
+    echo date('H:i:s') , " Unable to set Cell Caching using " , $cacheMethod , " method, reverting to memory" , EOL;
+}
 
 
 // Create new PHPExcel object

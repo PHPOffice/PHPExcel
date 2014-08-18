@@ -2,7 +2,7 @@
 /**
  * PHPExcel
  *
- * Copyright (c) 2006 - 2013 PHPExcel
+ * Copyright (c) 2006 - 2014 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,7 +20,7 @@
  *
  * @category	PHPExcel
  * @package		PHPExcel_Calculation
- * @copyright	Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright	Copyright (c) 2006 - 2014 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license		http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version		##VERSION##, ##DATE##
  */
@@ -54,7 +54,7 @@ define('PRECISION', 8.88E-016);
  *
  * @category	PHPExcel
  * @package		PHPExcel_Calculation
- * @copyright	Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright	Copyright (c) 2006 - 2014 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
 class PHPExcel_Calculation_Functions {
 
@@ -270,7 +270,7 @@ class PHPExcel_Calculation_Functions {
 	 *
 	 * @access	public
 	 * @category Error Returns
-	 * @return	string	#REF!
+	 * @return	string	#NULL!
 	 */
 	public static function NULL() {
 		return self::$_errorCodes['null'];
@@ -316,7 +316,12 @@ class PHPExcel_Calculation_Functions {
 		} else {
 			preg_match('/([<>=]+)(.*)/',$condition,$matches);
 			list(,$operator,$operand) = $matches;
-			if (!is_numeric($operand)) { $operand = PHPExcel_Calculation::_wrapResult(strtoupper($operand)); }
+
+			if (!is_numeric($operand)) {
+				$operand = str_replace('"', '""', $operand);
+				$operand = PHPExcel_Calculation::_wrapResult(strtoupper($operand));
+			}
+
 			return $operator.$operand;
 		}
 	}	//	function _ifCondition()
@@ -573,7 +578,6 @@ class PHPExcel_Calculation_Functions {
 				return 4;
 		} elseif(is_array($value)) {
 				return 64;
-				break;
 		} elseif(is_string($value)) {
 			//	Errors
 			if ((strlen($value) > 0) && ($value{0} == '#')) {

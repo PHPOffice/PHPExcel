@@ -3,7 +3,7 @@
 /**
  * PHPExcel
  *
- * Copyright (c) 2006 - 2013 PHPExcel
+ * Copyright (c) 2006 - 2014 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -21,7 +21,7 @@
  *
  * @category   PHPExcel
  * @package	PHPExcel_Shared
- * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2014 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license	http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version	##VERSION##, ##DATE##
  */
@@ -32,7 +32,7 @@
  *
  * @category   PHPExcel
  * @package	PHPExcel_Shared
- * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2014 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
 class PHPExcel_Shared_Date
 {
@@ -155,7 +155,7 @@ class PHPExcel_Shared_Date
 	 * Convert a date from Excel to a PHP Date/Time object
 	 *
 	 * @param	integer		$dateValue		Excel date/time value
-	 * @return	integer						PHP date/time object
+	 * @return	DateTime					PHP date/time object
 	 */
 	public static function ExcelToPHPObject($dateValue = 0) {
 		$dateTime = self::ExcelToPHP($dateValue);

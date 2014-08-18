@@ -2,7 +2,7 @@
 /**
  * PHPExcel
  *
- * Copyright (C) 2006 - 2013 PHPExcel
+ * Copyright (C) 2006 - 2014 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,7 +20,7 @@
  *
  * @category   PHPExcel
  * @package    PHPExcel
- * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2014 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -35,6 +35,7 @@ if (PHP_SAPI != 'cli') {
 // List of tests
 $aTests = array(
 	  '01simple.php'
+	, '01simplePCLZip.php'
 	, '02types.php'
 	, '02types-xls.php'
 	, '03formulas.php'
@@ -42,8 +43,11 @@ $aTests = array(
 	, '05featuredemo.php'
 	, '06largescale.php'
 	, '06largescale-with-cellcaching.php'
+	, '06largescale-with-cellcaching-sqlite.php'
+	, '06largescale-with-cellcaching-sqlite3.php'
 	, '06largescale-xls.php'
 	, '07reader.php'
+	, '07readerPCLZip.php'
 	, '08conditionalformatting.php'
 	, '08conditionalformatting2.php'
 	, '09pagebreaks.php'
@@ -90,17 +94,20 @@ $aTests = array(
 	, '34chartupdate.php'
 	, '35chartrender.php'
 	, '36chartreadwriteHTML.php'
+	, '36chartreadwritePDF.php'
 	, '37page_layout_view.php'
 	, '38cloneWorksheet.php'
+    , '39dropdown.php'
 	, '40duplicateStyle.php'
 	, 'OOCalcReader.php'
+	, 'OOCalcReaderPCLZip.php'
 	, 'SylkReader.php'
 	, 'Excel2003XMLReader.php'
 	, 'XMLReader.php'
 	, 'GnumericReader.php'
 );
 
-// First, clear all results
+// First, clear all previous run results
 foreach ($aTests as $sTest) {
 	@unlink( str_replace('.php', '.xls', 	$sTest) );
 	@unlink( str_replace('.php', '.xlsx', 	$sTest) );

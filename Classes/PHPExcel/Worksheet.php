@@ -2,7 +2,7 @@
 /**
  * PHPExcel
  *
- * Copyright (c) 2006 - 2013 PHPExcel
+ * Copyright (c) 2006 - 2014 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,7 +20,7 @@
  *
  * @category   PHPExcel
  * @package    PHPExcel_Worksheet
- * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2014 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -31,7 +31,7 @@
  *
  * @category   PHPExcel
  * @package    PHPExcel_Worksheet
- * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2014 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
 class PHPExcel_Worksheet implements PHPExcel_IComparable
 {
@@ -326,6 +326,13 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
     private $_hash    = null;
 
     /**
+    * CodeName
+    *
+    * @var string
+    */
+    private $_codeName = null;
+
+	/**
      * Create a new worksheet
      *
      * @param PHPExcel        $pParent
@@ -336,6 +343,8 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
         // Set parent and title
         $this->_parent = $pParent;
         $this->setTitle($pTitle, FALSE);
+        // setTitle can change $pTitle
+	    $this->setCodeName($this->getTitle());
         $this->setSheetState(PHPExcel_Worksheet::SHEETSTATE_VISIBLE);
 
         $this->_cellCollection        = PHPExcel_CachedObjectStorageFactory::getInstance($this);
@@ -417,6 +426,34 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
     }
 
     /**
+     * Check sheet code name for valid Excel syntax
+     *
+     * @param string $pValue The string to check
+     * @return string The valid string
+     * @throws Exception
+     */
+    private static function _checkSheetCodeName($pValue)
+    {
+        $CharCount = PHPExcel_Shared_String::CountCharacters($pValue);
+        if ($CharCount == 0) {
+            throw new PHPExcel_Exception('Sheet code name cannot be empty.');
+        }
+        // Some of the printable ASCII characters are invalid:  * : / \ ? [ ] and  first and last characters cannot be a "'"
+        if ((str_replace(self::$_invalidCharacters, '', $pValue) !== $pValue) || 
+            (PHPExcel_Shared_String::Substring($pValue,-1,1)=='\'') || 
+            (PHPExcel_Shared_String::Substring($pValue,0,1)=='\'')) {
+            throw new PHPExcel_Exception('Invalid character found in sheet code name');
+        }
+ 
+        // Maximum 31 characters allowed for sheet title
+        if ($CharCount > 31) {
+            throw new PHPExcel_Exception('Maximum 31 characters allowed in sheet code name.');
+        }
+ 
+        return $pValue;
+    }
+
+   /**
      * Check sheet title for valid Excel syntax
      *
      * @param string $pValue The string to check
@@ -757,14 +794,16 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
      * @return PHPExcel_Worksheet
      */
 	public function rebindParent(PHPExcel $parent) {
-        $namedRanges = $this->_parent->getNamedRanges();
-        foreach ($namedRanges as $namedRange) {
-            $parent->addNamedRange($namedRange);
-        }
+        if ($this->_parent !== null) {
+            $namedRanges = $this->_parent->getNamedRanges();
+            foreach ($namedRanges as $namedRange) {
+                $parent->addNamedRange($namedRange);
+            }
 
-        $this->_parent->removeSheetByIndex(
-            $this->_parent->getIndex($this)
-        );
+            $this->_parent->removeSheetByIndex(
+                $this->_parent->getIndex($this)
+            );
+        }
         $this->_parent = $parent;
 
         return $this;
@@ -1366,7 +1405,7 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
     /**
      * Get style for cell
      *
-     * @param string $pCellCoordinate Cell coordinate to get style for
+     * @param string $pCellCoordinate Cell coordinate (or range) to get style for
      * @return PHPExcel_Style
      * @throws PHPExcel_Exception
      */
@@ -1449,10 +1488,18 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
      *
      * @param int $pColumn  Numeric column coordinate of the cell
      * @param int $pRow Numeric row coordinate of the cell
+     * @param int pColumn2 Numeric column coordinate of the range cell
+     * @param int pRow2 Numeric row coordinate of the range cell
      * @return PHPExcel_Style
      */
-    public function getStyleByColumnAndRow($pColumn = 0, $pRow = 1)
+    public function getStyleByColumnAndRow($pColumn = 0, $pRow = 1, $pColumn2 = null, $pRow2 = null)
     {
+        if (!is_null($pColumn2) && !is_null($pRow2)) {
+		    $cellRange = PHPExcel_Cell::stringFromColumnIndex($pColumn) . $pRow . ':' . 
+                PHPExcel_Cell::stringFromColumnIndex($pColumn2) . $pRow2;
+		    return $this->getStyle($cellRange);
+	    }
+
         return $this->getStyle(PHPExcel_Cell::stringFromColumnIndex($pColumn) . $pRow);
     }
 
@@ -1550,7 +1597,7 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
         // Loop through cells and apply styles
         for ($col = $rangeStart[0]; $col <= $rangeEnd[0]; ++$col) {
             for ($row = $rangeStart[1]; $row <= $rangeEnd[1]; ++$row) {
-                $this->setConditionalStyles(PHPExcel_Cell::stringFromColumnIndex($col) . $row, $pCellStyle);
+                $this->setConditionalStyles(PHPExcel_Cell::stringFromColumnIndex($col - 1) . $row, $pCellStyle);
             }
         }
 
@@ -2426,7 +2473,7 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
                             $style = $this->_parent->getCellXfByIndex($cell->getXfIndex());
                             $returnValue[$rRef][$cRef] = PHPExcel_Style_NumberFormat::toFormattedString(
                             	$returnValue[$rRef][$cRef],
-								($style->getNumberFormat()) ?
+								($style && $style->getNumberFormat()) ?
 									$style->getNumberFormat()->getFormatCode() :
 									PHPExcel_Style_NumberFormat::FORMAT_GENERAL
                             );
@@ -2498,7 +2545,7 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
     /**
      * Get row iterator
      *
-     * @param  integer                           $startRow    The row number at which to start iterating
+     * @param integer $startRow The row number at which to start iterating
      * @return PHPExcel_Worksheet_RowIterator
      */
 	public function getRowIterator($startRow = 1) {
@@ -2802,4 +2849,69 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
             }
         }
     }
+/**
+	 * Define the code name of the sheet
+	 *
+	 * @param null|string Same rule as Title minus space not allowed (but, like Excel, change silently space to underscore)
+	 * @return objWorksheet
+	 * @throws PHPExcel_Exception
+	*/
+	public function setCodeName($pValue=null){
+		// Is this a 'rename' or not?
+		if ($this->getCodeName() == $pValue) {
+			return $this;
+		}
+		$pValue = str_replace(' ', '_', $pValue);//Excel does this automatically without flinching, we are doing the same
+		// Syntax check
+        // throw an exception if not valid
+		self::_checkSheetCodeName($pValue);
+
+		// We use the same code that setTitle to find a valid codeName else not using a space (Excel don't like) but a '_'
+		
+        if ($this->getParent()) {
+			// Is there already such sheet name?
+			if ($this->getParent()->sheetCodeNameExists($pValue)) {
+				// Use name, but append with lowest possible integer
+
+				if (PHPExcel_Shared_String::CountCharacters($pValue) > 29) {
+					$pValue = PHPExcel_Shared_String::Substring($pValue,0,29);
+				}
+				$i = 1;
+				while ($this->getParent()->sheetCodeNameExists($pValue . '_' . $i)) {
+					++$i;
+					if ($i == 10) {
+						if (PHPExcel_Shared_String::CountCharacters($pValue) > 28) {
+							$pValue = PHPExcel_Shared_String::Substring($pValue,0,28);
+						}
+					} elseif ($i == 100) {
+						if (PHPExcel_Shared_String::CountCharacters($pValue) > 27) {
+							$pValue = PHPExcel_Shared_String::Substring($pValue,0,27);
+						}
+					}
+				}
+
+				$pValue = $pValue . '_' . $i;// ok, we have a valid name
+				//codeName is'nt used in formula : no need to call for an update
+				//return $this->setTitle($altTitle,$updateFormulaCellReferences);
+			}
+		}
+
+		$this->_codeName=$pValue;
+		return $this;
+	}
+	/**
+	 * Return the code name of the sheet
+	 *
+	 * @return null|string
+	*/
+	public function getCodeName(){
+		return $this->_codeName;
+	}
+	/**
+	 * Sheet has a code name ?
+	 * @return boolean
+	*/
+	public function hasCodeName(){
+		return !(is_null($this->_codeName));
+	}
 }

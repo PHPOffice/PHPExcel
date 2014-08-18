@@ -3,7 +3,7 @@
 /**
  * PHPExcel
  *
- * Copyright (c) 2006 - 2013 PHPExcel
+ * Copyright (c) 2006 - 2014 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -21,7 +21,7 @@
  *
  * @category	PHPExcel
  * @package		PHPExcel_Chart_Renderer
- * @copyright	Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright	Copyright (c) 2006 - 2014 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license		http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version		##VERSION##, ##DATE##
  */
@@ -35,7 +35,7 @@ require_once(PHPExcel_Settings::getChartRendererPath().'/jpgraph.php');
  *
  * @category	PHPExcel
  * @package		PHPExcel_Chart_Renderer
- * @copyright	Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright	Copyright (c) 2006 - 2014 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
 class PHPExcel_Chart_Renderer_jpgraph
 {
@@ -554,7 +554,7 @@ class PHPExcel_Chart_Renderer_jpgraph
 
 
 	private function _renderAreaChart($groupCount, $dimensions = '2d') {
-		require_once('jpgraph_line.php');
+		require_once(PHPExcel_Settings::getChartRendererPath().'jpgraph_line.php');
 
 		$this->_renderCartesianPlotArea();
 
@@ -565,7 +565,7 @@ class PHPExcel_Chart_Renderer_jpgraph
 
 
 	private function _renderLineChart($groupCount, $dimensions = '2d') {
-		require_once('jpgraph_line.php');
+		require_once(PHPExcel_Settings::getChartRendererPath().'jpgraph_line.php');
 
 		$this->_renderCartesianPlotArea();
 
@@ -576,7 +576,7 @@ class PHPExcel_Chart_Renderer_jpgraph
 
 
 	private function _renderBarChart($groupCount, $dimensions = '2d') {
-		require_once('jpgraph_bar.php');
+		require_once(PHPExcel_Settings::getChartRendererPath().'jpgraph_bar.php');
 
 		$this->_renderCartesianPlotArea();
 
@@ -587,9 +587,9 @@ class PHPExcel_Chart_Renderer_jpgraph
 
 
 	private function _renderScatterChart($groupCount) {
-		require_once('jpgraph_scatter.php');
-		require_once('jpgraph_regstat.php');
-		require_once('jpgraph_line.php');
+		require_once(PHPExcel_Settings::getChartRendererPath().'jpgraph_scatter.php');
+		require_once(PHPExcel_Settings::getChartRendererPath().'jpgraph_regstat.php');
+		require_once(PHPExcel_Settings::getChartRendererPath().'jpgraph_line.php');
 
 		$this->_renderCartesianPlotArea('linlin');
 
@@ -600,7 +600,7 @@ class PHPExcel_Chart_Renderer_jpgraph
 
 
 	private function _renderBubbleChart($groupCount) {
-		require_once('jpgraph_scatter.php');
+		require_once(PHPExcel_Settings::getChartRendererPath().'jpgraph_scatter.php');
 
 		$this->_renderCartesianPlotArea('linlin');
 
@@ -611,9 +611,9 @@ class PHPExcel_Chart_Renderer_jpgraph
 
 
 	private function _renderPieChart($groupCount, $dimensions = '2d', $doughnut = False, $multiplePlots = False) {
-		require_once('jpgraph_pie.php');
+		require_once(PHPExcel_Settings::getChartRendererPath().'jpgraph_pie.php');
 		if ($dimensions == '3d') {
-			require_once('jpgraph_pie3d.php');
+			require_once(PHPExcel_Settings::getChartRendererPath().'jpgraph_pie3d.php');
 		}
 
 		$this->_renderPiePlotArea($doughnut);
@@ -686,7 +686,7 @@ class PHPExcel_Chart_Renderer_jpgraph
 
 
 	private function _renderRadarChart($groupCount) {
-		require_once('jpgraph_radar.php');
+		require_once(PHPExcel_Settings::getChartRendererPath().'jpgraph_radar.php');
 
 		$this->_renderRadarPlotArea();
 
@@ -697,7 +697,7 @@ class PHPExcel_Chart_Renderer_jpgraph
 
 
 	private function _renderStockChart($groupCount) {
-		require_once('jpgraph_stock.php');
+		require_once(PHPExcel_Settings::getChartRendererPath().'jpgraph_stock.php');
 
 		$this->_renderCartesianPlotArea('intint');
 
@@ -708,7 +708,7 @@ class PHPExcel_Chart_Renderer_jpgraph
 
 
 	private function _renderContourChart($groupCount,$dimensions) {
-		require_once('jpgraph_contour.php');
+		require_once(PHPExcel_Settings::getChartRendererPath().'jpgraph_contour.php');
 
 		$this->_renderCartesianPlotArea('intint');
 
@@ -719,11 +719,11 @@ class PHPExcel_Chart_Renderer_jpgraph
 
 
 	private function _renderCombinationChart($groupCount,$dimensions,$outputDestination) {
-		require_once('jpgraph_line.php');
-		require_once('jpgraph_bar.php');
-		require_once('jpgraph_scatter.php');
-		require_once('jpgraph_regstat.php');
-		require_once('jpgraph_line.php');
+		require_once(PHPExcel_Settings::getChartRendererPath().'jpgraph_line.php');
+		require_once(PHPExcel_Settings::getChartRendererPath().'jpgraph_bar.php');
+		require_once(PHPExcel_Settings::getChartRendererPath().'jpgraph_scatter.php');
+		require_once(PHPExcel_Settings::getChartRendererPath().'jpgraph_regstat.php');
+		require_once(PHPExcel_Settings::getChartRendererPath().'jpgraph_line.php');
 
 		$this->_renderCartesianPlotArea();
 

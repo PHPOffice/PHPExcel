@@ -2,7 +2,7 @@
 /**
  * PHPExcel
  *
- * Copyright (c) 2006 - 2013 PHPExcel
+ * Copyright (c) 2006 - 2014 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,7 +20,7 @@
  *
  * @category   PHPExcel
  * @package    PHPExcel_Writer_Excel2007
- * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2014 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -31,7 +31,7 @@
  *
  * @category   PHPExcel
  * @package    PHPExcel_Writer_Excel2007
- * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2014 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
 class PHPExcel_Writer_Excel2007_ContentTypes extends PHPExcel_Writer_Excel2007_WriterPart
 {
@@ -86,9 +86,26 @@ class PHPExcel_Writer_Excel2007_ContentTypes extends PHPExcel_Writer_Excel2007_W
 			);
 
 			// Workbook
-			$this->_writeOverrideContentType(
-				$objWriter, '/xl/workbook.xml', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml'
-			);
+			if($pPHPExcel->hasMacros()){ //Macros in workbook ?
+				// Yes : not standard content but "macroEnabled"
+				$this->_writeOverrideContentType(
+					$objWriter, '/xl/workbook.xml', 'application/vnd.ms-excel.sheet.macroEnabled.main+xml'
+				);
+				//... and define a new type for the VBA project
+				$this->_writeDefaultContentType(
+							$objWriter, 'bin', 'application/vnd.ms-office.vbaProject'
+						);
+				if($pPHPExcel->hasMacrosCertificate()){// signed macros ?
+					// Yes : add needed information
+					$this->_writeOverrideContentType(
+						$objWriter, '/xl/vbaProjectSignature.bin', 'application/vnd.ms-office.vbaProjectSignature'
+				);
+				}
+			}else{// no macros in workbook, so standard type
+				$this->_writeOverrideContentType(
+					$objWriter, '/xl/workbook.xml', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml'
+				);
+			}
 
 			// DocProps
 			$this->_writeOverrideContentType(
@@ -178,7 +195,16 @@ class PHPExcel_Writer_Excel2007_ContentTypes extends PHPExcel_Writer_Excel2007_W
 						);
 				}
 			}
-
+			if($pPHPExcel->hasRibbonBinObjects()){//Some additional objects in the ribbon ?
+				//we need to write "Extension" but not already write for media content
+				$tabRibbonTypes=array_diff($pPHPExcel->getRibbonBinObjects('types'), array_keys($aMediaContentTypes));
+				foreach($tabRibbonTypes as $aRibbonType){
+					$mimeType='image/.'.$aRibbonType;//we wrote $mimeType like customUI Editor
+					$this->_writeDefaultContentType(
+						$objWriter, $aRibbonType, $mimeType
+					);
+				}	
+			}
 			$sheetCount = $pPHPExcel->getSheetCount();
 			for ($i = 0; $i < $sheetCount; ++$i) {
 				if (count($pPHPExcel->getSheet()->getHeaderFooter()->getImages()) > 0) {

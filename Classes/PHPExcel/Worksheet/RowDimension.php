@@ -2,7 +2,7 @@
 /**
  * PHPExcel
  *
- * Copyright (c) 2006 - 2013 PHPExcel
+ * Copyright (c) 2006 - 2014 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,7 +20,7 @@
  *
  * @category   PHPExcel
  * @package    PHPExcel_Worksheet
- * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2014 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -31,7 +31,7 @@
  *
  * @category   PHPExcel
  * @package    PHPExcel_Worksheet
- * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2014 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
 class PHPExcel_Worksheet_RowDimension
 {
@@ -145,7 +145,7 @@ class PHPExcel_Worksheet_RowDimension
 	 *
 	 * @return bool
 	 */
-	public function getzeroHeight() {
+	public function getZeroHeight() {
 		return $this->_zeroHeight;
 	}
 
@@ -155,7 +155,7 @@ class PHPExcel_Worksheet_RowDimension
 	 * @param bool $pValue
 	 * @return PHPExcel_Worksheet_RowDimension
 	 */
-	public function setzeroHeight($pValue = false) {
+	public function setZeroHeight($pValue = false) {
 		$this->_zeroHeight = $pValue;
 		return $this;
 	}

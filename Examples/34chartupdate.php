@@ -13,7 +13,7 @@ date_default_timezone_set('Europe/London');
 /**
  * PHPExcel
  *
- * Copyright (C) 2006 - 2013 PHPExcel
+ * Copyright (C) 2006 - 2014 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -31,13 +31,13 @@ date_default_timezone_set('Europe/London');
  *
  * @category   PHPExcel
  * @package    PHPExcel
- * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2014 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
 
 /** PHPExcel */
-include '../Classes/PHPExcel.php';
+require_once dirname(__FILE__) . '/../Classes/PHPExcel.php';
 
 if (!file_exists("33chartcreate-bar.xlsx")) {
 	exit("Please run 33chartcreate-bar.php first." . EOL);

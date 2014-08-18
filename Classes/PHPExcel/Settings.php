@@ -2,7 +2,7 @@
 /**
  * PHPExcel
  *
- * Copyright (c) 2006 - 2013 PHPExcel
+ * Copyright (c) 2006 - 2014 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,7 +20,7 @@
  *
  * @category   PHPExcel
  * @package    PHPExcel_Settings
- * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2014 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -105,6 +105,12 @@ class PHPExcel_Settings
      */
     private static $_pdfRendererPath = NULL;
 
+    /**
+     * Default options for libxml loader
+     *
+     * @var int
+     */
+    private static $_libXmlLoaderOptions = null;
 
     /**
      * Set the Zip handler Class that PHPExcel should use for Zip file management (PCLZip or ZipArchive)
@@ -339,7 +345,6 @@ class PHPExcel_Settings
         return self::$_pdfRendererName;
     } // function getPdfRendererName()
 
-
     /**
      * Return the directory path to the PDF Rendering Library that PHPExcel is currently configured to use
      *
@@ -351,4 +356,32 @@ class PHPExcel_Settings
         return self::$_pdfRendererPath;
     } // function getPdfRendererPath()
 
+    /**
+     * Set default options for libxml loader
+     *
+     * @param int $options Default options for libxml loader
+     */
+    public static function setLibXmlLoaderOptions($options = null)
+    {
+        if (is_null($options)) {
+            $options = LIBXML_DTDLOAD | LIBXML_DTDATTR;
+        }
+        @libxml_disable_entity_loader($options == (LIBXML_DTDLOAD | LIBXML_DTDATTR)); 
+        self::$_libXmlLoaderOptions = $options;
+    } // function setLibXmlLoaderOptions
+
+    /**
+     * Get default options for libxml loader.
+     * Defaults to LIBXML_DTDLOAD | LIBXML_DTDATTR when not set explicitly.
+     *
+     * @return int Default options for libxml loader
+     */
+    public static function getLibXmlLoaderOptions()
+    {
+        if (is_null(self::$_libXmlLoaderOptions)) {
+            self::setLibXmlLoaderOptions(LIBXML_DTDLOAD | LIBXML_DTDATTR);
+        }
+        @libxml_disable_entity_loader(self::$_libXmlLoaderOptions == (LIBXML_DTDLOAD | LIBXML_DTDATTR));
+        return self::$_libXmlLoaderOptions;
+    } // function getLibXmlLoaderOptions
 }

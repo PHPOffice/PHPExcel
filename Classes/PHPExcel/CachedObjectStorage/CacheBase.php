@@ -2,7 +2,7 @@
 /**
  * PHPExcel
  *
- * Copyright (c) 2006 - 2013 PHPExcel
+ * Copyright (c) 2006 - 2014 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,7 +20,7 @@
  *
  * @category   PHPExcel
  * @package    PHPExcel_CachedObjectStorage
- * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2014 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -31,7 +31,7 @@
  *
  * @category   PHPExcel
  * @package    PHPExcel_CachedObjectStorage
- * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2014 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
 abstract class PHPExcel_CachedObjectStorage_CacheBase {
 
@@ -136,7 +136,7 @@ abstract class PHPExcel_CachedObjectStorage_CacheBase {
      * Add or Update a cell in cache
      *
      * @param	PHPExcel_Cell	$cell		Cell to update
-	 * @return	void
+	 * @return	PHPExcel_Cell
      * @throws	PHPExcel_Exception
      */
 	public function updateCacheData(PHPExcel_Cell $cell) {
@@ -167,7 +167,7 @@ abstract class PHPExcel_CachedObjectStorage_CacheBase {
 	/**
 	 * Get a list of all cell addresses currently held in cache
 	 *
-	 * @return	array of string
+	 * @return	string[]
 	 */
 	public function getCellList() {
 		return array_keys($this->_cellCache);
@@ -177,7 +177,7 @@ abstract class PHPExcel_CachedObjectStorage_CacheBase {
 	/**
 	 * Sort the list of all cell addresses currently held in cache by row and column
 	 *
-	 * @return	void
+	 * @return	string[]
 	 */
 	public function getSortedCellList() {
 		$sortKeys = array();
@@ -243,12 +243,12 @@ abstract class PHPExcel_CachedObjectStorage_CacheBase {
 	/**
 	 * Return the row address of the currently active cell object
 	 *
-	 * @return	string
+	 * @return	integer
 	 */
 	public function getCurrentRow()
 	{
 		sscanf($this->_currentObjectID, '%[A-Z]%d', $column, $row);
-		return $row;
+		return (integer) $row;
 	}
 
 	/**

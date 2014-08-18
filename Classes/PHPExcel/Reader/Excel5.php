@@ -2,7 +2,7 @@
 /**
  * PHPExcel
  *
- * Copyright (c) 2006 - 2013 PHPExcel
+ * Copyright (c) 2006 - 2014 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,7 +20,7 @@
  *
  * @category   PHPExcel
  * @package    PHPExcel_Reader_Excel5
- * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2014 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -73,7 +73,7 @@ if (!defined('PHPEXCEL_ROOT')) {
  *
  * @category	PHPExcel
  * @package		PHPExcel_Reader_Excel5
- * @copyright	Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright	Copyright (c) 2006 - 2014 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
 class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExcel_Reader_IReader
 {
@@ -1089,6 +1089,7 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
 				}
 			}
 		}
+        $this->_data = null;
 
 		return $this->_phpExcel;
 	}
@@ -1687,7 +1688,7 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
 			substr($recordData, 38, 16),
 			$this->_md5Ctxt
 		)) {
-			throw new \Exception('Decryption password incorrect');
+			throw new PHPExcel_Reader_Exception('Decryption password incorrect');
 		}
 		
 		$this->_encryption = self::MS_BIFF_CRYPTO_RC4;
@@ -4561,6 +4562,9 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
 				$offset += 4;
 				// offset: var; size: $us; character array of the URL, no Unicode string header, always 16-bit characters, zero-terminated
 				$url = self::_encodeUTF16(substr($recordData, $offset, $us - 2), false);
+                $nullOffset = strpos($url, 0x00);
+				if ($nullOffset)
+                    $url = substr($url,0,$nullOffset);
 				$url .= $hasText ? '#' : '';
 				$offset += $us;
 				break;

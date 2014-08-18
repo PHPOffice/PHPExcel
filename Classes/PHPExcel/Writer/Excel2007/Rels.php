@@ -2,7 +2,7 @@
 /**
  * PHPExcel
  *
- * Copyright (c) 2006 - 2013 PHPExcel
+ * Copyright (c) 2006 - 2014 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,7 +20,7 @@
  *
  * @category   PHPExcel
  * @package    PHPExcel_Writer_Excel2007
- * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2014 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -31,7 +31,7 @@
  *
  * @category   PHPExcel
  * @package    PHPExcel_Writer_Excel2007
- * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2014 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
 class PHPExcel_Writer_Excel2007_Rels extends PHPExcel_Writer_Excel2007_WriterPart
 {
@@ -94,6 +94,15 @@ class PHPExcel_Writer_Excel2007_Rels extends PHPExcel_Writer_Excel2007_WriterPar
 				'http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument',
 				'xl/workbook.xml'
 			);
+			// a custom UI in workbook ?
+			if($pPHPExcel->hasRibbon()){
+				$this->_writeRelationShip(
+					$objWriter,
+					5,
+					'http://schemas.microsoft.com/office/2006/relationships/ui/extensibility',
+					$pPHPExcel->getRibbonXMLData('target')
+				);
+			}
 
 		$objWriter->endElement();
 
@@ -158,6 +167,17 @@ class PHPExcel_Writer_Excel2007_Rels extends PHPExcel_Writer_Excel2007_WriterPar
 					'http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet',
 					'worksheets/sheet' . ($i + 1) . '.xml'
 				);
+			}
+			// Relationships for vbaProject if needed
+			// id : just after the last sheet
+			if($pPHPExcel->hasMacros()){
+				$this->_writeRelationShip(
+					$objWriter,
+					($i + 1 + 3),
+					'http://schemas.microsoft.com/office/2006/relationships/vbaProject',
+					'vbaProject.bin'
+				);
+				++$i;//increment i if needed for an another relation
 			}
 
 		$objWriter->endElement();

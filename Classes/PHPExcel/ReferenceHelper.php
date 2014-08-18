@@ -2,7 +2,7 @@
 /**
  * PHPExcel
  *
- * Copyright (c) 2006 - 2013 PHPExcel
+ * Copyright (c) 2006 - 2014 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,7 +20,7 @@
  *
  * @category   PHPExcel
  * @package	PHPExcel
- * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2014 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license	http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version	##VERSION##, ##DATE##
  */
@@ -31,7 +31,7 @@
  *
  * @category   PHPExcel
  * @package	PHPExcel
- * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2014 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
 class PHPExcel_ReferenceHelper
 {
@@ -431,6 +431,7 @@ class PHPExcel_ReferenceHelper
 		while ($cellID = array_pop($aCellCollection)) {
 			$cell = $pSheet->getCell($cellID);
 			$cellIndex = PHPExcel_Cell::columnIndexFromString($cell->getColumn());
+
 			if ($cellIndex-1 + $pNumCols < 0) {
 				continue;
 			}
@@ -736,6 +737,7 @@ class PHPExcel_ReferenceHelper
 				}
 				//	Search for cell references (e.g. 'Sheet1'!A3 or C5) with or without $ absolutes (e.g. $A1 or C$5)
 				$matchCount = preg_match_all('/'.self::REFHELPER_REGEXP_CELLREF.'/i', ' '.$formulaBlock.' ', $matches, PREG_SET_ORDER);
+
 				if ($matchCount > 0) {
 					foreach($matches as $match) {
 						$fromString = ($match[2] > '') ? $match[2].'!' : '';
@@ -750,7 +752,7 @@ class PHPExcel_ReferenceHelper
 								//	Max worksheet size is 1,048,576 rows by 16,384 columns in Excel 2007, so our adjustments need to be at least one digit more
 								$column = PHPExcel_Cell::columnIndexFromString(trim($column,'$')) + 100000;
 								$row = trim($row,'$') + 10000000;
-								$cellIndex = $column.$row;
+								$cellIndex = $row . $column;
 
 								$newCellTokens[$cellIndex] = preg_quote($toString);
 								$cellTokens[$cellIndex] = '/(?<![A-Z\$\!])'.preg_quote($fromString).'(?!\d)/i';
@@ -760,14 +762,13 @@ class PHPExcel_ReferenceHelper
 					}
 				}
 				if ($adjustCount > 0) {
-					if ($pNumCols > 0) {
-						krsort($cellTokens);
-						krsort($newCellTokens);
-					} else {
-						ksort($cellTokens);
-						ksort($newCellTokens);
-					}
-					//	Update cell references in the formula
+                    if ($pNumCols > 0 || $pNumRows > 0) {
+                        krsort($cellTokens);
+                        krsort($newCellTokens);
+                      } else {
+                        ksort($cellTokens);
+                        ksort($newCellTokens);
+                    }   //  Update cell references in the formula
 					$formulaBlock = str_replace('\\','',preg_replace($cellTokens,$newCellTokens,$formulaBlock));
 				}
 			}

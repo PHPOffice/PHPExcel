@@ -2,7 +2,7 @@
 /**
  * PHPExcel
  *
- * Copyright (c) 2006 - 2013 PHPExcel
+ * Copyright (c) 2006 - 2014 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,7 +20,7 @@
  *
  * @category   PHPExcel
  * @package    PHPExcel_Shared
- * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2014 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -31,7 +31,7 @@
  *
  * @category   PHPExcel
  * @package    PHPExcel_Shared
- * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2014 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
 class PHPExcel_Shared_CodePage
 {
@@ -83,12 +83,15 @@ class PHPExcel_Shared_CodePage
 			case 1258:	return 'CP1258';			break;	//	ANSI Vietnamese
 			case 1361:	return 'CP1361';			break;	//	ANSI Korean (Johab)
 			case 10000:	return 'MAC';				break;	//	Apple Roman
+			case 10001:	return 'CP932';				break;	//	Macintosh Japanese
+			case 10002:	return 'CP950';				break;	//	Macintosh Chinese Traditional
+			case 10003:	return 'CP1361';			break;	//	Macintosh Korean
 			case 10006:	return 'MACGREEK';			break;	//	Macintosh Greek
-			case 10007:	return 'MACCYRILLIC';		break;	//	Macintosh Cyrillic
-            case 10008: return 'CP936';             break;  //  Macintosh - Simplified Chinese (GB 2312)
-			case 10029:	return 'MACCENTRALEUROPE';	break;	//	Macintosh Central Europe
-			case 10079: return 'MACICELAND';		break;	//	Macintosh Icelandic
-			case 10081: return 'MACTURKISH';		break;	//	Macintosh Turkish
+			case 10007:	return 'MACCYRILLIC';			break;	//	Macintosh Cyrillic
+                        case 10008:	return 'CP936';				break;  //	Macintosh - Simplified Chinese (GB 2312)
+			case 10029:	return 'MACCENTRALEUROPE';		break;	//	Macintosh Central Europe
+			case 10079:	return 'MACICELAND';			break;	//	Macintosh Icelandic
+			case 10081:	return 'MACTURKISH';			break;	//	Macintosh Turkish
 			case 32768:	return 'MAC';				break;	//	Apple Roman
 			case 32769:	throw new PHPExcel_Exception('Code page 32769 not supported.');
 													break;	//	ANSI Latin I (BIFF2-BIFF3)

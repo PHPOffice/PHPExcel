@@ -13,7 +13,7 @@ date_default_timezone_set('Europe/London');
 /**
  * PHPExcel
  *
- * Copyright (C) 2006 - 2013 PHPExcel
+ * Copyright (C) 2006 - 2014 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -31,7 +31,7 @@ date_default_timezone_set('Europe/London');
  *
  * @category   PHPExcel
  * @package    PHPExcel
- * @copyright  Copyright (c) 2006 - 2013 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2014 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -68,13 +68,13 @@ $objWorksheet->fromArray(
 //		Number of datapoints in series
 //		Data values
 //		Data Marker
-$dataseriesLabels1 = array(
+$dataSeriesLabels1 = array(
 	new PHPExcel_Chart_DataSeriesValues('String', 'Worksheet!$B$1', NULL, 1),	//	Temperature
 );
-$dataseriesLabels2 = array(
+$dataSeriesLabels2 = array(
 	new PHPExcel_Chart_DataSeriesValues('String', 'Worksheet!$C$1', NULL, 1),	//	Rainfall
 );
-$dataseriesLabels3 = array(
+$dataSeriesLabels3 = array(
 	new PHPExcel_Chart_DataSeriesValues('String', 'Worksheet!$D$1', NULL, 1),	//	Humidity
 );
 
@@ -106,7 +106,7 @@ $series1 = new PHPExcel_Chart_DataSeries(
 	PHPExcel_Chart_DataSeries::TYPE_BARCHART,		// plotType
 	PHPExcel_Chart_DataSeries::GROUPING_CLUSTERED,	// plotGrouping
 	range(0, count($dataSeriesValues1)-1),			// plotOrder
-	$dataseriesLabels1,								// plotLabel
+	$dataSeriesLabels1,								// plotLabel
 	$xAxisTickValues,								// plotCategory
 	$dataSeriesValues1								// plotValues
 );
@@ -131,7 +131,7 @@ $series2 = new PHPExcel_Chart_DataSeries(
 	PHPExcel_Chart_DataSeries::TYPE_LINECHART,		// plotType
 	PHPExcel_Chart_DataSeries::GROUPING_STANDARD,	// plotGrouping
 	range(0, count($dataSeriesValues2)-1),			// plotOrder
-	$dataseriesLabels2,								// plotLabel
+	$dataSeriesLabels2,								// plotLabel
 	NULL,											// plotCategory
 	$dataSeriesValues2								// plotValues
 );
@@ -153,14 +153,14 @@ $series3 = new PHPExcel_Chart_DataSeries(
 	PHPExcel_Chart_DataSeries::TYPE_AREACHART,		// plotType
 	PHPExcel_Chart_DataSeries::GROUPING_STANDARD,	// plotGrouping
 	range(0, count($dataSeriesValues2)-1),			// plotOrder
-	$dataseriesLabels3,								// plotLabel
+	$dataSeriesLabels3,								// plotLabel
 	NULL,											// plotCategory
 	$dataSeriesValues3								// plotValues
 );
 
 
 //	Set the series in the plot area
-$plotarea = new PHPExcel_Chart_PlotArea(NULL, array($series1, $series2, $series3));
+$plotArea = new PHPExcel_Chart_PlotArea(NULL, array($series1, $series2, $series3));
 //	Set the chart legend
 $legend = new PHPExcel_Chart_Legend(PHPExcel_Chart_Legend::POSITION_RIGHT, NULL, false);
 
@@ -172,7 +172,7 @@ $chart = new PHPExcel_Chart(
 	'chart1',		// name
 	$title,			// title
 	$legend,		// legend
-	$plotarea,		// plotArea
+	$plotArea,		// plotArea
 	true,			// plotVisibleOnly
 	0,				// displayBlanksAs
 	NULL,			// xAxisLabel

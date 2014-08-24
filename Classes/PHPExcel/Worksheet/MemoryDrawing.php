@@ -55,6 +55,13 @@ class PHPExcel_Worksheet_MemoryDrawing extends PHPExcel_Worksheet_BaseDrawing im
 	private $_imageResource;
 
 	/**
+	 * Image data in string
+	 *
+	 * @var string
+	 */
+	private $_imageResourceString;
+
+	/**
 	 * Rendering function
 	 *
 	 * @var string
@@ -96,8 +103,21 @@ class PHPExcel_Worksheet_MemoryDrawing extends PHPExcel_Worksheet_BaseDrawing im
      * @return resource
      */
     public function getImageResource() {
-    	return $this->_imageResource;
-    }
+		if (!$this->_imageResource && $this->_imageResourceString) {
+			$this->_imageResource = imagecreatefromstring($this->_imageResourceString);
+		}
+		return $this->_imageResource;
+	}
+
+    /**
+     * Get image resource as string
+     * May return null if imageResource was set but not imageResourceData
+     * @todo create image resource string if not set from _imageResource?
+     * @return string
+     */
+	public function getImageResourceData() {
+		return $this->_imageResourceString;
+	}
 
     /**
      * Set image resource
@@ -115,6 +135,40 @@ class PHPExcel_Worksheet_MemoryDrawing extends PHPExcel_Worksheet_BaseDrawing im
     	}
     	return $this;
     }
+
+    /**
+     * Set image resource data
+     *
+     * @param string $data
+     * @return PHPExcel_Worksheet_MemoryDrawing
+     */
+	public function setImageResourceData($data) {
+		$this->_imageResource = null;
+		$this->_imageResourceString = $data;
+		if (!function_exists('getimagesizefromstring')) {
+			$size = getimagesize('data://application/octet-stream;base64,' .
+					base64_encode($data));
+		} else {
+			//requires PHP 5 >= 5.4.0
+			$size = getimagesizefromstring($data);
+		}
+		if ($size) {
+			$this->_width = $size[0];
+			$this->_height = $size[1];
+			switch ($size[2]) {
+				case IMAGETYPE_PNG:
+					$this->_mimeType = self::MIMETYPE_PNG;
+					break;
+				case IMAGETYPE_GIF:
+					$this->_mimeType = self::MIMETYPE_GIF;
+					break;
+				case IMAGETYPE_JPEG:
+					$this->_mimeType = self::MIMETYPE_JPEG;
+					break;
+			}
+		}
+		return $this;
+	}
 
     /**
      * Get rendering function

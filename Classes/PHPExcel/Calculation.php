@@ -194,6 +194,8 @@ class PHPExcel_Calculation {
 	 */
 	private $_cyclicReferenceStack;
 
+	private $_cellStack = array();
+
 	/**
 	 * Current iteration counter for cyclic formulae
 	 * If the value is 0 (or less) then cyclic formulae will throw an exception,
@@ -1626,7 +1628,7 @@ class PHPExcel_Calculation {
 												 'argumentCount'	=>	'2'
 												),
 				'VALUE'					=> array('category'			=>	PHPExcel_Calculation_Function::CATEGORY_TEXT_AND_DATA,
-												 'functionCall'		=>	'PHPExcel_Calculation_Functions::DUMMY',
+												 'functionCall'		=>	'PHPExcel_Calculation_TextData::VALUE',
 												 'argumentCount'	=>	'1'
 												),
 				'VAR'					=> array('category'			=>	PHPExcel_Calculation_Function::CATEGORY_STATISTICAL,
@@ -2240,9 +2242,17 @@ class PHPExcel_Calculation {
 		}
 
 		//	Execute the calculation for the cell formula
+        $this->_cellStack[] = array(
+            'sheet' => $pCell->getWorksheet()->getTitle(),
+            'cell' => $pCell->getCoordinate(),
+        );
 		try {
 			$result = self::_unwrapResult($this->_calculateFormulaValue($pCell->getValue(), $pCell->getCoordinate(), $pCell));
+            $cellAddress = array_pop($this->_cellStack);
+            $this->_workbook->getSheetByName($cellAddress['sheet'])->getCell($cellAddress['cell']);
 		} catch (PHPExcel_Exception $e) {
+            $cellAddress = array_pop($this->_cellStack);
+            $this->_workbook->getSheetByName($cellAddress['sheet'])->getCell($cellAddress['cell']);
 			throw new PHPExcel_Calculation_Exception($e->getMessage());
 		}
 
@@ -2640,7 +2650,7 @@ class PHPExcel_Calculation {
 	}	//	function _showTypeDetails()
 
 
-	private static function _convertMatrixReferences($formula) {
+	private function _convertMatrixReferences($formula) {
 		static $matrixReplaceFrom = array('{',';','}');
 		static $matrixReplaceTo = array('MKMATRIX(MKMATRIX(','),MKMATRIX(','))');
 
@@ -2729,7 +2739,7 @@ class PHPExcel_Calculation {
 
 	// Convert infix to postfix notation
 	private function _parseFormula($formula, PHPExcel_Cell $pCell = NULL) {
-		if (($formula = self::_convertMatrixReferences(trim($formula))) === FALSE) {
+		if (($formula = $this->_convertMatrixReferences(trim($formula))) === FALSE) {
 			return FALSE;
 		}
 

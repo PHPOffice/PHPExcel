@@ -1405,7 +1405,7 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
     /**
      * Get style for cell
      *
-     * @param string $pCellCoordinate Cell coordinate to get style for
+     * @param string $pCellCoordinate Cell coordinate (or range) to get style for
      * @return PHPExcel_Style
      * @throws PHPExcel_Exception
      */
@@ -1488,10 +1488,18 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
      *
      * @param int $pColumn  Numeric column coordinate of the cell
      * @param int $pRow Numeric row coordinate of the cell
+     * @param int pColumn2 Numeric column coordinate of the range cell
+     * @param int pRow2 Numeric row coordinate of the range cell
      * @return PHPExcel_Style
      */
-    public function getStyleByColumnAndRow($pColumn = 0, $pRow = 1)
+    public function getStyleByColumnAndRow($pColumn = 0, $pRow = 1, $pColumn2 = null, $pRow2 = null)
     {
+        if (!is_null($pColumn2) && !is_null($pRow2)) {
+		    $cellRange = PHPExcel_Cell::stringFromColumnIndex($pColumn) . $pRow . ':' . 
+                PHPExcel_Cell::stringFromColumnIndex($pColumn2) . $pRow2;
+		    return $this->getStyle($cellRange);
+	    }
+
         return $this->getStyle(PHPExcel_Cell::stringFromColumnIndex($pColumn) . $pRow);
     }
 
@@ -2537,7 +2545,7 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
     /**
      * Get row iterator
      *
-     * @param  integer                           $startRow    The row number at which to start iterating
+     * @param integer $startRow The row number at which to start iterating
      * @return PHPExcel_Worksheet_RowIterator
      */
 	public function getRowIterator($startRow = 1) {

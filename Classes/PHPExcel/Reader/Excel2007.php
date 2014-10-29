@@ -330,6 +330,14 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 			$contents = $archive->getFromName(substr($fileName, 1));
 		}
 
+		//Fix x:tag
+		if (is_string($contents))
+		{
+			$contents = str_ireplace('<x:', '<', $contents);
+			$contents = str_ireplace('</x:', '</', $contents);
+			$contents = str_ireplace(' xmlns:x="', ' xmlns="', $contents);
+		}
+
 		return $contents;
 	}
 
@@ -807,7 +815,12 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 							}
 
 							if ($xmlSheet && $xmlSheet->sheetData && $xmlSheet->sheetData->row) {
+								$numRow = 1;
 								foreach ($xmlSheet->sheetData->row as $row) {
+									if (!isset($row["r"])) {
+										$row["r"] = $numRow;
+									}
+									$numRow++;
 									if ($row["ht"] && !$this->_readDataOnly) {
 										$docSheet->getRowDimension(intval($row["r"]))->setRowHeight(floatval($row["ht"]));
 									}
@@ -824,8 +837,13 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 										$docSheet->getRowDimension(intval($row["r"]))->setXfIndex(intval($row["s"]));
 									}
 
+									$numCol = 0;
 									foreach ($row->c as $c) {
-										$r 					= (string) $c["r"];
+										$colName = PHPExcel_Cell::stringFromColumnIndex($numCol);
+										$numCol++;
+										$r = $colName . $row["r"];
+										if (isset($c["r"]))
+											$r = (string) $c["r"];
 										$cellDataType 		= (string) $c["t"];
 										$value				= null;
 										$calculatedValue 	= null;

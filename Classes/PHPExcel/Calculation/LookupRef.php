@@ -736,10 +736,7 @@ class PHPExcel_Calculation_LookupRef {
 			} else {
 				//	otherwise return the appropriate value
 				$result = $lookup_array[$rowNumber][$returnColumn];
-				if ((is_numeric($lookup_value) && is_numeric($result)) ||
-					(!is_numeric($lookup_value) && !is_numeric($result))) {
-					return $result;
-				}
+				return $result;
 			}
 		}
 

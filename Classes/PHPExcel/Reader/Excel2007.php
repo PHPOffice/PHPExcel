@@ -525,7 +525,12 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 								}
 
 								if ((int)$xf["numFmtId"] < 164) {
-									$numFmt = PHPExcel_Style_NumberFormat::builtInFormatCode((int)$xf["numFmtId"]);
+									$builtInFormat = PHPExcel_Style_NumberFormat::builtInFormatCode((int)$xf["numFmtId"]);
+
+									if ($builtInFormat) {
+										$numFmt = $builtInFormat;
+									}
+
 								}
 							}
                             $quotePrefix = false;

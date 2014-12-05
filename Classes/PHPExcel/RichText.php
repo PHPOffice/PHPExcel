@@ -196,4 +196,18 @@ class PHPExcel_RichText implements PHPExcel_IComparable
             }
         }
     }
+    
+    /**
+     * Add Rich Text element
+     *
+     * @param PHPExcel_RichText_ITextElement $pElement
+     * @throws PHPExcel_Exception
+     * @return PHPExcel_RichText
+     */
+    public function addRichTextElement($pElement = null)
+    {
+        $this->_richTextElements[] = $pElement;
+        return $this;
+    }
+
 }

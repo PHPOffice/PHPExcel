@@ -140,6 +140,10 @@ class PHPExcel_Calculation_MathTrig {
 		$number			= PHPExcel_Calculation_Functions::flattenSingleValue($number);
 		$significance	= PHPExcel_Calculation_Functions::flattenSingleValue($significance);
 
+		if ( $number == 0 ) {
+			return 0;
+		}
+
 		if ((is_null($significance)) &&
 			(PHPExcel_Calculation_Functions::getCompatibilityMode() == PHPExcel_Calculation_Functions::COMPATIBILITY_GNUMERIC)) {
 			$significance = $number/abs($number);

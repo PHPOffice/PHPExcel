@@ -389,6 +389,8 @@ class PHPExcel_Reader_HTML extends PHPExcel_Reader_Abstract implements PHPExcel_
 						$this->_tableLevel = 0;
 						$this->_processDomElement($child,$sheet,$row,$column,$cellContent);
 						break;
+					case 'style' :
+						break;
 					default:
 						$this->_processDomElement($child,$sheet,$row,$column,$cellContent);
 				}

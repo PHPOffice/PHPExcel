@@ -187,7 +187,7 @@ class PHPExcel_Shared_Date
 		date_default_timezone_set('UTC');
 
 		$timezoneAdjustment = ($adjustToTimezone) ?
-		    PHPExcel_Shared_TimeZone::getTimezoneAdjustment($timezone ?: $saveTimeZone, $dateValue) :
+		    PHPExcel_Shared_TimeZone::getTimezoneAdjustment($timezone ? $timezone : $saveTimeZone, $dateValue) :
 		    0;
 
 		$retValue = FALSE;

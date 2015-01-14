@@ -128,7 +128,7 @@ class PHPExcel_Shared_Drawing
 	 * @return 	int			Value in points
 	 */
 	public static function pixelsToPoints($pValue = 0) {
-		return $pValue * 0.67777777;
+		return $pValue * 0.75;
 	}
 
 	/**

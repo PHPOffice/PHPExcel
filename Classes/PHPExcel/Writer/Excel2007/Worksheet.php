@@ -1065,41 +1065,41 @@ class PHPExcel_Writer_Excel2007_Worksheet extends PHPExcel_Writer_Excel2007_Writ
                 $objWriter->writeAttribute('s', $pCell->getXfIndex());
             }
 
-            // If cell value is supplied, write cell value
-            $cellValue = $pCell->getValue();
-            if (is_object($cellValue) || $cellValue !== '') {
-                // Map type
-                $mappedType = $pCell->getDataType();
+			// If cell value is supplied, write cell value
+			$cellValue = $pCell->getValue();
+			if (is_object($cellValue) || $cellValue !== '') {
+				// Map type
+				$mappedType = strtolower($pCell->getDataType());
 
-                // Write data type depending on its type
-                switch (strtolower($mappedType)) {
-                    case 'inlinestr':    // Inline string
-                    case 's':            // String
-                    case 'b':            // Boolean
-                        $objWriter->writeAttribute('t', $mappedType);
-                        break;
-                    case 'f':            // Formula
-                        $calculatedValue = ($this->getParentWriter()->getPreCalculateFormulas()) ?
-                            $pCell->getCalculatedValue() :
-                            $cellValue;
-                        if (is_string($calculatedValue)) {
-                            $objWriter->writeAttribute('t', 'str');
-                        }
-                        break;
-                    case 'e':            // Error
-                        $objWriter->writeAttribute('t', $mappedType);
-                }
+				// Write data type depending on its type
+				switch ($mappedType) {
+					case 'inlinestr':	// Inline string
+					case 's':			// String
+					case 'b':			// Boolean
+						$objWriter->writeAttribute('t', $mappedType);
+						break;
+					case 'f':			// Formula
+						$calculatedValue = ($this->getParentWriter()->getPreCalculateFormulas()) ?
+						    $pCell->getCalculatedValue() :
+						    $cellValue;
+						if (is_string($calculatedValue)) {
+							$objWriter->writeAttribute('t', 'str');
+						}
+						break;
+					case 'e':			// Error
+						$objWriter->writeAttribute('t', $mappedType);
+				}
 
-                // Write data depending on its type
-                switch (strtolower($mappedType)) {
-                    case 'inlinestr':    // Inline string
-                        if (! $cellValue instanceof PHPExcel_RichText) {
-                            $objWriter->writeElement('t', PHPExcel_Shared_String::ControlCharacterPHP2OOXML(htmlspecialchars($cellValue)));
-                        } elseif ($cellValue instanceof PHPExcel_RichText) {
-                            $objWriter->startElement('is');
-                            $this->getParentWriter()->getWriterPart('stringtable')->writeRichText($objWriter, $cellValue);
-                            $objWriter->endElement();
-                        }
+				// Write data depending on its type
+				switch ($mappedType) {
+					case 'inlinestr':	// Inline string
+						if (! $cellValue instanceof PHPExcel_RichText) {
+							$objWriter->writeElement('t', PHPExcel_Shared_String::ControlCharacterPHP2OOXML( htmlspecialchars($cellValue) ) );
+						} else if ($cellValue instanceof PHPExcel_RichText) {
+							$objWriter->startElement('is');
+							$this->getParentWriter()->getWriterPart('stringtable')->writeRichText($objWriter, $cellValue);
+							$objWriter->endElement();
+						}
 
                         break;
                     case 's':            // String
@@ -1111,47 +1111,47 @@ class PHPExcel_Writer_Excel2007_Worksheet extends PHPExcel_Writer_Excel2007_Writ
                             $objWriter->writeElement('v', $pFlippedStringTable[$cellValue->getHashCode()]);
                         }
 
-                        break;
-                    case 'f':            // Formula
-                        $attributes = $pCell->getFormulaAttributes();
-                        if ($attributes['t'] == 'array') {
-                            $objWriter->startElement('f');
-                            $objWriter->writeAttribute('t', 'array');
-                            $objWriter->writeAttribute('ref', $pCellAddress);
-                            $objWriter->writeAttribute('aca', '1');
-                            $objWriter->writeAttribute('ca', '1');
-                            $objWriter->text(substr($cellValue, 1));
-                            $objWriter->endElement();
-                        } else {
-                            $objWriter->writeElement('f', substr($cellValue, 1));
-                        }
-                        if ($this->getParentWriter()->getOffice2003Compatibility() === false) {
-                            if ($this->getParentWriter()->getPreCalculateFormulas()) {
-//                                $calculatedValue = $pCell->getCalculatedValue();
-                                if (!is_array($calculatedValue) && substr($calculatedValue, 0, 1) != '#') {
-                                    $objWriter->writeElement('v', PHPExcel_Shared_String::FormatNumber($calculatedValue));
-                                } else {
-                                    $objWriter->writeElement('v', '0');
-                                }
-                            } else {
-                                $objWriter->writeElement('v', '0');
-                            }
-                        }
-                        break;
-                    case 'n':            // Numeric
-                        // force point as decimal separator in case current locale uses comma
-                        $objWriter->writeElement('v', str_replace(',', '.', $cellValue));
-                        break;
-                    case 'b':            // Boolean
-                        $objWriter->writeElement('v', ($cellValue ? '1' : '0'));
-                        break;
-                    case 'e':            // Error
-                        if (substr($cellValue, 0, 1) == '=') {
-                            $objWriter->writeElement('f', substr($cellValue, 1));
-                            $objWriter->writeElement('v', substr($cellValue, 1));
-                        } else {
-                            $objWriter->writeElement('v', $cellValue);
-                        }
+						break;
+					case 'f':			// Formula
+						$attributes = $pCell->getFormulaAttributes();
+						if($attributes['t'] === 'array') {
+							$objWriter->startElement('f');
+							$objWriter->writeAttribute('t', 'array');
+							$objWriter->writeAttribute('ref', $pCellAddress);
+							$objWriter->writeAttribute('aca', '1');
+							$objWriter->writeAttribute('ca', '1');
+							$objWriter->text(substr($cellValue, 1));
+							$objWriter->endElement();
+						} else {
+							$objWriter->writeElement('f', substr($cellValue, 1));
+						}
+						if ($this->getParentWriter()->getOffice2003Compatibility() === false) {
+							if ($this->getParentWriter()->getPreCalculateFormulas()) {
+//								$calculatedValue = $pCell->getCalculatedValue();
+								if (!is_array($calculatedValue) && substr($calculatedValue, 0, 1) !== '#') {
+									$objWriter->writeElement('v', PHPExcel_Shared_String::FormatNumber($calculatedValue));
+								} else {
+									$objWriter->writeElement('v', '0');
+								}
+							} else {
+								$objWriter->writeElement('v', '0');
+							}
+						}
+						break;
+					case 'n':			// Numeric
+						// force point as decimal separator in case current locale uses comma
+						$objWriter->writeElement('v', str_replace(',', '.', $cellValue));
+						break;
+					case 'b':			// Boolean
+						$objWriter->writeElement('v', ($cellValue ? '1' : '0'));
+						break;
+					case 'e':			// Error
+						if (substr($cellValue, 0, 1) == '=') {
+							$objWriter->writeElement('f', substr($cellValue, 1));
+							$objWriter->writeElement('v', substr($cellValue, 1));
+						} else {
+							$objWriter->writeElement('v', $cellValue);
+						}
 
                         break;
                 }

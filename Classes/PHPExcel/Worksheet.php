@@ -717,6 +717,7 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
 
         // There is only something to do if there are some auto-size columns
         if (!empty($autoSizes)) {
+
             // build list of cells references that participate in a merge
             $isMergeCell = array();
             foreach ($this->getMergeCells() as $cells) {
@@ -732,9 +733,16 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
                     // Determine width if cell does not participate in a merge
                     if (!isset($isMergeCell[$this->cellCollection->getCurrentAddress()])) {
                         // Calculated value
+                        /** @var PHPExcel_Writer_Abstract $writer */
+                        $writer = $this->getParent()->getWriter();
+                        $cellValue = $cell->getValue();
+                        if ($writer->getPreCalculateFormulas()) {
+                            $cellValue = $cell->getCalculatedValue();
+                        }
+
                         // To formatted string
                         $cellValue = PHPExcel_Style_NumberFormat::toFormattedString(
-                            $cell->getCalculatedValue(),
+                            $cellValue,
                             $this->getParent()->getCellXfByIndex($cell->getXfIndex())->getNumberFormat()->getFormatCode()
                         );
 
@@ -1392,8 +1400,8 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
         $this->parent->getDefaultStyle()->applyFromArray(array(
             'font' => array(
                 'name' => $pValue->getFont()->getName(),
-                'size' => $pValue->getFont()->getSize(),
-            ),
+                'size' => $pValue->getFont()->getSize()
+            )
         ));
         return $this;
     }

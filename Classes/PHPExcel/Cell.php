@@ -581,10 +581,12 @@ class PHPExcel_Cell
      *    @return    array    Array containing column and row (indexes 0 and 1)
      *    @throws    PHPExcel_Exception
      */
-    public static function coordinateFromString($pCoordinateString = 'A1')
+    public static function coordinateFromString($pCoordinateString = 'A1', $index = 0)
     {
         if (preg_match("/^([$]?[A-Z]{1,3})([$]?\d{1,7})$/", $pCoordinateString, $matches)) {
-            return array($matches[1],$matches[2]);
+            return array($matches[1], $matches[2]);
+        } elseif (preg_match('%^[$]?([A-Z]{1,3})$%is', $pCoordinateString)) {
+            return array($pCoordinateString, $index == 0 ? 1 : 1048576);
         } elseif ((strpos($pCoordinateString, ':') !== false) || (strpos($pCoordinateString, ',') !== false)) {
             throw new PHPExcel_Exception('Cell coordinate string can not be a range of cells');
         } elseif ($pCoordinateString == '') {

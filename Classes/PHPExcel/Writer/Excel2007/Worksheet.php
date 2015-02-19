@@ -370,7 +370,7 @@ class PHPExcel_Writer_Excel2007_Worksheet extends PHPExcel_Writer_Excel2007_Writ
 		if (count($pSheet->getColumnDimensions()) > 0)  {
 			$objWriter->startElement('cols');
 
-				$pSheet->calculateColumnWidths();
+                $pSheet->calculateColumnWidths();
 
 				// Loop through column dimensions
 				foreach ($pSheet->getColumnDimensions() as $colDimension) {
@@ -901,8 +901,8 @@ class PHPExcel_Writer_Excel2007_Worksheet extends PHPExcel_Writer_Excel2007_Writ
 	private function _writeBreaks(PHPExcel_Shared_XMLWriter $objWriter = null, PHPExcel_Worksheet $pSheet = null)
 	{
 		// Get row and column breaks
-		$aRowBreaks = array();
-		$aColumnBreaks = array();
+		$aRowBreaks = [];
+		$aColumnBreaks = [];
 		foreach ($pSheet->getBreaks() as $cell => $breakType) {
 			if ($breakType == PHPExcel_Worksheet::BREAK_ROW) {
 				$aRowBreaks[] = $cell;
@@ -972,7 +972,7 @@ class PHPExcel_Writer_Excel2007_Worksheet extends PHPExcel_Writer_Excel2007_Writ
 				$highestRow = $pSheet->getHighestRow();
 
 				// Loop through cells
-				$cellsByRow = array();
+				$cellsByRow = [];
 				foreach ($pSheet->getCellCollection() as $cellID) {
 					$cellAddress = PHPExcel_Cell::coordinateFromString($cellID);
 					$cellsByRow[$cellAddress[1]][] = $cellID;
@@ -1070,10 +1070,10 @@ class PHPExcel_Writer_Excel2007_Worksheet extends PHPExcel_Writer_Excel2007_Writ
 			$cellValue = $pCell->getValue();
 			if (is_object($cellValue) || $cellValue !== '') {
 				// Map type
-				$mappedType = $pCell->getDataType();
+				$mappedType = strtolower($pCell->getDataType());
 
 				// Write data type depending on its type
-				switch (strtolower($mappedType)) {
+				switch ($mappedType) {
 					case 'inlinestr':	// Inline string
 					case 's':			// String
 					case 'b':			// Boolean
@@ -1092,7 +1092,7 @@ class PHPExcel_Writer_Excel2007_Worksheet extends PHPExcel_Writer_Excel2007_Writ
 				}
 
 				// Write data depending on its type
-				switch (strtolower($mappedType)) {
+				switch ($mappedType) {
 					case 'inlinestr':	// Inline string
 						if (! $cellValue instanceof PHPExcel_RichText) {
 							$objWriter->writeElement('t', PHPExcel_Shared_String::ControlCharacterPHP2OOXML( htmlspecialchars($cellValue) ) );
@@ -1115,7 +1115,7 @@ class PHPExcel_Writer_Excel2007_Worksheet extends PHPExcel_Writer_Excel2007_Writ
 						break;
 					case 'f':			// Formula
 						$attributes = $pCell->getFormulaAttributes();
-						if($attributes['t'] == 'array') {
+						if($attributes['t'] === 'array') {
 							$objWriter->startElement('f');
 							$objWriter->writeAttribute('t', 'array');
 							$objWriter->writeAttribute('ref', $pCellAddress);
@@ -1129,7 +1129,7 @@ class PHPExcel_Writer_Excel2007_Worksheet extends PHPExcel_Writer_Excel2007_Writ
 						if ($this->getParentWriter()->getOffice2003Compatibility() === false) {
 							if ($this->getParentWriter()->getPreCalculateFormulas()) {
 //								$calculatedValue = $pCell->getCalculatedValue();
-								if (!is_array($calculatedValue) && substr($calculatedValue, 0, 1) != '#') {
+								if (!is_array($calculatedValue) && substr($calculatedValue, 0, 1) !== '#') {
 									$objWriter->writeElement('v', PHPExcel_Shared_String::FormatNumber($calculatedValue));
 								} else {
 									$objWriter->writeElement('v', '0');

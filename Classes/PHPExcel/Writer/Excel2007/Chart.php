@@ -1312,7 +1312,7 @@ class PHPExcel_Writer_Excel2007_Chart extends
     $objWriter->writeAttribute('val', $plotSeriesLabel->getPointCount());
     $objWriter->endElement();
 
-    foreach ($plotSeriesLabel->getDataValues() as $plotLabelKey => $plotLabelValue) {
+    foreach ((array)$plotSeriesLabel->getDataValues() as $plotLabelKey => $plotLabelValue) {
       $objWriter->startElement('c:pt');
       $objWriter->writeAttribute('idx', $plotLabelKey);
 

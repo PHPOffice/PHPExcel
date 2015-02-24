@@ -873,7 +873,7 @@ class PHPExcel_Writer_HTML extends PHPExcel_Writer_Abstract implements PHPExcel_
 
 		// Cache
 		if (is_null($this->_cssStyles)) {
-			$this->_cssStyles = array_merge_recursive($css, $this->_cssUserStyles);
+			$this->_cssStyles = array_replace_recursive($css, $this->_cssUserStyles);
 		}
 
 		// Return

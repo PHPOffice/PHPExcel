@@ -102,8 +102,7 @@ class PHPExcel_Style extends PHPExcel_Style_Supervisor implements PHPExcel_IComp
      */
     public function __construct($isSupervisor = false, $isConditional = false)
     {
-        // Supervisor?
-        $this->isSupervisor = $isSupervisor;
+        parent::__construct($isSupervisor);
 
         // Initialise values
         $this->conditionalStyles = array();
@@ -209,6 +208,7 @@ class PHPExcel_Style extends PHPExcel_Style_Supervisor implements PHPExcel_IComp
     public function applyFromArray($pStyles = null, $pAdvanced = true)
     {
         if (is_array($pStyles)) {
+            $this->hashCode = null;
             if ($this->isSupervisor) {
                 $pRange = $this->getSelectedCells();
 
@@ -497,6 +497,7 @@ class PHPExcel_Style extends PHPExcel_Style_Supervisor implements PHPExcel_IComp
      */
     public function setFont(PHPExcel_Style_Font $font)
     {
+        $this->hashCode = null;
         $this->font = $font;
         return $this;
     }
@@ -550,6 +551,7 @@ class PHPExcel_Style extends PHPExcel_Style_Supervisor implements PHPExcel_IComp
     public function setConditionalStyles($pValue = null)
     {
         if (is_array($pValue)) {
+            $this->hashCode = null;
             $this->getActiveSheet()->setConditionalStyles($this->getSelectedCells(), $pValue);
         }
         return $this;
@@ -585,6 +587,7 @@ class PHPExcel_Style extends PHPExcel_Style_Supervisor implements PHPExcel_IComp
      */
     public function setQuotePrefix($pValue)
     {
+        $this->hashCode = null;
         if ($pValue == '') {
             $pValue = false;
         }
@@ -604,22 +607,26 @@ class PHPExcel_Style extends PHPExcel_Style_Supervisor implements PHPExcel_IComp
      */
     public function getHashCode()
     {
-        $hashConditionals = '';
-        foreach ($this->conditionalStyles as $conditional) {
-            $hashConditionals .= $conditional->getHashCode();
+        if (!$this->hashCode) {
+            $hashConditionals = '';
+            foreach ($this->conditionalStyles as $conditional) {
+                $hashConditionals .= $conditional->getHashCode();
+            }
+
+            $this->hashCode = md5(
+                $this->fill->getHashCode() .
+                $this->font->getHashCode() .
+                $this->borders->getHashCode() .
+                $this->alignment->getHashCode() .
+                $this->numberFormat->getHashCode() .
+                $hashConditionals .
+                $this->protection->getHashCode() .
+                ($this->quotePrefix ? 't' : 'f') .
+                __CLASS__
+            );
         }
 
-        return md5(
-            $this->fill->getHashCode() .
-            $this->font->getHashCode() .
-            $this->borders->getHashCode() .
-            $this->alignment->getHashCode() .
-            $this->numberFormat->getHashCode() .
-            $hashConditionals .
-            $this->protection->getHashCode() .
-            ($this->quotePrefix  ? 't' : 'f') .
-            __CLASS__
-        );
+        return $this->hashCode;
     }
 
     /**

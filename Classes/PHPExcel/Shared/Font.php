@@ -256,6 +256,13 @@ class PHPExcel_Shared_Font
             $cellText = $cellText->getPlainText();
         }
 
+        // cache for text width
+        static $cacheText = array();
+        $cacheId = $font->getHashCode().$cellText.$rotation;
+        if (isset($cacheText[$cacheId])) {
+            return $cacheText[$cacheId];
+        }
+
         // Special case if there are one or more newline characters ("\n")
         if (strpos($cellText, "\n") !== false) {
             $lineTexts = explode("\n", $cellText);
@@ -289,9 +296,10 @@ class PHPExcel_Shared_Font
         // Convert from pixel width to column width
         $columnWidth = PHPExcel_Shared_Drawing::pixelsToCellDimension($columnWidth, $defaultFont);
 
-        // Return
-        return round($columnWidth, 6);
-    }
+		// Return
+		$cacheText[$cacheId] = round($columnWidth, 6);
+		return $cacheText[$cacheId];
+	}
 
     /**
      * Get GD text width in pixels for a string of text in a certain font at a certain rotation angle

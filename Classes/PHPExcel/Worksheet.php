@@ -226,6 +226,13 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
     * @var boolean
     */
     private $_printGridlines = false;
+    
+    /**
+    * Print heading?
+    *
+    * @var boolean
+    */
+    private $_printHeadings = false;
 
     /**
     * Show row and column headers?
@@ -2154,6 +2161,26 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
     */
     public function setPrintGridlines($pValue = false) {
         $this->_printGridlines = $pValue;
+        return $this;
+    }
+    
+    /**
+    * Print headings?
+    *
+    * @return boolean
+    */
+    public function getPrintHeadings() {
+        return $this->_printHeadings;
+    }
+
+    /**
+    * Set print headings
+    *
+    * @param boolean $pValue Print headings (true/false)
+    * @return PHPExcel_Worksheet
+    */
+    public function setPrintHeadings($pValue = false) {
+        $this->_printHeadings = $pValue;
         return $this;
     }
 

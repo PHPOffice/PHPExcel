@@ -904,12 +904,19 @@ class PHPExcel_Writer_HTML extends PHPExcel_Writer_Abstract implements PHPExcel_
 		$css['-webkit-transform'] = 'rotate(-'.$textRotate.'deg)'; 	//Chrome, Safari
 		$css['-moz-transform'] = 'rotate(-'.$textRotate.'deg)'; 	//Firefox
 		$css['-o-transform'] = 'rotate(-'.$textRotate.'deg)';		//Opera
-		if ($textRotate == 90) $textRotate = 1;
-		elseif ($textRotate == 180) $textRotate = 2;
-		elseif ($textRotate == 270) $textRotate = 3;
-		else $textRotate = 0;
-		$css['-ms-filter'] = 'progid:DXImageTransform.Microsoft.BasicImage(rotation='.$textRotate.')'; //IE8
-		$css['filter'] = 'progid:DXImageTransform.Microsoft.BasicImage(rotation='.$textRotate.')'; //IE6-7
+		if ($textRotate == 90) 
+			{
+			$css['writing-mode'] = "tb-rl"; //IE8
+			$css['filter'] = "flipv fliph"; //IE8
+			}
+		elseif ($textRotate == 180) 
+			{
+			$css['filter'] = "flipv fliph"; //IE8
+			}
+		elseif ($textRotate == 270) 
+			{
+			$css['writing-mode'] = "tb-rl"; //IE8
+			}
 		}
 
 		// Create CSS

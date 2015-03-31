@@ -471,15 +471,26 @@ class PHPExcel_Writer_Excel2007_Worksheet extends PHPExcel_Writer_Excel2007_Writ
 
 		// Loop through styles in the current worksheet
 		foreach ($pSheet->getConditionalStylesCollection() as $cellCoordinate => $conditionalStyles) {
+			$cell_ref = '';
+			if(count($conditionalStyles) > 0){ // write conditionalStyles only if we are going to have some cfRules
+				$objWriter->startElement('conditionalFormatting');
+				$objWriter->writeAttribute('sqref',	$cellCoordinate);
+
+				/* inside certain conditions a single cell reference is required, 
+				 * but the conditional style may be applied to an range or a set 
+				 * of ranges. Any single one of the cells in this range seems to 
+				 * be sufficient and seems to match sheets written by Excel. */
+				$cell_ref = array_shift(PHPExcel_Cell::extractAllCellReferencesInRange($cellCoordinate));
+			}
+
 			foreach ($conditionalStyles as $conditional) {
 				// WHY was this again?
 				// if ($this->getParentWriter()->getStylesConditionalHashTable()->getIndexForHashCode( $conditional->getHashCode() ) == '') {
 				//	continue;
 				// }
+
 				if ($conditional->getConditionType() != PHPExcel_Style_Conditional::CONDITION_NONE) {
 					// conditionalFormatting
-					$objWriter->startElement('conditionalFormatting');
-					$objWriter->writeAttribute('sqref',	$cellCoordinate);
 
 						// cfRule
 						$objWriter->startElement('cfRule');
@@ -487,9 +498,13 @@ class PHPExcel_Writer_Excel2007_Worksheet extends PHPExcel_Writer_Excel2007_Writ
 						$objWriter->writeAttribute('dxfId',		$this->getParentWriter()->getStylesConditionalHashTable()->getIndexForHashCode( $conditional->getHashCode() ));
 						$objWriter->writeAttribute('priority',	$id++);
 
+						if($conditional->getStopIfTrue() !== ''){
+							$objWriter->writeAttribute('stopIfTrue', $conditional->getStopIfTrue());
+						}
+
 						if (($conditional->getConditionType() == PHPExcel_Style_Conditional::CONDITION_CELLIS
 								||
-							 $conditional->getConditionType() == PHPExcel_Style_Conditional::CONDITION_CONTAINSTEXT)
+							$conditional->getConditionType() == PHPExcel_Style_Conditional::CONDITION_CONTAINSTEXT)
 							&& $conditional->getOperatorType() != PHPExcel_Style_Conditional::OPERATOR_NONE) {
 							$objWriter->writeAttribute('operator',	$conditional->getOperatorType());
 						}
@@ -502,19 +517,19 @@ class PHPExcel_Writer_Excel2007_Worksheet extends PHPExcel_Writer_Excel2007_Writ
 						if ($conditional->getConditionType() == PHPExcel_Style_Conditional::CONDITION_CONTAINSTEXT
 							&& $conditional->getOperatorType() == PHPExcel_Style_Conditional::OPERATOR_CONTAINSTEXT
 							&& !is_null($conditional->getText())) {
-							$objWriter->writeElement('formula',	'NOT(ISERROR(SEARCH("' . $conditional->getText() . '",' . $cellCoordinate . ')))');
+							$objWriter->writeElement('formula',	'NOT(ISERROR(SEARCH("' . $conditional->getText() . '",' . $cell_ref . ')))');
 						} else if ($conditional->getConditionType() == PHPExcel_Style_Conditional::CONDITION_CONTAINSTEXT
 							&& $conditional->getOperatorType() == PHPExcel_Style_Conditional::OPERATOR_BEGINSWITH
 							&& !is_null($conditional->getText())) {
-							$objWriter->writeElement('formula',	'LEFT(' . $cellCoordinate . ',' . strlen($conditional->getText()) . ')="' . $conditional->getText() . '"');
+							$objWriter->writeElement('formula',	'LEFT(' . $cell_ref . ',' . strlen($conditional->getText()) . ')="' . $conditional->getText() . '"');
 						} else if ($conditional->getConditionType() == PHPExcel_Style_Conditional::CONDITION_CONTAINSTEXT
 							&& $conditional->getOperatorType() == PHPExcel_Style_Conditional::OPERATOR_ENDSWITH
 							&& !is_null($conditional->getText())) {
-							$objWriter->writeElement('formula',	'RIGHT(' . $cellCoordinate . ',' . strlen($conditional->getText()) . ')="' . $conditional->getText() . '"');
+							$objWriter->writeElement('formula',	'RIGHT(' . $cell_ref . ',' . strlen($conditional->getText()) . ')="' . $conditional->getText() . '"');
 						} else if ($conditional->getConditionType() == PHPExcel_Style_Conditional::CONDITION_CONTAINSTEXT
 							&& $conditional->getOperatorType() == PHPExcel_Style_Conditional::OPERATOR_NOTCONTAINS
 							&& !is_null($conditional->getText())) {
-							$objWriter->writeElement('formula',	'ISERROR(SEARCH("' . $conditional->getText() . '",' . $cellCoordinate . '))');
+							$objWriter->writeElement('formula',	'ISERROR(SEARCH("' . $conditional->getText() . '",' . $cell_ref . '))');
 						} else if ($conditional->getConditionType() == PHPExcel_Style_Conditional::CONDITION_CELLIS
 							|| $conditional->getConditionType() == PHPExcel_Style_Conditional::CONDITION_CONTAINSTEXT
 							|| $conditional->getConditionType() == PHPExcel_Style_Conditional::CONDITION_EXPRESSION) {
@@ -522,12 +537,20 @@ class PHPExcel_Writer_Excel2007_Worksheet extends PHPExcel_Writer_Excel2007_Writ
 								// Formula
 								$objWriter->writeElement('formula',	$formula);
 							}
+						} else if ($conditional->getConditionType() == PHPExcel_Style_Conditional::CONDITION_CONTAINSBLANKS
+							&& $cell_ref !== '') {
+							$objWriter->writeElement('formula',	'LEFT(TRIM(' . $cell_ref . '))=0');
+						} else if ($conditional->getConditionType() == PHPExcel_Style_Conditional::CONDITION_NOTCONTAINSBLANKS
+							&& $cell_ref !== '') {
+							$objWriter->writeElement('formula',	'LEFT(TRIM(' . $cell_ref . '))>0');
 						}
 
 						$objWriter->endElement();
 
-					$objWriter->endElement();
 				}
+			}
+			if(count($conditionalStyles) > 0){
+				$objWriter->endElement();
 			}
 		}
 	}

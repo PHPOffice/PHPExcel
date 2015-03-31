@@ -949,7 +949,9 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 												(string)$cfRule["type"] == PHPExcel_Style_Conditional::CONDITION_NONE ||
 												(string)$cfRule["type"] == PHPExcel_Style_Conditional::CONDITION_CELLIS ||
 												(string)$cfRule["type"] == PHPExcel_Style_Conditional::CONDITION_CONTAINSTEXT ||
-												(string)$cfRule["type"] == PHPExcel_Style_Conditional::CONDITION_EXPRESSION
+												(string)$cfRule["type"] == PHPExcel_Style_Conditional::CONDITION_EXPRESSION ||
+												(string)$cfRule["type"] == PHPExcel_Style_Conditional::CONDITION_BLANK ||
+												(string)$cfRule["type"] == PHPExcel_Style_Conditional::CONDITION_NOTBLANK
 											) && isset($dxfs[intval($cfRule["dxfId"])])
 										) {
 											$conditionals[(string) $conditional["sqref"]][intval($cfRule["priority"])] = $cfRule;
@@ -958,12 +960,14 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 								}
 
 								foreach ($conditionals as $ref => $cfRules) {
-									ksort($cfRules);
 									$conditionalStyles = array();
 									foreach ($cfRules as $cfRule) {
 										$objConditional = new PHPExcel_Style_Conditional();
 										$objConditional->setConditionType((string)$cfRule["type"]);
 										$objConditional->setOperatorType((string)$cfRule["operator"]);
+
+										$objConditional->setPriority((int)$cfRule["priority"]);
+										$objConditional->setStopIfTrue((string)$cfRule["stopIfTrue"]);
 
 										if ((string)$cfRule["text"] != '') {
 											$objConditional->setText((string)$cfRule["text"]);
@@ -976,15 +980,15 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 										} else {
 											$objConditional->addCondition((string)$cfRule->formula);
 										}
-										$objConditional->setStyle(clone $dxfs[intval($cfRule["dxfId"])]);
+
+										// the rule may unset formatting in which case dxfId will not be present
+										if(isset($cfRule["dxfId"]])){
+											$objConditional->setStyle(clone $dxfs[(int)$cfRule["dxfId"]]);
+										}
 										$conditionalStyles[] = $objConditional;
 									}
 
-									// Extract all cell references in $ref
-									$aReferences = PHPExcel_Cell::extractAllCellReferencesInRange($ref);
-									foreach ($aReferences as $reference) {
-										$docSheet->getStyle($reference)->setConditionalStyles($conditionalStyles);
-									}
+									$docSheet->setConditionalStyles($ref, $conditionalStyles);
 								}
 							}
 

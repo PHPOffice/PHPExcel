@@ -66,6 +66,20 @@ class PHPExcel_Shared_OLERead {
 	public $summaryInformation			= null;
 	public $documentSummaryInformation	= null;
 
+	private $entry;
+	private $rootentry;
+	private $numBigBlockDepotBlocks;
+	private $rootStartBlock;
+	private $sbdStartBlock;
+	private $extensionBlock;
+	private $numExtensionBlocks;
+
+	private $props = array();
+	private $smallBlockChain = array();
+	private $bigBlockChain = array();
+
+	private $isRead = false;
+	private $readedFilename;
 
 	/**
 	 * Read the file
@@ -136,26 +150,29 @@ class PHPExcel_Shared_OLERead {
 			}
 		}
 
-		$pos = 0;
-		$this->bigBlockChain = '';
-		$bbs = self::BIG_BLOCK_SIZE / 4;
+		$index = 0;
 		for ($i = 0; $i < $this->numBigBlockDepotBlocks; ++$i) {
 			$pos = ($bigBlockDepotBlocks[$i] + 1) * self::BIG_BLOCK_SIZE;
 
-			$this->bigBlockChain .= substr($this->data, $pos, 4*$bbs);
-			$pos += 4*$bbs;
+			for($j = 0; $j < self::BIG_BLOCK_SIZE / 4; $j ++) {
+				$this->bigBlockChain[$index] = self::_GetInt4d($this->data, $pos);
+				$pos += 4;
+				$index++;
+			}
 		}
 
-		$pos = 0;
 		$sbdBlock = $this->sbdStartBlock;
-		$this->smallBlockChain = '';
+
+		$index = 0;
 		while ($sbdBlock != -2) {
 			$pos = ($sbdBlock + 1) * self::BIG_BLOCK_SIZE;
 
-			$this->smallBlockChain .= substr($this->data, $pos, 4*$bbs);
-			$pos += 4*$bbs;
-
-			$sbdBlock = self::_GetInt4d($this->bigBlockChain, $sbdBlock*4);
+			for($j = 0; $j < self::BIG_BLOCK_SIZE / 4; $j++) {
+				$this->smallBlockChain[$index] = self::_GetInt4d($this->data, $pos);
+				$pos += 4;
+				$index++;
+			}
+			$sbdBlock = $this->bigBlockChain[$sbdBlock];
 		}
 
 		// read the directory stream
@@ -184,10 +201,9 @@ class PHPExcel_Shared_OLERead {
 			$block = $this->props[$stream]['startBlock'];
 
 			while ($block != -2) {
-	  			$pos = $block * self::SMALL_BLOCK_SIZE;
+				$pos = $block * self::SMALL_BLOCK_SIZE;
 				$streamData .= substr($rootdata, $pos, self::SMALL_BLOCK_SIZE);
-
-				$block = self::_GetInt4d($this->smallBlockChain, $block*4);
+				$block = $this->smallBlockChain[$block];
 			}
 
 			return $streamData;
@@ -204,7 +220,7 @@ class PHPExcel_Shared_OLERead {
 			while ($block != -2) {
 				$pos = ($block + 1) * self::BIG_BLOCK_SIZE;
 				$streamData .= substr($this->data, $pos, self::BIG_BLOCK_SIZE);
-				$block = self::_GetInt4d($this->bigBlockChain, $block*4);
+				$block = $this->bigBlockChain[$block];
 			}
 
 			return $streamData;
@@ -222,11 +238,12 @@ class PHPExcel_Shared_OLERead {
 		$block = $bl;
 		$data = '';
 
-		while ($block != -2)  {
+		while ($block != -2) {
 			$pos = ($block + 1) * self::BIG_BLOCK_SIZE;
 			$data .= substr($this->data, $pos, self::BIG_BLOCK_SIZE);
-			$block = self::_GetInt4d($this->bigBlockChain, $block*4);
+			$block = $this->bigBlockChain[$block];
 		}
+
 		return $data;
 	 }
 

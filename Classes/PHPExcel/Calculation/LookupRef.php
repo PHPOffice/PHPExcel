@@ -671,14 +671,14 @@ class PHPExcel_Calculation_LookupRef {
 	}	//	function TRANSPOSE()
 
 
-	private static function _vlookupSort($a,$b) {
-		$f = array_keys($a);
-		$firstColumn = array_shift($f);
-		if (strtolower($a[$firstColumn]) == strtolower($b[$firstColumn])) {
-			return 0;
-		}
-		return (strtolower($a[$firstColumn]) < strtolower($b[$firstColumn])) ? -1 : 1;
-	}	//	function _vlookupSort()
+        private static function _vlookupSort($a,$b) {
+            reset($a);
+            $firstColumn = key($a);
+            if (($alower = strtolower($a[$firstColumn])) == ($blower = strtolower($b[$firstColumn]))) {
+                return 0;
+            }
+            return ($alower < $blower) ? -1 : 1;
+        }	//	function _vlookupSort()
 
 
 	/**

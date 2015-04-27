@@ -422,6 +422,13 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
 	private $_md5Ctxt = null;
 
 	/**
+	 * The instance of OLE read.
+	 *
+	 * @var \PHPExcel_Shared_OLERead
+	 */
+	private $ole;
+
+	/**
 	 * Create a new PHPExcel_Reader_Excel5 instance
 	 */
 	public function __construct() {
@@ -444,11 +451,8 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
 		}
 
 		try {
-			// Use ParseXL for the hard work.
-			$ole = new PHPExcel_Shared_OLERead();
-
 			// get excel data
-			$res = $ole->read($pFilename);
+			$res = $this->getOle()->read($pFilename);
 			return true;
 		} catch (PHPExcel_Exception $e) {
 			return false;
@@ -1159,7 +1163,7 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
 	private function _loadOLE($pFilename)
 	{
 		// OLE reader
-		$ole = new PHPExcel_Shared_OLERead();
+		$ole = $this->getOle();
 
 		// get excel data,
 		$res = $ole->read($pFilename);
@@ -7085,4 +7089,14 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
 		return $value;
 	}
 
+	/**
+	 * @return \PHPExcel_Shared_OLERead
+	 */
+	private function getOle() {
+		if ($this->ole === null) {
+			$this->ole = new PHPExcel_Shared_OLERead();
+		}
+
+		return $this->ole;
+	}
 }

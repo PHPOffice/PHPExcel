@@ -66,6 +66,8 @@ class PHPExcel_Shared_OLERead {
 	public $summaryInformation			= null;
 	public $documentSummaryInformation	= null;
 
+	private $isRead = false;
+	private $readedFilename;
 
 	/**
 	 * Read the file
@@ -75,6 +77,10 @@ class PHPExcel_Shared_OLERead {
 	 */
 	public function read($sFileName)
 	{
+		if ($this->isRead && $this->readedFilename === $sFileName) {
+			// don't read twice
+			return;
+		}
 		// Check if file exists and is readable
 		if(!is_readable($sFileName)) {
 			throw new PHPExcel_Reader_Exception("Could not open " . $sFileName . " for reading! File does not exist, or it is not readable.");
@@ -163,6 +169,9 @@ class PHPExcel_Shared_OLERead {
 		$this->entry = $this->_readData($block);
 
 		$this->_readPropertySets();
+
+		$this->isRead = true;
+		$this->readedFilename = $sFileName;
 	}
 
 	/**

@@ -606,6 +606,10 @@ class PHPExcel_Calculation_LookupRef {
 			return PHPExcel_Calculation_Functions::VALUE();
 		}
 
+		if (PHPExcel_Calculation_Functions::IS_ERROR($rowNum)) {
+			return $rowNum;
+		}
+
 		if (!is_array($arrayValues)) {
 			return PHPExcel_Calculation_Functions::REF();
 		}

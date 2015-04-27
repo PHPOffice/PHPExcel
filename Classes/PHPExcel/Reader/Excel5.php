@@ -920,9 +920,8 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
 
 							// need check because some blip types are not supported by Escher reader such as EMF
 							if ($blip = $BSE->getBlip()) {
-								$ih = imagecreatefromstring($blip->getData());
 								$drawing = new PHPExcel_Worksheet_MemoryDrawing();
-								$drawing->setImageResource($ih);
+								$drawing->setImageResourceData($blip->getData());
 
 								// width, height, offsetX, offsetY
 								$drawing->setResizeProportional(false);

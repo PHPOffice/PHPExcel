@@ -238,6 +238,8 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
 	 */
 	private $_codepage;
 
+	private $_defaultCodepage = 'CP1252';
+
 	/**
 	 * Shared formats
 	 *
@@ -630,7 +632,7 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
 
 		// initialize
 		$this->_pos					= 0;
-		$this->_codepage			= 'CP1252';
+		$this->_codepage			= $this->_defaultCodepage;
 		$this->_formats				= array();
 		$this->_objFonts			= array();
 		$this->_palette				= array();
@@ -1091,6 +1093,10 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
 		}
 
 		return $this->_phpExcel;
+	}
+
+	public function setDefaultCodepage($val) {
+		$this->_defaultCodepage = $val;
 	}
 	
 	/**

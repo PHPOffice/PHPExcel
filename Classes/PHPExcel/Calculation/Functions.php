@@ -37,16 +37,24 @@ if (!defined('PHPEXCEL_ROOT')) {
 
 
 /** MAX_VALUE */
-define('MAX_VALUE', 1.2e308);
+if (!defined('MAX_VALUE')) {
+	define('MAX_VALUE', 1.2e308);
+}
 
 /** 2 / PI */
-define('M_2DIVPI', 0.63661977236758134307553505349006);
+if (!defined('M_2DIVPI')) {
+	define('M_2DIVPI', 0.63661977236758134307553505349006);
+}
 
 /** MAX_ITERATIONS */
-define('MAX_ITERATIONS', 256);
+if (!defined('MAX_ITERATIONS')) {
+	define('MAX_ITERATIONS', 256);
+}
 
 /** PRECISION */
-define('PRECISION', 8.88E-016);
+if (!defined('PRECISION')) {
+	define('PRECISION', 8.88E-016);
+}
 
 
 /**

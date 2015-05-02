@@ -3338,13 +3338,13 @@ class PHPExcel_Calculation {
 									$cellValue = $this->extractCellRange($cellRef, $this->_workbook->getSheetByName($matches[2]), FALSE);
 									$pCell->attach($pCellParent);
 								} else {
+									$cellRef = $matches[2] . '!' . $cellRef;
 									$cellValue = NULL;
 								}
 							} else {
 								return $this->_raiseFormulaError('Unable to access Cell Reference');
 							}
 							$this->_debugLog->writeDebugLog('Evaluation Result for cell ', $cellRef, ' in worksheet ', $matches[2], ' is ', $this->_showTypeDetails($cellValue));
-//							$cellRef = $matches[2].'!'.$cellRef;
 						} else {
 //							echo '$cellRef='.$cellRef.' in current worksheet<br />';
 							$this->_debugLog->writeDebugLog('Evaluating Cell ', $cellRef, ' in current worksheet');

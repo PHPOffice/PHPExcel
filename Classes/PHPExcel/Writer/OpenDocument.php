@@ -35,7 +35,7 @@
  * @author     Alexander Pervakov <frost-nzcr4@jagmort.com>
  * @link       http://docs.oasis-open.org/office/v1.2/os/OpenDocument-v1.2-os.html
  */
-class PHPExcel_Writer_OpenDocument extends PHPExcel_Writer_Abstract implements PHPExcel_Writer_IWriter
+class PHPExcel_Writer_OpenDocument extends PHPExcel_Writer_Abstract
 {
     /**
      * Private writer parts
@@ -43,13 +43,6 @@ class PHPExcel_Writer_OpenDocument extends PHPExcel_Writer_Abstract implements P
      * @var PHPExcel_Writer_OpenDocument_WriterPart[]
      */
     private $_writerParts = array();
-
-    /**
-     * Private PHPExcel
-     *
-     * @var PHPExcel
-     */
-    private $_spreadSheet;
 
     /**
      * Create a new PHPExcel_Writer_OpenDocument
@@ -98,12 +91,12 @@ class PHPExcel_Writer_OpenDocument extends PHPExcel_Writer_Abstract implements P
      */
     public function save($pFilename = NULL)
     {
-        if (!$this->_spreadSheet) {
+        if (!$this->_phpExcel) {
             throw new PHPExcel_Writer_Exception('PHPExcel object unassigned.');
         }
 
         // garbage collect
-        $this->_spreadSheet->garbageCollect();
+        $this->_phpExcel->garbageCollect();
 
         // If $pFilename is php://output or php://stdout, make it a temporary file...
         $originalFilename = $pFilename;
@@ -168,33 +161,5 @@ class PHPExcel_Writer_OpenDocument extends PHPExcel_Writer_Abstract implements P
         }
 
         return $objZip;
-    }
-
-    /**
-     * Get PHPExcel object
-     *
-     * @return PHPExcel
-     * @throws PHPExcel_Writer_Exception
-     */
-    public function getPHPExcel()
-    {
-        if ($this->_spreadSheet !== null) {
-            return $this->_spreadSheet;
-        } else {
-            throw new PHPExcel_Writer_Exception('No PHPExcel assigned.');
-        }
-    }
-
-    /**
-     * Set PHPExcel object
-     *
-     * @param  PHPExcel  $pPHPExcel  PHPExcel object
-     * @throws PHPExcel_Writer_Exception
-     * @return PHPExcel_Writer_Excel2007
-     */
-    public function setPHPExcel(PHPExcel $pPHPExcel = null)
-    {
-        $this->_spreadSheet = $pPHPExcel;
-        return $this;
     }
 }

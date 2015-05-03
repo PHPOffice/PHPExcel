@@ -33,15 +33,8 @@
  * @package    PHPExcel_Writer_Excel5
  * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExcel_Writer_IWriter
+class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract
 {
-	/**
-	 * PHPExcel object
-	 *
-	 * @var PHPExcel
-	 */
-	private $_phpExcel;
-
 	/**
 	 * Total number of shared strings in workbook
 	 *
@@ -104,7 +97,7 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExce
 	 * @param	PHPExcel	$phpExcel	PHPExcel object
 	 */
 	public function __construct(PHPExcel $phpExcel) {
-		$this->_phpExcel	= $phpExcel;
+		$this->setPHPExcel($phpExcel);
 
 		$this->_parser		= new PHPExcel_Writer_Excel5_Parser();
 	}
@@ -115,7 +108,11 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExce
 	 * @param	string		$pFilename
 	 * @throws	PHPExcel_Writer_Exception
 	 */
-	public function save($pFilename = null) {
+	public function save($pFilename = null)
+	{
+        if (!$this->_phpExcel) {
+            throw new PHPExcel_Writer_Exception('PHPExcel object unassigned.');
+        }
 
 		// garbage collect
 		$this->_phpExcel->garbageCollect();

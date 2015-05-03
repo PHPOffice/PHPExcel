@@ -61,6 +61,10 @@ class PHPExcel_Writer_PDF_mPDF extends PHPExcel_Writer_PDF_Core implements PHPEx
      */
     public function save($pFilename = NULL)
     {
+        if (!$this->_phpExcel) {
+            throw new PHPExcel_Writer_Exception('PHPExcel object unassigned.');
+        }
+
         $fileHandle = parent::prepareForSave($pFilename);
 
         //  Default PDF paper size

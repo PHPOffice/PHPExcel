@@ -43,4 +43,20 @@ interface PHPExcel_Writer_IWriter
      */
     public function save($pFilename = NULL);
 
+    /**
+     * Get PHPExcel object
+     *
+     * @return PHPExcel
+     * @throws PHPExcel_Writer_Exception
+     */
+    public function getPHPExcel();
+
+    /**
+     * Set PHPExcel object
+     *
+     * @param 	PHPExcel 	$pPHPExcel	PHPExcel object
+     * @throws	PHPExcel_Writer_Exception
+     * @return PHPExcel_Writer_IWriter
+     */
+    public function setPHPExcel(PHPExcel $pPHPExcel = null);
 }

@@ -33,14 +33,8 @@
  * @package	PHPExcel_Writer_CSV
  * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Writer_CSV extends PHPExcel_Writer_Abstract implements PHPExcel_Writer_IWriter {
-	/**
-	 * PHPExcel object
-	 *
-	 * @var PHPExcel
-	 */
-	private $_phpExcel;
-
+class PHPExcel_Writer_CSV extends PHPExcel_Writer_Abstract
+{
 	/**
 	 * Delimiter
 	 *
@@ -89,7 +83,7 @@ class PHPExcel_Writer_CSV extends PHPExcel_Writer_Abstract implements PHPExcel_W
 	 * @param	PHPExcel	$phpExcel	PHPExcel object
 	 */
 	public function __construct(PHPExcel $phpExcel) {
-		$this->_phpExcel	= $phpExcel;
+		$this->setPHPExcel($phpExcel);
 	}
 
 	/**
@@ -98,7 +92,12 @@ class PHPExcel_Writer_CSV extends PHPExcel_Writer_Abstract implements PHPExcel_W
 	 * @param	string		$pFilename
 	 * @throws	PHPExcel_Writer_Exception
 	 */
-	public function save($pFilename = null) {
+	public function save($pFilename = null)
+	{
+        if (!$this->_phpExcel) {
+            throw new PHPExcel_Writer_Exception('PHPExcel object unassigned.');
+        }
+
 		// Fetch sheet
 		$sheet = $this->_phpExcel->getSheet($this->_sheetIndex);
 

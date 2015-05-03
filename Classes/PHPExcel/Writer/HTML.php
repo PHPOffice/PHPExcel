@@ -33,14 +33,8 @@
  * @package	PHPExcel_Writer_HTML
  * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
-class PHPExcel_Writer_HTML extends PHPExcel_Writer_Abstract implements PHPExcel_Writer_IWriter {
-	/**
-	 * PHPExcel object
-	 *
-	 * @var PHPExcel
-	 */
-	protected $_phpExcel;
-
+class PHPExcel_Writer_HTML extends PHPExcel_Writer_Abstract
+{
 	/**
 	 * Sheet index to write
 	 *
@@ -138,7 +132,7 @@ class PHPExcel_Writer_HTML extends PHPExcel_Writer_Abstract implements PHPExcel_
 	 * @param	PHPExcel	$phpExcel	PHPExcel object
 	 */
 	public function __construct(PHPExcel $phpExcel) {
-		$this->_phpExcel = $phpExcel;
+		$this->setPHPExcel($phpExcel);
 		$this->_defaultFont = $this->_phpExcel->getDefaultStyle()->getFont();
 	}
 
@@ -148,7 +142,12 @@ class PHPExcel_Writer_HTML extends PHPExcel_Writer_Abstract implements PHPExcel_
 	 * @param	string		$pFilename
 	 * @throws	PHPExcel_Writer_Exception
 	 */
-	public function save($pFilename = null) {
+	public function save($pFilename = null)
+    {
+        if (!$this->_phpExcel) {
+            throw new PHPExcel_Writer_Exception('PHPExcel object unassigned.');
+        }
+
 		// garbage collect
 		$this->_phpExcel->garbageCollect();
 
@@ -610,9 +609,9 @@ class PHPExcel_Writer_HTML extends PHPExcel_Writer_Abstract implements PHPExcel_
 					}
 
 					$html .= '<div style="position: relative;">';
-					$html .= '<img style="position: absolute; z-index: 1; left: ' . 
-                        $drawing->getOffsetX() . 'px; top: ' . $drawing->getOffsetY() . 'px; width: ' . 
-                        $drawing->getWidth() . 'px; height: ' . $drawing->getHeight() . 'px;" src="' . 
+					$html .= '<img style="position: absolute; z-index: 1; left: ' .
+                        $drawing->getOffsetX() . 'px; top: ' . $drawing->getOffsetY() . 'px; width: ' .
+                        $drawing->getWidth() . 'px; height: ' . $drawing->getHeight() . 'px;" src="' .
                         $imageData . '" border="0" />';
 					$html .= '</div>';
 				}
@@ -971,9 +970,9 @@ class PHPExcel_Writer_HTML extends PHPExcel_Writer_Abstract implements PHPExcel_
 	private function _createCSSStyleBorder(PHPExcel_Style_Border $pStyle) {
 		// Create CSS
 //		$css = $this->_mapBorderStyle($pStyle->getBorderStyle()) . ' #' . $pStyle->getColor()->getRGB();
-		//	Create CSS - add !important to non-none border styles for merged cells  
-		$borderStyle = $this->_mapBorderStyle($pStyle->getBorderStyle());  
-		$css = $borderStyle . ' #' . $pStyle->getColor()->getRGB() . (($borderStyle == 'none') ? '' : ' !important'); 
+		//	Create CSS - add !important to non-none border styles for merged cells
+		$borderStyle = $this->_mapBorderStyle($pStyle->getBorderStyle());
+		$css = $borderStyle . ' #' . $pStyle->getColor()->getRGB() . (($borderStyle == 'none') ? '' : ' !important');
 
 		// Return
 		return $css;
@@ -1024,7 +1023,7 @@ class PHPExcel_Writer_HTML extends PHPExcel_Writer_Abstract implements PHPExcel_
 		// Construct HTML
 		$html = '';
 		$html .= $this->_setMargins($pSheet);
-			
+
 		if (!$this->_useInlineCss) {
 			$gridlines = $pSheet->getShowGridlines() ? ' gridlines' : '';
 			$html .= '	<table border="0" cellpadding="0" cellspacing="0" id="sheet' . $sheetIndex . '" class="sheet' . $sheetIndex . $gridlines . '">' . PHP_EOL;
@@ -1544,5 +1543,4 @@ class PHPExcel_Writer_HTML extends PHPExcel_Writer_Abstract implements PHPExcel_
 
 		return "<style>\n" . $htmlPage . $htmlBody . "</style>\n";
 	}
-	
 }

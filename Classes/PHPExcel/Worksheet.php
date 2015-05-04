@@ -1152,7 +1152,6 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
      */
     public function getCell($pCoordinate = 'A1')
     {
-        $pCoordinate = strtoupper($pCoordinate);
         // Check cell collection
         if ($this->_cellCollection->isDataSet($pCoordinate)) {
             return $this->_cellCollection->getCacheData($pCoordinate);
@@ -1161,7 +1160,7 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
         // Worksheet reference?
         if (strpos($pCoordinate, '!') !== false) {
             $worksheetReference = PHPExcel_Worksheet::extractSheetTitle($pCoordinate, true);
-			return $this->_parent->getSheetByName($worksheetReference[0])->getCell($worksheetReference[1]);
+			return $this->_parent->getSheetByName($worksheetReference[0])->getCell(strtoupper($worksheetReference[1]));
         }
 
         // Named range?

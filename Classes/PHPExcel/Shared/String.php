@@ -383,6 +383,9 @@ class PHPExcel_Shared_String
 	public static function SanitizeUTF8($value)
 	{
 		if (self::getIsIconvEnabled()) {
+			if( !self::IsUTF8( $value ) ) {
+        			$value = @iconv( 'WINDOWS-1252', 'UTF-8', $value );
+        		}
 			$value = @iconv('UTF-8', 'UTF-8', $value);
 			return $value;
 		}

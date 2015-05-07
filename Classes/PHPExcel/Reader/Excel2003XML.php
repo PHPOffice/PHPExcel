@@ -95,7 +95,7 @@ class PHPExcel_Reader_Excel2003XML extends PHPExcel_Reader_Abstract implements P
 		// Open file
 		$this->_openFile($pFilename);
 		$fileHandle = $this->_fileHandle;
-		
+
 		// Read sample data (first 2 KB will do)
 		$data = fread($fileHandle, 2048);
 		fclose($fileHandle);
@@ -407,61 +407,62 @@ class PHPExcel_Reader_Excel2003XML extends PHPExcel_Reader_Abstract implements P
 			}
 		}
 
-		foreach($xml->Styles[0] as $style) {
-			$style_ss = $style->attributes($namespaces['ss']);
-			$styleID = (string) $style_ss['ID'];
-//			echo 'Style ID = '.$styleID.'<br />';
-			if ($styleID == 'Default') {
-				$this->_styles['Default'] = array();
-			} else {
-				$this->_styles[$styleID] = $this->_styles['Default'];
-			}
-			foreach ($style as $styleType => $styleData) {
-				$styleAttributes = $styleData->attributes($namespaces['ss']);
-//				echo $styleType.'<br />';
-				switch ($styleType) {
-					case 'Alignment' :
-							foreach($styleAttributes as $styleAttributeKey => $styleAttributeValue) {
-//								echo $styleAttributeKey.' = '.$styleAttributeValue.'<br />';
-								$styleAttributeValue = (string) $styleAttributeValue;
+		if (isset($xml->Styles)) {
+			foreach ($xml->Styles[0] as $style) {
+				$style_ss = $style->attributes($namespaces['ss']);
+				$styleID = (string)$style_ss['ID'];
+				//			echo 'Style ID = '.$styleID.'<br />';
+				if ($styleID == 'Default') {
+					$this->_styles['Default'] = array();
+				} else {
+					$this->_styles[$styleID] = $this->_styles['Default'];
+				}
+				foreach ($style as $styleType => $styleData) {
+					$styleAttributes = $styleData->attributes($namespaces['ss']);
+					//				echo $styleType.'<br />';
+					switch ($styleType) {
+						case 'Alignment' :
+							foreach ($styleAttributes as $styleAttributeKey => $styleAttributeValue) {
+								//								echo $styleAttributeKey.' = '.$styleAttributeValue.'<br />';
+								$styleAttributeValue = (string)$styleAttributeValue;
 								switch ($styleAttributeKey) {
 									case 'Vertical' :
-											if (self::identifyFixedStyleValue($verticalAlignmentStyles,$styleAttributeValue)) {
-												$this->_styles[$styleID]['alignment']['vertical'] = $styleAttributeValue;
-											}
-											break;
+										if (self::identifyFixedStyleValue($verticalAlignmentStyles, $styleAttributeValue)) {
+											$this->_styles[$styleID]['alignment']['vertical'] = $styleAttributeValue;
+										}
+										break;
 									case 'Horizontal' :
-											if (self::identifyFixedStyleValue($horizontalAlignmentStyles,$styleAttributeValue)) {
-												$this->_styles[$styleID]['alignment']['horizontal'] = $styleAttributeValue;
-											}
-											break;
+										if (self::identifyFixedStyleValue($horizontalAlignmentStyles, $styleAttributeValue)) {
+											$this->_styles[$styleID]['alignment']['horizontal'] = $styleAttributeValue;
+										}
+										break;
 									case 'WrapText' :
-											$this->_styles[$styleID]['alignment']['wrap'] = true;
-											break;
+										$this->_styles[$styleID]['alignment']['wrap'] = true;
+										break;
 								}
 							}
 							break;
-					case 'Borders' :
-							foreach($styleData->Border as $borderStyle) {
+						case 'Borders' :
+							foreach ($styleData->Border as $borderStyle) {
 								$borderAttributes = $borderStyle->attributes($namespaces['ss']);
 								$thisBorder = array();
-								foreach($borderAttributes as $borderStyleKey => $borderStyleValue) {
-//									echo $borderStyleKey.' = '.$borderStyleValue.'<br />';
+								foreach ($borderAttributes as $borderStyleKey => $borderStyleValue) {
+									//									echo $borderStyleKey.' = '.$borderStyleValue.'<br />';
 									switch ($borderStyleKey) {
 										case 'LineStyle' :
-												$thisBorder['style'] = PHPExcel_Style_Border::BORDER_MEDIUM;
-//												$thisBorder['style'] = $borderStyleValue;
-												break;
+											$thisBorder['style'] = PHPExcel_Style_Border::BORDER_MEDIUM;
+											//												$thisBorder['style'] = $borderStyleValue;
+											break;
 										case 'Weight' :
-//												$thisBorder['style'] = $borderStyleValue;
-												break;
+											//												$thisBorder['style'] = $borderStyleValue;
+											break;
 										case 'Position' :
-												$borderPosition = strtolower($borderStyleValue);
-												break;
+											$borderPosition = strtolower($borderStyleValue);
+											break;
 										case 'Color' :
-												$borderColour = substr($borderStyleValue,1);
-												$thisBorder['color']['rgb'] = $borderColour;
-												break;
+											$borderColour = substr($borderStyleValue, 1);
+											$thisBorder['color']['rgb'] = $borderColour;
+											break;
 									}
 								}
 								if (!empty($thisBorder)) {
@@ -471,67 +472,68 @@ class PHPExcel_Reader_Excel2003XML extends PHPExcel_Reader_Abstract implements P
 								}
 							}
 							break;
-					case 'Font' :
-							foreach($styleAttributes as $styleAttributeKey => $styleAttributeValue) {
-//								echo $styleAttributeKey.' = '.$styleAttributeValue.'<br />';
-								$styleAttributeValue = (string) $styleAttributeValue;
+						case 'Font' :
+							foreach ($styleAttributes as $styleAttributeKey => $styleAttributeValue) {
+								//								echo $styleAttributeKey.' = '.$styleAttributeValue.'<br />';
+								$styleAttributeValue = (string)$styleAttributeValue;
 								switch ($styleAttributeKey) {
 									case 'FontName' :
-											$this->_styles[$styleID]['font']['name'] = $styleAttributeValue;
-											break;
+										$this->_styles[$styleID]['font']['name'] = $styleAttributeValue;
+										break;
 									case 'Size' :
-											$this->_styles[$styleID]['font']['size'] = $styleAttributeValue;
-											break;
+										$this->_styles[$styleID]['font']['size'] = $styleAttributeValue;
+										break;
 									case 'Color' :
-											$this->_styles[$styleID]['font']['color']['rgb'] = substr($styleAttributeValue,1);
-											break;
+										$this->_styles[$styleID]['font']['color']['rgb'] = substr($styleAttributeValue, 1);
+										break;
 									case 'Bold' :
-											$this->_styles[$styleID]['font']['bold'] = true;
-											break;
+										$this->_styles[$styleID]['font']['bold'] = true;
+										break;
 									case 'Italic' :
-											$this->_styles[$styleID]['font']['italic'] = true;
-											break;
+										$this->_styles[$styleID]['font']['italic'] = true;
+										break;
 									case 'Underline' :
-											if (self::identifyFixedStyleValue($underlineStyles,$styleAttributeValue)) {
-												$this->_styles[$styleID]['font']['underline'] = $styleAttributeValue;
-											}
-											break;
+										if (self::identifyFixedStyleValue($underlineStyles, $styleAttributeValue)) {
+											$this->_styles[$styleID]['font']['underline'] = $styleAttributeValue;
+										}
+										break;
 								}
 							}
 							break;
-					case 'Interior' :
-							foreach($styleAttributes as $styleAttributeKey => $styleAttributeValue) {
-//								echo $styleAttributeKey.' = '.$styleAttributeValue.'<br />';
+						case 'Interior' :
+							foreach ($styleAttributes as $styleAttributeKey => $styleAttributeValue) {
+								//								echo $styleAttributeKey.' = '.$styleAttributeValue.'<br />';
 								switch ($styleAttributeKey) {
 									case 'Color' :
-											$this->_styles[$styleID]['fill']['color']['rgb'] = substr($styleAttributeValue,1);
-											break;
+										$this->_styles[$styleID]['fill']['color']['rgb'] = substr($styleAttributeValue, 1);
+										break;
 								}
 							}
 							break;
-					case 'NumberFormat' :
-							foreach($styleAttributes as $styleAttributeKey => $styleAttributeValue) {
-//								echo $styleAttributeKey.' = '.$styleAttributeValue.'<br />';
-								$styleAttributeValue = str_replace($fromFormats,$toFormats,$styleAttributeValue);
+						case 'NumberFormat' :
+							foreach ($styleAttributes as $styleAttributeKey => $styleAttributeValue) {
+								//								echo $styleAttributeKey.' = '.$styleAttributeValue.'<br />';
+								$styleAttributeValue = str_replace($fromFormats, $toFormats, $styleAttributeValue);
 								switch ($styleAttributeValue) {
 									case 'Short Date' :
-											$styleAttributeValue = 'dd/mm/yyyy';
-											break;
+										$styleAttributeValue = 'dd/mm/yyyy';
+										break;
 								}
 								if ($styleAttributeValue > '') {
 									$this->_styles[$styleID]['numberformat']['code'] = $styleAttributeValue;
 								}
 							}
 							break;
-					case 'Protection' :
-							foreach($styleAttributes as $styleAttributeKey => $styleAttributeValue) {
-//								echo $styleAttributeKey.' = '.$styleAttributeValue.'<br />';
+						case 'Protection' :
+							foreach ($styleAttributes as $styleAttributeKey => $styleAttributeValue) {
+								//								echo $styleAttributeKey.' = '.$styleAttributeValue.'<br />';
 							}
 							break;
+					}
 				}
+				//			print_r($this->_styles[$styleID]);
+				//			echo '<hr />';
 			}
-//			print_r($this->_styles[$styleID]);
-//			echo '<hr />';
 		}
 //		echo '<hr />';
 

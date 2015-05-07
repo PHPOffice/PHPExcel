@@ -801,7 +801,7 @@ class PHPExcel_Writer_HTML extends PHPExcel_Writer_Abstract implements PHPExcel_
 			$column = -1;
 			while($column++ < $highestColumnIndex) {
 				$this->_columnWidths[$sheetIndex][$column] = 42; // approximation
-				$css['table.sheet' . $sheetIndex . ' col.col' . $column]['width'] = '42pt';
+				$css['table.sheet' . $sheetIndex . ' td.column' . $column]['min-width'] = '42pt';
 			}
 
 			// col elements, loop through columnDimensions and set width
@@ -810,11 +810,10 @@ class PHPExcel_Writer_HTML extends PHPExcel_Writer_Abstract implements PHPExcel_
 					$width = PHPExcel_Shared_Drawing::pixelsToPoints($width);
 					$column = PHPExcel_Cell::columnIndexFromString($columnDimension->getColumnIndex()) - 1;
 					$this->_columnWidths[$sheetIndex][$column] = $width;
-					$css['table.sheet' . $sheetIndex . ' col.col' . $column]['width'] = $width . 'pt';
-
+					$css['table.sheet' . $sheetIndex . ' td.column' . $column]['min-width'] = $width . 'pt';
 					if ($columnDimension->getVisible() === false) {
-						$css['table.sheet' . $sheetIndex . ' col.col' . $column]['visibility'] = 'collapse';
-						$css['table.sheet' . $sheetIndex . ' col.col' . $column]['*display'] = 'none'; // target IE6+7
+						$css['table.sheet' . $sheetIndex . ' td.column' . $column]['visibility'] = 'collapse';
+						$css['table.sheet' . $sheetIndex . ' td.column' . $column]['*display'] = 'none'; // target IE6+7
 					}
 				}
 			}
@@ -1047,8 +1046,8 @@ class PHPExcel_Writer_HTML extends PHPExcel_Writer_Abstract implements PHPExcel_
 				if (!$this->_useInlineCss) {
 					$html .= '		<col class="col' . $i . '">' . PHP_EOL;
 				} else {
-					$style = isset($this->_cssStyles['table.sheet' . $sheetIndex . ' col.col' . $i]) ?
-						$this->_assembleCSS($this->_cssStyles['table.sheet' . $sheetIndex . ' col.col' . $i]) : '';
+					$style = isset($this->_cssStyles['table.sheet' . $sheetIndex . ' td.column' . $i]) ?
+						$this->_assembleCSS($this->_cssStyles['table.sheet' . $sheetIndex . ' td.column' . $i]) : '';
 					$html .= '		<col style="' . $style . '">' . PHP_EOL;
 				}
 			}
@@ -1192,7 +1191,6 @@ class PHPExcel_Writer_HTML extends PHPExcel_Writer_Abstract implements PHPExcel_
 								array($this, 'formatColor')
 							);
 						}
-						$cellData = htmlspecialchars($cellData);
 						if ($pSheet->getParent()->getCellXfByIndex( $cell->getXfIndex() )->getFont()->getSuperScript()) {
 							$cellData = '<sup>'.$cellData.'</sup>';
 						} elseif ($pSheet->getParent()->getCellXfByIndex( $cell->getXfIndex() )->getFont()->getSubScript()) {

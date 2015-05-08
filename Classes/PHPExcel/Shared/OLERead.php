@@ -179,6 +179,13 @@ class PHPExcel_Shared_OLERead {
 		$streamData = '';
 
 		if ($this->props[$stream]['size'] < self::SMALL_BLOCK_THRESHOLD) {
+            $numBlocks = $this->props[$stream]['size'] / self::SMALL_BLOCK_SIZE;
+            if ($this->props[$stream]['size'] % self::SMALL_BLOCK_SIZE != 0) {
+                ++$numBlocks;
+            }
+
+            if ($numBlocks == 0) return '';
+
 			$rootdata = $this->_readData($this->props[$this->rootentry]['startBlock']);
 
 			$block = $this->props[$stream]['startBlock'];

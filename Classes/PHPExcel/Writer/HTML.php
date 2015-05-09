@@ -741,7 +741,7 @@ class PHPExcel_Writer_HTML extends PHPExcel_Writer_Abstract implements PHPExcel_
 			// html { }
 			$css['html']['font-family']	  = 'Calibri, Arial, Helvetica, sans-serif';
 			$css['html']['font-size']		= '11pt';
-			$css['html']['background-color'] = 'white';
+			$css['html']['background-color'] = 'transparent';
 		}
 
 
@@ -897,6 +897,28 @@ class PHPExcel_Writer_HTML extends PHPExcel_Writer_Abstract implements PHPExcel_
 		// Construct CSS
 		$css = array();
 
+		//TextRotation
+		if ($textRotate = $pStyle->getTextRotation()) {
+		$css['mso-rotate'] = $textRotate;  				//MS Office
+		$css['-ms-transform'] = 'rotate(-'.$textRotate.'deg)';  	//IE9+
+		$css['-webkit-transform'] = 'rotate(-'.$textRotate.'deg)'; 	//Chrome, Safari
+		$css['-moz-transform'] = 'rotate(-'.$textRotate.'deg)'; 	//Firefox
+		$css['-o-transform'] = 'rotate(-'.$textRotate.'deg)';		//Opera
+		if ($textRotate == 90) 
+			{
+			$css['writing-mode'] = "tb-rl"; //IE8
+			$css['filter'] = "flipv fliph"; //IE8
+			}
+		elseif ($textRotate == 180) 
+			{
+			$css['filter'] = "flipv fliph"; //IE8
+			}
+		elseif ($textRotate == 270) 
+			{
+			$css['writing-mode'] = "tb-rl"; //IE8
+			}
+		}
+
 		// Create CSS
 		$css['vertical-align'] = $this->_mapVAlign($pStyle->getVertical());
 		if ($textAlign = $this->_mapHAlign($pStyle->getHorizontal())) {
@@ -991,7 +1013,7 @@ class PHPExcel_Writer_HTML extends PHPExcel_Writer_Abstract implements PHPExcel_
 
 		// Create CSS
 		$value = $pStyle->getFillType() == PHPExcel_Style_Fill::FILL_NONE ?
-			'white' : '#' . $pStyle->getStartColor()->getRGB();
+			'transparent' : '#' . $pStyle->getStartColor()->getRGB();
 		$css['background-color'] = $value;
 
 		// Return

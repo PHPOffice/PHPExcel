@@ -76,6 +76,14 @@ class PHPExcel_Writer_HTML extends PHPExcel_Writer_Abstract implements PHPExcel_
 	 */
 	private $_cssStyles = null;
 
+        /**
+         * Array of user CSS styles
+         *
+         * @var array
+         */
+	private $_cssUserStyles = array();
+
+
 	/**
 	 * Array of column widths in points
 	 *
@@ -508,6 +516,13 @@ class PHPExcel_Writer_HTML extends PHPExcel_Writer_Abstract implements PHPExcel_
 		return $html;
 	}
 
+        /**
+         * Add user CSS styles.
+         */
+         public function addUserCssStyles($cssStyles) {
+                $this->_cssUserStyles += $cssStyles;
+        }
+
 	private function _extendRowsForChartsAndImages(PHPExcel_Worksheet $pSheet, $row) {
 		$rowMax = $row;
 		$colMax = 'A';
@@ -858,7 +873,7 @@ class PHPExcel_Writer_HTML extends PHPExcel_Writer_Abstract implements PHPExcel_
 
 		// Cache
 		if (is_null($this->_cssStyles)) {
-			$this->_cssStyles = $css;
+			$this->_cssStyles = array_replace_recursive($css, $this->_cssUserStyles);
 		}
 
 		// Return

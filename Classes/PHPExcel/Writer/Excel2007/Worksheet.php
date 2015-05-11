@@ -706,6 +706,7 @@ class PHPExcel_Writer_Excel2007_Worksheet extends PHPExcel_Writer_Excel2007_Writ
 		$objWriter->startElement('printOptions');
 
 		$objWriter->writeAttribute('gridLines',	($pSheet->getPrintGridlines() ? 'true': 'false'));
+		$objWriter->writeAttribute('headings', ($pSheet->getPrintHeadings() ? 'true': 'false'));
 		$objWriter->writeAttribute('gridLinesSet',	'true');
 
 		if ($pSheet->getPageSetup()->getHorizontalCentered()) {

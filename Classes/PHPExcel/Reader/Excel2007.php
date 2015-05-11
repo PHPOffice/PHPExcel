@@ -797,6 +797,10 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 								if (self::boolean((string) $xmlSheet->printOptions['gridLines'])) {
 									$docSheet->setPrintGridlines(TRUE);
 								}
+								
+								if (self::boolean((string) $xmlSheet->printOptions['headings'])) {
+									$docSheet->setPrintHeadings(TRUE);
+								}
 
 								if (self::boolean((string) $xmlSheet->printOptions['horizontalCentered'])) {
 									$docSheet->getPageSetup()->setHorizontalCentered(TRUE);

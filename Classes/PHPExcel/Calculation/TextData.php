@@ -225,6 +225,28 @@ class PHPExcel_Calculation_TextData
 
     }
 
+    /**
+     * The Microsoft Excel EXACT function compares two strings
+     * and returns TRUE if both values are the same. Otherwise, it will return FALSE.
+     *
+     * Note: The EXACT function is case-sensitive when it compares the two strings.
+     *
+     * @param string $text1
+     * @param string $text2
+     * @return string
+     */
+    public static function EXACT($text1, $text2) {
+        $text1 = PHPExcel_Calculation_Functions::flattenSingleValue($text1);
+        $text2 = PHPExcel_Calculation_Functions::flattenSingleValue($text2);
+
+        if(is_string($text1) && is_string($text2)){
+            if(0 === strcmp($text1, $text2)){
+                return PHPExcel_Calculation::getTRUE();
+            }
+        }
+        // @TODO Should divergent types be handled by this function (integer ...)?
+        return PHPExcel_Calculation::getFALSE();
+    } // function EXACT()
 
     /**
      * SEARCHSENSITIVE

@@ -97,11 +97,17 @@ class PHPExcel_Worksheet_HeaderFooter
 {
 	/* Header/footer image location */
 	const IMAGE_HEADER_LEFT							= 'LH';
+        const IMAGE_HEADER_LEFT_FIRST						= 'LHFIRST';
 	const IMAGE_HEADER_CENTER						= 'CH';
+        const IMAGE_HEADER_CENTER_FIRST						= 'CHFIRST';
 	const IMAGE_HEADER_RIGHT						= 'RH';
+        const IMAGE_HEADER_RIGHT_FIRST						= 'RHFIRST';
 	const IMAGE_FOOTER_LEFT							= 'LF';
+        const IMAGE_FOOTER_LEFT_FIRST						= 'LFFIRST';
 	const IMAGE_FOOTER_CENTER						= 'CF';
+        const IMAGE_FOOTER_CENTER_FIRST						= 'CFFIRST';
 	const IMAGE_FOOTER_RIGHT						= 'RF';
+        const IMAGE_FOOTER_RIGHT_FIRST						= 'RFFIRST';
 
 	/**
 	 * OddHeader
@@ -439,11 +445,17 @@ class PHPExcel_Worksheet_HeaderFooter
     	// Sort array
     	$images = array();
     	if (isset($this->_headerFooterImages[self::IMAGE_HEADER_LEFT])) 	$images[self::IMAGE_HEADER_LEFT] = 		$this->_headerFooterImages[self::IMAGE_HEADER_LEFT];
-    	if (isset($this->_headerFooterImages[self::IMAGE_HEADER_CENTER])) 	$images[self::IMAGE_HEADER_CENTER] = 	$this->_headerFooterImages[self::IMAGE_HEADER_CENTER];
-    	if (isset($this->_headerFooterImages[self::IMAGE_HEADER_RIGHT])) 	$images[self::IMAGE_HEADER_RIGHT] = 	$this->_headerFooterImages[self::IMAGE_HEADER_RIGHT];
+        if (isset($this->_headerFooterImages[self::IMAGE_HEADER_LEFT_FIRST])) 	$images[self::IMAGE_HEADER_LEFT_FIRST] = 	$this->_headerFooterImages[self::IMAGE_HEADER_LEFT_FIRST];
+    	if (isset($this->_headerFooterImages[self::IMAGE_HEADER_CENTER])) 	$images[self::IMAGE_HEADER_CENTER] =            $this->_headerFooterImages[self::IMAGE_HEADER_CENTER];
+        if (isset($this->_headerFooterImages[self::IMAGE_HEADER_CENTER_FIRST])) $images[self::IMAGE_HEADER_CENTER_FIRST] = 	$this->_headerFooterImages[self::IMAGE_HEADER_CENTER_FIRST];
+    	if (isset($this->_headerFooterImages[self::IMAGE_HEADER_RIGHT])) 	$images[self::IMAGE_HEADER_RIGHT] =             $this->_headerFooterImages[self::IMAGE_HEADER_RIGHT];
+        if (isset($this->_headerFooterImages[self::IMAGE_HEADER_RIGHT_FIRST])) 	$images[self::IMAGE_HEADER_RIGHT_FIRST] = 	$this->_headerFooterImages[self::IMAGE_HEADER_RIGHT_FIRST];
     	if (isset($this->_headerFooterImages[self::IMAGE_FOOTER_LEFT])) 	$images[self::IMAGE_FOOTER_LEFT] = 		$this->_headerFooterImages[self::IMAGE_FOOTER_LEFT];
-    	if (isset($this->_headerFooterImages[self::IMAGE_FOOTER_CENTER])) 	$images[self::IMAGE_FOOTER_CENTER] = 	$this->_headerFooterImages[self::IMAGE_FOOTER_CENTER];
-    	if (isset($this->_headerFooterImages[self::IMAGE_FOOTER_RIGHT])) 	$images[self::IMAGE_FOOTER_RIGHT] = 	$this->_headerFooterImages[self::IMAGE_FOOTER_RIGHT];
+        if (isset($this->_headerFooterImages[self::IMAGE_FOOTER_LEFT_FIRST])) 	$images[self::IMAGE_FOOTER_LEFT_FIRST] = 	$this->_headerFooterImages[self::IMAGE_FOOTER_LEFT_FIRST];
+    	if (isset($this->_headerFooterImages[self::IMAGE_FOOTER_CENTER])) 	$images[self::IMAGE_FOOTER_CENTER] =            $this->_headerFooterImages[self::IMAGE_FOOTER_CENTER];
+        if (isset($this->_headerFooterImages[self::IMAGE_FOOTER_CENTER_FIRST])) $images[self::IMAGE_FOOTER_CENTER_FIRST] = 	$this->_headerFooterImages[self::IMAGE_FOOTER_CENTER_FIRST];
+    	if (isset($this->_headerFooterImages[self::IMAGE_FOOTER_RIGHT])) 	$images[self::IMAGE_FOOTER_RIGHT] =             $this->_headerFooterImages[self::IMAGE_FOOTER_RIGHT];
+        if (isset($this->_headerFooterImages[self::IMAGE_FOOTER_RIGHT_FIRST])) 	$images[self::IMAGE_FOOTER_RIGHT_FIRST] = 	$this->_headerFooterImages[self::IMAGE_FOOTER_RIGHT_FIRST];
     	$this->_headerFooterImages = $images;
 
     	return $this->_headerFooterImages;

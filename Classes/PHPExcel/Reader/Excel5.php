@@ -6773,7 +6773,9 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
 	 */
 	public static function _GetInt2d($data, $pos)
 	{
-		return ord($data[$pos]) | (ord($data[$pos+1]) << 8);
+		$ord = (isset($data[$pos])) ? ord($data[$pos]) : 0;
+        	$ord1 = (isset($data[$pos+1])) ? ord($data[$pos+1]) : 0;
+        	return $ord | ($ord1 << 8);
 	}
 
 

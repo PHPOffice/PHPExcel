@@ -623,6 +623,7 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 					$oldSheetId = -1; // keep track of old sheet id in final workbook
 					$countSkippedSheets = 0; // keep track of number of skipped sheets
 					$mapSheetId = array(); // mapping of sheet ids from old to new
+					$accessCells = 0; // count total cells for debug
 
 
 					$charts = $chartDetails = array();
@@ -844,6 +845,7 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 	//									echo PHP_EOL;
 	//									echo 'Cell Data Type is ', $cellDataType, ': ';
 	//
+										++$accessCells;
 										// Read cell!
 										switch ($cellDataType) {
 											case "s":
@@ -1759,6 +1761,7 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 
 		$zip->close();
 
+//		echo 'Total access cells: ', $accessCells, '<br/>', PHP_EOL;
 		return $excel;
 	}
 

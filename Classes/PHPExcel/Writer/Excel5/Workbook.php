@@ -229,7 +229,7 @@ class PHPExcel_Writer_Excel5_Workbook extends PHPExcel_Writer_Excel5_BIFFwriter
 		for ($i = 0; $i < $countSheets; ++$i) {
 			$phpSheet = $phpExcel->getSheet($i);
 
-			$this->_parser->setExtSheet($phpSheet->getTitle(), $i);  // Register worksheet name with parser
+			$this->_parser->setExtSheet(PHPExcel_Writer_Excel5_Worksheet::prepareSheetName($phpSheet->getTitle()), $i);  // Register worksheet name with parser
 
 			$supbook_index = 0x00;
 			$ref = pack('vvv', $supbook_index, $i, $i);
@@ -487,7 +487,7 @@ class PHPExcel_Writer_Excel5_Workbook extends PHPExcel_Writer_Excel5_BIFFwriter
 		// add size of Workbook globals part 2, the length of the SHEET records
 		$total_worksheets = count($this->_phpExcel->getAllSheets());
 		foreach ($this->_phpExcel->getWorksheetIterator() as $sheet) {
-			$offset += $boundsheet_length + strlen(PHPExcel_Shared_String::UTF8toBIFF8UnicodeShort($sheet->getTitle()));
+			$offset += $boundsheet_length + strlen(PHPExcel_Shared_String::UTF8toBIFF8UnicodeShort(PHPExcel_Writer_Excel5_Worksheet::prepareSheetName($sheet->getTitle())));
 		}
 
 		// add the sizes of each of the Sheet substreams, respectively
@@ -548,7 +548,7 @@ class PHPExcel_Writer_Excel5_Workbook extends PHPExcel_Writer_Excel5_BIFFwriter
 
 		// Create EXTERNSHEET for each worksheet
 		for ($i = 0; $i < $countSheets; ++$i) {
-			$this->_writeExternsheet($this->_phpExcel->getSheet($i)->getTitle());
+			$this->_writeExternsheet(PHPExcel_Writer_Excel5_Worksheet::prepareSheetName($this->_phpExcel->getSheet($i)->getTitle()));
 		}
 	}
 
@@ -662,7 +662,7 @@ class PHPExcel_Writer_Excel5_Workbook extends PHPExcel_Writer_Excel5_BIFFwriter
 				// Create absolute coordinate
 				$range = PHPExcel_Cell::splitRange($namedRange->getRange());
 				for ($i = 0; $i < count($range); $i++) {
-					$range[$i][0] = '\'' . str_replace("'", "''", $namedRange->getWorksheet()->getTitle()) . '\'!' . PHPExcel_Cell::absoluteCoordinate($range[$i][0]);
+					$range[$i][0] = '\'' . str_replace("'", "''", PHPExcel_Writer_Excel5_Worksheet::prepareSheetName($namedRange->getWorksheet()->getTitle())) . '\'!' . PHPExcel_Cell::absoluteCoordinate($range[$i][0]);
 					if (isset($range[$i][1])) {
 						$range[$i][1] = PHPExcel_Cell::absoluteCoordinate($range[$i][1]);
 					}
@@ -924,7 +924,7 @@ class PHPExcel_Writer_Excel5_Workbook extends PHPExcel_Writer_Excel5_BIFFwriter
 	 */
 	private function _writeBoundsheet($sheet, $offset)
 	{
-		$sheetname = $sheet->getTitle();
+		$sheetname = PHPExcel_Writer_Excel5_Worksheet::prepareSheetName($sheet->getTitle());
 		$record    = 0x0085;                    // Record identifier
 
 		// sheet state

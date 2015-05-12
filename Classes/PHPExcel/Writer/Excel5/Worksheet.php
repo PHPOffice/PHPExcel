@@ -70,6 +70,8 @@
  */
 class PHPExcel_Writer_Excel5_Worksheet extends PHPExcel_Writer_Excel5_BIFFwriter
 {
+    const MAX_NAME_LENGTH = 31;
+
 	/**
 	 * Formula parser
 	 *
@@ -1707,7 +1709,7 @@ class PHPExcel_Writer_Excel5_Worksheet extends PHPExcel_Writer_Excel5_BIFFwriter
 		// References to the current sheet are encoded differently to references to
 		// external sheets.
 		//
-		if ($this->_phpSheet->getTitle() == $sheetname) {
+		if (PHPExcel_Writer_Excel5_Worksheet::prepareSheetName($this->_phpSheet->getTitle()) == $sheetname) {
 			$sheetname = '';
 			$length	= 0x02;  // The following 2 bytes
 			$cch	   = 1;	 // The following byte
@@ -3677,5 +3679,21 @@ class PHPExcel_Writer_Excel5_Worksheet extends PHPExcel_Writer_Excel5_BIFFwriter
 		$data     .= pack('v', 0x0001);
 		$data     .= $cellRange;
 		$this->_append($header . $data);
+	}
+
+
+	/**
+	 * Prepare name to write to a file
+	 *
+	 * @param string $name
+	 * @return string
+	 */
+	public static function prepareSheetName($name)
+	{
+	    if (mb_strlen($name) > self::MAX_NAME_LENGTH) {
+	        return mb_substr($name, 0, self::MAX_NAME_LENGTH);
+	    }
+
+	    return $name;
 	}
 }

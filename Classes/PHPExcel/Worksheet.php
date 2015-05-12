@@ -439,17 +439,17 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
             throw new PHPExcel_Exception('Sheet code name cannot be empty.');
         }
         // Some of the printable ASCII characters are invalid:  * : / \ ? [ ] and  first and last characters cannot be a "'"
-        if ((str_replace(self::$_invalidCharacters, '', $pValue) !== $pValue) || 
-            (PHPExcel_Shared_String::Substring($pValue,-1,1)=='\'') || 
+        if ((str_replace(self::$_invalidCharacters, '', $pValue) !== $pValue) ||
+            (PHPExcel_Shared_String::Substring($pValue,-1,1)=='\'') ||
             (PHPExcel_Shared_String::Substring($pValue,0,1)=='\'')) {
             throw new PHPExcel_Exception('Invalid character found in sheet code name');
         }
- 
+
         // Maximum 31 characters allowed for sheet title
         if ($CharCount > 31) {
             throw new PHPExcel_Exception('Maximum 31 characters allowed in sheet code name.');
         }
- 
+
         return $pValue;
     }
 
@@ -465,11 +465,6 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
         // Some of the printable ASCII characters are invalid:  * : / \ ? [ ]
         if (str_replace(self::$_invalidCharacters, '', $pValue) !== $pValue) {
             throw new PHPExcel_Exception('Invalid character found in sheet title');
-        }
-
-        // Maximum 31 characters allowed for sheet title
-        if (PHPExcel_Shared_String::CountCharacters($pValue) > 31) {
-            throw new PHPExcel_Exception('Maximum 31 characters allowed in sheet title.');
         }
 
         return $pValue;
@@ -1216,8 +1211,8 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
 		$cell = $this->_cellCollection->addCacheData(
 			$pCoordinate,
 			new PHPExcel_Cell(
-				NULL, 
-				PHPExcel_Cell_DataType::TYPE_NULL, 
+				NULL,
+				PHPExcel_Cell_DataType::TYPE_NULL,
 				$this
 			)
 		);
@@ -1244,7 +1239,7 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
 
         return $cell;
 	}
-	
+
     /**
      * Does the cell at a specific coordinate exist?
      *
@@ -2895,7 +2890,7 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
 		self::_checkSheetCodeName($pValue);
 
 		// We use the same code that setTitle to find a valid codeName else not using a space (Excel don't like) but a '_'
-		
+
         if ($this->getParent()) {
 			// Is there already such sheet name?
 			if ($this->getParent()->sheetCodeNameExists($pValue)) {

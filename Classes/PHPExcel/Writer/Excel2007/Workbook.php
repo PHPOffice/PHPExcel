@@ -222,7 +222,7 @@ class PHPExcel_Writer_Excel2007_Workbook extends PHPExcel_Writer_Excel2007_Write
 			// sheet
 			$this->_writeSheet(
 				$objWriter,
-				$pPHPExcel->getSheet($i)->getTitle(),
+				PHPExcel_Writer_Excel2007_Worksheet::prepareSheetName($pPHPExcel->getSheet($i)->getTitle()),
 				($i + 1),
 				($i + 1 + 3),
 				$pPHPExcel->getSheet($i)->getSheetState()
@@ -328,7 +328,7 @@ class PHPExcel_Writer_Excel2007_Workbook extends PHPExcel_Writer_Excel2007_Write
 		// Create absolute coordinate and write as raw text
 		$range = PHPExcel_Cell::splitRange($pNamedRange->getRange());
 		for ($i = 0; $i < count($range); $i++) {
-			$range[$i][0] = '\'' . str_replace("'", "''", $pNamedRange->getWorksheet()->getTitle()) . '\'!' . PHPExcel_Cell::absoluteReference($range[$i][0]);
+			$range[$i][0] = '\'' . str_replace("'", "''", PHPExcel_Writer_Excel2007_Worksheet::prepareSheetName($pNamedRange->getWorksheet()->getTitle())) . '\'!' . PHPExcel_Cell::absoluteReference($range[$i][0]);
 			if (isset($range[$i][1])) {
 				$range[$i][1] = PHPExcel_Cell::absoluteReference($range[$i][1]);
 			}
@@ -370,7 +370,7 @@ class PHPExcel_Writer_Excel2007_Workbook extends PHPExcel_Writer_Excel2007_Write
 			$range[1] = PHPExcel_Cell::absoluteCoordinate($range[1]);
 			$range = implode(':', $range);
 
-			$objWriter->writeRawData('\'' . str_replace("'", "''", $pSheet->getTitle()) . '\'!' . $range);
+			$objWriter->writeRawData('\'' . str_replace("'", "''", PHPExcel_Writer_Excel2007_Worksheet::prepareSheetName($pSheet->getTitle())) . '\'!' . $range);
 
 			$objWriter->endElement();
 		}
@@ -399,7 +399,7 @@ class PHPExcel_Writer_Excel2007_Workbook extends PHPExcel_Writer_Excel2007_Write
 			if ($pSheet->getPageSetup()->isColumnsToRepeatAtLeftSet()) {
 				$repeat = $pSheet->getPageSetup()->getColumnsToRepeatAtLeft();
 
-				$settingString .= '\'' . str_replace("'", "''", $pSheet->getTitle()) . '\'!$' . $repeat[0] . ':$' . $repeat[1];
+				$settingString .= '\'' . str_replace("'", "''", PHPExcel_Writer_Excel2007_Worksheet::prepareSheetName($pSheet->getTitle())) . '\'!$' . $repeat[0] . ':$' . $repeat[1];
 			}
 
 			// Rows to repeat
@@ -410,7 +410,7 @@ class PHPExcel_Writer_Excel2007_Workbook extends PHPExcel_Writer_Excel2007_Write
 
 				$repeat = $pSheet->getPageSetup()->getRowsToRepeatAtTop();
 
-				$settingString .= '\'' . str_replace("'", "''", $pSheet->getTitle()) . '\'!$' . $repeat[0] . ':$' . $repeat[1];
+				$settingString .= '\'' . str_replace("'", "''", PHPExcel_Writer_Excel2007_Worksheet::prepareSheetName($pSheet->getTitle())) . '\'!$' . $repeat[0] . ':$' . $repeat[1];
 			}
 
 			$objWriter->writeRawData($settingString);
@@ -445,7 +445,7 @@ class PHPExcel_Writer_Excel2007_Workbook extends PHPExcel_Writer_Excel2007_Write
 			foreach ($printArea as $printAreaRect) {
 				$printAreaRect[0] = PHPExcel_Cell::absoluteReference($printAreaRect[0]);
 				$printAreaRect[1] = PHPExcel_Cell::absoluteReference($printAreaRect[1]);
-				$chunks[] = '\'' . str_replace("'", "''", $pSheet->getTitle()) . '\'!' . implode(':', $printAreaRect);
+				$chunks[] = '\'' . str_replace("'", "''", PHPExcel_Writer_Excel2007_Worksheet::prepareSheetName($pSheet->getTitle())) . '\'!' . implode(':', $printAreaRect);
 			}
 
 			$objWriter->writeRawData(implode(',', $chunks));

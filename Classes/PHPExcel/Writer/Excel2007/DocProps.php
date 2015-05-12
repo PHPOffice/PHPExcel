@@ -101,7 +101,7 @@ class PHPExcel_Writer_Excel2007_DocProps extends PHPExcel_Writer_Excel2007_Write
 
 					$sheetCount = $pPHPExcel->getSheetCount();
 					for ($i = 0; $i < $sheetCount; ++$i) {
-						$objWriter->writeElement('vt:lpstr', $pPHPExcel->getSheet($i)->getTitle());
+						$objWriter->writeElement('vt:lpstr', PHPExcel_Writer_Excel2007_Worksheet::prepareSheetName($pPHPExcel->getSheet($i)->getTitle()));
 					}
 
 				$objWriter->endElement();

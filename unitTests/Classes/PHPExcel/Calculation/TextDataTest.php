@@ -289,6 +289,22 @@ class TextDataTest extends PHPUnit_Framework_TestCase
     	return new testDataFileIterator('rawTestData/Calculation/TextData/DOLLAR.data');
 	}
 
+	/**
+	 * @dataProvider providerEXACT
+	 */
+	public function testEXACT()
+	{
+	    $args = func_get_args();
+	    $expectedResult = array_pop($args);
+	    $result = call_user_func_array(array('PHPExcel_Calculation_TextData','EXACT'),$args);
+	    $this->assertEquals($expectedResult, $result);
+	}
+
+	public function providerEXACT()
+	{
+	    return new testDataFileIterator('rawTestData/Calculation/TextData/EXACT.data');
+	}
+
     /**
      * @dataProvider providerFIXED
      */

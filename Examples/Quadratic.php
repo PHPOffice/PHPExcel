@@ -52,13 +52,13 @@ if (isset($_POST['submit'])) {
 		echo '<hr /><b>Roots:</b><br />';
 
 		$callStartTime = microtime(true);
-		echo $objPHPExcel->getActiveSheet()->getCell('B5')->getCalculatedValue().'<br />';
-		echo $objPHPExcel->getActiveSheet()->getCell('B6')->getCalculatedValue().'<br />';
+		echo $objPHPExcel->getActiveSheet()->getCell('B5')->getCalculatedValue(),'<br />';
+		echo $objPHPExcel->getActiveSheet()->getCell('B6')->getCalculatedValue(),'<br />';
 		$callEndTime = microtime(true);
 		$callTime = $callEndTime - $callStartTime;
 
-		echo '<hr />Call time for Quadratic Equation Solution was '.sprintf('%.4f',$callTime).' seconds<br /><hr />';
-		echo ' Peak memory usage: '.(memory_get_peak_usage(true) / 1024 / 1024).' MB<br />';
+		echo '<hr />Call time for Quadratic Equation Solution was ',sprintf('%.4f',$callTime),' seconds<br /><hr />';
+		echo ' Peak memory usage: ',(memory_get_peak_usage(true) / 1024 / 1024),' MB<br />';
 	}
 }
 

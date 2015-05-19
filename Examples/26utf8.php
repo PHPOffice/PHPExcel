@@ -81,12 +81,12 @@ try {
 		$rendererName,
 		$rendererLibraryPath
 	)) {
-		echo (
-			'NOTICE: Please set the $rendererName and $rendererLibraryPath values' .
-			EOL .
-			'at the top of this script as appropriate for your directory structure' .
+		echo  
+			'NOTICE: Please set the $rendererName and $rendererLibraryPath values' ,
+			EOL ,
+			'at the top of this script as appropriate for your directory structure' ,
 			EOL
-		);
+		 ;
 	} else {
 		$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'PDF');
 		$objWriter->save(str_replace('.php', '.pdf', __FILE__));

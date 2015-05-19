@@ -36,7 +36,7 @@ for ($col = 0; $col < 50; $col++) {
     }
 }
 $d = microtime(true) - $t;
-echo date('H:i:s') , " Add data (end), time: " . round($d, 2) . " s", EOL;
+echo date('H:i:s') , " Add data (end), time: " , round($d, 2) , " s", EOL;
 
 
 echo date('H:i:s') , " Write to Excel2007 format" , EOL;

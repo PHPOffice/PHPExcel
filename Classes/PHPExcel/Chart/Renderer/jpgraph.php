@@ -833,7 +833,7 @@ class PHPExcel_Chart_Renderer_jpgraph
 				$this->_renderStockChart($groupCount,$dimensions);
 				break;
 			default	:
-				echo $chartType.' is not yet implemented<br />';
+				echo $chartType,' is not yet implemented<br />';
 				return false;
 		}
 		$this->_renderLegend();

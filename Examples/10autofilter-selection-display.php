@@ -38,11 +38,11 @@ require_once dirname(__FILE__) . '/../Classes/PHPExcel.php';
 
 
 // Create new PHPExcel object
-echo date('H:i:s').' Create new PHPExcel object'.EOL;
+echo date('H:i:s'),' Create new PHPExcel object',EOL;
 $objPHPExcel = new PHPExcel();
 
 // Set document properties
-echo date('H:i:s').' Set document properties'.EOL;
+echo date('H:i:s'),' Set document properties',EOL;
 $objPHPExcel->getProperties()->setCreator('Maarten Balliauw')
 							 ->setLastModifiedBy('Maarten Balliauw')
 							 ->setTitle('PHPExcel Test Document')
@@ -52,7 +52,7 @@ $objPHPExcel->getProperties()->setCreator('Maarten Balliauw')
 							 ->setCategory('Test result file');
 
 // Create the worksheet
-echo date('H:i:s').' Add data'.EOL;
+echo date('H:i:s'),' Add data',EOL;
 $objPHPExcel->setActiveSheetIndex(0);
 $objPHPExcel->getActiveSheet()->setCellValue('A1', 'Financial Year')
                               ->setCellValue('B1', 'Financial Period')
@@ -111,7 +111,7 @@ $row--;
 
 
 // Set styling
-echo date('H:i:s').' Set styling'.EOL;
+echo date('H:i:s'),' Set styling',EOL;
 $objPHPExcel->getActiveSheet()->getStyle('A1:F1')->getFont()->setBold(true);
 $objPHPExcel->getActiveSheet()->getStyle('A1:F1')->getAlignment()->setWrapText(TRUE);
 $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(12.5);
@@ -124,7 +124,7 @@ $objPHPExcel->getActiveSheet()->freezePane('A2');
 
 
 // Set autofilter range
-echo date('H:i:s').' Set autofilter range'.EOL;
+echo date('H:i:s'),' Set autofilter range',EOL;
 // Always include the complete filter range!
 // Excel does support setting only the caption
 // row, but that's not a best practise...
@@ -132,7 +132,7 @@ $objPHPExcel->getActiveSheet()->setAutoFilter($objPHPExcel->getActiveSheet()->ca
 
 // Set active filters
 $autoFilter = $objPHPExcel->getActiveSheet()->getAutoFilter();
-echo date('H:i:s').' Set active filters'.EOL;
+echo date('H:i:s'),' Set active filters',EOL;
 // Filter the Country column on a filter value of countries beginning with the letter U (or Japan)
 //     We use * as a wildcard, so specify as U* and using a wildcard requires customFilter
 $autoFilter->getColumn('C')
@@ -179,7 +179,7 @@ $autoFilter->getColumn('E')
 		);
 
 // Execute filtering
-echo date('H:i:s').' Execute filtering'.EOL;
+echo date('H:i:s'),' Execute filtering',EOL;
 $autoFilter->showHideRows();
 
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
@@ -187,7 +187,7 @@ $objPHPExcel->setActiveSheetIndex(0);
 
 
 // Display Results of filtering
-echo date('H:i:s').' Display filtered rows'.EOL;
+echo date('H:i:s'),' Display filtered rows',EOL;
 foreach ($objPHPExcel->getActiveSheet()->getRowIterator() as $row) {
 	if ($objPHPExcel->getActiveSheet()->getRowDimension($row->getRowIndex())->getVisible()) {
 		echo '    Row number - ' , $row->getRowIndex() , ' ';

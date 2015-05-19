@@ -121,8 +121,8 @@ foreach ($aTests as $sTest) {
 
 // Run all tests
 foreach ($aTests as $sTest) {
-	echo '============== TEST ==============' . "\r\n";
-	echo 'Test name: ' . $sTest . "\r\n";
+	echo '============== TEST ==============' , "\r\n";
+	echo 'Test name: ' , $sTest , "\r\n";
 	echo "\r\n";
 	echo shell_exec('php ' . $sTest);
 	echo "\r\n";

@@ -23,7 +23,7 @@ $exampleTypeList = glob('./*',GLOB_ONLYDIR);
 
 foreach($exampleTypeList as $exampleType) {
 
-	echo '<h2>' . pathinfo($exampleType,PATHINFO_BASENAME) . ' Function Examples</h2>';
+	echo '<h2>' , pathinfo($exampleType,PATHINFO_BASENAME) , ' Function Examples</h2>';
 
 	$exampleList = glob('./'.$exampleType.'/*.php');
 

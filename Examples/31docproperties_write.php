@@ -70,7 +70,7 @@ echo date('H:i:s') , " File written to " , str_replace('.php', '.xlsx', pathinfo
 
 
 // Echo memory peak usage
-echo date('H:i:s') , " Peak memory usage: " . (memory_get_peak_usage(true) / 1024 / 1024) . " MB" , EOL;
+echo date('H:i:s') , " Peak memory usage: " , (memory_get_peak_usage(true) / 1024 / 1024) , " MB" , EOL;
 
 
 echo EOL;
@@ -116,4 +116,4 @@ foreach($customProperties as $customProperty) {
 }
 
 // Echo memory peak usage
-echo date('H:i:s') , " Peak memory usage: " , (memory_get_peak_usage(true) / 1024 / 1024) . " MB" , EOL;
+echo date('H:i:s') , " Peak memory usage: " , (memory_get_peak_usage(true) / 1024 / 1024) , " MB" , EOL;

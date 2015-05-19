@@ -21,7 +21,7 @@ $exampleTypeList = glob('./*',GLOB_ONLYDIR);
 
 foreach($exampleTypeList as $exampleType) {
 
-	echo '<h1>PHPExcel ' . pathinfo($exampleType,PATHINFO_BASENAME) . ' Examples</h1>';
+	echo '<h1>PHPExcel ' , pathinfo($exampleType,PATHINFO_BASENAME) , ' Examples</h1>';
 
 	$exampleList = glob('./'.$exampleType.'/*.php');
 

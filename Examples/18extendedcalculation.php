@@ -40,16 +40,16 @@ require_once dirname(__FILE__) . '/../Classes/PHPExcel.php';
 
 
 // List functions
-echo date('H:i:s') . " List implemented functions\n";
+echo date('H:i:s') , " List implemented functions\n";
 $objCalc = PHPExcel_Calculation::getInstance();
 print_r($objCalc->listFunctionNames());
 
 // Create new PHPExcel object
-echo date('H:i:s') . " Create new PHPExcel object\n";
+echo date('H:i:s') , " Create new PHPExcel object\n";
 $objPHPExcel = new PHPExcel();
 
 // Add some data, we will use some formulas here
-echo date('H:i:s') . " Add some data\n";
+echo date('H:i:s') , " Add some data\n";
 $objPHPExcel->getActiveSheet()->setCellValue('A14', 'Count:');
 
 $objPHPExcel->getActiveSheet()->setCellValue('B1', 'Range 1');
@@ -97,12 +97,12 @@ $objPHPExcel->getActiveSheet()->setCellValue('E14', 'Count of both ranges:');
 $objPHPExcel->getActiveSheet()->setCellValue('F14', '=COUNT(B2:C12)');
 
 // Calculated data
-echo date('H:i:s') . " Calculated data\n";
-echo 'Value of B14 [=COUNT(B2:B12)]: ' . $objPHPExcel->getActiveSheet()->getCell('B14')->getCalculatedValue() . "\r\n";
+echo date('H:i:s') , " Calculated data\n";
+echo 'Value of B14 [=COUNT(B2:B12)]: ' , $objPHPExcel->getActiveSheet()->getCell('B14')->getCalculatedValue() , "\r\n";
 
 
 // Echo memory peak usage
-echo date('H:i:s') . " Peak memory usage: " . (memory_get_peak_usage(true) / 1024 / 1024) . " MB\r\n";
+echo date('H:i:s') , " Peak memory usage: " , (memory_get_peak_usage(true) / 1024 / 1024) , " MB\r\n";
 
 // Echo done
-echo date('H:i:s') . " Done" , EOL;
+echo date('H:i:s') , " Done" , EOL;

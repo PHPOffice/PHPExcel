@@ -38,11 +38,11 @@ date_default_timezone_set('Europe/London');
 require_once dirname(__FILE__) . '/../Classes/PHPExcel.php';
 
 // Create new PHPExcel object
-echo date('H:i:s').' Create new PHPExcel object'.EOL;
+echo date('H:i:s'),' Create new PHPExcel object',EOL;
 $objPHPExcel = new PHPExcel();
 
 // Set document properties
-echo date('H:i:s').' Set document properties'.EOL;
+echo date('H:i:s'),' Set document properties',EOL;
 $objPHPExcel->getProperties()->setCreator('Maarten Balliauw')
 							 ->setLastModifiedBy('Maarten Balliauw')
 							 ->setTitle('PHPExcel Test Document')
@@ -52,7 +52,7 @@ $objPHPExcel->getProperties()->setCreator('Maarten Balliauw')
 							 ->setCategory('Test result file');
 
 // Create the worksheet
-echo date('H:i:s').' Add data'.EOL;
+echo date('H:i:s'),' Add data',EOL;
 $objPHPExcel->setActiveSheetIndex(0);
 $objPHPExcel->getActiveSheet()->setCellValue('A1', 'Year')
                               ->setCellValue('B1', 'Quarter')
@@ -119,11 +119,11 @@ $dataArray = array(array('2010',	'Q1',	'United States',	790),
 $objPHPExcel->getActiveSheet()->fromArray($dataArray, NULL, 'A2');
 
 // Set title row bold
-echo date('H:i:s').' Set title row bold'.EOL;
+echo date('H:i:s'),' Set title row bold',EOL;
 $objPHPExcel->getActiveSheet()->getStyle('A1:D1')->getFont()->setBold(true);
 
 // Set autofilter
-echo date('H:i:s').' Set autofilter'.EOL;
+echo date('H:i:s'),' Set autofilter',EOL;
 // Always include the complete filter range!
 // Excel does support setting only the caption
 // row, but that's not a best practise...
@@ -164,8 +164,8 @@ echo date('H:i:s') , ' Current memory usage: ' , (memory_get_usage(true) / 1024 
 
 
 // Echo memory peak usage
-echo date('H:i:s').' Peak memory usage: '.(memory_get_peak_usage(true) / 1024 / 1024).' MB'.EOL;
+echo date('H:i:s'),' Peak memory usage: ',(memory_get_peak_usage(true) / 1024 / 1024),' MB',EOL;
 
 // Echo done
-echo date('H:i:s').' Done writing files'.EOL;
+echo date('H:i:s'),' Done writing files',EOL;
 echo 'Files have been created in ' , getcwd() , EOL;

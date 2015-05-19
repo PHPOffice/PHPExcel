@@ -197,7 +197,7 @@ for ($col = 'B'; $col != 'G'; ++$col) {
         if ((!is_null($formula = $objPHPExcel->getActiveSheet()->getCell($col.$row)->getValue())) &&
 			($formula[0] == '=')) {
             echo 'Value of ' , $col , $row , ' [' , $formula , ']: ' ,
-                               $objPHPExcel->getActiveSheet()->getCell($col.$row)->getCalculatedValue() . EOL;
+                               $objPHPExcel->getActiveSheet()->getCell($col.$row)->getCalculatedValue() , EOL;
         }
     }
 }

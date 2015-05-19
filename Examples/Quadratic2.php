@@ -49,13 +49,13 @@ if (isset($_POST['submit'])) {
 		$r1Formula = '=IMDIV(IMSUM(-'.$_POST['B'].',IMSQRT('.$discriminant.')),2 * '.$_POST['A'].')';
 		$r2Formula = '=IF('.$discriminant.'=0,"Only one root",IMDIV(IMSUB(-'.$_POST['B'].',IMSQRT('.$discriminant.')),2 * '.$_POST['A'].'))';
 
-		echo PHPExcel_Calculation::getInstance()->calculateFormula($r1Formula).'<br />';
-		echo PHPExcel_Calculation::getInstance()->calculateFormula($r2Formula).'<br />';
+		echo PHPExcel_Calculation::getInstance()->calculateFormula($r1Formula),'<br />';
+		echo PHPExcel_Calculation::getInstance()->calculateFormula($r2Formula),'<br />';
 		$callEndTime = microtime(true);
 		$callTime = $callEndTime - $callStartTime;
 
-		echo '<hr />Call time for Quadratic Equation Solution was '.sprintf('%.4f',$callTime).' seconds<br /><hr />';
-		echo ' Peak memory usage: '.(memory_get_peak_usage(true) / 1024 / 1024).' MB<br />';
+		echo '<hr />Call time for Quadratic Equation Solution was ',sprintf('%.4f',$callTime),' seconds<br /><hr />';
+		echo ' Peak memory usage: ',(memory_get_peak_usage(true) / 1024 / 1024),' MB<br />';
 	}
 }
 

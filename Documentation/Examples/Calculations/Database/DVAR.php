@@ -73,16 +73,16 @@ echo '<h4>Criteria</h4>';
 $criteriaData = $worksheet->rangeToArray('A1:A3',null,true,true,true);
 var_dump($criteriaData);
 
-echo $worksheet->getCell("A12")->getValue() .'<br />';
-echo 'DVAR() Result is ' . $worksheet->getCell("B12")->getCalculatedValue() .'<br /><br />';
+echo $worksheet->getCell("A12")->getValue() ,'<br />';
+echo 'DVAR() Result is ' , $worksheet->getCell("B12")->getCalculatedValue() ,'<br /><br />';
 
 echo '<h4>Criteria</h4>';
 
 $criteriaData = $worksheet->rangeToArray('A1:A3',null,true,true,true);
 var_dump($criteriaData);
 
-echo $worksheet->getCell("A13")->getValue() .'<br />';
-echo 'DVAR() Result is ' . $worksheet->getCell("B13")->getCalculatedValue();
+echo $worksheet->getCell("A13")->getValue() ,'<br />';
+echo 'DVAR() Result is ' , $worksheet->getCell("B13")->getCalculatedValue();
 
 
 ?>

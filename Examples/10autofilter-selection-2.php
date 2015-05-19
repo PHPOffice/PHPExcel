@@ -38,11 +38,11 @@ require_once dirname(__FILE__) . '/../Classes/PHPExcel.php';
 
 
 // Create new PHPExcel object
-echo date('H:i:s').' Create new PHPExcel object'.EOL;
+echo date('H:i:s'),' Create new PHPExcel object',EOL;
 $objPHPExcel = new PHPExcel();
 
 // Set document properties
-echo date('H:i:s').' Set document properties'.EOL;
+echo date('H:i:s'),' Set document properties',EOL;
 $objPHPExcel->getProperties()->setCreator('Maarten Balliauw')
 							 ->setLastModifiedBy('Maarten Balliauw')
 							 ->setTitle('PHPExcel Test Document')
@@ -52,7 +52,7 @@ $objPHPExcel->getProperties()->setCreator('Maarten Balliauw')
 							 ->setCategory('Test result file');
 
 // Create the worksheet
-echo date('H:i:s').' Add data'.EOL;
+echo date('H:i:s'),' Add data',EOL;
 $objPHPExcel->setActiveSheetIndex(0);
 $objPHPExcel->getActiveSheet()->setCellValue('A1', 'Financial Year')
                               ->setCellValue('B1', 'Financial Period')
@@ -111,7 +111,7 @@ $row--;
 
 
 // Set styling
-echo date('H:i:s').' Set styling'.EOL;
+echo date('H:i:s'),' Set styling',EOL;
 $objPHPExcel->getActiveSheet()->getStyle('A1:F1')->getFont()->setBold(true);
 $objPHPExcel->getActiveSheet()->getStyle('A1:F1')->getAlignment()->setWrapText(TRUE);
 $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(12.5);
@@ -124,7 +124,7 @@ $objPHPExcel->getActiveSheet()->freezePane('A2');
 
 
 // Set autofilter range
-echo date('H:i:s').' Set autofilter range'.EOL;
+echo date('H:i:s'),' Set autofilter range',EOL;
 // Always include the complete filter range!
 // Excel does support setting only the caption
 // row, but that's not a best practise...
@@ -132,7 +132,7 @@ $objPHPExcel->getActiveSheet()->setAutoFilter($objPHPExcel->getActiveSheet()->ca
 
 // Set active filters
 $autoFilter = $objPHPExcel->getActiveSheet()->getAutoFilter();
-echo date('H:i:s').' Set active filters'.EOL;
+echo date('H:i:s'),' Set active filters',EOL;
 // Filter the Country column on a filter value of Germany
 //	As it's just a simple value filter, we can use FILTERTYPE_FILTER
 $autoFilter->getColumn('C')
@@ -206,8 +206,8 @@ echo date('H:i:s') , ' Current memory usage: ' , (memory_get_usage(true) / 1024 
 
 
 // Echo memory peak usage
-echo date('H:i:s').' Peak memory usage: '.(memory_get_peak_usage(true) / 1024 / 1024).' MB'.EOL;
+echo date('H:i:s'),' Peak memory usage: ',(memory_get_peak_usage(true) / 1024 / 1024),' MB',EOL;
 
 // Echo done
-echo date('H:i:s').' Done writing files'.EOL;
+echo date('H:i:s'),' Done writing files',EOL;
 echo 'Files have been created in ' , getcwd() , EOL;

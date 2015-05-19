@@ -70,18 +70,18 @@ echo '<hr />';
 // Test the formulae
 echo '<h4>Criteria</h4>';
 
-echo 'ALL' . '<br /><br />';
+echo 'ALL' , '<br /><br />';
 
-echo $worksheet->getCell("A12")->getValue() .'<br />';
-echo 'DMIN() Result is ' . $worksheet->getCell("B12")->getCalculatedValue() .'<br /><br />';
+echo $worksheet->getCell("A12")->getValue() ,'<br />';
+echo 'DMIN() Result is ' , $worksheet->getCell("B12")->getCalculatedValue() ,'<br /><br />';
 
 echo '<h4>Criteria</h4>';
 
 $criteriaData = $worksheet->rangeToArray('A1:A2',null,true,true,true);
 var_dump($criteriaData);
 
-echo $worksheet->getCell("A13")->getValue() .'<br />';
-echo 'DMIN() Result is ' . $worksheet->getCell("B13")->getCalculatedValue();
+echo $worksheet->getCell("A13")->getValue() ,'<br />';
+echo 'DMIN() Result is ' , $worksheet->getCell("B13")->getCalculatedValue();
 
 
 ?>

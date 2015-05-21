@@ -849,7 +849,11 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
                                                 break;
                                             case "inlineStr":
     //                                            echo 'Inline String', PHP_EOL;
-                                                $value = $this->parseRichText($c->is);
+                                                if(isset($c->f)) {
+                                                    $this->_castToFormula($c,$r,$cellDataType,$value,$calculatedValue,$sharedFormulas,'_castToError');
+                                                } else {
+                                                    $value = $this->parseRichText($c->is);
+                                                }
                                                 break;
                                             case "e":
     //                                            echo 'Error', PHP_EOL;

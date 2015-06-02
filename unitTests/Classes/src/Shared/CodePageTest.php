@@ -1,17 +1,14 @@
 <?php
 
 
-require_once 'testDataFileIterator.php';
+require_once __DIR__.'/../../../testDataFileIterator.php';
 
 class CodePageTest extends PHPUnit_Framework_TestCase
 {
 
     public function setUp()
     {
-        if (!defined('PHPEXCEL_ROOT')) {
-            define('PHPEXCEL_ROOT', APPLICATION_PATH . '/');
-        }
-        require_once(PHPEXCEL_ROOT . 'PHPExcel/Autoloader.php');
+        require_once(__DIR__.'/../../../../src/Autoloader.php');
     }
 
     /**
@@ -27,7 +24,7 @@ class CodePageTest extends PHPUnit_Framework_TestCase
 
     public function providerCodePage()
     {
-        return new testDataFileIterator('rawTestData/Shared/CodePage.data');
+        return new testDataFileIterator(__DIR__.'/../../../rawTestData/Shared/CodePage.data');
     }
 
     public function testNumberToNameWithInvalidCodePage()

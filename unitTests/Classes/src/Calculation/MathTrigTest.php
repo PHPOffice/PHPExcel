@@ -324,9 +324,9 @@ class MathTrigTest extends PHPUnit_Framework_TestCase
     {
         $args = func_get_args();
         $expectedResult = array_pop($args);
-        PHPExcel_Calculation::setArrayReturnType(PHPExcel_Calculation::RETURN_ARRAY_AS_VALUE);
+        \PHPExcel\Calculation::setArrayReturnType(\PHPExcel\Calculation::RETURN_ARRAY_AS_VALUE);
         $result = call_user_func_array(array('\PHPExcel\Calculation\MathTrig','MROUND'), $args);
-        PHPExcel_Calculation::setArrayReturnType(PHPExcel_Calculation::RETURN_ARRAY_AS_ARRAY);
+        \PHPExcel\Calculation::setArrayReturnType(\PHPExcel\Calculation::RETURN_ARRAY_AS_ARRAY);
         $this->assertEquals($expectedResult, $result, null, 1E-12);
     }
 

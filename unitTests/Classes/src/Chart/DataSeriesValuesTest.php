@@ -6,10 +6,7 @@ class DataSeriesValuesTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        if (!defined('PHPEXCEL_ROOT')) {
-            define('PHPEXCEL_ROOT', APPLICATION_PATH . '/');
-        }
-        require_once(PHPEXCEL_ROOT . 'PHPExcel/Autoloader.php');
+        require_once(__DIR__.'/../../../../src/Autoloader.php');
     }
 
     public function testSetDataType()
@@ -19,17 +16,17 @@ class DataSeriesValuesTest extends PHPUnit_Framework_TestCase
             'String'
         );
 
-        $testInstance = new PHPExcel_Chart_DataSeriesValues;
+        $testInstance = new \PHPExcel\Chart\DataSeriesValues;
 
         foreach ($dataTypeValues as $dataTypeValue) {
             $result = $testInstance->setDataType($dataTypeValue);
-            $this->assertTrue($result instanceof PHPExcel_Chart_DataSeriesValues);
+            $this->assertTrue($result instanceof \PHPExcel\Chart\DataSeriesValues);
         }
     }
 
     public function testSetInvalidDataTypeThrowsException()
     {
-        $testInstance = new PHPExcel_Chart_DataSeriesValues;
+        $testInstance = new \PHPExcel\Chart\DataSeriesValues;
 
         try {
             $result = $testInstance->setDataType('BOOLEAN');
@@ -44,7 +41,7 @@ class DataSeriesValuesTest extends PHPUnit_Framework_TestCase
     {
         $dataTypeValue = 'String';
 
-        $testInstance = new PHPExcel_Chart_DataSeriesValues;
+        $testInstance = new \PHPExcel\Chart\DataSeriesValues;
         $setValue = $testInstance->setDataType($dataTypeValue);
 
         $result = $testInstance->getDataType();

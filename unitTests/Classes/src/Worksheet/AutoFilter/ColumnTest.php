@@ -11,12 +11,9 @@ class AutofilterColumnTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        if (!defined('PHPEXCEL_ROOT')) {
-            define('PHPEXCEL_ROOT', APPLICATION_PATH . '/');
-        }
-        require_once(PHPEXCEL_ROOT . 'PHPExcel/Autoloader.php');
+        require_once(__DIR__.'/../../../../../src/Autoloader.php');
 
-        $this->_mockAutoFilterObject = $this->getMockBuilder('PHPExcel_Worksheet_AutoFilter')
+        $this->_mockAutoFilterObject = $this->getMockBuilder('PHPExcel\Worksheet\AutoFilter')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -24,7 +21,7 @@ class AutofilterColumnTest extends PHPUnit_Framework_TestCase
             ->method('testColumnInRange')
             ->will($this->returnValue(3));
 
-        $this->_testAutoFilterColumnObject = new PHPExcel_Worksheet_AutoFilter_Column(
+        $this->_testAutoFilterColumnObject = new PHPExcel\Worksheet\AutoFilter\Column(
             $this->_testInitialColumn,
             $this->_mockAutoFilterObject
         );
@@ -42,7 +39,7 @@ class AutofilterColumnTest extends PHPUnit_Framework_TestCase
 
         //    Setters return the instance to implement the fluent interface
         $result = $this->_testAutoFilterColumnObject->setColumnIndex($expectedResult);
-        $this->assertInstanceOf('PHPExcel_Worksheet_AutoFilter_Column', $result);
+        $this->assertInstanceOf('PHPExcel\Worksheet\AutoFilter\Column', $result);
 
         $result = $this->_testAutoFilterColumnObject->getColumnIndex();
         $this->assertEquals($expectedResult, $result);
@@ -51,29 +48,29 @@ class AutofilterColumnTest extends PHPUnit_Framework_TestCase
     public function testGetParent()
     {
         $result = $this->_testAutoFilterColumnObject->getParent();
-        $this->assertInstanceOf('PHPExcel_Worksheet_AutoFilter', $result);
+        $this->assertInstanceOf('PHPExcel\Worksheet\AutoFilter', $result);
     }
 
     public function testSetParent()
     {
         //    Setters return the instance to implement the fluent interface
         $result = $this->_testAutoFilterColumnObject->setParent($this->_mockAutoFilterObject);
-        $this->assertInstanceOf('PHPExcel_Worksheet_AutoFilter_Column', $result);
+        $this->assertInstanceOf('PHPExcel\Worksheet\AutoFilter\Column', $result);
     }
 
     public function testGetFilterType()
     {
         $result = $this->_testAutoFilterColumnObject->getFilterType();
-        $this->assertEquals(PHPExcel_Worksheet_AutoFilter_Column::AUTOFILTER_FILTERTYPE_FILTER, $result);
+        $this->assertEquals(PHPExcel\Worksheet\AutoFilter\Column::AUTOFILTER_FILTERTYPE_FILTER, $result);
     }
 
     public function testSetFilterType()
     {
-        $result = $this->_testAutoFilterColumnObject->setFilterType(PHPExcel_Worksheet_AutoFilter_Column::AUTOFILTER_FILTERTYPE_DYNAMICFILTER);
-        $this->assertInstanceOf('PHPExcel_Worksheet_AutoFilter_Column', $result);
+        $result = $this->_testAutoFilterColumnObject->setFilterType(PHPExcel\Worksheet\AutoFilter\Column::AUTOFILTER_FILTERTYPE_DYNAMICFILTER);
+        $this->assertInstanceOf('PHPExcel\Worksheet\AutoFilter\Column', $result);
 
         $result = $this->_testAutoFilterColumnObject->getFilterType();
-        $this->assertEquals(PHPExcel_Worksheet_AutoFilter_Column::AUTOFILTER_FILTERTYPE_DYNAMICFILTER, $result);
+        $this->assertEquals(PHPExcel\Worksheet\AutoFilter\Column::AUTOFILTER_FILTERTYPE_DYNAMICFILTER, $result);
     }
 
     /**
@@ -89,16 +86,16 @@ class AutofilterColumnTest extends PHPUnit_Framework_TestCase
     public function testGetJoin()
     {
         $result = $this->_testAutoFilterColumnObject->getJoin();
-        $this->assertEquals(PHPExcel_Worksheet_AutoFilter_Column::AUTOFILTER_COLUMN_JOIN_OR, $result);
+        $this->assertEquals(PHPExcel\Worksheet\AutoFilter\Column::AUTOFILTER_COLUMN_JOIN_OR, $result);
     }
 
     public function testSetJoin()
     {
-        $result = $this->_testAutoFilterColumnObject->setJoin(PHPExcel_Worksheet_AutoFilter_Column::AUTOFILTER_COLUMN_JOIN_AND);
-        $this->assertInstanceOf('PHPExcel_Worksheet_AutoFilter_Column', $result);
+        $result = $this->_testAutoFilterColumnObject->setJoin(PHPExcel\Worksheet\AutoFilter\Column::AUTOFILTER_COLUMN_JOIN_AND);
+        $this->assertInstanceOf('PHPExcel\Worksheet\AutoFilter\Column', $result);
 
         $result = $this->_testAutoFilterColumnObject->getJoin();
-        $this->assertEquals(PHPExcel_Worksheet_AutoFilter_Column::AUTOFILTER_COLUMN_JOIN_AND, $result);
+        $this->assertEquals(PHPExcel\Worksheet\AutoFilter\Column::AUTOFILTER_COLUMN_JOIN_AND, $result);
     }
 
     /**
@@ -119,7 +116,7 @@ class AutofilterColumnTest extends PHPUnit_Framework_TestCase
 
         //    Setters return the instance to implement the fluent interface
         $result = $this->_testAutoFilterColumnObject->setAttributes($attributeSet);
-        $this->assertInstanceOf('PHPExcel_Worksheet_AutoFilter_Column', $result);
+        $this->assertInstanceOf('PHPExcel\Worksheet\AutoFilter\Column', $result);
     }
 
     public function testGetAttributes()
@@ -144,7 +141,7 @@ class AutofilterColumnTest extends PHPUnit_Framework_TestCase
         foreach ($attributeSet as $attributeName => $attributeValue) {
             //    Setters return the instance to implement the fluent interface
             $result = $this->_testAutoFilterColumnObject->setAttribute($attributeName, $attributeValue);
-            $this->assertInstanceOf('PHPExcel_Worksheet_AutoFilter_Column', $result);
+            $this->assertInstanceOf('PHPExcel\Worksheet\AutoFilter\Column', $result);
         }
     }
 
@@ -167,6 +164,6 @@ class AutofilterColumnTest extends PHPUnit_Framework_TestCase
     public function testClone()
     {
         $result = clone $this->_testAutoFilterColumnObject;
-        $this->assertInstanceOf('PHPExcel_Worksheet_AutoFilter_Column', $result);
+        $this->assertInstanceOf('PHPExcel\Worksheet\AutoFilter\Column', $result);
     }
 }

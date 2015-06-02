@@ -74,7 +74,7 @@ class AutofilterColumnTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException PHPExcel_Exception
+     * @expectedException \PHPExcel\Exception
      */
     public function testSetInvalidFilterTypeThrowsException()
     {
@@ -99,7 +99,7 @@ class AutofilterColumnTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException PHPExcel_Exception
+     * @expectedException \PHPExcel\Exception
      */
     public function testSetInvalidJoinThrowsException()
     {

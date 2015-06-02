@@ -13,7 +13,7 @@ class RowIteratorTest extends PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->mockWorksheet = $this->getMockBuilder('PHPExcel_Worksheet')
+        $this->mockWorksheet = $this->getMockBuilder('\PHPExcel\Worksheet')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -64,7 +64,7 @@ class RowIteratorTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException PHPExcel_Exception
+     * @expectedException \PHPExcel\Exception
      */
     public function testSeekOutOfRange()
     {
@@ -73,7 +73,7 @@ class RowIteratorTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException PHPExcel_Exception
+     * @expectedException \PHPExcel\Exception
      */
     public function testPrevOutOfRange()
     {

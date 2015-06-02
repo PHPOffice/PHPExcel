@@ -9,11 +9,11 @@ class RowCellIteratorTest extends PHPUnit_Framework_TestCase
     {
         require_once(__DIR__.'/../../../../src/Autoloader.php');
         
-        $this->mockCell = $this->getMockBuilder('PHPExcel_Cell')
+        $this->mockCell = $this->getMockBuilder('\PHPExcel\Cell')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->mockWorksheet = $this->getMockBuilder('PHPExcel_Worksheet')
+        $this->mockWorksheet = $this->getMockBuilder('\PHPExcel\Worksheet')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -34,7 +34,7 @@ class RowCellIteratorTest extends PHPUnit_Framework_TestCase
         
         foreach ($iterator as $key => $RowCell) {
             $this->assertEquals($RowCellIndexResult++, $key);
-            $this->assertInstanceOf('PHPExcel_Cell', $RowCell);
+            $this->assertInstanceOf('\PHPExcel\Cell', $RowCell);
         }
     }
 
@@ -46,7 +46,7 @@ class RowCellIteratorTest extends PHPUnit_Framework_TestCase
         
         foreach ($iterator as $key => $RowCell) {
             $this->assertEquals($RowCellIndexResult++, $key);
-            $this->assertInstanceOf('PHPExcel_Cell', $RowCell);
+            $this->assertInstanceOf('\PHPExcel\Cell', $RowCell);
         }
     }
 
@@ -66,7 +66,7 @@ class RowCellIteratorTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException PHPExcel_Exception
+     * @expectedException \PHPExcel\Exception
      */
     public function testSeekOutOfRange()
     {
@@ -75,7 +75,7 @@ class RowCellIteratorTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException PHPExcel_Exception
+     * @expectedException \PHPExcel\Exception
      */
     public function testPrevOutOfRange()
     {

@@ -9,7 +9,7 @@ class WorksheetRowTest extends PHPUnit_Framework_TestCase
     {
         require_once(__DIR__.'/../../../../src/Autoloader.php');
         
-        $this->mockWorksheet = $this->getMockBuilder('PHPExcel_Worksheet')
+        $this->mockWorksheet = $this->getMockBuilder('\PHPExcel\Worksheet')
             ->disableOriginalConstructor()
             ->getMock();
         $this->mockWorksheet->expects($this->any())

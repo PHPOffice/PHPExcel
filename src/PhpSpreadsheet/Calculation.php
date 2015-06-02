@@ -2128,7 +2128,7 @@ class Calculation
      * @access    public
      * @param   PHPExcel $spreadsheet  Injected spreadsheet identifying the instance to unset
      */
-    public static function unsetInstance(PHPExcel $spreadsheet = null)
+    public static function unsetInstance(Spreadsheet $spreadsheet = null)
     {
         if ($spreadsheet !== null) {
             if (isset(self::$spreadsheetSets[$spreadsheet->getID()])) {
@@ -3007,7 +3007,7 @@ class Calculation
                 return ($value) ? self::$localeBoolean['TRUE'] : self::$localeBoolean['FALSE'];
             }
         }
-        return Calculation\Categories::flattenSingleValue($value);
+        return Calculation\Functions::flattenSingleValue($value);
     }
 
 
@@ -4010,7 +4010,7 @@ class Calculation
         }
 
         // Use case insensitive comparaison if not OpenOffice mode
-        if (Calculation\Categories::getCompatibilityMode() != Calculation\Categories::COMPATIBILITY_OPENOFFICE) {
+        if (Calculation\Functions::getCompatibilityMode() != Calculation\Functions::COMPATIBILITY_OPENOFFICE) {
             if (is_string($operand1)) {
                 $operand1 = strtoupper($operand1);
             }
@@ -4019,7 +4019,7 @@ class Calculation
             }
         }
 
-        $useLowercaseFirstComparison = is_string($operand1) && is_string($operand2) && Calculation\Categories::getCompatibilityMode() == Calculation\Categories::COMPATIBILITY_OPENOFFICE;
+        $useLowercaseFirstComparison = is_string($operand1) && is_string($operand2) && Calculation\Functions::getCompatibilityMode() == Calculation\Functions::COMPATIBILITY_OPENOFFICE;
 
         //    execute the necessary operation
         switch ($operation) {
@@ -4126,7 +4126,7 @@ class Calculation
                 $result = '#VALUE!';
             }
         } else {
-            if ((Calculation\Categories::getCompatibilityMode() != Calculation\Categories::COMPATIBILITY_OPENOFFICE) &&
+            if ((Calculation\Functions::getCompatibilityMode() != Calculation\Functions::COMPATIBILITY_OPENOFFICE) &&
                 ((is_string($operand1) && !is_numeric($operand1) && strlen($operand1)>0) ||
                  (is_string($operand2) && !is_numeric($operand2) && strlen($operand2)>0))) {
                 $result = Calculation\Categories::VALUE();

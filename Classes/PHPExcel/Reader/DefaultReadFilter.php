@@ -1,8 +1,18 @@
 <?php
+
+/** PHPExcel root directory */
+if (!defined('PHPEXCEL_ROOT')) {
+    /**
+     * @ignore
+     */
+    define('PHPEXCEL_ROOT', dirname(__FILE__) . '/../../');
+    require(PHPEXCEL_ROOT . 'PHPExcel/Autoloader.php');
+}
+
 /**
- * PHPExcel
+ * PHPExcel_Reader_DefaultReadFilter
  *
- * Copyright (c) 2006 - 2014 PHPExcel
+ * Copyright (c) 2006 - 2015 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,39 +30,22 @@
  *
  * @category   PHPExcel
  * @package    PHPExcel_Reader
- * @copyright  Copyright (c) 2006 - 2014 PHPExcel (http://www.codeplex.com/PHPExcel)
- * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
+ * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
- */
-
-
-/** PHPExcel root directory */
-if (!defined('PHPEXCEL_ROOT')) {
-	/**
-	 * @ignore
-	 */
-	define('PHPEXCEL_ROOT', dirname(__FILE__) . '/../../');
-	require(PHPEXCEL_ROOT . 'PHPExcel/Autoloader.php');
-}
-
-/**
- * PHPExcel_Reader_DefaultReadFilter
- *
- * @category   PHPExcel
- * @package    PHPExcel_Reader
- * @copyright  Copyright (c) 2006 - 2014 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
 class PHPExcel_Reader_DefaultReadFilter implements PHPExcel_Reader_IReadFilter
 {
-	/**
-	 * Should this cell be read?
-	 *
-	 * @param 	$column		String column index
-	 * @param 	$row			Row index
-	 * @param	$worksheetName	Optional worksheet name
-	 * @return	boolean
-	 */
-	public function readCell($column, $row, $worksheetName = '') {
-		return true;
-	}
+    /**
+     * Should this cell be read?
+     *
+     * @param    $column           Column address (as a string value like "A", or "IV")
+     * @param    $row              Row number
+     * @param    $worksheetName    Optional worksheet name
+     * @return   boolean
+     */
+    public function readCell($column, $row, $worksheetName = '')
+    {
+        return true;
+    }
 }

@@ -1,8 +1,9 @@
 <?php
+
 /**
- * PHPExcel
+ * PHPExcel_Cell_DataType
  *
- * Copyright (c) 2006 - 2014 PHPExcel
+ * Copyright (c) 2006 - 2015 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,18 +21,9 @@
  *
  * @category   PHPExcel
  * @package    PHPExcel_Cell
- * @copyright  Copyright (c) 2006 - 2014 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
- */
-
-
-/**
- * PHPExcel_Cell_DataType
- *
- * @category   PHPExcel
- * @package    PHPExcel_Cell
- * @copyright  Copyright (c) 2006 - 2014 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
 class PHPExcel_Cell_DataType
 {
@@ -50,7 +42,7 @@ class PHPExcel_Cell_DataType
      *
      * @var array
      */
-    private static $_errorCodes = array(
+    private static $errorCodes = array(
         '#NULL!'  => 0,
         '#DIV/0!' => 1,
         '#VALUE!' => 2,
@@ -65,8 +57,9 @@ class PHPExcel_Cell_DataType
      *
      * @return array
      */
-    public static function getErrorCodes() {
-        return self::$_errorCodes;
+    public static function getErrorCodes()
+    {
+        return self::$errorCodes;
     }
 
     /**
@@ -76,7 +69,8 @@ class PHPExcel_Cell_DataType
      * @param       mixed  $pValue
      * @return      string
      */
-    public static function dataTypeForValue($pValue = null) {
+    public static function dataTypeForValue($pValue = null)
+    {
         return PHPExcel_Cell_DefaultValueBinder::dataTypeForValue($pValue);
     }
 
@@ -112,11 +106,10 @@ class PHPExcel_Cell_DataType
     {
         $pValue = (string) $pValue;
 
-        if ( !array_key_exists($pValue, self::$_errorCodes) ) {
+        if (!array_key_exists($pValue, self::$errorCodes)) {
             $pValue = '#NULL!';
         }
 
         return $pValue;
     }
-
 }

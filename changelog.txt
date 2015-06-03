@@ -22,26 +22,53 @@
 * @version    ##VERSION##, ##DATE##
 **************************************************************************************
 
-Planned for v1.8.1
+
+Planned for 1.8.2
+- Bugfix:   (MBaker)                            - Fix to getCell() method when cell reference includes a worksheet reference
+- Bugfix:   (ncrypthic)       Work Item GH-570  - Ignore inlineStr type if formula element exists
+- General:  (umpirsky)        Work Item GH-548  - Optimize vlookup() sort
+
+
+2015-04-30 (v1.8.1):
 - Bugfix:   (goncons)         Work Item GH-397  - Fix for Writing an Open Document cell with non-numeric formula
 - Bugfix:   (sarciszewski)    Work Item GH-329  - Avoid potential divide by zero in basedrawing
 - Bugfix:   (ymaerschalck)    Work Item GH-405  - XML External Entity (XXE) Processing, different behaviour between simplexml_load_string() and simplexml_load_file().
 - Bugfix:   (MBaker)                            - Fix to ensure that current cell is maintained when executing formula calculations
 - Bugfix:   (MBaker)          Work Item GH-350  - Keep/set the value on Reader _loadSheetsOnly as NULL, courtesy of Restless-ET 
 - Bugfix:   (MBaker)          Work Item CP18105 - Loading an Excel 2007 spreadsheet throws an "Autofilter must be set on a range of cells" exception
-- Bugfix:   (MBaker)                            - Fix to autoloader registration for backward compatibility with PHP 5.2.0 not accepting the prepend flag
+- Bugfix:   (MBaker)          Work Item GH-388  - Fix to autoloader registration for backward compatibility with PHP 5.2.0 not accepting the prepend flag
 - Bugfix:   (MBaker)          Work Item GH-384  - DOM loadHTMLFile() failing with options flags when using PHP < 5.4.0
 - Bugfix:   (MBaker)                            - Fix for percentage operator in formulae for BIFF Writer
+- Bugfix:   (MBaker)                            - Fix to getStyle() call for cell object
+- Bugfix:   (MBaker)                            - Discard Autofilters in Excel2007 Reader when filter range isn't a valid range
+- Bugfix:   (frozenstupidity) Work Item GH-423  - Fix invalid NA return in VLOOKUP
+- Bugfix:   (wiseloren)       Work Item CP21454 - "No Impact" conditional formatting fix for NumberFormat
+- Bugfix:   (bobwitlox)       Work Item GH-467  - Bug in Excel2003XML reader, parsing merged cells
+- Bugfix:   (MBaker)          Work Item GH-302  - Fix for CEIL() and FLOOR() when number argument is zero
+- Bugfix:   (MBaker)                            - Remove cells cleanly when calling RemoveRow() or RemoveColumn()
 - General:  (MBaker)                            - Small performance improvement for autosize columns
 - General:  (frost-nzcr4)     Work Item GH-379  - Change the getter/setter for zeroHeight to camel case
+- General:  (MBaker)          Work Item GH-394  - DefaultValueBinder is too much aggressive when converting string to numeric
+- General:  (MBaker)                            - Default precalculate formulas to false for writers
+- General:  (MBaker)                            - Set default Cyclic Reference behaviour to 1 to eliminate exception when using a single cyclic iteration in formulae
+- General:  (MBaker)          Work Item GH-396  - Some Excel writer libraries erroneously use Codepage 21010 for UTF-16LE
 - Feature:  (WiktrzGE)        Work Item GH-404  - Methods to manage most of the existing options for Chart Axis, Major Grid-lines and Minor Grid-lines
 - Feature:  (frost-nzcr4)     Work Item GH-403  - ODS read/write comments in the cell
 - Feature:  (CQD)             Work Item GH-389  - Additional Mac CJK codepage definitions
 - Feature:  (bolovincev)      Work Item GH-269  - Update Worksheet.php getStyleByColumnAndRow() to allow a range of cells rather than just a single cell
 - Feature:  (MBaker)                            - New methods added for testing cell status within merge groups
+- Feature:  (cifren/MBaker)   Work Item GH-205  - Handling merge cells in HTML Reader
+- Feature:  (MBaker)                            - Helper to convert basic HTML markup to a Rich Text object
+- Feature:  (MBaker)                            - Improved Iterators
+                                                    New Column Iterator
+                                                    Support for row and column ranges
+                                                    Improved handling for next/prev
+- Security: (MBaker)                            - XML filescan in XML-based Readers to prevent XML Entity Expansion (XEE)
+                                                    (see http://projects.webappsec.org/w/page/13247002/XML%20Entity%20Expansion for an explanation of XEE injection) attacks
+                                                  Reference CVE-2015-3542 - Identification of problem courtesy of Dawid Golunski (Pentest Ltd.)
 
 
-2014-03-02 (v1.8.0):
+                                                  2014-03-02 (v1.8.0):
 - Bugfix:   (MBaker)          Work item CP19830 - Undefined variable: fileHandle in CSV Reader
 - Bugfix:   (MBaker)          Work item CP19968 - Out of memory in style/supervisor.php
 - Bugfix:   (MBaker)                            - Style error with merged cells in PDF Writer

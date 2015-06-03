@@ -13,7 +13,7 @@ date_default_timezone_set('Europe/London');
 /**
  * PHPExcel
  *
- * Copyright (C) 2006 - 2014 PHPExcel
+ * Copyright (c) 2006 - 2015 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -31,7 +31,7 @@ date_default_timezone_set('Europe/London');
  *
  * @category   PHPExcel
  * @package    PHPExcel
- * @copyright  Copyright (c) 2006 - 2014 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -87,7 +87,7 @@ $dataSeriesValues1 = array(
 //	Build the dataseries
 $series1 = new PHPExcel_Chart_DataSeries(
 	PHPExcel_Chart_DataSeries::TYPE_PIECHART,				// plotType
-	PHPExcel_Chart_DataSeries::GROUPING_STANDARD,			// plotGrouping
+	NULL,			                                        // plotGrouping (Pie charts don't have any grouping)
 	range(0, count($dataSeriesValues1)-1),					// plotOrder
 	$dataSeriesLabels1,										// plotLabel
 	$xAxisTickValues1,										// plotCategory
@@ -161,7 +161,7 @@ $dataSeriesValues2 = array(
 //	Build the dataseries
 $series2 = new PHPExcel_Chart_DataSeries(
 	PHPExcel_Chart_DataSeries::TYPE_DONUTCHART,		// plotType
-	PHPExcel_Chart_DataSeries::GROUPING_STANDARD,	// plotGrouping
+	NULL,			                                // plotGrouping (Donut charts don't have any grouping)
 	range(0, count($dataSeriesValues2)-1),			// plotOrder
 	$dataSeriesLabels2,								// plotLabel
 	$xAxisTickValues2,								// plotCategory

@@ -36,10 +36,11 @@
 class PHPExcel_Style_Conditional implements PHPExcel_IComparable
 {
     /* Condition types */
-    const CONDITION_NONE         = 'none';
-    const CONDITION_CELLIS       = 'cellIs';
-    const CONDITION_CONTAINSTEXT = 'containsText';
-    const CONDITION_EXPRESSION   = 'expression';
+    const CONDITION_NONE            = 'none';
+    const CONDITION_CELLIS          = 'cellIs';
+    const CONDITION_CONTAINSTEXT    = 'containsText';
+    const CONDITION_EXPRESSION      = 'expression';
+    const CONDITION_DUPLICATEVALUES = 'duplicateValues';
 
     /* Operator types */
     const OPERATOR_NONE               = '';

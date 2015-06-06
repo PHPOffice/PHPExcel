@@ -285,7 +285,7 @@ class PHPExcel_Writer_Excel5_Worksheet extends PHPExcel_Writer_Excel5_BIFFwriter
         $this->writeGridset();
 
         // Calculate column widths
-        $phpSheet->calculateColumnWidths();
+        $phpSheet->calculateColumnWidths(false, $this->getParentWriter()->getPreCalculateFormulas());
 
         // Column dimensions
         if (($defaultWidth = $phpSheet->getDefaultColumnDimension()->getWidth()) < 0) {

@@ -123,8 +123,9 @@ class PHPExcel_Shared_ZipArchive
     /**
      * Extract file from archive by given fileName (Emulate ZipArchive getFromName())
      *
-     * @param        string        $fileName        Filename for the file in zip archive
-     * @return        string  $contents        File string contents
+     * @access  public
+     * @param   string  $fileName   Filename for the file in zip archive
+     * @return  string  $contents   File string contents
      */
     public function getFromName($fileName)
     {
@@ -154,6 +155,8 @@ class PHPExcel_Shared_ZipArchive
             }
             $extracted = $this->zip->extractByIndex($list_index, PCLZIP_OPT_EXTRACT_AS_STRING);
         }
+        
+        $contents = "";
         if ((is_array($extracted)) && ($extracted != 0)) {
             $contents = $extracted[0]["content"];
         }

@@ -721,7 +721,7 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
      * @param  boolean  $calculateMergeCells  Calculate merge cell width
      * @return PHPExcel_Worksheet;
      */
-    public function calculateColumnWidths($calculateMergeCells = false)
+    public function calculateColumnWidths($calculateMergeCells = true)
     {
         // initialize $autoSizes array
         $autoSizes = array();
@@ -747,7 +747,7 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
                 $cell = $this->getCell($cellID);
 				if (isset($autoSizes[$this->_cellCollection->getCurrentColumn()])) {
                     // Determine width if cell does not participate in a merge
-					if (!isset($isMergeCell[$this->_cellCollection->getCurrentAddress()])) {
+					if ($calculateMergeCells || !isset($isMergeCell[$this->_cellCollection->getCurrentAddress()])) {
                         // Calculated value
                         // To formatted string
 						$cellValue = PHPExcel_Style_NumberFormat::toFormattedString(

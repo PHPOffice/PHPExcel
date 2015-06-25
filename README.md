@@ -7,6 +7,14 @@ Develop: [![Build Status](https://travis-ci.org/PHPOffice/PHPExcel.png?branch=de
 
 [![Join the chat at https://gitter.im/PHPOffice/PHPExcel](https://img.shields.io/badge/GITTER-join%20chat-green.svg)](https://gitter.im/PHPOffice/PHPExcel)
 
+## Install
+
+To install with composer:
+
+```sh
+composer require phpoffice/phpexcel
+```
+
 ## File Formats supported
 
 ### Reading

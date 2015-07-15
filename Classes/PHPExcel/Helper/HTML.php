@@ -588,7 +588,7 @@ class PHPExcel_Helper_HTML
         $this->initialise();
 
         //  Create a new DOM object
-        $dom = new domDocument;
+        $dom = new \DOMDocument;
         //  Load the HTML file into the DOM object
         //  Note the use of error suppression, because typically this will be an html fragment, so not fully valid markup
         $loaded = @$dom->loadHTML($html);

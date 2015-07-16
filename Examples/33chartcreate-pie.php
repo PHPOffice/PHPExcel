@@ -114,7 +114,7 @@ $chart1 = new PHPExcel_Chart(
 	$legend1,		// legend
 	$plotArea1,		// plotArea
 	true,			// plotVisibleOnly
-	0,				// displayBlanksAs
+    'gap',			// displayBlanksAs: gap, span, zero
 	NULL,			// xAxisLabel
 	NULL			// yAxisLabel		- Pie charts don't have a Y-Axis
 );
@@ -186,7 +186,7 @@ $chart2 = new PHPExcel_Chart(
 	NULL,			// legend
 	$plotArea2,		// plotArea
 	true,			// plotVisibleOnly
-	0,				// displayBlanksAs
+    'gap',			// displayBlanksAs: gap, span, zero
 	NULL,			// xAxisLabel
 	NULL			// yAxisLabel		- Like Pie charts, Donut charts don't have a Y-Axis
 );

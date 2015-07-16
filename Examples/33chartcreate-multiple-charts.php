@@ -114,7 +114,7 @@ $chart1 = new PHPExcel_Chart(
 	$legend1,		// legend
 	$plotArea1,		// plotArea
 	true,			// plotVisibleOnly
-	0,				// displayBlanksAs
+    'gap',			// displayBlanksAs: gap, span, zero
 	NULL,			// xAxisLabel
 	$yAxisLabel1	// yAxisLabel
 );
@@ -191,7 +191,7 @@ $chart2 = new PHPExcel_Chart(
 	$legend2,		// legend
 	$plotArea2,		// plotArea
 	true,			// plotVisibleOnly
-	0,				// displayBlanksAs
+    'gap',			// displayBlanksAs: gap, span, zero
 	NULL,			// xAxisLabel
 	$yAxisLabel2	// yAxisLabel
 );

@@ -587,18 +587,36 @@ class PHPExcel_Helper_HTML
     {
         $this->initialise();
 
-        //    Create a new DOM object
-        $dom = new domDocument;
-        //    Load the HTML file into the DOM object
+        //  Create a new DOM object
+        $dom = new \DOMDocument;
+        //  Load the HTML file into the DOM object
         //  Note the use of error suppression, because typically this will be an html fragment, so not fully valid markup
         $loaded = @$dom->loadHTML($html);
 
-        //    Discard excess white space
+        //  Discard excess white space
         $dom->preserveWhiteSpace = false;
 
-        $this->richTextObject = new PHPExcel_RichText();
+        $this->richTextObject = new PHPExcel_RichText();;
         $this->parseElements($dom);
+
+        // Clean any further spurious whitespace
+        $this->cleanWhitespace();
+
         return $this->richTextObject;
+    }
+
+    protected function cleanWhitespace()
+    {
+        foreach ($this->richTextObject->getRichTextElements() as $key => $element) {
+            $text = $element->getText();
+            // Trim any leading spaces on the first run
+            if ($key == 0) {
+                $text = ltrim($text);
+            }
+            // Trim any spaces immediately after a line break
+            $text = preg_replace('/\n */mu', "\n", $text);
+            $element->setText($text);
+        }
     }
 
     protected function buildTextRun()
@@ -740,12 +758,16 @@ class PHPExcel_Helper_HTML
 
     protected function breakTag()
     {
-        $this->stringData .= PHP_EOL;
+        $this->stringData .= "\n";
     }
 
     protected function parseTextNode(DOMText $textNode)
     {
-        $domText = preg_replace('/\s+/u', ' ', ltrim($textNode->nodeValue));
+        $domText = preg_replace(
+            '/\s+/u',
+            ' ',
+            str_replace(["\r", "\n"], ' ', $textNode->nodeValue)
+        );
         $this->stringData .= $domText;
         $this->buildTextRun();
     }
@@ -768,7 +790,6 @@ class PHPExcel_Helper_HTML
         $this->handleCallback($element, $callbackTag, $this->startTagCallbacks);
 
         $this->parseElements($element);
-        $this->stringData .= ' ';
         array_pop($this->stack);
 
         $this->handleCallback($element, $callbackTag, $this->endTagCallbacks);

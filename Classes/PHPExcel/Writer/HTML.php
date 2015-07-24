@@ -847,16 +847,17 @@ class PHPExcel_Writer_HTML extends PHPExcel_Writer_Abstract implements PHPExcel_
 
             // col elements, loop through columnDimensions and set width
             foreach ($sheet->getColumnDimensions() as $columnDimension) {
+                $column = PHPExcel_Cell::columnIndexFromString($columnDimension->getColumnIndex()) - 1;
                 if (($width = PHPExcel_Shared_Drawing::cellDimensionToPixels($columnDimension->getWidth(), $this->defaultFont)) >= 0) {
                     $width = PHPExcel_Shared_Drawing::pixelsToPoints($width);
-                    $column = PHPExcel_Cell::columnIndexFromString($columnDimension->getColumnIndex()) - 1;
                     $this->columnWidths[$sheetIndex][$column] = $width;
                     $css['table.sheet' . $sheetIndex . ' col.col' . $column]['width'] = $width . 'pt';
-
-                    if ($columnDimension->getVisible() === false) {
-                        $css['table.sheet' . $sheetIndex . ' col.col' . $column]['visibility'] = 'collapse';
-                        $css['table.sheet' . $sheetIndex . ' col.col' . $column]['*display'] = 'none'; // target IE6+7
-                    }
+                }
+                
+                if ($columnDimension->getVisible() === false) {
+                    $css['table.sheet' . $sheetIndex . ' col.col' . $column]['visibility'] = 'collapse';
+                    $css['table.sheet' . $sheetIndex . ' .column' . $column]['display'] = 'none'; // target Chrome
+                    $css['table.sheet' . $sheetIndex . ' col.col' . $column]['*display'] = 'none'; // target IE6+7
                 }
             }
 

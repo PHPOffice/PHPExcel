@@ -178,7 +178,7 @@ class PHPExcel_Writer_Excel2007_Comments extends PHPExcel_Writer_Excel2007_Write
 
 			// Loop through comments
 			foreach ($comments as $key => $value) {
-				$this->_writeVMLComment($objWriter, $key, $value);
+				$this->_writeVMLComment($pWorksheet, $objWriter, $key, $value);
 			}
 
 		$objWriter->endElement();
@@ -190,12 +190,13 @@ class PHPExcel_Writer_Excel2007_Comments extends PHPExcel_Writer_Excel2007_Write
 	/**
 	 * Write VML comment to XML format
 	 *
+     * @param   PHPExcel_Worksheet              $pWorksheet
 	 * @param 	PHPExcel_Shared_XMLWriter		$objWriter 			XML Writer
 	 * @param	string							$pCellReference		Cell reference
 	 * @param 	PHPExcel_Comment				$pComment			Comment
 	 * @throws 	PHPExcel_Writer_Exception
 	 */
-	public function _writeVMLComment(PHPExcel_Shared_XMLWriter $objWriter = null, $pCellReference = 'A1', PHPExcel_Comment $pComment = null)
+	public function _writeVMLComment(PHPExcel_Worksheet $pWorksheet = null, PHPExcel_Shared_XMLWriter $objWriter = null, $pCellReference = 'A1', PHPExcel_Comment $pComment = null)
 	{
  		// Metadata
  		list($column, $row) = PHPExcel_Cell::coordinateFromString($pCellReference);
@@ -203,11 +204,14 @@ class PHPExcel_Writer_Excel2007_Comments extends PHPExcel_Writer_Excel2007_Write
  		$id = 1024 + $column + $row;
  		$id = substr($id, 0, 4);
 
+        $cssWidth = $pComment->getWidth();
+        $cssHeight = $pComment->getHeight();
+
 		// v:shape
 		$objWriter->startElement('v:shape');
 		$objWriter->writeAttribute('id', 			'_x0000_s' . $id);
 		$objWriter->writeAttribute('type', 			'#_x0000_t202');
-		$objWriter->writeAttribute('style', 		'position:absolute;margin-left:' . $pComment->getMarginLeft() . ';margin-top:' . $pComment->getMarginTop() . ';width:' . $pComment->getWidth() . ';height:' . $pComment->getHeight() . ';z-index:1;visibility:' . ($pComment->getVisible() ? 'visible' : 'hidden'));
+		$objWriter->writeAttribute('style', 		'position:absolute;margin-left:' . $pComment->getMarginLeft() . ';margin-top:' . $pComment->getMarginTop() . ';width:' . $cssWidth . ';height:' . $cssHeight . ';z-index:1;visibility:' . ($pComment->getVisible() ? 'visible' : 'hidden'));
 		$objWriter->writeAttribute('fillcolor', 	'#' . $pComment->getFillColor()->getRGB());
 		$objWriter->writeAttribute('o:insetmode', 	'auto');
 
@@ -250,7 +254,53 @@ class PHPExcel_Writer_Excel2007_Comments extends PHPExcel_Writer_Excel2007_Write
 				$objWriter->writeElement('x:SizeWithCells', '');
 
 				// x:Anchor
-				//$objWriter->writeElement('x:Anchor', $column . ', 15, ' . ($row - 2) . ', 10, ' . ($column + 4) . ', 15, ' . ($row + 5) . ', 18');
+                // anchor is a nice way to locate the comment sensibly with respect to the sheet's rows/columns, but 
+                // in order to do so, need to be able to convert roughly to point dimensions from the comments
+                // width/height, which are optimized for css
+                 if(preg_match('/\\s*pt\\s*$/', $cssWidth) && preg_match('/\\s*pt\\s*$/', $cssHeight)) {
+                     // compute CSS height to an integer # pts
+                     $width = intval(preg_replace('/\\s*pt\\s*$/', '', $cssWidth));
+                     $height = intval(preg_replace('/\\s*pt\\s*$/', '', $cssHeight));
+         
+                     // starting from the row/column this is being placed in try 
+                     // to figure out the row column that should anchor the lower-right
+                     // corner of the comment
+                     $clearedWidth = 0;
+                     $clearedHeight = 0;
+                     $maxColumns = 2;
+                     $maxRows = 10;
+         
+                     // loop incremenets, so decrement both to start
+                     $curColumn = $column-1;
+                     $curRow = $row-1;
+                 
+                     while($clearedWidth < $width && ($curColumn-$column) < $maxColumns) {
+                         ++$curColumn;
+                         $dim = $pWorksheet->getColumnDimensionByColumn($curColumn, false);
+                         $clearedWidth += ($dim && $dim->getWidth() > 0) ? 
+                                                 $dim->getWidth() : 96;
+                     }
+                 
+                     while($clearedHeight < $height && ($curRow-$row) < $maxRows) {
+                         ++$curRow;
+                         $dim = $pWorksheet->getRowDimension($curRow, false);
+                         $clearedHeight += ($dim && $dim->getRowHeight() > 0) ? 
+                                                 $dim->getRowHeight() : 14;
+                     }
+         
+                     $colBump = 15;
+                     $rowBump = 10;
+                     $anchor = $column.', '. // upper-left column
+                               $colBump.', '. // upper-left offset from column
+                               ($row-1).', '. // upper-left row (need to 0-index)
+                               $rowBump.', '.  // upper-left offset from row
+                               $curColumn.', '. // lower-right column 
+                               max($clearedWidth-$width,0).', '. // lower-right col offset 
+                               ($curRow).', '. // lower-right row
+                               max($clearedHeight-$height,0); // lower-right row offset
+         
+                     $objWriter->writeElement('x:Anchor', $anchor);
+                 }
 
 				// x:AutoFill
 				$objWriter->writeElement('x:AutoFill', 'False');

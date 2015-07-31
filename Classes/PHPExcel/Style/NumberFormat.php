@@ -423,26 +423,43 @@ class PHPExcel_Style_NumberFormat extends PHPExcel_Style_Supervisor implements P
             'h'  => 'g'
         );
 
+    private static function setLowercaseCallback($matches) {
+        return mb_strtolower($matches[0]);
+    }
+
+    private static function escapeQuotesCallback($matches) {
+        return '\\' . implode('\\', str_split($matches[1]));
+    }
+
     private static function formatAsDate(&$value, &$format)
     {
-        // dvc: convert Excel formats to PHP date formats
-
         // strip off first part containing e.g. [$-F800] or [$USD-409]
         // general syntax: [$<Currency string>-<language info>]
         // language info is in hexadecimal
         $format = preg_replace('/^(\[\$[A-Z]*-[0-9A-F]*\])/i', '', $format);
 
-        // OpenOffice.org uses upper-case number formats, e.g. 'YYYY', convert to lower-case
-        $format = strtolower($format);
+        // OpenOffice.org uses upper-case number formats, e.g. 'YYYY', convert to lower-case;
+        //    but we don't want to change any quoted strings
+        $format = preg_replace_callback('/(?:^|")([^"]*)(?:$|")/', array('self', 'setLowercaseCallback'), $format);
 
-        $format = strtr($format, self::$dateFormatReplacements);
-        if (!strpos($format, 'A')) {
-            // 24-hour time format
-            $format = strtr($format, self::$dateFormatReplacements24);
-        } else {
-            // 12-hour time format
-            $format = strtr($format, self::$dateFormatReplacements12);
+        // Only process the non-quoted blocks for date format characters
+        $blocks = explode('"', $format);
+        foreach($blocks as $key => &$block) {
+            if ($key % 2 == 0) {
+                $block = strtr($block, self::$dateFormatReplacements);
+                if (!strpos($block, 'A')) {
+                    // 24-hour time format
+                    $block = strtr($block, self::$dateFormatReplacements24);
+                } else {
+                    // 12-hour time format
+                    $block = strtr($block, self::$dateFormatReplacements12);
+                }
+            }
         }
+        $format = implode('"', $blocks);
+
+        // escape any quoted characters so that DateTime format() will render them correctly
+        $format = preg_replace_callback('/"(.*)"/U', array('self', 'escapeQuotesCallback'), $format);
 
         $dateObj = PHPExcel_Shared_Date::ExcelToPHPObject($value);
         $value = $dateObj->format($format);
@@ -551,10 +568,12 @@ class PHPExcel_Style_NumberFormat extends PHPExcel_Style_Supervisor implements P
             return $value;
         }
 
-        // Get the sections, there can be up to four sections
-        $sections = explode(';', $format);
+        // Convert any escaped characters to quoted strings, e.g. (\T to "T")
+        $format = preg_replace('/(\\\(.))(?=(?:[^"]|"[^"]*")*$)/u', '"${2}"', $format);
+        // Get the sections, there can be up to four sections, separated with a semi-colon (but only if not a quoted literal)
+        $sections = preg_split('/(;)(?=(?:[^"]|"[^"]*")*$)/u', $format);
 
-        // Fetch the relevant section depending on whether number is positive, negative, or zero?
+        // Extract the relevant section depending on whether number is positive, negative, or zero?
         // Text not supported yet.
         // Here is how the sections apply to various values in Excel:
         //   1 section:   [POSITIVE/NEGATIVE/ZERO/TEXT]
@@ -595,9 +614,13 @@ class PHPExcel_Style_NumberFormat extends PHPExcel_Style_Supervisor implements P
         $format = preg_replace($color_regex, '', $format);
 
         // Let's begin inspecting the format and converting the value to a formatted string
-        if (preg_match('/^(\[\$[A-Z]*-[0-9A-F]*\])*[hmsdy]/i', $format)) { // datetime format
+
+        //  Check for date/time characters (not inside quotes)
+        if (preg_match('/(\[\$[A-Z]*-[0-9A-F]*\])*[hmsdy](?=(?:[^"]|"[^"]*")*$)/miu', $format, $matches)) {
+            // datetime format
             self::formatAsDate($value, $format);
-        } elseif (preg_match('/%$/', $format)) { // % number format
+        } elseif (preg_match('/%$/', $format)) {
+            // % number format
             self::formatAsPercentage($value, $format);
         } else {
             if ($format === self::FORMAT_CURRENCY_EUR_SIMPLE) {
@@ -685,7 +708,7 @@ class PHPExcel_Style_NumberFormat extends PHPExcel_Style_Supervisor implements P
                     }
                 }
                 if (preg_match('/\[\$(.*)\]/u', $format, $m)) {
-                    //    Currency or Accounting
+                    //  Currency or Accounting
                     $currencyFormat = $m[0];
                     $currencyCode = $m[1];
                     list($currencyCode) = explode('-', $currencyCode);

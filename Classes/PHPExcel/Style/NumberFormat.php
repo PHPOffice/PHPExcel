@@ -590,8 +590,9 @@ class PHPExcel_Style_NumberFormat extends PHPExcel_Style_Supervisor implements P
             return $value;
         }
 
-        // Convert any escaped characters to quoted strings, e.g. (\T to "T")
+        // Convert any other escaped characters to quoted strings, e.g. (\T to "T")
         $format = preg_replace('/(\\\(.))(?=(?:[^"]|"[^"]*")*$)/u', '"${2}"', $format);
+
         // Get the sections, there can be up to four sections, separated with a semi-colon (but only if not a quoted literal)
         $sections = preg_split('/(;)(?=(?:[^"]|"[^"]*")*$)/u', $format);
 
@@ -628,6 +629,10 @@ class PHPExcel_Style_NumberFormat extends PHPExcel_Style_Supervisor implements P
                 break;
         }
 
+        // In Excel formats, "_" is used to add spacing,
+        //    The following character indicates the size of the spacing, which we can't do in HTML, so we just use a standard space
+        $format = preg_replace('/_./', ' ', $format);
+
         // Save format with color information for later use below
         $formatColor = $format;
 
@@ -648,15 +653,6 @@ class PHPExcel_Style_NumberFormat extends PHPExcel_Style_Supervisor implements P
             if ($format === self::FORMAT_CURRENCY_EUR_SIMPLE) {
                 $value = 'EUR ' . sprintf('%1.2f', $value);
             } else {
-                // In Excel formats, "_" is used to add spacing, which we can't do in HTML
-                $format = preg_replace('/_./', '', $format);
-
-                // Some non-number characters are escaped with \, which we don't need
-                $format = preg_replace("/\\\\/", '', $format);
-//              Handle escaped characters, such as \" to display a literal " or \\ to display a literal \
-//              $format = preg_replace('/(?<!\\\\)\"/', '', $format);
-//                $format = str_replace(array('\\"', '*'), array('"', ''), $format);
-
                 // Some non-number strings are quoted, so we'll get rid of the quotes, likewise any positional * symbols
                 $format = str_replace(array('"', '*'), '', $format);
 
@@ -741,6 +737,9 @@ class PHPExcel_Style_NumberFormat extends PHPExcel_Style_Supervisor implements P
                 }
             }
         }
+
+        // Escape any escaped slashes to a single slash
+        $format = preg_replace("/\\\\/u", '\\', $format);
 
         // Additional formatting provided by callback function
         if ($callBack !== null) {

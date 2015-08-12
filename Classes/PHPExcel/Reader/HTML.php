@@ -444,6 +444,7 @@ class PHPExcel_Reader_HTML extends PHPExcel_Reader_HTML_Abstract
                     default:
                         $this->processDomElement($element, $row, $column, $cellContent);
                 }
+                // This method does all traversing itself, no TRAVERSE_CHILD hint needed.
     }
 
     /**

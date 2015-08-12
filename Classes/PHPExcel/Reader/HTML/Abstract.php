@@ -34,6 +34,12 @@ abstract class PHPExcel_Reader_HTML_Abstract extends PHPExcel_Reader_Abstract im
 {
 
     /**
+     * Tell processDomElement to traverse child elements of the current element recursively.
+     * @var int
+     */
+    const TRAVERSE_CHILDS = 1;
+
+    /**
      * Write cell content at specified position to active sheet.
      * @param int $row
      * @param string $column
@@ -47,6 +53,7 @@ abstract class PHPExcel_Reader_HTML_Abstract extends PHPExcel_Reader_Abstract im
      * @param int $row
      * @param string $column
      * @param string $cellContent
+     * @return int TRAVERSE_CHILDS or null
      */
     protected abstract function defaultElementHandler(\DOMNode $element, &$row, &$column, &$cellContent);
 
@@ -140,20 +147,36 @@ abstract class PHPExcel_Reader_HTML_Abstract extends PHPExcel_Reader_Abstract im
         return false;
     }
 
+    /**
+     * Traverse elements in DOM and invoke handler.
+     * A handler method in own object with name <element_name>ElementHandler
+     * is invoked if the method exists, or defaultElementHandler if not.
+     * Handlers can indicate whether to traverse child elements, by returning
+     * TRAVERSE_CHILDS. Childs are traversed recursively.
+     * @param \DOMNode $element Element of which childs are traversed.
+     * @param int $row Row number
+     * @param string $column Excel style column name
+     * @param $cellContent A buffer which can be used by implementation to store temporary cell content before flushing to cell.
+     */
     protected function processDomElement(DOMNode $element, &$row, &$column, &$cellContent)
     {
         foreach ($element->childNodes as $child) {
             if ($child instanceof \DOMText) {
                 $this->textElementHandler($child, $row, $column, $cellContent);
             } elseif ($child instanceof \DOMElement) {
-                // For each element a handler is invoked dynamically. If you don't want to use
-                // dynamic dispatch, use defaultElementHandler.
+                // For each element a handler is invoked dynamically. If you
+                // don't want to use dynamic dispatch, use defaultElementHandler.
                 $nodeName = $this->cleanNodeName($child->nodeName);
                 $handlerName = $nodeName . "ElementHandler";
-                if (method_exists($this, $handlerName)) {
-                    $this->{$handlerName}($child, $row, $column, $cellContent);
-                } else {
-                    $this->defaultElementHandler($child, $row, $column, $cellContent);
+                $continueWith = (method_exists($this, $handlerName)
+                    ? $this->{$handlerName}($child, $row, $column, $cellContent)
+                    : $this->defaultElementHandler($child, $row, $column, $cellContent));
+                if ($continueWith === self::TRAVERSE_CHILDS && $child->hasChildNodes()) {
+                    // Handlers may traverse the DOM themselves. To avoid
+                    // unnecessary traversing in here, by default no childs of
+                    // the child are traversed. If however indicated by handler
+                    // to traverse childs, then do so.
+                    $this->processDomElement($child, $row, $column, $cellContent);
                 }
             }
         }

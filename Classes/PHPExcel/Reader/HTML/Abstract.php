@@ -1,10 +1,23 @@
 <?php
 
 /**
- * PHPExcel_Reader_HTML
+ * PHPExcel_Reader_HTML_Abstract
  *
  * Generic reader of HTML files which sub classes can extend
  * to read HTML files to their need.
+ *
+ * When loading a document, the DOM is traversed with its top-level elements.
+ * A handler is invoked for each element. By default it is defaultElementHandler,
+ * though explicit handlers may be defined in the subclass in form
+ * <element_name>ElementHandler where <element_name> is lowercase element name.
+ * Explicit handlers must accept same arguments as defaultElementHandler.
+ *
+ * Other handlers exist which facilitate implementation specific behavior:
+ *
+ * flushCell - Write a cell value
+ * textElementHandler - Invoked for DOMText elements.
+ * loadHandler - Invoked before traversing the DOM.
+ * finishHandler - Invoked after traversing the DOM.
  *
  * Copyright (c) 2006 - 2015 PHPExcel
  * Copyright (c) 2015 Wine Logistix GmbH
@@ -34,7 +47,8 @@ abstract class PHPExcel_Reader_HTML_Abstract extends PHPExcel_Reader_Abstract im
 {
 
     /**
-     * Tell processDomElement to traverse child elements of the current element recursively.
+     * Tell processDomElement to traverse child elements of the current child
+     * element recursively.
      * @var int
      */
     const TRAVERSE_CHILDS = 1;
@@ -53,7 +67,7 @@ abstract class PHPExcel_Reader_HTML_Abstract extends PHPExcel_Reader_Abstract im
      * @param int $row
      * @param string $column
      * @param string $cellContent
-     * @return int TRAVERSE_CHILDS or null
+     * @return int|null TRAVERSE_CHILDS or null
      */
     protected abstract function defaultElementHandler(\DOMNode $element, &$row, &$column, &$cellContent);
 
@@ -88,7 +102,7 @@ abstract class PHPExcel_Reader_HTML_Abstract extends PHPExcel_Reader_Abstract im
     public function load($pFilename)
     {
         // Create new PHPExcel
-        $objPHPExcel = new PHPExcel();
+        $objPHPExcel = new \PHPExcel();
         // Load into this instance
         return $this->loadIntoExisting($pFilename, $objPHPExcel);
     }
@@ -101,23 +115,23 @@ abstract class PHPExcel_Reader_HTML_Abstract extends PHPExcel_Reader_Abstract im
      * @return PHPExcel
      * @throws PHPExcel_Reader_Exception
      */
-    public function loadIntoExisting($pFilename, PHPExcel $objPHPExcel)
+    public function loadIntoExisting($pFilename, \PHPExcel $objPHPExcel)
     {
         // Open file to validate
         $this->openFile($pFilename);
         if (!$this->isValidFormat()) {
             fclose($this->fileHandle);
-            throw new PHPExcel_Reader_Exception($pFilename . " is an invalid HTML file.");
+            throw new \PHPExcel_Reader_Exception($pFilename . " is an invalid HTML file.");
         }
         //    Close after validating
         fclose($this->fileHandle);
 
         //    Create a new DOM object
-        $dom = new DOMDocument();
+        $dom = new \DOMDocument();
         //    Reload the HTML file into the DOM object
         $loaded = $dom->loadHTML($this->securityScanFile($pFilename));
         if ($loaded === false) {
-            throw new PHPExcel_Reader_Exception('Failed to load ', $pFilename, ' as a DOM Document');
+            throw new \PHPExcel_Reader_Exception('Failed to load ', $pFilename, ' as a DOM Document');
         }
 
         //    Discard white space
@@ -167,7 +181,7 @@ abstract class PHPExcel_Reader_HTML_Abstract extends PHPExcel_Reader_Abstract im
      * @param string $column Excel style column name
      * @param $cellContent A buffer which can be used by implementation to store temporary cell content before flushing to cell.
      */
-    protected function processDomElement(DOMNode $element, &$row, &$column, &$cellContent)
+    protected function processDomElement(\DOMNode $element, &$row, &$column, &$cellContent)
     {
         foreach ($element->childNodes as $child) {
             if ($child instanceof \DOMText) {
@@ -206,7 +220,7 @@ abstract class PHPExcel_Reader_HTML_Abstract extends PHPExcel_Reader_Abstract im
     {
         $pattern = '/\\0?' . implode('\\0?', str_split('<!ENTITY')) . '\\0?/';
         if (preg_match($pattern, $xml)) {
-            throw new PHPExcel_Reader_Exception('Detected use of ENTITY in XML, spreadsheet file load() aborted to prevent XXE/XEE attacks');
+            throw new \PHPExcel_Reader_Exception('Detected use of ENTITY in XML, spreadsheet file load() aborted to prevent XXE/XEE attacks');
         }
         return $xml;
     }

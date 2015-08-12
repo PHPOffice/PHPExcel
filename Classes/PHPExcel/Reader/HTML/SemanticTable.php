@@ -1,4 +1,13 @@
 <?php
+
+if (!defined('PHPEXCEL_ROOT')) {
+    /**
+     * @ignore
+     */
+    define('PHPEXCEL_ROOT', dirname(__FILE__) . '/../../../');
+    require(PHPEXCEL_ROOT . 'PHPExcel/Autoloader.php');
+}
+
 /**
  * PHPExcel_Reader_HTML_SemanticTable
  *
@@ -29,7 +38,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Reader_HTML_SemanticTable
+ * @package    PHPExcel_Reader_HTML
  * @copyright  Copyright (c) 2015 Wine Logistix (http://www.wine-logistix.de)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
@@ -135,7 +144,7 @@ class PHPExcel_Reader_HTML_SemanticTable extends PHPExcel_Reader_HTML_Abstract
         // Row and column need to be reset.
         $row = 1;
         $column = 'A';
-        return PHPExcel_Reader_HTML_Abstract::TRAVERSE_CHILDS;
+        return \PHPExcel_Reader_HTML_Abstract::TRAVERSE_CHILDS;
     }
 
     /**

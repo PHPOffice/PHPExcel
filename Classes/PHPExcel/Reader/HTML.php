@@ -12,6 +12,7 @@ if (!defined('PHPEXCEL_ROOT')) {
  * PHPExcel_Reader_HTML
  *
  * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2015 Wine Logistix GmbH
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -30,6 +31,7 @@ if (!defined('PHPEXCEL_ROOT')) {
  * @category   PHPExcel
  * @package    PHPExcel_Reader
  * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2015 Wine Logistix GmbH (http://www.wine-logistix.de)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -97,16 +99,16 @@ class PHPExcel_Reader_HTML extends PHPExcel_Reader_HTML_Abstract
             'font' => array(
                 'underline' => true,
                 'color' => array(
-                    'argb' => PHPExcel_Style_Color::COLOR_BLUE,
+                    'argb' => \PHPExcel_Style_Color::COLOR_BLUE,
                 ),
             ),
         ), //    Blue underlined
         'hr' => array(
             'borders' => array(
                 'bottom' => array(
-                    'style' => PHPExcel_Style_Border::BORDER_THIN,
+                    'style' => \PHPExcel_Style_Border::BORDER_THIN,
                     'color' => array(
-                        PHPExcel_Style_Color::COLOR_BLACK,
+                        \PHPExcel_Style_Color::COLOR_BLACK,
                     ),
                 ),
             ),
@@ -120,7 +122,7 @@ class PHPExcel_Reader_HTML extends PHPExcel_Reader_HTML_Abstract
      */
     public function __construct()
     {
-        $this->readFilter = new PHPExcel_Reader_DefaultReadFilter();
+        $this->readFilter = new \PHPExcel_Reader_DefaultReadFilter();
     }
 
     /**
@@ -225,7 +227,7 @@ class PHPExcel_Reader_HTML extends PHPExcel_Reader_HTML_Abstract
         }
     }
 
-    protected function defaultElementHandler(DOMNode $element, &$row, &$column, &$cellContent, $format = null)
+    protected function defaultElementHandler(\DOMNode $element, &$row, &$column, &$cellContent, $format = null)
     {
 //                echo '<b>DOM ELEMENT: </b>' , strtoupper($element->nodeName) , '<br />';
 

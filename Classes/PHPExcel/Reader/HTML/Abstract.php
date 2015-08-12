@@ -41,11 +41,11 @@ abstract class PHPExcel_Reader_HTML_Abstract extends PHPExcel_Reader_Abstract im
 
     /**
      * Write cell content at specified position to active sheet.
-     * @param int $row
      * @param string $column
+     * @param int $row
      * @param string $cellContent
      */
-    protected abstract function flushCell($row, $column, &$cellContent);
+    protected abstract function flushCell($column, $row, &$cellContent);
 
     /**
      * Handler for elements with no explicit handler.

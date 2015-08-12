@@ -99,16 +99,16 @@ class PHPExcel_Reader_HTML extends PHPExcel_Reader_HTML_Abstract
             'font' => array(
                 'underline' => true,
                 'color' => array(
-                    'argb' => \PHPExcel_Style_Color::COLOR_BLUE,
+                    'argb' => PHPExcel_Style_Color::COLOR_BLUE,
                 ),
             ),
         ), //    Blue underlined
         'hr' => array(
             'borders' => array(
                 'bottom' => array(
-                    'style' => \PHPExcel_Style_Border::BORDER_THIN,
+                    'style' => PHPExcel_Style_Border::BORDER_THIN,
                     'color' => array(
-                        \PHPExcel_Style_Color::COLOR_BLACK,
+                        PHPExcel_Style_Color::COLOR_BLACK,
                     ),
                 ),
             ),
@@ -122,7 +122,7 @@ class PHPExcel_Reader_HTML extends PHPExcel_Reader_HTML_Abstract
      */
     public function __construct()
     {
-        $this->readFilter = new \PHPExcel_Reader_DefaultReadFilter();
+        $this->readFilter = new PHPExcel_Reader_DefaultReadFilter();
     }
 
     /**
@@ -154,7 +154,7 @@ class PHPExcel_Reader_HTML extends PHPExcel_Reader_HTML_Abstract
 
     /**
      * Active Worksheet which is used for writing to.
-     * @var \PHPExcel_Worksheet
+     * @var PHPExcel_Worksheet
      */
     protected $sheet;
 
@@ -181,7 +181,7 @@ class PHPExcel_Reader_HTML extends PHPExcel_Reader_HTML_Abstract
         return array_pop($this->nestedColumn);
     }
 
-    protected function loadHandler(\PHPExcel $objPHPExcel)
+    protected function loadHandler(PHPExcel $objPHPExcel)
     {
         // Create new PHPExcel worksheets.
         while ($objPHPExcel->getSheetCount() <= $this->sheetIndex) {
@@ -215,7 +215,7 @@ class PHPExcel_Reader_HTML extends PHPExcel_Reader_HTML_Abstract
         $cellContent = (string) '';
     }
 
-    protected function textElementHandler(\DOMNode $element, &$row, &$column, &$cellContent)
+    protected function textElementHandler(DOMNode $element, &$row, &$column, &$cellContent)
     {
         $domText = preg_replace('/\s+/u', ' ', trim($element->nodeValue));
         if (is_string($cellContent)) {
@@ -227,7 +227,7 @@ class PHPExcel_Reader_HTML extends PHPExcel_Reader_HTML_Abstract
         }
     }
 
-    protected function defaultElementHandler(\DOMNode $element, &$row, &$column, &$cellContent, $format = null)
+    protected function defaultElementHandler(DOMNode $element, &$row, &$column, &$cellContent, $format = null)
     {
 //                echo '<b>DOM ELEMENT: </b>' , strtoupper($element->nodeName) , '<br />';
 
@@ -417,7 +417,7 @@ class PHPExcel_Reader_HTML extends PHPExcel_Reader_HTML_Abstract
                                 ++$columnTo;
                             }
                             $range = $column . $row . ':' . $columnTo . ($row + $attributeArray['rowspan'] - 1);
-                            foreach (\PHPExcel_Cell::extractAllCellReferencesInRange($range) as $value) {
+                            foreach (PHPExcel_Cell::extractAllCellReferencesInRange($range) as $value) {
                                 $this->rowspan[$value] = true;
                             }
                             $this->sheet->mergeCells($range);
@@ -425,7 +425,7 @@ class PHPExcel_Reader_HTML extends PHPExcel_Reader_HTML_Abstract
                         } elseif (isset($attributeArray['rowspan'])) {
                             //create merging rowspan
                             $range = $column . $row . ':' . $column . ($row + $attributeArray['rowspan'] - 1);
-                            foreach (\PHPExcel_Cell::extractAllCellReferencesInRange($range) as $value) {
+                            foreach (PHPExcel_Cell::extractAllCellReferencesInRange($range) as $value) {
                                 $this->rowspan[$value] = true;
                             }
                             $this->sheet->mergeCells($range);

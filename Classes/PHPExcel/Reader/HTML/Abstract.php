@@ -63,29 +63,29 @@ abstract class PHPExcel_Reader_HTML_Abstract extends PHPExcel_Reader_Abstract im
 
     /**
      * Handler for elements with no explicit handler.
-     * @param \DOMNode $element
+     * @param DOMNode $element
      * @param int $row
      * @param string $column
      * @param string $cellContent
      * @return int|null TRAVERSE_CHILDS or null
      */
-    protected abstract function defaultElementHandler(\DOMNode $element, &$row, &$column, &$cellContent);
+    protected abstract function defaultElementHandler(DOMNode $element, &$row, &$column, &$cellContent);
 
     /**
      * Handler for DOMText elements.
-     * @param \DOMNode $element
+     * @param DOMNode $element
      * @param int $row
      * @param string $column
      * @param string $cellContent
      */
-    protected abstract function textElementHandler(\DOMNode $element, &$row, &$column, &$cellContent);
+    protected abstract function textElementHandler(DOMNode $element, &$row, &$column, &$cellContent);
 
     /**
      * Handler which is executed after loading the HTML file and before
      * traversing elements.
-     * @param \PHPExcel $objPHPExcel
+     * @param PHPExcel $objPHPExcel
      */
-    protected abstract function loadHandler(\PHPExcel $objPHPExcel);
+    protected abstract function loadHandler(PHPExcel $objPHPExcel);
 
     /**
      * Handler which is executed after traversing elements and before
@@ -102,12 +102,12 @@ abstract class PHPExcel_Reader_HTML_Abstract extends PHPExcel_Reader_Abstract im
     public function load($pFilename)
     {
         // Create new PHPExcel
-        $objPHPExcel = new \PHPExcel();
+        $objPHPExcel = new PHPExcel();
         // Open file to validate
         $this->openFile($pFilename);
         if (!$this->isValidFileFormat()) {
             fclose($this->fileHandle);
-            throw new \PHPExcel_Reader_Exception($pFilename . " is an invalid HTML file.");
+            throw new PHPExcel_Reader_Exception($pFilename . " is an invalid HTML file.");
         }
         //    Close after validating
         fclose($this->fileHandle);
@@ -123,9 +123,9 @@ abstract class PHPExcel_Reader_HTML_Abstract extends PHPExcel_Reader_Abstract im
      */
     public function loadFromString($content)
     {
-        $objPHPExcel = new \PHPExcel();
+        $objPHPExcel = new PHPExcel();
         if (!$this->isValidFormat($content)) {
-            throw new \PHPExcel_Reader_Exception("HTML content is invalid");
+            throw new PHPExcel_Reader_Exception("HTML content is invalid");
         }
         $html = $this->securityScan($content);
         return $this->loadIntoExistingFromString($html, $objPHPExcel);
@@ -139,7 +139,7 @@ abstract class PHPExcel_Reader_HTML_Abstract extends PHPExcel_Reader_Abstract im
      * @return PHPExcel
      * @throws PHPExcel_Reader_Exception
      */
-    public function loadIntoExisting($pFilename, \PHPExcel $objPHPExcel)
+    public function loadIntoExisting($pFilename, PHPExcel $objPHPExcel)
     {
         $html = $this->securityScanFile($pFilename);
         return $this->loadIntoExistingFromString($html, $objPHPExcel);
@@ -148,15 +148,15 @@ abstract class PHPExcel_Reader_HTML_Abstract extends PHPExcel_Reader_Abstract im
     /**
      * Loads PHPExcel from string into PHPExcel instance.
      */
-    protected function loadIntoExistingFromString($content, \PHPExcel $objPHPExcel)
+    protected function loadIntoExistingFromString($content, PHPExcel $objPHPExcel)
     {
         // This method is protected as it doesn't do the security scan on content.
         //    Create a new DOM object
-        $dom = new \DOMDocument();
+        $dom = new DOMDocument();
         //    Reload the HTML file into the DOM object
         $loaded = $dom->loadHTML($content);
         if ($loaded === false) {
-            throw new \PHPExcel_Reader_Exception('Failed to load ', $pFilename, ' as a DOM Document');
+            throw new PHPExcel_Reader_Exception('Failed to load ', $pFilename, ' as a DOM Document');
         }
 
         //    Discard white space
@@ -209,17 +209,17 @@ abstract class PHPExcel_Reader_HTML_Abstract extends PHPExcel_Reader_Abstract im
      * is invoked if the method exists, or defaultElementHandler if not.
      * Handlers can indicate whether to traverse child elements, by returning
      * TRAVERSE_CHILDS. Childs are traversed recursively.
-     * @param \DOMNode $element Element of which childs are traversed.
+     * @param DOMNode $element Element of which childs are traversed.
      * @param int $row Row number
      * @param string $column Excel style column name
      * @param $cellContent A buffer which can be used by implementation to store temporary cell content before flushing to cell.
      */
-    protected function processDomElement(\DOMNode $element, &$row, &$column, &$cellContent)
+    protected function processDomElement(DOMNode $element, &$row, &$column, &$cellContent)
     {
         foreach ($element->childNodes as $child) {
-            if ($child instanceof \DOMText) {
+            if ($child instanceof DOMText) {
                 $this->textElementHandler($child, $row, $column, $cellContent);
-            } elseif ($child instanceof \DOMElement) {
+            } elseif ($child instanceof DOMElement) {
                 // For each element a handler is invoked dynamically. If you
                 // don't want to use dynamic dispatch, use defaultElementHandler.
                 $nodeName = $this->cleanNodeName($child->nodeName);
@@ -253,7 +253,7 @@ abstract class PHPExcel_Reader_HTML_Abstract extends PHPExcel_Reader_Abstract im
     {
         $pattern = '/\\0?' . implode('\\0?', str_split('<!ENTITY')) . '\\0?/';
         if (preg_match($pattern, $xml)) {
-            throw new \PHPExcel_Reader_Exception('Detected use of ENTITY in XML, spreadsheet file load() aborted to prevent XXE/XEE attacks');
+            throw new PHPExcel_Reader_Exception('Detected use of ENTITY in XML, spreadsheet file load() aborted to prevent XXE/XEE attacks');
         }
         return $xml;
     }

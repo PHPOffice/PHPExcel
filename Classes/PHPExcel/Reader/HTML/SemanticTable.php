@@ -47,7 +47,7 @@ class PHPExcel_Reader_HTML_SemanticTable extends PHPExcel_Reader_HTML_Abstract
 {
 
     /**
-     * @var \PHPExcel
+     * @var PHPExcel
      */
     protected $excel;
 
@@ -69,36 +69,36 @@ class PHPExcel_Reader_HTML_SemanticTable extends PHPExcel_Reader_HTML_Abstract
 
     /**
      * Handler for elements with no explicit handler.
-     * @param \DOMNode $element
+     * @param DOMNode $element
      * @param int $row
      * @param string $column
      * @param string $cellContent
      */
-    protected function defaultElementHandler(\DOMNode $element, &$row, &$column, &$cellContent)
+    protected function defaultElementHandler(DOMNode $element, &$row, &$column, &$cellContent)
     {
         // This implementation doesn't care about any element except the ones
         // for which an explicit handler is defined. To get to these elements
         // though, children of the other elements need to be traversed.
-        return \PHPExcel_Reader_HTML_Abstract::TRAVERSE_CHILDS;
+        return PHPExcel_Reader_HTML_Abstract::TRAVERSE_CHILDS;
     }
 
     /**
      * Handler for DOMText elements.
-     * @param \DOMNode $element
+     * @param DOMNode $element
      * @param int $row
      * @param string $column
      * @param string $cellContent
      */
-    protected function textElementHandler(\DOMNode $element, &$row, &$column, &$cellContent)
+    protected function textElementHandler(DOMNode $element, &$row, &$column, &$cellContent)
     {
     }
 
     /**
      * Handler which is executed after loading the HTML file and before
      * traversing elements.
-     * @param \PHPExcel $objPHPExcel
+     * @param PHPExcel $objPHPExcel
      */
-    protected function loadHandler(\PHPExcel $objPHPExcel)
+    protected function loadHandler(PHPExcel $objPHPExcel)
     {
         $this->excel = $objPHPExcel;
         // Remove first sheet because if no table elements are occured
@@ -119,24 +119,24 @@ class PHPExcel_Reader_HTML_SemanticTable extends PHPExcel_Reader_HTML_Abstract
 
     /**
      * Set document title.
-     * @param \DOMNode $element
+     * @param DOMNode $element
      * @param int $row
      * @param string $column
      * @param string $cellContent
      */
-    protected function titleElementHandler(\DOMNode $element, &$row, &$column, &$cellContent)
+    protected function titleElementHandler(DOMNode $element, &$row, &$column, &$cellContent)
     {
         $this->excel->getProperties()->setTitle($element->textContent);
     }
 
     /**
      * Create a new worksheet and use it as active sheet.
-     * @param \DOMNode $element
+     * @param DOMNode $element
      * @param int $row
      * @param string $column
      * @param string $cellContent
      */
-    protected function tableElementHandler(\DOMNode $element, &$row, &$column, &$cellContent)
+    protected function tableElementHandler(DOMNode $element, &$row, &$column, &$cellContent)
     {
         $sheetNum = $this->excel->getSheetCount();
         $this->excel->createSheet();
@@ -144,29 +144,29 @@ class PHPExcel_Reader_HTML_SemanticTable extends PHPExcel_Reader_HTML_Abstract
         // Row and column need to be reset.
         $row = 1;
         $column = 'A';
-        return \PHPExcel_Reader_HTML_Abstract::TRAVERSE_CHILDS;
+        return PHPExcel_Reader_HTML_Abstract::TRAVERSE_CHILDS;
     }
 
     /**
      * Set title of current active sheet.
-     * @param \DOMNode $element
+     * @param DOMNode $element
      * @param int $row
      * @param string $column
      * @param string $cellContent
      */
-    protected function captionElementHandler(\DOMNode $element, &$row, &$column, &$cellContent)
+    protected function captionElementHandler(DOMNode $element, &$row, &$column, &$cellContent)
     {
         $this->excel->getActiveSheet()->setTitle($element->textContent);
     }
 
     /**
      * For each header row in thead, create a row with bold formatted columns.
-     * @param \DOMNode $element
+     * @param DOMNode $element
      * @param int $row
      * @param string $column
      * @param string $cellContent
      */
-    protected function theadElementHandler(\DOMNode $element, &$row, &$column, &$cellContent)
+    protected function theadElementHandler(DOMNode $element, &$row, &$column, &$cellContent)
     {
         foreach ($element->childNodes as $child) {
             if ($this->isElement($child, "tr")) {
@@ -177,7 +177,7 @@ class PHPExcel_Reader_HTML_SemanticTable extends PHPExcel_Reader_HTML_Abstract
         // Don't traverse childs as they are already traversed in here.
     }
 
-    protected function tbodyElementHandler(\DOMNode $element, &$row, &$column, &$cellContent)
+    protected function tbodyElementHandler(DOMNode $element, &$row, &$column, &$cellContent)
     {
         foreach ($element->childNodes as $child) {
             if ($this->isElement($child, "tr")) {
@@ -188,7 +188,7 @@ class PHPExcel_Reader_HTML_SemanticTable extends PHPExcel_Reader_HTML_Abstract
         // Don't traverse childs as they are already traversed in here.
     }
 
-    protected function createHeaderRow(\DOMNode $theadRow, $row)
+    protected function createHeaderRow(DOMNode $theadRow, $row)
     {
         $column = 'A';
         foreach ($theadRow->childNodes as $child) {
@@ -202,7 +202,7 @@ class PHPExcel_Reader_HTML_SemanticTable extends PHPExcel_Reader_HTML_Abstract
         $this->excel->getActiveSheet()->getStyle($range)->getFont()->setBold(true);
     }
 
-    protected function createDataRow(\DOMNode $tbodyRow, $row)
+    protected function createDataRow(DOMNode $tbodyRow, $row)
     {
         $column = 'A';
         foreach ($tbodyRow->childNodes as $child) {
@@ -214,7 +214,7 @@ class PHPExcel_Reader_HTML_SemanticTable extends PHPExcel_Reader_HTML_Abstract
     }
 
     private function isElement($el, $name) {
-        return $el instanceof \DOMNode && $el->nodeName === $name;
+        return $el instanceof DOMNode && $el->nodeName === $name;
     }
 
 }

@@ -117,7 +117,7 @@ abstract class PHPExcel_Reader_HTML_Abstract extends PHPExcel_Reader_Abstract im
         //    Discard white space
         $dom->preserveWhiteSpace = false;
 
-        $row = 0;
+        $row = 1;
         $column = 'A';
         $content = '';
 

@@ -103,8 +103,32 @@ abstract class PHPExcel_Reader_HTML_Abstract extends PHPExcel_Reader_Abstract im
     {
         // Create new PHPExcel
         $objPHPExcel = new \PHPExcel();
+        // Open file to validate
+        $this->openFile($pFilename);
+        if (!$this->isValidFileFormat()) {
+            fclose($this->fileHandle);
+            throw new \PHPExcel_Reader_Exception($pFilename . " is an invalid HTML file.");
+        }
+        //    Close after validating
+        fclose($this->fileHandle);
         // Load into this instance
         return $this->loadIntoExisting($pFilename, $objPHPExcel);
+    }
+
+    /**
+     * Loads PHPExcel from string.
+     * @param string $content HTML content
+     * @return PHPExcel
+     * @throws PHPExcel_Reader_Exception
+     */
+    public function loadFromString($content)
+    {
+        $objPHPExcel = new \PHPExcel();
+        if (!$this->isValidFormat($content)) {
+            throw new \PHPExcel_Reader_Exception("HTML content is invalid");
+        }
+        $html = $this->securityScan($content);
+        return $this->loadIntoExistingFromString($html, $objPHPExcel);
     }
 
     /**
@@ -117,19 +141,20 @@ abstract class PHPExcel_Reader_HTML_Abstract extends PHPExcel_Reader_Abstract im
      */
     public function loadIntoExisting($pFilename, \PHPExcel $objPHPExcel)
     {
-        // Open file to validate
-        $this->openFile($pFilename);
-        if (!$this->isValidFormat()) {
-            fclose($this->fileHandle);
-            throw new \PHPExcel_Reader_Exception($pFilename . " is an invalid HTML file.");
-        }
-        //    Close after validating
-        fclose($this->fileHandle);
+        $html = $this->securityScanFile($pFilename);
+        return $this->loadIntoExistingFromString($html, $objPHPExcel);
+    }
 
+    /**
+     * Loads PHPExcel from string into PHPExcel instance.
+     */
+    protected function loadIntoExistingFromString($content, \PHPExcel $objPHPExcel)
+    {
+        // This method is protected as it doesn't do the security scan on content.
         //    Create a new DOM object
         $dom = new \DOMDocument();
         //    Reload the HTML file into the DOM object
-        $loaded = $dom->loadHTML($this->securityScanFile($pFilename));
+        $loaded = $dom->loadHTML($content);
         if ($loaded === false) {
             throw new \PHPExcel_Reader_Exception('Failed to load ', $pFilename, ' as a DOM Document');
         }
@@ -154,20 +179,28 @@ abstract class PHPExcel_Reader_HTML_Abstract extends PHPExcel_Reader_Abstract im
     }
 
     /**
-     * Validate that the current file is an HTML file
-     *
+     * Validate that data contains HTML.
      * @return boolean
      */
-    protected function isValidFormat()
+    protected function isValidFormat(&$data)
     {
-        //    Reading 2048 bytes should be enough to validate that the format is HTML
-        $data = fread($this->fileHandle, 2048);
         if ((strpos($data, '<') !== false) &&
                 (strlen($data) !== strlen(strip_tags($data)))) {
             return true;
         }
-
         return false;
+    }
+
+    /**
+     * Validate that the current file is an HTML file
+     *
+     * @return boolean
+     */
+    protected function isValidFileFormat()
+    {
+        //    Reading 2048 bytes should be enough to validate that the format is HTML
+        $data = fread($this->fileHandle, 2048);
+        return $this->isValidFormat($data);
     }
 
     /**

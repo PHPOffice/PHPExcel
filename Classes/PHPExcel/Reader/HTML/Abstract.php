@@ -74,6 +74,12 @@ abstract class PHPExcel_Reader_HTML_Abstract extends PHPExcel_Reader_Abstract im
     protected abstract function loadHandler(\PHPExcel $objPHPExcel);
 
     /**
+     * Handler which is executed after traversing elements and before
+     * returning from load method.
+     */
+    protected abstract function finishHandler();
+
+    /**
      * Loads PHPExcel from file.
      * @param  string $pFilename
      * @return PHPExcel
@@ -125,6 +131,9 @@ abstract class PHPExcel_Reader_HTML_Abstract extends PHPExcel_Reader_Abstract im
         $this->loadHandler($objPHPExcel);
 
         $this->processDomElement($dom, $row, $column, $content);
+
+        // Allow implementation specific operation after processing.
+        $this->finishHandler();
 
         // Return
         return $objPHPExcel;

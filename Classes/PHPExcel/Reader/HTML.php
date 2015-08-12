@@ -189,6 +189,10 @@ class PHPExcel_Reader_HTML extends PHPExcel_Reader_HTML_Abstract
         $this->sheet = $objPHPExcel->getActiveSheet();
     }
 
+    protected function finishHandler()
+    {
+    }
+
     protected function flushCell($column, $row, &$cellContent)
     {
         if (is_string($cellContent)) {

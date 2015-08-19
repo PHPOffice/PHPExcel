@@ -24,7 +24,8 @@
     "require": {
         "php": ">=5.2.0",
         "ext-xml": "*",
-        "ext-xmlwriter": "*"
+        "ext-xmlwriter": "*",
+        "ext-mbstring": "*"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "2.*"

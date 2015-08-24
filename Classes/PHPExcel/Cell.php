@@ -293,7 +293,7 @@ class PHPExcel_Cell
                 );
             }
 
-            if ($result === '#Not Yet Implemented') {
+            if ($result === '#N/A' || $result === '#Not Yet Implemented') {
 //echo 'Returning fallback value of '.$this->calculatedValue.' for cell '.$this->getCoordinate().PHP_EOL;
                 return $this->calculatedValue; // Fallback if calculation engine does not support the formula.
             }

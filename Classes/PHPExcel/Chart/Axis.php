@@ -191,6 +191,11 @@ class PHPExcel_Chart_Axis extends PHPExcel_Chart_Properties
         ($minor_unit !== null) ? $this->axisOptions['minor_unit'] = (string) $minor_unit : null;
     }
 
+    public function setAxisMaximum($maximum)
+    {
+        ($maximum !== null) ? $this->axisOptions['maximum'] = (string) $maximum : null;
+    }
+    
     /**
      * Get Axis Options Property
      *

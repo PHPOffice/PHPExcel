@@ -1,4 +1,6 @@
 /Build export-ignore
 /Documentation export-ignore
+/Examples export-ignore
 /Tests export-ignore
+/unitTests export-ignore
 README.md export-ignore

@@ -395,7 +395,7 @@ class PHPExcel
      */
     public function __destruct()
     {
-        PHPExcel_Calculation::unsetInstance($this);
+        unset($this->calculationEngine);
         $this->disconnectWorksheets();
     }
 

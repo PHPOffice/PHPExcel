@@ -2077,10 +2077,6 @@ class PHPExcel_Calculation
         }
         $this->delta = 1 * pow(10, -$setPrecision);
 
-        if ($workbook !== null) {
-            self::$workbookSets[$workbook->getID()] = $this;
-        }
-
         $this->workbook = $workbook;
         $this->cyclicReferenceStack = new PHPExcel_CalcEngine_CyclicReferenceStack();
         $this->_debugLog = new PHPExcel_CalcEngine_Logger($this->cyclicReferenceStack);
@@ -2116,8 +2112,9 @@ class PHPExcel_Calculation
     public static function getInstance(PHPExcel $workbook = null)
     {
         if ($workbook !== null) {
-            if (isset(self::$workbookSets[$workbook->getID()])) {
-                return self::$workbookSets[$workbook->getID()];
+	          $instance = $workbook->getCalculationEngine();
+            if (isset($instance)) {
+                return $instance;
             }
             return new PHPExcel_Calculation($workbook);
         }
@@ -2127,21 +2124,6 @@ class PHPExcel_Calculation
         }
 
         return self::$instance;
-    }
-
-    /**
-     * Unset an instance of this class
-     *
-     * @access    public
-     * @param   PHPExcel $workbook  Injected workbook identifying the instance to unset
-     */
-    public static function unsetInstance(PHPExcel $workbook = null)
-    {
-        if ($workbook !== null) {
-            if (isset(self::$workbookSets[$workbook->getID()])) {
-                unset(self::$workbookSets[$workbook->getID()]);
-            }
-        }
     }
 
     /**

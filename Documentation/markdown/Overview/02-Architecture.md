@@ -40,7 +40,7 @@ Just like desktop spreadsheet software, PHPExcel represents a spreadsheet contai
 
 On its own, PHPExcel does not provide the functionality to read from or write to a persisted spreadsheet (on disk or in a database). To provide that functionality, readers and writers can be used.
 
-By default, the PHPExcel package provides some readers and writers, including one for the Open XML spreadsheet format (a.k.a. Excel 2007 file format). You are not limited to the default readers and writers, as you are free to implement the PHPExcel_Writer_IReader and PHPExcel_Writer_IWriter interface in a custom class.
+By default, the PHPExcel package provides some readers and writers, including one for the Open XML spreadsheet format (a.k.a. Excel 2007 file format). You are not limited to the default readers and writers, as you are free to implement the PHPExcel_Reader_IReader and PHPExcel_Writer_IWriter interface in a custom class.
 
 ![02-readers-writers.png](./images/02-readers-writers.png "")
 

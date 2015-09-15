@@ -384,8 +384,8 @@ class PHPExcel_Reader_HTML extends PHPExcel_Reader_Abstract implements PHPExcel_
                         $column = $this->releaseTableStartColumn();
                         if ($this->tableLevel > 1) {
                             ++$column;
-                        } else {
-                            ++$row;
+//                        } else {
+//                            ++$row;
                         }
                         break;
                     case 'thead':

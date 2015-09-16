@@ -86,7 +86,12 @@ class PHPExcel_Cell
      *
      */
     private $formulaAttributes;
-
+    /**
+     * Original value without formatting
+     *
+     * @var     string
+     */
+     private  $_originalValue;
 
     /**
      *    Send notification to the cache controller
@@ -191,7 +196,16 @@ class PHPExcel_Cell
                 ->getNumberFormat()->getFormatCode()
         );
     }
-
+    
+    /**
+     * Get cell value with formatting
+     * @return string
+     */
+     public function getOriginalValue()
+     {
+         return $this->_originalValue;
+     }
+     
     /**
      *    Set cell value
      *
@@ -252,7 +266,10 @@ class PHPExcel_Cell
 
         // set the datatype
         $this->dataType = $pDataType;
-
+        
+        // set the original value as a string
+        $this->_originalValue = (string) $pValue;
+        
         return $this->notifyCacheController();
     }
 

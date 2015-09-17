@@ -2720,10 +2720,16 @@ class PHPExcel_Calculation
         $this->_debugLog->clearLog();
         $this->cyclicReferenceStack->clear();
 
-        //    Disable calculation cacheing because it only applies to cell calculations, not straight formulae
-        //    But don't actually flush any cache
-        $resetCache = $this->getCalculationCacheEnabled();
-        $this->calculationCacheEnabled = false;
+        if ($this->workbook !== null && $cellID === null && $pCell === null) {
+            $cellID = 'A1';
+            $pCell = $this->workbook->getActiveSheet()->getCell($cellID);
+        } else {
+            //    Disable calculation cacheing because it only applies to cell calculations, not straight formulae
+            //    But don't actually flush any cache
+            $resetCache = $this->getCalculationCacheEnabled();
+            $this->calculationCacheEnabled = false;
+        }
+
         //    Execute the calculation
         try {
             $result = self::unwrapResult($this->_calculateFormulaValue($formula, $cellID, $pCell));
@@ -2731,8 +2737,10 @@ class PHPExcel_Calculation
             throw new PHPExcel_Calculation_Exception($e->getMessage());
         }
 
-        //    Reset calculation cacheing to its previous state
-        $this->calculationCacheEnabled = $resetCache;
+        if ($this->workbook === null) {
+            //    Reset calculation cacheing to its previous state
+            $this->calculationCacheEnabled = $resetCache;
+        }
 
         return $result;
     }

@@ -276,6 +276,14 @@ class PHPExcel_Writer_Excel2007_StringTable extends PHPExcel_Writer_Excel2007_Wr
 //                        $objWriter->endElement();
 //                    }
 //
+
+            // Color
+            $objWriter->startElement($prefix.'solidFill');
+                $objWriter->startElement($prefix.'srgbClr');
+                    $objWriter->writeAttribute('val',$element->getFont()->getColor()->getRGB());
+                $objWriter->endElement();
+            $objWriter->endElement();
+
             $objWriter->endElement();
 
             // t

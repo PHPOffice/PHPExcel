@@ -132,7 +132,15 @@ class PHPExcel_Writer_Excel2007_Chart extends PHPExcel_Writer_Excel2007_WriterPa
         if ((is_array($caption)) && (count($caption) > 0)) {
             $caption = $caption[0];
         }
-        $this->getParentWriter()->getWriterPart('stringtable')->writeRichTextForCharts($objWriter, $caption, 'a');
+
+        $pRichText = new PHPExcel_RichText();
+        $pRichText->createTextRun($caption);
+        $elements = $pRichText->getRichTextElements();
+        foreach ($elements as $element) {
+            $element->setFont($title->getFont());
+        }
+
+        $this->getParentWriter()->getWriterPart('stringtable')->writeRichTextForCharts($objWriter, $pRichText, 'a');
 
         $objWriter->endElement();
         $objWriter->endElement();

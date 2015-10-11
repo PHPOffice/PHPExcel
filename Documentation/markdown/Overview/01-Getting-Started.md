@@ -63,7 +63,7 @@ There are some links and tools which are very useful when developing using PHPEx
 
 ### Frequently asked questions
 
-The up-to-date F.A.Q. page for PHPExcel can be found on [http://www.codeplex.com/PHPExcel/Wiki/View.aspx?title=FAQ&referringTitle=Requirements][7].
+The up-to-date F.A.Q. page for PHPExcel can be found on [https://github.com/PHPOffice/PHPExcel/Wiki/View.aspx?title=FAQ&referringTitle=Requirements][7].
 
 ##### There seems to be a problem with character encoding...
 
@@ -155,12 +155,12 @@ Thanks to peterrlynch for the following advice on resolving issues between the [
   [http://journal.mycom.co.jp/articles/2009/03/06/phpexcel/index.html][21]
 
 
-  [2]: http://www.codeplex.com/PHPExcel/Wiki/View.aspx?title=Documents&referringTitle=Home
+  [2]: https://github.com/PHPOffice/PHPExcel/Wiki/View.aspx?title=Documents&referringTitle=Home
   [3]: http://www.ecma-international.org/news/TC45_current_work/TC45_available_docs.htm
   [4]: http://openxmldeveloper.org/articles/1970.aspx
   [5]: http://www.microsoft.com/downloads/details.aspx?familyid=941b3470-3ae9-4aee-8f43-c6bb74cd1466&displaylang=en
   [6]: http://www.codeplex.com/PackageExplorer/
-  [7]: http://www.codeplex.com/PHPExcel/Wiki/View.aspx?title=FAQ&referringTitle=Requirements
+  [7]: https://github.com/PHPOffice/PHPExcel/Wiki/View.aspx?title=FAQ&referringTitle=Requirements
   [8]: http://snaps.php.net/win32/php5.2-win32-latest.zip
   [9]: http://phpexcel.codeplex.com/Thread/View.aspx?ThreadId=234150
   [10]: http://phpexcel.codeplex.com/Thread/View.aspx?ThreadId=242712

@@ -807,7 +807,7 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 							}
 
 							if ($xmlSheet && $xmlSheet->sheetData && $xmlSheet->sheetData->row) {
-								foreach ($xmlSheet->sheetData->row as $row) {
+								foreach ($xmlSheet->sheetData->row as $row) if ($row->c) {
 									if ($row["ht"] && !$this->_readDataOnly) {
 										$docSheet->getRowDimension(intval($row["r"]))->setRowHeight(floatval($row["ht"]));
 									}

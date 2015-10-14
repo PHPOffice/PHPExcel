@@ -500,7 +500,6 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
                     if (!$this->readDataOnly && $xmlStyles) {
                         foreach ($xmlStyles->cellXfs->xf as $xf) {
                             $numFmt = PHPExcel_Style_NumberFormat::FORMAT_GENERAL;
-
                             if ($xf["numFmtId"]) {
                                 if (isset($numFmts)) {
                                     $tmpNumFmt = self::getArrayItem($numFmts->xpath("sml:numFmt[@numFmtId=$xf[numFmtId]]"));
@@ -513,7 +512,7 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
                                 // We shouldn't override any of the built-in MS Excel values (values below id 164)
                                 //  But there's a lot of naughty homebrew xlsx writers that do use "reserved" id values that aren't actually used
                                 //  So we make allowance for them rather than lose formatting masks
-                                if ((int)$xf["numFmtId"] < 164 && PHPExcel_Style_NumberFormat::builtInFormatCodeIndex((int)$xf["numFmtId"]) !== false) {
+                                if ((int)$xf["numFmtId"] < 164 && PHPExcel_Style_NumberFormat::builtInFormatCode((int)$xf["numFmtId"]) !== '') {
                                     $numFmt = PHPExcel_Style_NumberFormat::builtInFormatCode((int)$xf["numFmtId"]);
                                 }
                             }

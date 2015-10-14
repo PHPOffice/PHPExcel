@@ -338,7 +338,6 @@ class PHPExcel_Style_NumberFormat extends PHPExcel_Style_Supervisor implements P
 
         // Ensure built-in format codes are available
         self::fillBuiltInFormatCodes();
-
         // Lookup format code
         if (isset(self::$builtInFormats[$pIndex])) {
             return self::$builtInFormats[$pIndex];

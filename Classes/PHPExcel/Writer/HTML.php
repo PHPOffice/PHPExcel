@@ -1024,6 +1024,20 @@ class PHPExcel_Writer_HTML extends PHPExcel_Writer_Abstract implements PHPExcel_
               unset($css['border']);
             }
         }
+        else {
+          if ($css['border-bottom'] == '') {
+              unset($css['border-bottom']);
+          }
+          if ($css['border-top'] == '') { 
+              unset($css['border-top']);
+          }
+          if ($css['border-left'] == '') { 
+              unset($css['border-left']);
+          }
+          if ($css['border-right'] == '') { 
+              unset($css['border-right']);
+          }
+        }
 
         return $css;
     }
@@ -1041,8 +1055,9 @@ class PHPExcel_Writer_HTML extends PHPExcel_Writer_Abstract implements PHPExcel_
         
         // If there is no border we don't want to return anything here. Actually returning
         // border:none; would override the display of the table gridlines.
-        if ($css == 'none')
+        if ($css == 'none') {
             return '';
+        }
         
         $css = $css . ' #' . $pStyle->getColor()->getRGB() . ' !important';
 
@@ -1061,8 +1076,9 @@ class PHPExcel_Writer_HTML extends PHPExcel_Writer_Abstract implements PHPExcel_
         $css = array();
 
         // Create CSS, if we have a fill type for this cell.
-        if ($pStyle->getFillType() != PHPExcel_Style_Fill::FILL_NONE) 
+        if ($pStyle->getFillType() != PHPExcel_Style_Fill::FILL_NONE) {
             $css['background-color'] = '#' . $pStyle->getStartColor()->getRGB();
+        }
 
         return $css;
     }

@@ -208,12 +208,12 @@ class PHPExcel_Calculation
     public $cyclicFormulaCount = 1;
 
     /**
-     * Precision used for calculations
+     * Epsilon Precision used for comparisons in calculations
      *
      * @var integer
      *
      */
-    private $savedPrecision    = 14;
+    private $delta    = 0.0000000000001;
 
 
     /**
@@ -2070,12 +2070,7 @@ class PHPExcel_Calculation
 
     private function __construct(PHPExcel $workbook = null)
     {
-        $setPrecision = (PHP_INT_SIZE == 4) ? 14 : 16;
-        $this->savedPrecision = ini_get('precision');
-        if ($this->savedPrecision < $setPrecision) {
-            ini_set('precision', $setPrecision);
-        }
-        $this->delta = 1 * pow(10, -$setPrecision);
+        $this->delta = 1 * pow(10, 0 - ini_get('precision'));
 
         if ($workbook !== null) {
             self::$workbookSets[$workbook->getID()] = $this;
@@ -2086,13 +2081,6 @@ class PHPExcel_Calculation
         $this->_debugLog = new PHPExcel_CalcEngine_Logger($this->cyclicReferenceStack);
     }
 
-
-    public function __destruct()
-    {
-        if ($this->savedPrecision != ini_get('precision')) {
-            ini_set('precision', $this->savedPrecision);
-        }
-    }
 
     private static function loadLocales()
     {

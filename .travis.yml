@@ -14,11 +14,20 @@ php:
 matrix:
   allow_failures:
     - php: hhvm
-    - php: 5.2 # no xdebug installed within container based environment
 
 sudo: false
 
+before_script:
+  ## Composer
+  ##@todo Remove when support of 5.2 will be dropped
+  - if [[ "$TRAVIS_PHP_VERSION" == "5.2" ]]; then phpenv global 5.3; fi;
+  - composer self-update
+  - composer install --prefer-source --dev
+  - if [[ "$TRAVIS_PHP_VERSION" == "5.2" ]]; then phpenv global "$TRAVIS_PHP_VERSION"; fi;
+
 script:
+  ## PHP_CodeSniffer
+  - ./vendor/bin/phpcs --report-width=200 --report-summary  --report-full Classes/ unitTests/ --standard=PSR2 -n
   ## PHPUnit
   - phpunit -c ./unitTests/
 

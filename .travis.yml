@@ -10,10 +10,11 @@ php:
   - 7
   - nightly
   - hhvm
- 
+
 matrix:
   allow_failures:
     - php: hhvm
+    - php: 5.2 # no xdebug installed within container based environment
 
 sudo: false
 

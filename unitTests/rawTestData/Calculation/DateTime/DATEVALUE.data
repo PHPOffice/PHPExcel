@@ -23,7 +23,7 @@
 "31-12-2008",			39813		//		PHPExcel tries to handle both US and UK formats, irrespective of country settings
 "8/22/2008",			39682		//	MS Excel success or failure dependent on country settings
 "22/8/2008",			39682		//		PHPExcel tries to handle both US and UK formats, irrespective of country settings
-"22/8/08",			39682
+"22/8/08",			39682		//	MS Excel reads 22-08-2008 (dependent on country settings?) PHPExcel currently reads 08-08-2022 - FIX NEEDED?
 "22-AUG-2008",			39682
 "2008/02/23",			39501
 "6-7-2008",			39635
@@ -35,11 +35,11 @@
 "22 August 98",			36029
 "1st March 2007",		39142		//	MS Excel will fail with a #VALUE return, but PHPExcel can parse this date
 "The 1st day of March 2007",	"#VALUE!"
-"1 Jan",			41275
-"31/12",			41639
-"12/31",			11658		//	Excel reads as 1st December 1931, not 31st December in current year
-"5-JUL",			41460
-"5 Jul",			41460
+"1 Jan",			42005		//	dependent on "current" year! more dynamic provider logic needed?
+"31/12",			42369		//	dependent on "current" year! more dynamic provider logic needed?
+"12/31",			11658		//	Excel reads as 1st December 1931, not 31st December in current year - FIX NEEDED?
+"5-JUL",			42190		//	dependent on "current" year! more dynamic provider logic needed?
+"5 Jul",			42190		//	dependent on "current" year! more dynamic provider logic needed?
 "12/2008",			39783
 "10/32",			11963
 11,				"#VALUE!"

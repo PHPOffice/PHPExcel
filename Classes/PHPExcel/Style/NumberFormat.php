@@ -264,7 +264,7 @@ class PHPExcel_Style_NumberFormat extends PHPExcel_Style_Supervisor implements P
         //      40: "#,##0.00_);[Red](#,##0.00)"
         //      47: "mm:ss.0"
         //      KOR fmt 55: "yyyy/mm/dd"
- 
+
         // Built-in format codes
         if (is_null(self::$builtInFormats)) {
             self::$builtInFormats = array();
@@ -444,11 +444,13 @@ class PHPExcel_Style_NumberFormat extends PHPExcel_Style_Supervisor implements P
             'h'  => 'g'
         );
 
-    private static function setLowercaseCallback($matches) {
+    private static function setLowercaseCallback($matches)
+    {
         return mb_strtolower($matches[0]);
     }
 
-    private static function escapeQuotesCallback($matches) {
+    private static function escapeQuotesCallback($matches)
+    {
         return '\\' . implode('\\', str_split($matches[1]));
     }
 

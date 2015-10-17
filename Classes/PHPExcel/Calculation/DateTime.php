@@ -1286,7 +1286,7 @@ class PHPExcel_Calculation_DateTime
     {
         $dateValue    = PHPExcel_Calculation_Functions::flattenSingleValue($dateValue);
 
-        if ($dateValue === null) {
+        if (!$dateValue) {
             $dateValue = 1;
         } elseif (is_string($dateValue = self::getDateValue($dateValue))) {
             return PHPExcel_Calculation_Functions::VALUE();

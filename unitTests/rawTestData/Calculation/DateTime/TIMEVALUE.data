@@ -9,5 +9,5 @@
 "9:44:55 pm",		0.90619213
 12,			"#VALUE!"
 "13:01",		0.542361111
-"33:45",		0.40625
+"33:45",		0.40625		//	date_parse("33:45") delivers error "unexpected character" - MS Excel parses "01.01.1900  09:45:00" and so 0.40625 - FIX NEEDED?
 "13:01PM",		"#VALUE!"

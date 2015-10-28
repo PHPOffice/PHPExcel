@@ -2337,7 +2337,7 @@ class PHPExcel_Calculation_Statistical
             if ($mValueCount == floor($mValueCount)) {
                 $returnValue = ($mArgs[$mValueCount--] + $mArgs[$mValueCount]) / 2;
             } else {
-                $mValueCount == floor($mValueCount);
+                $mValueCount = floor($mValueCount);
                 $returnValue = $mArgs[$mValueCount];
             }
         }

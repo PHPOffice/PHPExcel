@@ -115,7 +115,7 @@ class PHPExcel_Shared_String
             "\x1B :"  => chr(10),
             "\x1B ;"  => chr(11),
             "\x1B <"  => chr(12),
-            "\x1B :"  => chr(13),
+            "\x1B ="  => chr(13),
             "\x1B >"  => chr(14),
             "\x1B ?"  => chr(15),
             "\x1B!0"  => chr(16),

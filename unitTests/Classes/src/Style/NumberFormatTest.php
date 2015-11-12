@@ -1,20 +1,17 @@
 <?php
 
 
-require_once 'testDataFileIterator.php';
+require_once __DIR__.'/../../../testDataFileIterator.php';
 
 class NumberFormatTest extends PHPUnit_Framework_TestCase
 {
 
     public function setUp()
     {
-        if (!defined('PHPEXCEL_ROOT')) {
-            define('PHPEXCEL_ROOT', APPLICATION_PATH . '/');
-        }
-        require_once(PHPEXCEL_ROOT . 'PHPExcel/Autoloader.php');
+        require_once(__DIR__.'/../../../../src/Autoloader.php');
 
-        PHPExcel_Shared_String::setDecimalSeparator('.');
-        PHPExcel_Shared_String::setThousandsSeparator(',');
+        \PHPExcel\Shared\String::setDecimalSeparator('.');
+        \PHPExcel\Shared\String::setThousandsSeparator(',');
     }
 
     /**
@@ -24,12 +21,12 @@ class NumberFormatTest extends PHPUnit_Framework_TestCase
     {
         $args = func_get_args();
         $expectedResult = array_pop($args);
-        $result = call_user_func_array(array('PHPExcel_Style_NumberFormat','toFormattedString'), $args);
+        $result = call_user_func_array(array('\PHPExcel\Style\NumberFormat','toFormattedString'), $args);
         $this->assertEquals($expectedResult, $result);
     }
 
     public function providerNumberFormat()
     {
-        return new testDataFileIterator('rawTestData/Style/NumberFormat.data');
+        return new testDataFileIterator(__DIR__.'/../../../rawTestData/Style/NumberFormat.data');
     }
 }

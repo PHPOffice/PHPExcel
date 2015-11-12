@@ -6,10 +6,7 @@ class TimeZoneTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        if (!defined('PHPEXCEL_ROOT')) {
-            define('PHPEXCEL_ROOT', APPLICATION_PATH . '/');
-        }
-        require_once(PHPEXCEL_ROOT . 'PHPExcel/Autoloader.php');
+        require_once(__DIR__.'/../../../../src/Autoloader.php');
     }
 
     public function testSetTimezone()
@@ -23,7 +20,7 @@ class TimeZoneTest extends PHPUnit_Framework_TestCase
         );
 
         foreach ($timezoneValues as $timezoneValue) {
-            $result = call_user_func(array('PHPExcel_Shared_TimeZone','setTimezone'), $timezoneValue);
+            $result = call_user_func(array('\PHPExcel\Shared\TimeZone','setTimezone'), $timezoneValue);
             $this->assertTrue($result);
         }
 
@@ -32,7 +29,7 @@ class TimeZoneTest extends PHPUnit_Framework_TestCase
     public function testSetTimezoneWithInvalidValue()
     {
         $unsupportedTimezone = 'Etc/GMT+10';
-        $result = call_user_func(array('PHPExcel_Shared_TimeZone','setTimezone'), $unsupportedTimezone);
+        $result = call_user_func(array('\PHPExcel\Shared\TimeZone','setTimezone'), $unsupportedTimezone);
         $this->assertFalse($result);
     }
 }

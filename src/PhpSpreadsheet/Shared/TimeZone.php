@@ -45,7 +45,7 @@ class TimeZone
      */
     private static function validateTimeZone($timezone)
     {
-        if (in_array($timezone, DateTimeZone::listIdentifiers())) {
+        if (in_array($timezone, \DateTimeZone::listIdentifiers())) {
             return true;
         }
         return false;

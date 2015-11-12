@@ -1,36 +1,33 @@
 <?php
 
 
-require_once 'testDataFileIterator.php';
+require_once __DIR__.'/../../../testDataFileIterator.php';
 
 class FontTest extends PHPUnit_Framework_TestCase
 {
 
     public function setUp()
     {
-        if (!defined('PHPEXCEL_ROOT')) {
-            define('PHPEXCEL_ROOT', APPLICATION_PATH . '/');
-        }
-        require_once(PHPEXCEL_ROOT . 'PHPExcel/Autoloader.php');
+        require_once(__DIR__.'/../../../../src/Autoloader.php');
     }
 
     public function testGetAutoSizeMethod()
     {
-        $expectedResult = PHPExcel_Shared_Font::AUTOSIZE_METHOD_APPROX;
+        $expectedResult = \PHPExcel\Shared\Font::AUTOSIZE_METHOD_APPROX;
 
-        $result = call_user_func(array('PHPExcel_Shared_Font','getAutoSizeMethod'));
+        $result = call_user_func(array('\PHPExcel\Shared\Font','getAutoSizeMethod'));
         $this->assertEquals($expectedResult, $result);
     }
 
     public function testSetAutoSizeMethod()
     {
         $autosizeMethodValues = array(
-            PHPExcel_Shared_Font::AUTOSIZE_METHOD_EXACT,
-            PHPExcel_Shared_Font::AUTOSIZE_METHOD_APPROX,
+            \PHPExcel\Shared\Font::AUTOSIZE_METHOD_EXACT,
+            \PHPExcel\Shared\Font::AUTOSIZE_METHOD_APPROX,
         );
 
         foreach ($autosizeMethodValues as $autosizeMethodValue) {
-            $result = call_user_func(array('PHPExcel_Shared_Font','setAutoSizeMethod'), $autosizeMethodValue);
+            $result = call_user_func(array('\PHPExcel\Shared\Font','setAutoSizeMethod'), $autosizeMethodValue);
             $this->assertTrue($result);
         }
     }
@@ -39,7 +36,7 @@ class FontTest extends PHPUnit_Framework_TestCase
     {
         $unsupportedAutosizeMethod = 'guess';
 
-        $result = call_user_func(array('PHPExcel_Shared_Font','setAutoSizeMethod'), $unsupportedAutosizeMethod);
+        $result = call_user_func(array('\PHPExcel\Shared\Font','setAutoSizeMethod'), $unsupportedAutosizeMethod);
         $this->assertFalse($result);
     }
 
@@ -50,13 +47,13 @@ class FontTest extends PHPUnit_Framework_TestCase
     {
         $args = func_get_args();
         $expectedResult = array_pop($args);
-        $result = call_user_func_array(array('PHPExcel_Shared_Font','fontSizeToPixels'), $args);
+        $result = call_user_func_array(array('\PHPExcel\Shared\Font','fontSizeToPixels'), $args);
         $this->assertEquals($expectedResult, $result);
     }
 
     public function providerFontSizeToPixels()
     {
-        return new testDataFileIterator('rawTestData/Shared/FontSizeToPixels.data');
+        return new testDataFileIterator(__DIR__.'/../../../rawTestData/Shared/FontSizeToPixels.data');
     }
 
     /**
@@ -66,13 +63,13 @@ class FontTest extends PHPUnit_Framework_TestCase
     {
         $args = func_get_args();
         $expectedResult = array_pop($args);
-        $result = call_user_func_array(array('PHPExcel_Shared_Font','inchSizeToPixels'), $args);
+        $result = call_user_func_array(array('\PHPExcel\Shared\Font','inchSizeToPixels'), $args);
         $this->assertEquals($expectedResult, $result);
     }
 
     public function providerInchSizeToPixels()
     {
-        return new testDataFileIterator('rawTestData/Shared/InchSizeToPixels.data');
+        return new testDataFileIterator(__DIR__.'/../../../rawTestData/Shared/InchSizeToPixels.data');
     }
 
     /**
@@ -82,12 +79,12 @@ class FontTest extends PHPUnit_Framework_TestCase
     {
         $args = func_get_args();
         $expectedResult = array_pop($args);
-        $result = call_user_func_array(array('PHPExcel_Shared_Font','centimeterSizeToPixels'), $args);
+        $result = call_user_func_array(array('\PHPExcel\Shared\Font','centimeterSizeToPixels'), $args);
         $this->assertEquals($expectedResult, $result);
     }
 
     public function providerCentimeterSizeToPixels()
     {
-        return new testDataFileIterator('rawTestData/Shared/CentimeterSizeToPixels.data');
+        return new testDataFileIterator(__DIR__.'/../../../rawTestData/Shared/CentimeterSizeToPixels.data');
     }
 }

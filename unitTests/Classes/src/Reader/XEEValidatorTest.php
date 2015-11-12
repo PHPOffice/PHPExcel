@@ -6,19 +6,16 @@ class XEEValidatorTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        if (!defined('PHPEXCEL_ROOT')) {
-            define('PHPEXCEL_ROOT', APPLICATION_PATH . '/');
-        }
-        require_once(PHPEXCEL_ROOT . 'PHPExcel/Autoloader.php');
+        require_once(__DIR__.'/../../../../src/Autoloader.php');
     }
 
     /**
      * @dataProvider providerInvalidXML
-     * @expectedException PHPExcel_Reader_Exception
+     * @expectedException \PHPExcel\Reader\Exception
      */
     public function testInvalidXML($filename)
     {
-        $reader = $this->getMockForAbstractClass('PHPExcel_Reader_Abstract');
+        $reader = $this->getMockForAbstractClass('\PHPExcel\Reader\BaseReader');
         $expectedResult = 'FAILURE: Should throw an Exception rather than return a value';
         $result = $reader->securityScanFile($filename);
         $this->assertEquals($expectedResult, $result);
@@ -38,7 +35,7 @@ class XEEValidatorTest extends PHPUnit_Framework_TestCase
      */
     public function testValidXML($filename, $expectedResult)
     {
-        $reader = $this->getMockForAbstractClass('PHPExcel_Reader_Abstract');
+        $reader = $this->getMockForAbstractClass('\PHPExcel\Reader\BaseReader');
         $result = $reader->securityScanFile($filename);
         $this->assertEquals($expectedResult, $result);
     }

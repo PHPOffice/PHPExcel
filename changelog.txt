@@ -26,8 +26,11 @@
 Planned for 1.8.2
 - Bugfix:   (MBaker)                            - Fix to getCell() method when cell reference includes a worksheet reference
 - Bugfix:   (ncrypthic)       Work Item GH-570  - Ignore inlineStr type if formula element exists
+- Bugfix:   (hernst42)        Work Item GH-709  - Fixed missing renames of writeRelationShip (from _writeRelationShip)
 - General:  (umpirsky)        Work Item GH-548  - Optimize vlookup() sort
 - Bugfix:   (MBaker)          Work Item GH-554  - Whitespace after toRichTextObject()
+- Feature:  (MBaker)                            - Initial implementation of SUMIFS() function
+- Feature:  (MBaker)                            - Additional codepages
 
 
 2015-04-30 (v1.8.1):
@@ -68,8 +71,7 @@ Planned for 1.8.2
                                                     (see http://projects.webappsec.org/w/page/13247002/XML%20Entity%20Expansion for an explanation of XEE injection) attacks
                                                   Reference CVE-2015-3542 - Identification of problem courtesy of Dawid Golunski (Pentest Ltd.)
 
-
-                                                  2014-03-02 (v1.8.0):
+2014-03-02 (v1.8.0):
 - Bugfix:   (MBaker)          Work item CP19830 - Undefined variable: fileHandle in CSV Reader
 - Bugfix:   (MBaker)          Work item CP19968 - Out of memory in style/supervisor.php
 - Bugfix:   (MBaker)                            - Style error with merged cells in PDF Writer

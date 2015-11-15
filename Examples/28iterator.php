@@ -38,15 +38,11 @@ date_default_timezone_set('Europe/London');
 require_once dirname(__FILE__) . '/../Classes/PHPExcel/IOFactory.php';
 
 
-if (!file_exists("05featuredemo.xlsx")) {
-	exit("Please run 05featuredemo.php first." . EOL);
-}
-
 echo date('H:i:s') , " Load from Excel2007 file" , EOL;
 $objReader = PHPExcel_IOFactory::createReader('Excel2007');
-$objPHPExcel = $objReader->load("05featuredemo.xlsx");
+$objPHPExcel = $objReader->load("./templates/28iterators.xlsx");
 
-echo date('H:i:s') , " Iterate worksheets" , EOL;
+echo date('H:i:s') , " Iterate worksheets by Row" , EOL;
 foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
 	echo 'Worksheet - ' , $worksheet->getTitle() , EOL;
 
@@ -55,6 +51,24 @@ foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
 
 		$cellIterator = $row->getCellIterator();
 		$cellIterator->setIterateOnlyExistingCells(false); // Loop all cells, even if it is not set
+		foreach ($cellIterator as $cell) {
+			if (!is_null($cell)) {
+				echo '        Cell - ' , $cell->getCoordinate() , ' - ' , $cell->getCalculatedValue() , EOL;
+			}
+		}
+	}
+}
+
+
+echo date('H:i:s') , " Iterate worksheets by Column" , EOL;
+foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
+	echo 'Worksheet - ' , $worksheet->getTitle() , EOL;
+
+	foreach ($worksheet->getColumnIterator() as $column) {
+		echo '    Column index - ' , $column->getColumnIndex() , EOL;
+
+		$cellIterator = $column->getCellIterator();
+		$cellIterator->setIterateOnlyExistingCells(true); // Loop all cells, even if it is not set
 		foreach ($cellIterator as $cell) {
 			if (!is_null($cell)) {
 				echo '        Cell - ' , $cell->getCoordinate() , ' - ' , $cell->getCalculatedValue() , EOL;

@@ -861,10 +861,10 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
         $this->title = $pValue;
         $this->dirty = true;
 
-        if ($this->parent) {
+        if ($this->parent && $this->parent->getCalculationEngine()) {
             // New title
             $newTitle = $this->getTitle();
-            PHPExcel_Calculation::getInstance($this->parent)
+            $this->parent->getCalculationEngine()
                 ->renameCalculationCacheForWorksheet($oldTitle, $newTitle);
             if ($updateFormulaCellReferences) {
                 PHPExcel_ReferenceHelper::getInstance()->updateNamedFormulas($this->parent, $oldTitle, $newTitle);

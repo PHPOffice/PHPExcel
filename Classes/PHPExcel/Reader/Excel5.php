@@ -1753,7 +1753,7 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
         
         // move stream pointer to next record
         $this->pos += 4 + $length;
-        
+
         if (!$this->verifyPassword('VelvetSweatshop', substr($recordData, 6, 16), substr($recordData, 22, 16), substr($recordData, 38, 16), $this->md5Ctxt)) {
             throw new PHPExcel_Reader_Exception('Decryption password incorrect');
         }

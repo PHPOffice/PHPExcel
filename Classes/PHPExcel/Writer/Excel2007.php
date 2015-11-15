@@ -297,7 +297,7 @@ class PHPExcel_Writer_Excel2007 extends PHPExcel_Writer_Abstract implements PHPE
                     $charts = $this->spreadSheet->getSheet($i)->getChartCollection();
                     if (count($charts) > 0) {
                         foreach ($charts as $chart) {
-                            $objZip->addFromString('xl/charts/chart' . ($chartCount + 1) . '.xml', $this->getWriterPart('Chart')->writeChart($chart));
+                            $objZip->addFromString('xl/charts/chart' . ($chartCount + 1) . '.xml', $this->getWriterPart('Chart')->writeChart($chart, $this->preCalculateFormulas));
                             $chartCount++;
                         }
                     }

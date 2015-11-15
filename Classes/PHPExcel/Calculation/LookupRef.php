@@ -780,7 +780,7 @@ class PHPExcel_Calculation_LookupRef
         } else {
             $f = array_keys($lookup_array);
             $firstRow = array_pop($f);
-            if ((!is_array($lookup_array[$firstRow])) || ($index_number > count($lookup_array[$firstRow]))) {
+            if ((!is_array($lookup_array[$firstRow]))) {
                 return PHPExcel_Calculation_Functions::REF();
             } else {
                 $columnKeys = array_keys($lookup_array[$firstRow]);

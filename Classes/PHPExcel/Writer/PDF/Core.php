@@ -1,8 +1,9 @@
 <?php
+
 /**
- *  PHPExcel
+ *  PHPExcel_Writer_PDF_Core
  *
- *  Copyright (c) 2006 - 2014 PHPExcel
+ *  Copyright (c) 2006 - 2015 PHPExcel
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -20,18 +21,9 @@
  *
  *  @category    PHPExcel
  *  @package     PHPExcel_Writer_PDF
- *  @copyright   Copyright (c) 2006 - 2014 PHPExcel (http://www.codeplex.com/PHPExcel)
+ *  @copyright   Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
  *  @license     http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  *  @version     ##VERSION##, ##DATE##
- */
-
-
-/**
- *  PHPExcel_Writer_PDF_Core
- *
- *  @category    PHPExcel
- *  @package     PHPExcel_Writer_PDF
- *  @copyright   Copyright (c) 2006 - 2014 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
 abstract class PHPExcel_Writer_PDF_Core extends PHPExcel_Writer_HTML
 {
@@ -40,28 +32,28 @@ abstract class PHPExcel_Writer_PDF_Core extends PHPExcel_Writer_HTML
      *
      * @var string
      */
-    protected $_tempDir = '';
+    protected $tempDir = '';
 
     /**
      * Font
      *
      * @var string
      */
-    protected $_font = 'freesans';
+    protected $font = 'freesans';
 
     /**
      * Orientation (Over-ride)
      *
      * @var string
      */
-    protected $_orientation    = NULL;
+    protected $orientation;
 
     /**
      * Paper size (Over-ride)
      *
      * @var int
      */
-    protected $_paperSize    = NULL;
+    protected $paperSize;
 
 
     /**
@@ -69,14 +61,14 @@ abstract class PHPExcel_Writer_PDF_Core extends PHPExcel_Writer_HTML
      *
      * @var string
      */
-	private $_saveArrayReturnType;
+    private $saveArrayReturnType;
 
     /**
      * Paper Sizes xRef List
      *
      * @var array
      */
-    protected static $_paperSizes = array(
+    protected static $paperSizes = array(
         PHPExcel_Worksheet_PageSetup::PAPERSIZE_LETTER
             => 'LETTER',                 //    (8.5 in. by 11 in.)
         PHPExcel_Worksheet_PageSetup::PAPERSIZE_LETTER_SMALL
@@ -219,8 +211,8 @@ abstract class PHPExcel_Writer_PDF_Core extends PHPExcel_Writer_HTML
     public function __construct(PHPExcel $phpExcel)
     {
         parent::__construct($phpExcel);
-        $this->setUseInlineCss(TRUE);
-        $this->_tempDir = PHPExcel_Shared_File::sys_get_temp_dir();
+        $this->setUseInlineCss(true);
+        $this->tempDir = PHPExcel_Shared_File::sys_get_temp_dir();
     }
 
     /**
@@ -230,7 +222,7 @@ abstract class PHPExcel_Writer_PDF_Core extends PHPExcel_Writer_HTML
      */
     public function getFont()
     {
-        return $this->_font;
+        return $this->font;
     }
 
     /**
@@ -244,7 +236,7 @@ abstract class PHPExcel_Writer_PDF_Core extends PHPExcel_Writer_HTML
      */
     public function setFont($fontName)
     {
-        $this->_font = $fontName;
+        $this->font = $fontName;
         return $this;
     }
 
@@ -255,7 +247,7 @@ abstract class PHPExcel_Writer_PDF_Core extends PHPExcel_Writer_HTML
      */
     public function getPaperSize()
     {
-        return $this->_paperSize;
+        return $this->paperSize;
     }
 
     /**
@@ -266,7 +258,7 @@ abstract class PHPExcel_Writer_PDF_Core extends PHPExcel_Writer_HTML
      */
     public function setPaperSize($pValue = PHPExcel_Worksheet_PageSetup::PAPERSIZE_LETTER)
     {
-        $this->_paperSize = $pValue;
+        $this->paperSize = $pValue;
         return $this;
     }
 
@@ -277,7 +269,7 @@ abstract class PHPExcel_Writer_PDF_Core extends PHPExcel_Writer_HTML
      */
     public function getOrientation()
     {
-        return $this->_orientation;
+        return $this->orientation;
     }
 
     /**
@@ -288,7 +280,7 @@ abstract class PHPExcel_Writer_PDF_Core extends PHPExcel_Writer_HTML
      */
     public function setOrientation($pValue = PHPExcel_Worksheet_PageSetup::ORIENTATION_DEFAULT)
     {
-        $this->_orientation = $pValue;
+        $this->orientation = $pValue;
         return $this;
     }
 
@@ -299,7 +291,7 @@ abstract class PHPExcel_Writer_PDF_Core extends PHPExcel_Writer_HTML
      */
     public function getTempDir()
     {
-        return $this->_tempDir;
+        return $this->tempDir;
     }
 
     /**
@@ -312,7 +304,7 @@ abstract class PHPExcel_Writer_PDF_Core extends PHPExcel_Writer_HTML
     public function setTempDir($pValue = '')
     {
         if (is_dir($pValue)) {
-            $this->_tempDir = $pValue;
+            $this->tempDir = $pValue;
         } else {
             throw new PHPExcel_Writer_Exception("Directory does not exist: $pValue");
         }
@@ -325,24 +317,24 @@ abstract class PHPExcel_Writer_PDF_Core extends PHPExcel_Writer_HTML
      *  @param     string     $pFilename   Name of the file to save as
      *  @throws    PHPExcel_Writer_Exception
      */
-    protected function prepareForSave($pFilename = NULL)
+    protected function prepareForSave($pFilename = null)
     {
         //  garbage collect
-        $this->_phpExcel->garbageCollect();
+        $this->phpExcel->garbageCollect();
 
-        $this->_saveArrayReturnType = PHPExcel_Calculation::getArrayReturnType();
+        $this->saveArrayReturnType = PHPExcel_Calculation::getArrayReturnType();
         PHPExcel_Calculation::setArrayReturnType(PHPExcel_Calculation::RETURN_ARRAY_AS_VALUE);
 
         //  Open file
         $fileHandle = fopen($pFilename, 'w');
-        if ($fileHandle === FALSE) {
+        if ($fileHandle === false) {
             throw new PHPExcel_Writer_Exception("Could not open file $pFilename for writing.");
         }
 
         //  Set PDF
-        $this->_isPdf = TRUE;
+        $this->isPdf = true;
         //  Build CSS
-        $this->buildCSS(TRUE);
+        $this->buildCSS(true);
 
         return $fileHandle;
     }
@@ -358,7 +350,6 @@ abstract class PHPExcel_Writer_PDF_Core extends PHPExcel_Writer_HTML
         //  Close file
         fclose($fileHandle);
 
-        PHPExcel_Calculation::setArrayReturnType($this->_saveArrayReturnType);
+        PHPExcel_Calculation::setArrayReturnType($this->saveArrayReturnType);
     }
-
 }

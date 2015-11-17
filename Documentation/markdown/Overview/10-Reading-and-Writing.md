@@ -625,7 +625,7 @@ Library | Version used for testing | Downloadable from                | PHPExcel
 --------|--------------------------|----------------------------------|----------------------------
 tcPDF   | 5.9                      | http://www.tcpdf.org/            | PDF_RENDERER_TCPDF
 mPDF    | 5.4                      | http://www.mpdf1.com/mpdf/       | PDF_RENDERER_MPDF
-domPDF  | 0.6.0 beta 3             | http://code.google.com/p/dompdf/ | PDF_RENDERER_DOMPDF
+domPDF  | 0.6.0 beta 3             | http://dompdf.github.io/         | PDF_RENDERER_DOMPDF
 
 The different libraries have different strengths and weaknesses. Some generate better formatted output than others, some are faster or use less memory than others, while some generate smaller .pdf files. It is the developers choice which one they wish to use, appropriate to their own circumstances.
 

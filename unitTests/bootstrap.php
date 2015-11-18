@@ -45,5 +45,8 @@ if (extension_loaded('xdebug')) {
     echo "Xdebug extension loaded and running\n";
     xdebug_enable();
 } else {
-    echo 'Xdebug not found, you should run the following at the command line: echo "zend_extension=/usr/lib64/php/modules/xdebug.so" > /etc/php.d/xdebug.ini' . "\n";
+    printf(
+        "Xdebug not found, you should run the following at the command line: echo 'zend_extension=%s/xdebug.so' | sudo tee -a `php -i | grep 'Loaded Configuration File' | awk '{print \$5}'`\n",
+        ini_get("extension_dir")
+    );
 }

@@ -2146,9 +2146,9 @@ class PHPExcel_Calculation_Financial
         if ((!is_array($values)) && (!is_array($dates))) {
             return PHPExcel_Calculation_Functions::VALUE();
         }
-        $values    = PHPExcel_Calculation_Functions::flattenArray($values);
-        $dates    = PHPExcel_Calculation_Functions::flattenArray($dates);
-        $guess = PHPExcel_Calculation_Functions::flattenSingleValue($guess);
+        $values = PHPExcel_Calculation_Functions::flattenArray($values);
+        $dates  = PHPExcel_Calculation_Functions::flattenArray($dates);
+        $guess  = PHPExcel_Calculation_Functions::flattenSingleValue($guess);
         if (count($values) != count($dates)) {
             return PHPExcel_Calculation_Functions::NaN();
         }

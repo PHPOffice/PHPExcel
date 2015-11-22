@@ -555,10 +555,8 @@ class PHPExcel_Calculation_Functions
             case 'float':
             case 'integer':
                 return $value;
-                break;
             case 'boolean':
                 return (integer) $value;
-                break;
             case 'string':
                 //    Errors
                 if ((strlen($value) > 0) && ($value{0} == '#')) {

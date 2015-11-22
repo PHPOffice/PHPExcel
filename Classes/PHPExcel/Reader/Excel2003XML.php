@@ -401,11 +401,7 @@ class PHPExcel_Reader_Excel2003XML extends PHPExcel_Reader_Abstract implements P
             $style_ss = $style->attributes($namespaces['ss']);
             $styleID = (string) $style_ss['ID'];
 //            echo 'Style ID = '.$styleID.'<br />';
-            if ($styleID == 'Default') {
-                $this->styles['Default'] = array();
-            } else {
-                $this->styles[$styleID] = $this->styles['Default'];
-            }
+            $this->styles[$styleID] = (isset($this->styles['Default'])) ? $this->styles['Default'] : array();
             foreach ($style as $styleType => $styleData) {
                 $styleAttributes = $styleData->attributes($namespaces['ss']);
 //                echo $styleType.'<br />';

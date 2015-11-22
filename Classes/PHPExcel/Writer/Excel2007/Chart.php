@@ -27,6 +27,8 @@
  */
 class PHPExcel_Writer_Excel2007_Chart extends PHPExcel_Writer_Excel2007_WriterPart
 {
+    protected $calculateCellValues;
+
     /**
      * Write charts to XML format
      *
@@ -35,8 +37,10 @@ class PHPExcel_Writer_Excel2007_Chart extends PHPExcel_Writer_Excel2007_WriterPa
      * @return  string            XML Output
      * @throws  PHPExcel_Writer_Exception
      */
-    public function writeChart(PHPExcel_Chart $pChart = null)
+    public function writeChart(PHPExcel_Chart $pChart = null, $calculateCellValues = true)
     {
+        $this->calculateCellValues = $calculateCellValues;
+
         // Create XML writer
         $objWriter = null;
         if ($this->getParentWriter()->getUseDiskCaching()) {
@@ -45,7 +49,9 @@ class PHPExcel_Writer_Excel2007_Chart extends PHPExcel_Writer_Excel2007_WriterPa
             $objWriter = new PHPExcel_Shared_XMLWriter(PHPExcel_Shared_XMLWriter::STORAGE_MEMORY);
         }
         //    Ensure that data series values are up-to-date before we save
-        $pChart->refresh();
+        if ($this->calculateCellValues) {
+            $pChart->refresh();
+        }
 
         // XML header
         $objWriter->startDocument('1.0', 'UTF-8', 'yes');

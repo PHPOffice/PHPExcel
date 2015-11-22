@@ -419,6 +419,22 @@ class MathTrigTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @dataProvider providerSUMIFS
+     */
+    public function testSUMIFS()
+    {
+        $args = func_get_args();
+        $expectedResult = array_pop($args);
+        $result = call_user_func_array(array('PHPExcel_Calculation_MathTrig','SUMIFS'), $args);
+        $this->assertEquals($expectedResult, $result, null, 1E-12);
+    }
+
+    public function providerSUMIFS()
+    {
+        return new testDataFileIterator('rawTestData/Calculation/MathTrig/SUMIFS.data');
+    }
+
+    /**
      * @dataProvider providerSUMSQ
      */
     public function testSUMSQ()

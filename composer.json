@@ -22,7 +22,7 @@
         }
     ],
     "require": {
-        "php": ">=5.2.0",
+        "php": "^5.2|^7.0",
         "ext-mbstring": "*",
         "ext-xml": "*",
         "ext-xmlwriter": "*"

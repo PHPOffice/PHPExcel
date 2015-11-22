@@ -364,7 +364,7 @@ class PHPExcel
     public function __construct()
     {
         $this->uniqueID = uniqid();
-        $this->calculationEngine = PHPExcel_Calculation::getInstance($this);
+        $this->calculationEngine = new PHPExcel_Calculation($this);
 
         // Initialise worksheet collection and add one worksheet
         $this->workSheetCollection = array();
@@ -395,7 +395,7 @@ class PHPExcel
      */
     public function __destruct()
     {
-        PHPExcel_Calculation::unsetInstance($this);
+        $this->calculationEngine = null;
         $this->disconnectWorksheets();
     }
 

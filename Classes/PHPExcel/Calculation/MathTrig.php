@@ -1220,6 +1220,66 @@ class PHPExcel_Calculation_MathTrig
     }
 
 
+ 	/**
+	 *	SUMIFS
+	 *
+	 *	Counts the number of cells that contain numbers within the list of arguments
+	 *
+	 *	Excel Function:
+	 *		SUMIFS(value1[,value2[, ...]],condition)
+	 *
+	 *	@access	public
+	 *	@category Mathematical and Trigonometric Functions
+	 *	@param	mixed		$arg,...		Data values
+	 *	@param	string		$condition		The criteria that defines which cells will be summed.
+	 *	@return	float
+	 */
+	public static function SUMIFS() {
+		$arrayList = func_get_args();
+
+		$sumArgs = PHPExcel_Calculation_Functions::flattenArray(array_shift($arrayList));
+
+        while (count($arrayList) > 0) {
+            $aArgsArray[] = PHPExcel_Calculation_Functions::flattenArray(array_shift($arrayList));
+            $conditions[] = PHPExcel_Calculation_Functions::ifCondition(array_shift($arrayList));
+        }
+
+        // Loop through each set of arguments and conditions
+        foreach ($conditions as $index => $condition) {
+            $aArgs = $aArgsArray[$index];
+            $wildcard = false;
+            if ((strpos($condition, '*') !== false) || (strpos($condition, '?') !== false)) {
+                // * and ? are wildcard characters.
+                // Use ~* and ~? for literal star and question mark
+                // Code logic doesn't yet handle escaping
+                $condition = trim(ltrim($condition, '=<>'), '"');
+                $wildcard = true;
+            }
+            // Loop through arguments
+            foreach ($aArgs as $key => $arg) {
+                if ($wildcard) {
+                    if (!fnmatch($condition, $arg, FNM_CASEFOLD)) {
+                        // Is it a value within our criteria
+                        $sumArgs[$key] = 0.0;
+                    }
+                } else {
+                    if (!is_numeric($arg)) {
+                        $arg = PHPExcel_Calculation::wrapResult(strtoupper($arg));
+                    }
+                    $testCondition = '='.$arg.$condition;
+                    if (!PHPExcel_Calculation::getInstance()->_calculateFormulaValue($testCondition)) {
+                        // Is it a value within our criteria
+                        $sumArgs[$key] = 0.0;
+                    }
+                }
+            }
+        }
+
+		// Return
+		return array_sum($sumArgs);
+	}
+
+
     /**
      * SUMPRODUCT
      *

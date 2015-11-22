@@ -691,6 +691,8 @@ class PHPExcel_Style_NumberFormat extends PHPExcel_Style_Supervisor implements P
                     // scale number
                     $value = $value / $scale;
 
+                    $decimalsFormat = strstr($format, '.');
+                    $optionalDecimalsCount = strlen($decimalsFormat) - strlen(rtrim($decimalsFormat, '#'));
                     // Strip #
                     $format = preg_replace('/\\#/', '0', $format);
 
@@ -724,6 +726,11 @@ class PHPExcel_Style_NumberFormat extends PHPExcel_Style_Supervisor implements P
                                 $value = preg_replace($number_regex, $value, $format);
                             }
                         }
+                    }
+
+                    while ($optionalDecimalsCount > 0 && substr($value, -1) === '0') {
+                        $value = substr($value, 0, -1);
+                        $optionalDecimalsCount--;
                     }
                 }
                 if (preg_match('/\[\$(.*)\]/u', $format, $m)) {

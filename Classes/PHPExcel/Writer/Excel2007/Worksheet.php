@@ -259,7 +259,7 @@ class PHPExcel_Writer_Excel2007_Worksheet extends PHPExcel_Writer_Excel2007_Writ
         $pane = '';
         $topLeftCell = $pSheet->getFreezePane();
         if (($topLeftCell != '') && ($topLeftCell != 'A1')) {
-            $activeCell = $topLeftCell;
+            $activeCell = empty($activeCell) ? $topLeftCell : $activeCell;
             // Calculate freeze coordinates
             $xSplit = $ySplit = 0;
 

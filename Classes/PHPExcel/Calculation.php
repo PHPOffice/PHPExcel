@@ -210,10 +210,10 @@ class PHPExcel_Calculation
     /**
      * Epsilon Precision used for comparisons in calculations
      *
-     * @var integer
+     * @var float
      *
      */
-    private $delta    = 0.0000000000001;
+    private $delta    = 0.1e-12;
 
 
     /**

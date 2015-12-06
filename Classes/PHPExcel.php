@@ -141,7 +141,7 @@ class PHPExcel
     /**
     * The workbook has macros ?
     *
-    * @return true if workbook has macros, false if not
+    * @return boolean true if workbook has macros, false if not
     */
     public function hasMacros()
     {
@@ -312,7 +312,7 @@ class PHPExcel
     /**
     * This workbook have a custom UI ?
     *
-    * @return true|false
+    * @return boolean true|false
     */
     public function hasRibbon()
     {
@@ -322,7 +322,7 @@ class PHPExcel
     /**
     * This workbook have additionnal object for the ribbon ?
     *
-    * @return true|false
+    * @return boolean true|false
     */
     public function hasRibbonBinObjects()
     {
@@ -621,7 +621,7 @@ class PHPExcel
      * Get index for sheet
      *
      * @param  PHPExcel_Worksheet $pSheet
-     * @return Sheet index
+     * @return int Sheet index
      * @throws PHPExcel_Exception
      */
     public function getIndex(PHPExcel_Worksheet $pSheet)
@@ -640,7 +640,7 @@ class PHPExcel
      *
      * @param  string $sheetName Sheet name to modify index for
      * @param  int $newIndex New index for the sheet
-     * @return New sheet index
+     * @return int New sheet index
      * @throws PHPExcel_Exception
      */
     public function setIndexByName($sheetName, $newIndex)
@@ -782,7 +782,7 @@ class PHPExcel
      * Add named range
      *
      * @param  PHPExcel_NamedRange $namedRange
-     * @return PHPExcel
+     * @return boolean
      */
     public function addNamedRange(PHPExcel_NamedRange $namedRange)
     {
@@ -908,7 +908,7 @@ class PHPExcel
      * Get cellXf by hash code
      *
      * @param  string $pValue
-     * @return PHPExcel_Style|false
+     * @return PHPExcel_Style|boolean False if no match found
      */
     public function getCellXfByHashCode($pValue = '')
     {
@@ -1022,7 +1022,7 @@ class PHPExcel
      * Get cellStyleXf by hash code
      *
      * @param  string $pValue
-     * @return PHPExcel_Style|false
+     * @return PHPExcel_Style|boolean False if no match found
      */
     public function getCellStyleXfByHashCode($pValue = '')
     {
@@ -1095,6 +1095,7 @@ class PHPExcel
         // remove cellXfs without references and create mapping so we can update xfIndex
         // for all cells and columns
         $countNeededCellXfs = 0;
+        $map = array();
         foreach ($this->cellXfCollection as $index => $cellXf) {
             if ($countReferencesCellXf[$index] > 0 || $index == 0) { // we must never remove the first cellXf
                 ++$countNeededCellXfs;

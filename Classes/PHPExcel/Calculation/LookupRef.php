@@ -598,6 +598,16 @@ class PHPExcel_Calculation_LookupRef
      */
     public static function INDEX($arrayValues, $rowNum = 0, $columnNum = 0)
     {
+        
+        if(is_array($rowNum)){
+			foreach($rowNum as $k=>$v){
+				foreach($v as $k2=>$v2){
+					$rowNum = $v2;
+					break 2;
+				}
+			}
+		}
+		        
         if (($rowNum < 0) || ($columnNum < 0)) {
             return PHPExcel_Calculation_Functions::VALUE();
         }
@@ -770,7 +780,7 @@ class PHPExcel_Calculation_LookupRef
         } else {
             $f = array_keys($lookup_array);
             $firstRow = array_pop($f);
-            if ((!is_array($lookup_array[$firstRow])) || ($index_number > count($lookup_array[$firstRow]))) {
+            if ((!is_array($lookup_array[$firstRow]))) {
                 return PHPExcel_Calculation_Functions::REF();
             } else {
                 $columnKeys = array_keys($lookup_array[$firstRow]);

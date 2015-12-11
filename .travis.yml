@@ -7,21 +7,23 @@ php:
   - 5.4
   - 5.5
   - 5.6
+  - 7
+  - nightly
   - hhvm
- 
+
 matrix:
   allow_failures:
     - php: hhvm
 
+sudo: false
+
 before_script:
-  ## Packages
-  - sudo apt-get -qq update > /dev/null
   ## Composer
   ##@todo Remove when support of 5.2 will be dropped
-  - phpenv global 5.3
+  - if [[ "$TRAVIS_PHP_VERSION" == "5.2" ]]; then phpenv global 5.3; fi;
   - composer self-update
   - composer install --prefer-source --dev
-  - phpenv global "$TRAVIS_PHP_VERSION"
+  - if [[ "$TRAVIS_PHP_VERSION" == "5.2" ]]; then phpenv global "$TRAVIS_PHP_VERSION"; fi;
 
 script:
   ## PHP_CodeSniffer

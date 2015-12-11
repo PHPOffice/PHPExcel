@@ -242,7 +242,7 @@ class PHPExcel
     {
         $ReturnData = null;
         $What = strtolower($What);
-        switch ($What){
+        switch ($What) {
             case 'all':
                 $ReturnData = $this->ribbonXMLData;
                 break;
@@ -286,7 +286,7 @@ class PHPExcel
     {
         $ReturnData = null;
         $What = strtolower($What);
-        switch($What) {
+        switch ($What) {
             case 'all':
                 return $this->ribbonBinObjects;
                 break;

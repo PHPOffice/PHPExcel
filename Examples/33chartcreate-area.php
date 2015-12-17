@@ -99,9 +99,14 @@ $series = new PHPExcel_Chart_DataSeries(
 
 //	Set the series in the plot area
 $plotArea = new PHPExcel_Chart_PlotArea(NULL, array($series));
+/* You can further set other properties of PlotArea using $plotArea variable
+	i.e. $plotArea->refresh($objWorksheet);	
+*/
 //	Set the chart legend
 $legend = new PHPExcel_Chart_Legend(PHPExcel_Chart_Legend::POSITION_TOPRIGHT, NULL, false);
-
+/* You can further set other properties of Chart_Legend using $legend variable
+	i.e. $legend->setOverlay(true);
+*/	
 $title = new PHPExcel_Chart_Title('Test %age-Stacked Area Chart');
 $yAxisLabel = new PHPExcel_Chart_Title('Value ($k)');
 

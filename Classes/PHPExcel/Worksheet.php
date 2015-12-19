@@ -2443,17 +2443,6 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
 
     /**
      * Fill worksheet from values in array with specified cell data type
-     * ex:
-     * $source = array(
-     *      array(
-     *          array('value1', PHPExcel_Cell_DataType::TYPE_STRING),
-     *          array('value2', PHPExcel_Cell_DataType::TYPE_FORMULA),
-     *      ),
-     *     array(
-     *          array('value3', PHPExcel_Cell_DataType::TYPE_STRING),
-     *          array('value4', PHPExcel_Cell_DataType::TYPE_NUMBER),
-     *      )
-     * );
      *
      * @param array $source Source array
      * @param mixed $nullValue Value in source array that stands for blank cell

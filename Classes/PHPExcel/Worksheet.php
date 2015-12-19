@@ -2442,6 +2442,49 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
     }
 
     /**
+     * Fill worksheet from values in array with specified cell data type
+     * ex:
+     * $source = array(
+     *      array(
+     *          array('value1', PHPExcel_Cell_DataType::TYPE_STRING),
+     *          array('value2', PHPExcel_Cell_DataType::TYPE_FORMULA),
+     *      ),
+     *     array(
+     *          array('value3', PHPExcel_Cell_DataType::TYPE_STRING),
+     *          array('value4', PHPExcel_Cell_DataType::TYPE_NUMBER),
+     *      )
+     * );
+     *
+     * @param array $source Source array
+     * @param mixed $nullValue Value in source array that stands for blank cell
+     * @param string $startCell Insert array starting from this cell address as the top left coordinate
+     * @throws PHPExcel_Exception
+     * @return PHPExcel_Worksheet
+     */
+    public function fromArrayExplicit($source = null, $nullValue = null, $startCell = 'A1')
+    {
+        if (is_array($source)) {
+            // start coordinate
+            list ($startColumn, $startRow) = PHPExcel_Cell::coordinateFromString($startCell);
+
+            // Loop through $source
+            foreach ($source as $rowData) {
+                $currentColumn = $startColumn;
+                foreach ($rowData as $cellValue) {
+                    if ($cellValue != $nullValue) {
+                        $this->getCell($currentColumn . $startRow)->setValueExplicit($cellValue[0], $cellValue[1]); // value, dataType
+                    }
+                    ++$currentColumn;
+                }
+                ++$startRow;
+            }
+        } else {
+            throw new PHPExcel_Exception("Parameter \$source should be an array.");
+        }
+        return $this;
+    }
+
+    /**
      * Create array from a range of cells
      *
      * @param string $pRange Range of cells (i.e. "A1:B10"), or just one cell (i.e. "A1")

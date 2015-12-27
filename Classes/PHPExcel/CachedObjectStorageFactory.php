@@ -34,6 +34,7 @@ class PHPExcel_CachedObjectStorageFactory
     const cache_to_discISAM             = 'DiscISAM';
     const cache_to_apc                  = 'APC';
     const cache_to_memcache             = 'Memcache';
+    const cache_to_redis                = 'Redis';
     const cache_to_phpTemp              = 'PHPTemp';
     const cache_to_wincache             = 'Wincache';
     const cache_to_sqlite               = 'SQLite';
@@ -96,6 +97,12 @@ class PHPExcel_CachedObjectStorageFactory
                                                       'memcachePort'    => 11211,
                                                       'cacheTime'       => 600
                                                     ),
+        self::cache_to_redis                => array( 'redisServer'     => 'localhost',
+                                                      'redisPort'       => 6379,
+                                                      'redisDb'         => 0,
+                                                      'redisPass'       => null,
+                                                      'cacheTime'       => 600
+        ),
         self::cache_to_wincache             => array( 'cacheTime'       => 600
                                                     ),
         self::cache_to_sqlite               => array(

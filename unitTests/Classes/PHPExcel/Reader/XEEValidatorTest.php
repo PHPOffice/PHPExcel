@@ -26,7 +26,7 @@ class XEEValidatorTest extends PHPUnit_Framework_TestCase
 
     public function providerInvalidXML()
     {
-        $tests = [];
+        $tests = array();
         foreach (glob('rawTestData/Reader/XEETestInvalid*.xml') as $file) {
             $tests[] = [realpath($file), true];
         }

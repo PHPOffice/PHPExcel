@@ -7627,38 +7627,10 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
      */
     private static function mapBorderStyle($index)
     {
-        switch ($index) {
-            case 0x00:
-                return PHPExcel_Style_Border::BORDER_NONE;
-            case 0x01:
-                return PHPExcel_Style_Border::BORDER_THIN;
-            case 0x02:
-                return PHPExcel_Style_Border::BORDER_MEDIUM;
-            case 0x03:
-                return PHPExcel_Style_Border::BORDER_DASHED;
-            case 0x04:
-                return PHPExcel_Style_Border::BORDER_DOTTED;
-            case 0x05:
-                return PHPExcel_Style_Border::BORDER_THICK;
-            case 0x06:
-                return PHPExcel_Style_Border::BORDER_DOUBLE;
-            case 0x07:
-                return PHPExcel_Style_Border::BORDER_HAIR;
-            case 0x08:
-                return PHPExcel_Style_Border::BORDER_MEDIUMDASHED;
-            case 0x09:
-                return PHPExcel_Style_Border::BORDER_DASHDOT;
-            case 0x0A:
-                return PHPExcel_Style_Border::BORDER_MEDIUMDASHDOT;
-            case 0x0B:
-                return PHPExcel_Style_Border::BORDER_DASHDOTDOT;
-            case 0x0C:
-                return PHPExcel_Style_Border::BORDER_MEDIUMDASHDOTDOT;
-            case 0x0D:
-                return PHPExcel_Style_Border::BORDER_SLANTDASHDOT;
-            default:
-                return PHPExcel_Style_Border::BORDER_NONE;
+        if (isset(PHPExcel_Reader_Excel5_Style_Border::$map[$index])) {
+            return PHPExcel_Reader_Excel5_Style_Border::$map[$index];
         }
+        return PHPExcel_Style_Border::BORDER_NONE;
     }
 
 
@@ -7671,48 +7643,10 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
      */
     private static function mapFillPattern($index)
     {
-        switch ($index) {
-            case 0x00:
-                return PHPExcel_Style_Fill::FILL_NONE;
-            case 0x01:
-                return PHPExcel_Style_Fill::FILL_SOLID;
-            case 0x02:
-                return PHPExcel_Style_Fill::FILL_PATTERN_MEDIUMGRAY;
-            case 0x03:
-                return PHPExcel_Style_Fill::FILL_PATTERN_DARKGRAY;
-            case 0x04:
-                return PHPExcel_Style_Fill::FILL_PATTERN_LIGHTGRAY;
-            case 0x05:
-                return PHPExcel_Style_Fill::FILL_PATTERN_DARKHORIZONTAL;
-            case 0x06:
-                return PHPExcel_Style_Fill::FILL_PATTERN_DARKVERTICAL;
-            case 0x07:
-                return PHPExcel_Style_Fill::FILL_PATTERN_DARKDOWN;
-            case 0x08:
-                return PHPExcel_Style_Fill::FILL_PATTERN_DARKUP;
-            case 0x09:
-                return PHPExcel_Style_Fill::FILL_PATTERN_DARKGRID;
-            case 0x0A:
-                return PHPExcel_Style_Fill::FILL_PATTERN_DARKTRELLIS;
-            case 0x0B:
-                return PHPExcel_Style_Fill::FILL_PATTERN_LIGHTHORIZONTAL;
-            case 0x0C:
-                return PHPExcel_Style_Fill::FILL_PATTERN_LIGHTVERTICAL;
-            case 0x0D:
-                return PHPExcel_Style_Fill::FILL_PATTERN_LIGHTDOWN;
-            case 0x0E:
-                return PHPExcel_Style_Fill::FILL_PATTERN_LIGHTUP;
-            case 0x0F:
-                return PHPExcel_Style_Fill::FILL_PATTERN_LIGHTGRID;
-            case 0x10:
-                return PHPExcel_Style_Fill::FILL_PATTERN_LIGHTTRELLIS;
-            case 0x11:
-                return PHPExcel_Style_Fill::FILL_PATTERN_GRAY125;
-            case 0x12:
-                return PHPExcel_Style_Fill::FILL_PATTERN_GRAY0625;
-            default:
-                return PHPExcel_Style_Fill::FILL_NONE;
+        if (isset(PHPExcel_Reader_Excel5_Style_FillPattern::$map[$index])) {
+            return PHPExcel_Reader_Excel5_Style_FillPattern::$map[$index];
         }
+        return PHPExcel_Style_Fill::FILL_NONE;
     }
 
 
@@ -7722,33 +7656,12 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
      * @param int $subData
      * @return string
      */
-    private static function mapErrorCode($subData)
+    private static function mapErrorCode($code)
     {
-        switch ($subData) {
-            case 0x00:
-                return '#NULL!';
-                break;
-            case 0x07:
-                return '#DIV/0!';
-                break;
-            case 0x0F:
-                return '#VALUE!';
-                break;
-            case 0x17:
-                return '#REF!';
-                break;
-            case 0x1D:
-                return '#NAME?';
-                break;
-            case 0x24:
-                return '#NUM!';
-                break;
-            case 0x2A:
-                return '#N/A';
-                break;
-            default:
-                return false;
+        if (isset(PHPExcel_Reader_Excel5_ErrorCode::$map[$code])) {
+            return PHPExcel_Reader_Excel5_ErrorCode::$map[$code];
         }
+        return false;
     }
 
 

@@ -86,7 +86,7 @@ class PHPExcel_CachedObjectStorageFactory
                                                     ),
         self::cache_igbinary                => array(
                                                     ),
-        self::cache_to_phpTemp              => array( 'memoryCacheSize' => '1MB'
+        self::cache_to_phpTemp              => array( 'memoryCacheSize' => '1024' // must be in bytes
                                                     ),
         self::cache_to_discISAM             => array( 'dir'             => null
                                                     ),

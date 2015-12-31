@@ -724,7 +724,7 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
         if (!$this->readDataOnly) {
             foreach ($this->objFonts as $objFont) {
                 if (isset($objFont->colorIndex)) {
-                    $color = self::readColor($objFont->colorIndex, $this->palette, $this->version);
+                    $color = PHPExcel_Reader_Excel5_Color::map($objFont->colorIndex, $this->palette, $this->version);
                     $objFont->getColor()->setRGB($color['rgb']);
                 }
             }
@@ -734,11 +734,11 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
                 $fill = $objStyle->getFill();
 
                 if (isset($fill->startcolorIndex)) {
-                    $startColor = self::readColor($fill->startcolorIndex, $this->palette, $this->version);
+                    $startColor = PHPExcel_Reader_Excel5_Color::map($fill->startcolorIndex, $this->palette, $this->version);
                     $fill->getStartColor()->setRGB($startColor['rgb']);
                 }
                 if (isset($fill->endcolorIndex)) {
-                    $endColor = self::readColor($fill->endcolorIndex, $this->palette, $this->version);
+                    $endColor = PHPExcel_Reader_Excel5_Color::map($fill->endcolorIndex, $this->palette, $this->version);
                     $fill->getEndColor()->setRGB($endColor['rgb']);
                 }
 
@@ -750,23 +750,23 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
                 $diagonal = $objStyle->getBorders()->getDiagonal();
 
                 if (isset($top->colorIndex)) {
-                    $borderTopColor = self::readColor($top->colorIndex, $this->palette, $this->version);
+                    $borderTopColor = PHPExcel_Reader_Excel5_Color::map($top->colorIndex, $this->palette, $this->version);
                     $top->getColor()->setRGB($borderTopColor['rgb']);
                 }
                 if (isset($right->colorIndex)) {
-                    $borderRightColor = self::readColor($right->colorIndex, $this->palette, $this->version);
+                    $borderRightColor = PHPExcel_Reader_Excel5_Color::map($right->colorIndex, $this->palette, $this->version);
                     $right->getColor()->setRGB($borderRightColor['rgb']);
                 }
                 if (isset($bottom->colorIndex)) {
-                    $borderBottomColor = self::readColor($bottom->colorIndex, $this->palette, $this->version);
+                    $borderBottomColor = PHPExcel_Reader_Excel5_Color::map($bottom->colorIndex, $this->palette, $this->version);
                     $bottom->getColor()->setRGB($borderBottomColor['rgb']);
                 }
                 if (isset($left->colorIndex)) {
-                    $borderLeftColor = self::readColor($left->colorIndex, $this->palette, $this->version);
+                    $borderLeftColor = PHPExcel_Reader_Excel5_Color::map($left->colorIndex, $this->palette, $this->version);
                     $left->getColor()->setRGB($borderLeftColor['rgb']);
                 }
                 if (isset($diagonal->colorIndex)) {
-                    $borderDiagonalColor = self::readColor($diagonal->colorIndex, $this->palette, $this->version);
+                    $borderDiagonalColor = PHPExcel_Reader_Excel5_Color::map($diagonal->colorIndex, $this->palette, $this->version);
                     $diagonal->getColor()->setRGB($borderDiagonalColor['rgb']);
                 }
             }
@@ -2209,19 +2209,19 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
 
                 // offset: 10; size: 4; Cell border lines and background area
                 // bit: 3-0; mask: 0x0000000F; left style
-                if ($bordersLeftStyle = self::mapBorderStyle((0x0000000F & self::getInt4d($recordData, 10)) >> 0)) {
+                if ($bordersLeftStyle = PHPExcel_Reader_Excel5_Style_Border::lookup((0x0000000F & self::getInt4d($recordData, 10)) >> 0)) {
                     $objStyle->getBorders()->getLeft()->setBorderStyle($bordersLeftStyle);
                 }
                 // bit: 7-4; mask: 0x000000F0; right style
-                if ($bordersRightStyle = self::mapBorderStyle((0x000000F0 & self::getInt4d($recordData, 10)) >> 4)) {
+                if ($bordersRightStyle = PHPExcel_Reader_Excel5_Style_Border::lookup((0x000000F0 & self::getInt4d($recordData, 10)) >> 4)) {
                     $objStyle->getBorders()->getRight()->setBorderStyle($bordersRightStyle);
                 }
                 // bit: 11-8; mask: 0x00000F00; top style
-                if ($bordersTopStyle = self::mapBorderStyle((0x00000F00 & self::getInt4d($recordData, 10)) >> 8)) {
+                if ($bordersTopStyle = PHPExcel_Reader_Excel5_Style_Border::lookup((0x00000F00 & self::getInt4d($recordData, 10)) >> 8)) {
                     $objStyle->getBorders()->getTop()->setBorderStyle($bordersTopStyle);
                 }
                 // bit: 15-12; mask: 0x0000F000; bottom style
-                if ($bordersBottomStyle = self::mapBorderStyle((0x0000F000 & self::getInt4d($recordData, 10)) >> 12)) {
+                if ($bordersBottomStyle = PHPExcel_Reader_Excel5_Style_Border::lookup((0x0000F000 & self::getInt4d($recordData, 10)) >> 12)) {
                     $objStyle->getBorders()->getBottom()->setBorderStyle($bordersBottomStyle);
                 }
                 // bit: 22-16; mask: 0x007F0000; left color
@@ -2257,12 +2257,12 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
                 $objStyle->getBorders()->getDiagonal()->colorIndex = (0x001FC000 & self::getInt4d($recordData, 14)) >> 14;
 
                 // bit: 24-21; mask: 0x01E00000; diagonal style
-                if ($bordersDiagonalStyle = self::mapBorderStyle((0x01E00000 & self::getInt4d($recordData, 14)) >> 21)) {
+                if ($bordersDiagonalStyle = PHPExcel_Reader_Excel5_Style_Border::lookup((0x01E00000 & self::getInt4d($recordData, 14)) >> 21)) {
                     $objStyle->getBorders()->getDiagonal()->setBorderStyle($bordersDiagonalStyle);
                 }
 
                 // bit: 31-26; mask: 0xFC000000 fill pattern
-                if ($fillType = self::mapFillPattern((0xFC000000 & self::getInt4d($recordData, 14)) >> 26)) {
+                if ($fillType = PHPExcel_Reader_Excel5_Style_FillPattern::lookup((0xFC000000 & self::getInt4d($recordData, 14)) >> 26)) {
                     $objStyle->getFill()->setFillType($fillType);
                 }
                 // offset: 18; size: 2; pattern and background colour
@@ -2304,10 +2304,10 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
                 $objStyle->getFill()->endcolorIndex = (0x00003F80 & $borderAndBackground) >> 7;
 
                 // bit: 21-16; mask: 0x003F0000; fill pattern
-                $objStyle->getFill()->setFillType(self::mapFillPattern((0x003F0000 & $borderAndBackground) >> 16));
+                $objStyle->getFill()->setFillType(PHPExcel_Reader_Excel5_Style_FillPattern::lookup((0x003F0000 & $borderAndBackground) >> 16));
 
                 // bit: 24-22; mask: 0x01C00000; bottom line style
-                $objStyle->getBorders()->getBottom()->setBorderStyle(self::mapBorderStyle((0x01C00000 & $borderAndBackground) >> 22));
+                $objStyle->getBorders()->getBottom()->setBorderStyle(PHPExcel_Reader_Excel5_Style_Border::lookup((0x01C00000 & $borderAndBackground) >> 22));
 
                 // bit: 31-25; mask: 0xFE000000; bottom line color
                 $objStyle->getBorders()->getBottom()->colorIndex = (0xFE000000 & $borderAndBackground) >> 25;
@@ -2316,13 +2316,13 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
                 $borderLines = self::getInt4d($recordData, 12);
 
                 // bit: 2-0; mask: 0x00000007; top line style
-                $objStyle->getBorders()->getTop()->setBorderStyle(self::mapBorderStyle((0x00000007 & $borderLines) >> 0));
+                $objStyle->getBorders()->getTop()->setBorderStyle(PHPExcel_Reader_Excel5_Style_Border::lookup((0x00000007 & $borderLines) >> 0));
 
                 // bit: 5-3; mask: 0x00000038; left line style
-                $objStyle->getBorders()->getLeft()->setBorderStyle(self::mapBorderStyle((0x00000038 & $borderLines) >> 3));
+                $objStyle->getBorders()->getLeft()->setBorderStyle(PHPExcel_Reader_Excel5_Style_Border::lookup((0x00000038 & $borderLines) >> 3));
 
                 // bit: 8-6; mask: 0x000001C0; right line style
-                $objStyle->getBorders()->getRight()->setBorderStyle(self::mapBorderStyle((0x000001C0 & $borderLines) >> 6));
+                $objStyle->getBorders()->getRight()->setBorderStyle(PHPExcel_Reader_Excel5_Style_Border::lookup((0x000001C0 & $borderLines) >> 6));
 
                 // bit: 15-9; mask: 0x0000FE00; top line color index
                 $objStyle->getBorders()->getTop()->colorIndex = (0x0000FE00 & $borderLines) >> 9;
@@ -3929,7 +3929,7 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
                 && (ord($recordData{13}) == 255)) {
                 // Error formula. Error code is in +2
                 $dataType = PHPExcel_Cell_DataType::TYPE_ERROR;
-                $value = self::mapErrorCode(ord($recordData{8}));
+                $value = PHPExcel_Reader_Excel5_ErrorCode::lookup(ord($recordData{8}));
             } elseif ((ord($recordData{6}) == 3)
                 && (ord($recordData{12}) == 255)
                 && (ord($recordData{13}) == 255)) {
@@ -4076,7 +4076,7 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
                     $cell->setValueExplicit($value, PHPExcel_Cell_DataType::TYPE_BOOL);
                     break;
                 case 1: // error type
-                    $value = self::mapErrorCode($boolErr);
+                    $value = PHPExcel_Reader_Excel5_ErrorCode::lookup($boolErr);
 
                     // add cell value
                     $cell->setValueExplicit($value, PHPExcel_Cell_DataType::TYPE_ERROR);
@@ -4937,7 +4937,7 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
                 case 0x14:
                     // offset: 16; size: 2; color index for sheet tab
                     $colorIndex = self::getInt2d($recordData, 16);
-                    $color = self::readColor($colorIndex, $this->palette, $this->version);
+                    $color = PHPExcel_Reader_Excel5_Color::map($colorIndex, $this->palette, $this->version);
                     $this->phpSheet->getTabColor()->setRGB($color['rgb']);
                     break;
                 case 0x28:
@@ -5704,7 +5704,7 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
                 // offset: 1; size: 1; error code
                 $name = 'tErr';
                 $size = 2;
-                $data = self::mapErrorCode(ord($formulaData[1]));
+                $data = PHPExcel_Reader_Excel5_ErrorCode::lookup(ord($formulaData[1]));
                 break;
             case 0x1D:    //    boolean
                 // offset: 1; size: 1; 0 = false, 1 = true;
@@ -7273,7 +7273,7 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
                 break;
             case 0x10: // error code
                 // offset: 1; size: 1; error code
-                $value = self::mapErrorCode(ord($valueData[1]));
+                $value = PHPExcel_Reader_Excel5_ErrorCode::lookup(ord($valueData[1]));
                 $size = 9;
                 break;
         }
@@ -7522,7 +7522,6 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
         return PHPExcel_Shared_String::ConvertEncoding($string, 'UTF-8', 'UTF-16LE');
     }
 
-
     /**
      * Convert UTF-16 string in compressed notation to uncompressed form. Only used for BIFF8.
      *
@@ -7540,7 +7539,6 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
         return $uncompressedString;
     }
 
-
     /**
      * Convert string to UTF-8. Only used for BIFF5.
      *
@@ -7551,7 +7549,6 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
     {
         return PHPExcel_Shared_String::ConvertEncoding($string, 'UTF-8', $this->codepage);
     }
-
 
     /**
      * Read 16-bit unsigned integer
@@ -7564,7 +7561,6 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
     {
         return ord($data[$pos]) | (ord($data[$pos+1]) << 8);
     }
-
 
     /**
      * Read 32-bit signed integer
@@ -7586,127 +7582,6 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
             $_ord_24 = ($_or_24 & 127) << 24;
         }
         return ord($data[$pos]) | (ord($data[$pos+1]) << 8) | (ord($data[$pos+2]) << 16) | $_ord_24;
-    }
-
-
-    /**
-     * Read color
-     *
-     * @param int $color Indexed color
-     * @param array $palette Color palette
-     * @return array RGB color value, example: array('rgb' => 'FF0000')
-     */
-    private static function readColor($color, $palette, $version)
-    {
-        if ($color <= 0x07 || $color >= 0x40) {
-            // special built-in color
-            return self::mapBuiltInColor($color);
-        } elseif (isset($palette) && isset($palette[$color - 8])) {
-            // palette color, color index 0x08 maps to pallete index 0
-            return $palette[$color - 8];
-        } else {
-            // default color table
-            if ($version == self::XLS_BIFF8) {
-                return self::mapColor($color);
-            } else {
-                // BIFF5
-                return self::mapColorBIFF5($color);
-            }
-        }
-
-        return $color;
-    }
-
-
-    /**
-     * Map border style
-     * OpenOffice documentation: 2.5.11
-     *
-     * @param int $index
-     * @return string
-     */
-    private static function mapBorderStyle($index)
-    {
-        if (isset(PHPExcel_Reader_Excel5_Style_Border::$map[$index])) {
-            return PHPExcel_Reader_Excel5_Style_Border::$map[$index];
-        }
-        return PHPExcel_Style_Border::BORDER_NONE;
-    }
-
-
-    /**
-     * Get fill pattern from index
-     * OpenOffice documentation: 2.5.12
-     *
-     * @param int $index
-     * @return string
-     */
-    private static function mapFillPattern($index)
-    {
-        if (isset(PHPExcel_Reader_Excel5_Style_FillPattern::$map[$index])) {
-            return PHPExcel_Reader_Excel5_Style_FillPattern::$map[$index];
-        }
-        return PHPExcel_Style_Fill::FILL_NONE;
-    }
-
-
-    /**
-     * Map error code, e.g. '#N/A'
-     *
-     * @param int $subData
-     * @return string
-     */
-    private static function mapErrorCode($code)
-    {
-        if (isset(PHPExcel_Reader_Excel5_ErrorCode::$map[$code])) {
-            return PHPExcel_Reader_Excel5_ErrorCode::$map[$code];
-        }
-        return false;
-    }
-
-
-    /**
-     * Map built-in color to RGB value
-     *
-     * @param int $color Indexed color
-     * @return array
-     */
-    private static function mapBuiltInColor($color)
-    {
-        if (isset(PHPExcel_Reader_Excel5_Color_BuiltIn::$map[$color])) {
-            return array('rgb' => PHPExcel_Reader_Excel5_Color_BuiltIn::$map[$color]);
-        }
-        return array('rgb' => '000000');
-    }
-
-
-    /**
-     * Map color array from BIFF5 built-in color index
-     *
-     * @param int $color
-     * @return array
-     */
-    private static function mapColorBIFF5($color)
-    {
-        if (isset(PHPExcel_Reader_Excel5_Color_BIFF5::$map[$color])) {
-            return array('rgb' => PHPExcel_Reader_Excel5_Color_BIFF5::$map[$color]);
-        }
-        return array('rgb' => '000000');
-    }
-
-
-    /**
-     * Map color array from BIFF8 built-in color index
-     *
-     * @param int $color
-     * @return array
-     */
-    private static function mapColor($color)
-    {
-        if (isset(PHPExcel_Reader_Excel5_Color_BIFF8::$map[$color])) {
-            return array('rgb' => PHPExcel_Reader_Excel5_Color_BIFF8::$map[$color]);
-        }
-        return array('rgb' => '000000');
     }
 
     private function parseRichText($is = '')

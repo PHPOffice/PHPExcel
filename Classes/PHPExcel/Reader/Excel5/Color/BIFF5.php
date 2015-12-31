@@ -2,7 +2,7 @@
 
 class PHPExcel_Reader_Excel5_Color_BIFF5
 {
-    public static $map = array(
+    protected static $map = array(
         0x08 => '000000',
         0x09 => 'FFFFFF',
         0x0A => 'FF0000',
@@ -60,4 +60,18 @@ class PHPExcel_Reader_Excel5_Color_BIFF5
         0x3E => '4A3285',
         0x3F => '424242',
     );
+
+    /**
+     * Map color array from BIFF5 built-in color index
+     *
+     * @param int $color
+     * @return array
+     */
+    public static function lookup($color)
+    {
+        if (isset(self::$map[$color])) {
+            return array('rgb' => self::$map[$color]);
+        }
+        return array('rgb' => '000000');
+    }
 }

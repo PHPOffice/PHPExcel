@@ -36,6 +36,6 @@ class PHPExcel_Reader_Excel5_Style_FillPattern
         if (isset(self::$map[$index])) {
             return self::$map[$index];
         }
-        return self::FILL_NONE;
+        return PHPExcel_Style_Fill::FILL_NONE;
     }
 }

@@ -315,12 +315,22 @@ class PHPExcel_Writer_OpenDocument_Content extends PHPExcel_Writer_OpenDocument_
                 $objWriter->writeAttribute('style:font-weight-asian', 'bold');
             }
 
+            if($font->getItalic()) {
+                $objWriter->writeAttribute('fo:font-style', 'italic');
+            }
+
             if($color = $font->getColor()) {
                 $objWriter->writeAttribute('fo:color', sprintf('#%s', $color->getRGB()));
             }
 
             if($size = $font->getSize()) {
                 $objWriter->writeAttribute('fo:font-size', sprintf('%.1fpt', $size));
+            }
+
+            if($font->getUnderline() == \PHPExcel_Style_Font::UNDERLINE_SINGLE) {
+                $objWriter->writeAttribute('style:text-underline-style', 'solid');
+                $objWriter->writeAttribute('style:text-underline-width', 'auto');
+                $objWriter->writeAttribute('style:text-underline-color', 'font-color');
             }
 
             $objWriter->endElement(); // Close style:text-properties

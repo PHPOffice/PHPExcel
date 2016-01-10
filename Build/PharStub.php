@@ -6,8 +6,8 @@ spl_autoload_register(function ($class) {
 try {
     Phar::mapPhar();
     include 'phar://PHPExcel/PHPExcel.php';
-} catch (PharException $e) {
-    error_log($e->getMessage());
+} catch (PharException $S) {
+    error_log($S->getMessage());
     exit(1);
 }
 

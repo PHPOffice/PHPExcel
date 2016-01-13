@@ -5465,7 +5465,7 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
                     unset($space2, $space3, $space4, $space5);
                     break;
                 case 'tArray': // array constant
-                    $constantArray = self::_readBIFF8ConstantArray($additionalData);
+                    $constantArray = self::readBIFF8ConstantArray($additionalData);
                     $formulaStrings[] = $space1 . $space0 . $constantArray['value'];
                     $additionalData = substr($additionalData, $constantArray['size']); // bite of chunk of additional data
                     unset($space0, $space1);
@@ -7217,7 +7217,7 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
         for ($r = 1; $r <= $nr + 1; ++$r) {
             $items = array();
             for ($c = 1; $c <= $nc + 1; ++$c) {
-                $constant = self::_readBIFF8Constant($arrayData);
+                $constant = self::readBIFF8Constant($arrayData);
                 $items[] = $constant['value'];
                 $arrayData = substr($arrayData, $constant['size']);
                 $size += $constant['size'];

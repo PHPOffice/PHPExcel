@@ -2,6 +2,9 @@
 
 namespace PHPExcel\Reader;
 
+use XMLReader;
+use ZipArchive as ZIPARCHIVE;
+
 /**
  * PHPExcel_Reader_Excel2007
  *
@@ -237,7 +240,7 @@ class Excel2007 extends BaseReader implements IReader
 
                         $currCells = 0;
                         while ($xml->read()) {
-                            if ($xml->name == 'row' && $xml->nodeType == XMLReader::ELEMENT) {
+                            if ($xml->name == 'row' && $xml->nodeType == \XMLReader::ELEMENT) {
                                 $row = $xml->getAttribute('r');
                                 $tmpInfo['totalRows'] = $row;
                                 $tmpInfo['totalColumns'] = max($tmpInfo['totalColumns'], $currCells);

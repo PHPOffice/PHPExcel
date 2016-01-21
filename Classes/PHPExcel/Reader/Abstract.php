@@ -37,6 +37,15 @@ abstract class PHPExcel_Reader_Abstract implements PHPExcel_Reader_IReader
     protected $readDataOnly = false;
 
     /**
+     * Read empty cells?
+     * Identifies whether the Reader should read data values for cells all cells, or should ignore cells containing
+     *         null value or empty string
+     *
+     * @var    boolean
+     */
+    protected $readEmptyCells = true;
+
+    /**
      * Read charts that are defined in the workbook?
      * Identifies whether the Reader should read the definitions for any charts that exist in the workbook;
      *
@@ -86,6 +95,33 @@ abstract class PHPExcel_Reader_Abstract implements PHPExcel_Reader_IReader
     public function setReadDataOnly($pValue = false)
     {
         $this->readDataOnly = $pValue;
+        return $this;
+    }
+
+    /**
+     * Read empty cells?
+     *        If this is true (the default), then the Reader will read data values for all cells, irrespective of value.
+     *        If false it will not read data for cells containing a null value or an empty string.
+     *
+     * @return    boolean
+     */
+    public function getReadEmptyCells()
+    {
+        return $this->readEmptyCells;
+    }
+
+    /**
+     * Set read empty cells
+     *        Set to true (the default) to advise the Reader read data values for all cells, irrespective of value.
+     *        Set to false to advise the Reader to ignore cells containing a null value or an empty string.
+     *
+     * @param    boolean    $pValue
+     *
+     * @return    PHPExcel_Reader_IReader
+     */
+    public function setReadEmptyCells($pValue = true)
+    {
+        $this->readEmptyCells = $pValue;
         return $this;
     }
 

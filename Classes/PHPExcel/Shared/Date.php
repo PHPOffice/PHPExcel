@@ -138,7 +138,7 @@ class PHPExcel_Shared_Date
 		} else {
 			$hours = round($dateValue * 24);
 			$mins = round($dateValue * 1440) - round($hours * 60);
-			$secs = round($dateValue * 86400) - round($hours * 3600) - round($mins * 60);
+			$secs = floor($dateValue * 86400) - round($hours * 3600) - round($mins * 60);
 			$returnValue = (integer) gmmktime($hours, $mins, $secs);
 		}
 

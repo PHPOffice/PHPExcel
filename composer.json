@@ -31,8 +31,8 @@
         "squizlabs/php_codesniffer": "2.*"
     },
     "recommend": {
-        "ext-zip": "*",
-        "ext-gd2": "*"
+        "ext-zip": "Required to handle .xlsx .ods or .gnumeric files",
+        "ext-gd": "Required for exact column width autocalculation"
     },
     "autoload": {
         "psr-0": {

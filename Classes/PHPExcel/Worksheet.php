@@ -2661,8 +2661,9 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
         }
 
         if ($returnRange) {
+            $comma = strpos(substr($pRange, $sep + 1), ',') ?: -1;
             return array( trim(substr($pRange, 0, $sep),"'"),
-                          substr($pRange, $sep + 1)
+                          substr($pRange, $sep + 1, $comma)
                         );
         }
 

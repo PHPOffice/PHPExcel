@@ -1641,6 +1641,7 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 								$extractedRange = preg_replace('/\'(\w+)\'\!/', '', $extractedRange);
 								if (($spos = strpos($extractedRange,'!')) !== false) {
 									$extractedRange = substr($extractedRange,0,$spos).str_replace('$', '', substr($extractedRange,$spos));
+
 								} else {
 									$extractedRange = str_replace('$', '', $extractedRange);
 								}
@@ -1682,15 +1683,16 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 									$extractedSheetName = '';
 									if (strpos( (string)$definedName, '!' ) !== false) {
 										// Extract sheet name
-										$extractedSheetName = PHPExcel_Worksheet::extractSheetTitle( (string)$definedName, true );
-										$extractedSheetName = $extractedSheetName[0];
+										$extraction = PHPExcel_Worksheet::extractSheetTitle( (string)$definedName, true );
+
+										$extractedSheetName = $extraction[0];
+										$extractedRange = $extraction[1];
 
 										// Locate sheet
 										$locatedSheet = $excel->getSheetByName($extractedSheetName);
 
 										// Modify range
-										$range = explode('!', $extractedRange);
-										$extractedRange = isset($range[1]) ? $range[1] : $range[0];
+										$extractedRange = str_replace('$', '', $extractedRange);
 									}
 
 									if ($locatedSheet !== NULL) {

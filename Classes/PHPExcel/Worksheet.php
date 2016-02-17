@@ -2652,6 +2652,9 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
      * @return mixed
      */
 	public static function extractSheetTitle($pRange, $returnRange = false) {
+        if (substr($pRange,0, strlen('OFFSET(')) === 'OFFSET(')
+            $pRange = substr($pRange, strlen('OFFSET('));
+
         // Sheet title included?
         if (($sep = strpos($pRange, '!')) === false) {
             return '';

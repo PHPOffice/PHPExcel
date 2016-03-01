@@ -31,6 +31,7 @@ Planned for 1.8.2
 - Bugfix:   (MBaker)          Work Item GH-554  - Whitespace after toRichTextObject()
 - Feature:  (MBaker)                            - Initial implementation of SUMIFS() function
 - Feature:  (MBaker)                            - Additional codepages
+- Feature:  (Tomino2112)      Work Item GH-808  - MemoryDrawing not working in HTML writer
 
 
 2015-04-30 (v1.8.1):

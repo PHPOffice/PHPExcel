@@ -705,7 +705,7 @@ class PHPExcel_Calculation_MathTrig
             return $b + fmod($a, abs($b));
         }
 
-        return fmod($a, $b);
+        return fmod((float)$a, (float)$b);
     }
 
 

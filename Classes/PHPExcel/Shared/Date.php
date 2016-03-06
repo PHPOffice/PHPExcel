@@ -187,7 +187,8 @@ class PHPExcel_Shared_Date
             $retValue = self::FormattedPHPToExcel($dateValue->format('Y'), $dateValue->format('m'), $dateValue->format('d'), $dateValue->format('H'), $dateValue->format('i'), $dateValue->format('s'));
         } elseif (is_numeric($dateValue)) {
             $retValue = self::FormattedPHPToExcel(date('Y', $dateValue), date('m', $dateValue), date('d', $dateValue), date('H', $dateValue), date('i', $dateValue), date('s', $dateValue));
-        }
+        } elseif (is_string($dateValue)) {
+            $retValue = self::stringToExcel($dateValue)
         date_default_timezone_set($saveTimeZone);
 
         return $retValue;

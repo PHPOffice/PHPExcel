@@ -2,7 +2,7 @@
 
 namespace PHPExcel\Calculation;
 
-require_once PHPEXCEL_ROOT . 'PHPExcel/Shared/trend/trendClass.php';
+//require_once PHPEXCEL_ROOT . 'PHPExcel/Shared/trend/trendClass.php';
 
 
 /** LOG_GAMMA_X_MAX_VALUE */

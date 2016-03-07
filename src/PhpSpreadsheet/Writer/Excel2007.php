@@ -179,7 +179,7 @@ class Excel2007 extends BaseWriter implements IWriter
             // If $pFilename is php://output or php://stdout, make it a temporary file...
             $originalFilename = $pFilename;
             if (strtolower($pFilename) == 'php://output' || strtolower($pFilename) == 'php://stdout') {
-                $pFilename = @tempnam(PHPExcel_Shared_File::sys_get_temp_dir(), 'phpxltmp');
+                $pFilename = @tempnam(\PHPExcel\Shared\File::sys_get_temp_dir(), 'phpxltmp');
                 if ($pFilename == '') {
                     $pFilename = $originalFilename;
                 }
@@ -351,7 +351,7 @@ class Excel2007 extends BaseWriter implements IWriter
                         $imagePath = substr($imagePath, 6);
                         $imagePathSplitted = explode('#', $imagePath);
 
-                        $imageZip = new ZipArchive();
+                        $imageZip = new \ZipArchive();
                         $imageZip->open($imagePathSplitted[0]);
                         $imageContents = $imageZip->getFromName($imagePathSplitted[1]);
                         $imageZip->close();

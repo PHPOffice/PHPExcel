@@ -7,3 +7,4 @@ analysis
 *.project
 /.settings
 /.idea
+/nbproject

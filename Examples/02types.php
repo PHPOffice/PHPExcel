@@ -2,7 +2,7 @@
 /**
  * PHPExcel
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,7 +20,7 @@
  *
  * @category   PHPExcel
  * @package    PHPExcel
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -39,7 +39,7 @@ require_once dirname(__FILE__) . '/../src/Bootstrap.php';
 
 // Create new PHPExcel object
 echo date('H:i:s') , " Create new PHPExcel object" , EOL;
-$objPHPExcel = new \PHPExcel\Spreadsheet();
+$objPHPExcel = new \PhpOffice\PhpExcel\Spreadsheet();
 
 // Set document properties
 echo date('H:i:s') , " Set document properties" , EOL;
@@ -105,41 +105,41 @@ $dateTimeNow = time();
 $objPHPExcel->getActiveSheet()
     ->setCellValue('A9', 'Date/Time')
     ->setCellValue('B9', 'Date')
-    ->setCellValue('C9', \PHPExcel\Shared\Date::PHPToExcel( $dateTimeNow ));
+    ->setCellValue('C9', \PhpOffice\PhpExcel\Shared\Date::PHPToExcel( $dateTimeNow ));
 $objPHPExcel->getActiveSheet()
     ->getStyle('C9')
     ->getNumberFormat()
-    ->setFormatCode(\PHPExcel\Style\NumberFormat::FORMAT_DATE_YYYYMMDD2);
+    ->setFormatCode(\PhpOffice\PhpExcel\Style\NumberFormat::FORMAT_DATE_YYYYMMDD2);
 
 $objPHPExcel->getActiveSheet()
     ->setCellValue('A10', 'Date/Time')
     ->setCellValue('B10', 'Time')
-    ->setCellValue('C10', \PHPExcel\Shared\Date::PHPToExcel( $dateTimeNow ));
+    ->setCellValue('C10', \PhpOffice\PhpExcel\Shared\Date::PHPToExcel( $dateTimeNow ));
 $objPHPExcel->getActiveSheet()
     ->getStyle('C10')
     ->getNumberFormat()
-    ->setFormatCode(\PHPExcel\Style\NumberFormat::FORMAT_DATE_TIME4);
+    ->setFormatCode(\PhpOffice\PhpExcel\Style\NumberFormat::FORMAT_DATE_TIME4);
 
 $objPHPExcel->getActiveSheet()
     ->setCellValue('A11', 'Date/Time')
     ->setCellValue('B11', 'Date and Time')
-    ->setCellValue('C11', \PHPExcel\Shared\Date::PHPToExcel( $dateTimeNow ));
+    ->setCellValue('C11', \PhpOffice\PhpExcel\Shared\Date::PHPToExcel( $dateTimeNow ));
 $objPHPExcel->getActiveSheet()
     ->getStyle('C11')
     ->getNumberFormat()
-    ->setFormatCode(\PHPExcel\Style\NumberFormat::FORMAT_DATE_DATETIME);
+    ->setFormatCode(\PhpOffice\PhpExcel\Style\NumberFormat::FORMAT_DATE_DATETIME);
 
 $objPHPExcel->getActiveSheet()
     ->setCellValue('A12', 'NULL')
     ->setCellValue('C12', NULL);
 
-$objRichText = new \PHPExcel\RichText();
+$objRichText = new \PhpOffice\PhpExcel\RichText();
 $objRichText->createText('你好 ');
 
 $objPayable = $objRichText->createTextRun('你 好 吗？');
 $objPayable->getFont()->setBold(true);
 $objPayable->getFont()->setItalic(true);
-$objPayable->getFont()->setColor( new \PHPExcel\Style\Color( \PHPExcel\Style\Color::COLOR_DARKGREEN ) );
+$objPayable->getFont()->setColor( new \PhpOffice\PhpExcel\Style\Color( \PhpOffice\PhpExcel\Style\Color::COLOR_DARKGREEN ) );
 
 $objRichText->createText(', unless specified otherwise on the invoice.');
 
@@ -148,11 +148,11 @@ $objPHPExcel->getActiveSheet()
     ->setCellValue('C13', $objRichText);
 
 
-$objRichText2 = new \PHPExcel\RichText();
+$objRichText2 = new \PhpOffice\PhpExcel\RichText();
 $objRichText2->createText("black text\n");
 
 $objRed = $objRichText2->createTextRun("red text");
-$objRed->getFont()->setColor( new \PHPExcel\Style\Color(\PHPExcel\Style\Color::COLOR_RED  ) );
+$objRed->getFont()->setColor( new \PhpOffice\PhpExcel\Style\Color(\PhpOffice\PhpExcel\Style\Color::COLOR_RED  ) );
 
 $objPHPExcel->getActiveSheet()
     ->getCell("C14")
@@ -191,7 +191,7 @@ $objPHPExcel->setActiveSheetIndex(0);
 echo date('H:i:s') , " Write to Excel2007 format" , EOL;
 $callStartTime = microtime(true);
 
-$objWriter = \PHPExcel\IOFactory::createWriter($objPHPExcel, 'Excel2007');
+$objWriter = \PhpOffice\PhpExcel\IOFactory::createWriter($objPHPExcel, 'Excel2007');
 $objWriter->save(str_replace('.php', '.xlsx', __FILE__));
 $callEndTime = microtime(true);
 $callTime = $callEndTime - $callStartTime;
@@ -205,7 +205,7 @@ echo date('H:i:s') , ' Current memory usage: ' , (memory_get_usage(true) / 1024 
 echo date('H:i:s') , " Reload workbook from saved file" , EOL;
 $callStartTime = microtime(true);
 
-$objPHPExcel = \PHPExcel\IOFactory::load(str_replace('.php', '.xlsx', __FILE__));
+$objPHPExcel = \PhpOffice\PhpExcel\IOFactory::load(str_replace('.php', '.xlsx', __FILE__));
 
 $callEndTime = microtime(true);
 $callTime = $callEndTime - $callStartTime;

@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel\Worksheet;
+namespace PhpOffice\PhpExcel\Worksheet;
 
 /**
  * PHPExcel_Worksheet_HeaderFooter
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,7 +23,7 @@ namespace PHPExcel\Worksheet;
  *
  * @category   PHPExcel
  * @package    PHPExcel_Worksheet
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  *
@@ -407,7 +407,7 @@ class HeaderFooter
      *
      * @param   HeaderFooterDrawing $image
      * @param   string $location
-     * @throws  \PHPExcel\Exception
+     * @throws  \PhpOffice\PhpExcel\Exception
      * @return  HeaderFooter
      */
     public function addImage(HeaderFooterDrawing $image = null, $location = self::IMAGE_HEADER_LEFT)
@@ -420,7 +420,7 @@ class HeaderFooter
      * Remove header/footer image
      *
      * @param string $location
-     * @throws \PHPExcel\Exception
+     * @throws \PhpOffice\PhpExcel\Exception
      * @return HeaderFooter
      */
     public function removeImage($location = self::IMAGE_HEADER_LEFT)
@@ -435,13 +435,13 @@ class HeaderFooter
      * Set header/footer images
      *
      * @param  HeaderFooterDrawing[] $images
-     * @throws \PHPExcel\Exception
+     * @throws \PhpOffice\PhpExcel\Exception
      * @return HeaderFooter
      */
     public function setImages($images)
     {
         if (!is_array($images)) {
-            throw new \PHPExcel\Exception('Invalid parameter!');
+            throw new \PhpOffice\PhpExcel\Exception('Invalid parameter!');
         }
 
         $this->headerFooterImages = $images;

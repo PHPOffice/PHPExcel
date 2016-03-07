@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel;
+namespace PhpOffice\PhpExcel;
 
 /**
  *    PHPExcel_Cell
  *
- *    Copyright (c) 2006 - 2015 PHPExcel
+ *    Copyright (c) 2006 - 2016 PHPExcel
  *
  *    This library is free software; you can redistribute it and/or
  *    modify it under the terms of the GNU Lesser General Public
@@ -23,7 +23,7 @@ namespace PHPExcel;
  *
  *    @category    PHPExcel
  *    @package    PHPExcel_Cell
- *    @copyright    Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ *    @copyright    Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  *    @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  *    @version    ##VERSION##, ##DATE##
  */
@@ -961,7 +961,7 @@ class Cell
     public static function setValueBinder(Cell\IValueBinder $binder = null)
     {
         if ($binder === null) {
-            throw new Exception("A \\PHPExcel\\Cell\\IValueBinder is required for PHPExcel to function correctly.");
+            throw new Exception("A \\PhpOffice\PhpExcel\\Cell\\IValueBinder is required for PHPExcel to function correctly.");
         }
 
         self::$valueBinder = $binder;

@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel\Writer;
+namespace PhpOffice\PhpExcel\Writer;
 
 /**
  * PHPExcel\Writer\Excel2007
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,7 +23,7 @@ namespace PHPExcel\Writer;
  *
  * @category   PHPExcel
  * @package    PHPExcel_Writer_Excel2007
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -46,7 +46,7 @@ class Excel2007 extends BaseWriter implements IWriter
     /**
      * Private Spreadsheet
      *
-     * @var \PHPExcel\Spreadsheet
+     * @var \PhpOffice\PhpExcel\Spreadsheet
      */
     private $spreadSheet;
 
@@ -58,78 +58,78 @@ class Excel2007 extends BaseWriter implements IWriter
     private $stringTable    = array();
 
     /**
-     * Private unique \PHPExcel\Style\Conditional HashTable
+     * Private unique \PhpOffice\PhpExcel\Style\Conditional HashTable
      *
-     * @var \PHPExcel\HashTable
+     * @var \PhpOffice\PhpExcel\HashTable
      */
     private $stylesConditionalHashTable;
 
     /**
-     * Private unique \PHPExcel\Style HashTable
+     * Private unique \PhpOffice\PhpExcel\Style HashTable
      *
-     * @var \PHPExcel\HashTable
+     * @var \PhpOffice\PhpExcel\HashTable
      */
     private $styleHashTable;
 
     /**
-     * Private unique \PHPExcel\Style\Fill HashTable
+     * Private unique \PhpOffice\PhpExcel\Style\Fill HashTable
      *
-     * @var \PHPExcel\HashTable
+     * @var \PhpOffice\PhpExcel\HashTable
      */
     private $fillHashTable;
 
     /**
-     * Private unique \PHPExcel\Style\Font HashTable
+     * Private unique \PhpOffice\PhpExcel\Style\Font HashTable
      *
-     * @var \PHPExcel\HashTable
+     * @var \PhpOffice\PhpExcel\HashTable
      */
     private $fontHashTable;
 
     /**
-     * Private unique \PHPExcel\Style\Borders HashTable
+     * Private unique \PhpOffice\PhpExcel\Style\Borders HashTable
      *
-     * @var \PHPExcel\HashTable
+     * @var \PhpOffice\PhpExcel\HashTable
      */
     private $bordersHashTable ;
 
     /**
-     * Private unique \PHPExcel\Style\NumberFormat HashTable
+     * Private unique \PhpOffice\PhpExcel\Style\NumberFormat HashTable
      *
-     * @var \PHPExcel\HashTable
+     * @var \PhpOffice\PhpExcel\HashTable
      */
     private $numFmtHashTable;
 
     /**
-     * Private unique \PHPExcel\Worksheet\BaseDrawing HashTable
+     * Private unique \PhpOffice\PhpExcel\Worksheet\BaseDrawing HashTable
      *
-     * @var \PHPExcel\HashTable
+     * @var \PhpOffice\PhpExcel\HashTable
      */
     private $drawingHashTable;
 
     /**
      * Create a new Excel2007 Writer
      *
-     * @param \PHPExcel\SpreadSheet $pPHPExcel
+     * @param \PhpOffice\PhpExcel\SpreadSheet $pPHPExcel
      */
-    public function __construct(\PHPExcel\Spreadsheet $pPHPExcel = null)
+    public function __construct(\PhpOffice\PhpExcel\Spreadsheet $pPHPExcel = null)
     {
         // Assign PHPExcel
         $this->setPHPExcel($pPHPExcel);
 
         $writerPartsArray = [
-            'stringtable'       => '\\PHPExcel\\Writer\\Excel2007\\StringTable',
-            'contenttypes'      => '\\PHPExcel\\Writer\\Excel2007\\ContentTypes',
-            'docprops'          => '\\PHPExcel\\Writer\\Excel2007\\DocProps',
-            'rels'              => '\\PHPExcel\\Writer\\Excel2007\\Rels',
-            'theme'             => '\\PHPExcel\\Writer\\Excel2007\\Theme',
-            'style'             => '\\PHPExcel\\Writer\\Excel2007\\Style',
-            'workbook'          => '\\PHPExcel\\Writer\\Excel2007\\Workbook',
-            'worksheet'         => '\\PHPExcel\\Writer\\Excel2007\\Worksheet',
-            'drawing'           => '\\PHPExcel\\Writer\\Excel2007\\Drawing',
-            'comments'          => '\\PHPExcel\\Writer\\Excel2007\\Comments',
-            'chart'             => '\\PHPExcel\\Writer\\Excel2007\\Chart',
-            'relsvba'           => '\\PHPExcel\\Writer\\Excel2007\\RelsVBA',
-            'relsribbonobjects' => '\\PHPExcel\\Writer\\Excel2007\\RelsRibbon'
+            'stringtable'       => '\\PhpOffice\PhpExcel\\Writer\\Excel2007\\StringTable',
+            'contenttypes'      => '\\PhpOffice\PhpExcel\\Writer\\Excel2007\\ContentTypes',
+            'docprops'          => '\\PhpOffice\PhpExcel\\Writer\\Excel2007\\DocProps',
+            'rels'              => '\\PhpOffice\PhpExcel\\Writer\\Excel2007\\Rels',
+            'theme'             => '\\PhpOffice\PhpExcel\\Writer\\Excel2007\\Theme',
+            'style'             => '\\PhpOffice\PhpExcel\\Writer\\Excel2007\\Style',
+            'workbook'          => '\\PhpOffice\PhpExcel\\Writer\\Excel2007\\Workbook',
+            'worksheet'         => '\\PhpOffice\PhpExcel\\Writer\\Excel2007\\Worksheet',
+            'drawing'           => '\\PhpOffice\PhpExcel\\Writer\\Excel2007\\Drawing',
+            'comments'          => '\\PhpOffice\PhpExcel\\Writer\\Excel2007\\Comments',
+            'chart'             => '\\PhpOffice\PhpExcel\\Writer\\Excel2007\\Chart',
+            'relsvba'           => '\\PhpOffice\PhpExcel\\Writer\\Excel2007\\RelsVBA',
+            'relsribbonobjects' => '\\PhpOffice\PhpExcel\\Writer\\Excel2007\\RelsRibbon'
         ];
 
         //    Initialise writer parts
@@ -145,7 +145,7 @@ class Excel2007 extends BaseWriter implements IWriter
 
         // Set HashTable variables
         foreach ($hashTablesArray as $tableName) {
-            $this->$tableName     = new \PHPExcel\HashTable();
+            $this->$tableName     = new \PhpOffice\PhpExcel\HashTable();
         }
     }
 
@@ -153,7 +153,7 @@ class Excel2007 extends BaseWriter implements IWriter
      * Get writer part
      *
      * @param     string     $pPartName        Writer part name
-     * @return     \PHPExcel\Writer\Excel2007\WriterPart
+     * @return     \PhpOffice\PhpExcel\Writer\Excel2007\WriterPart
      */
     public function getWriterPart($pPartName = '')
     {
@@ -168,7 +168,7 @@ class Excel2007 extends BaseWriter implements IWriter
      * Save PHPExcel to file
      *
      * @param     string         $pFilename
-     * @throws     \PHPExcel\Writer\Exception
+     * @throws     \PhpOffice\PhpExcel\Writer\Exception
      */
     public function save($pFilename = null)
     {
@@ -179,16 +179,16 @@ class Excel2007 extends BaseWriter implements IWriter
             // If $pFilename is php://output or php://stdout, make it a temporary file...
             $originalFilename = $pFilename;
             if (strtolower($pFilename) == 'php://output' || strtolower($pFilename) == 'php://stdout') {
-                $pFilename = @tempnam(\PHPExcel\Shared\File::sys_get_temp_dir(), 'phpxltmp');
+                $pFilename = @tempnam(\PhpOffice\PhpExcel\Shared\File::sys_get_temp_dir(), 'phpxltmp');
                 if ($pFilename == '') {
                     $pFilename = $originalFilename;
                 }
             }
 
-            $saveDebugLog = \PHPExcel\Calculation::getInstance($this->spreadSheet)->getDebugLog()->getWriteDebugLog();
-            \PHPExcel\Calculation::getInstance($this->spreadSheet)->getDebugLog()->setWriteDebugLog(false);
-            $saveDateReturnType = \PHPExcel\Calculation\Functions::getReturnDateType();
-            \PHPExcel\Calculation\Functions::setReturnDateType(\PHPExcel\Calculation\Functions::RETURNDATE_EXCEL);
+            $saveDebugLog = \PhpOffice\PhpExcel\Calculation::getInstance($this->spreadSheet)->getDebugLog()->getWriteDebugLog();
+            \PhpOffice\PhpExcel\Calculation::getInstance($this->spreadSheet)->getDebugLog()->setWriteDebugLog(false);
+            $saveDateReturnType = \PhpOffice\PhpExcel\Calculation\Functions::getReturnDateType();
+            \PhpOffice\PhpExcel\Calculation\Functions::setReturnDateType(\PhpOffice\PhpExcel\Calculation\Functions::RETURNDATE_EXCEL);
 
             // Create string lookup table
             $this->stringTable = array();
@@ -208,7 +208,7 @@ class Excel2007 extends BaseWriter implements IWriter
             $this->drawingHashTable->addFromSource($this->getWriterPart('Drawing')->allDrawings($this->spreadSheet));
 
             // Create new ZIP file and open it for writing
-            $zipClass = \PHPExcel\Settings::getZipClass();
+            $zipClass = \PhpOffice\PhpExcel\Settings::getZipClass();
             /** @var \ZipArchive $objZip */
             $objZip = new $zipClass();
 
@@ -224,7 +224,7 @@ class Excel2007 extends BaseWriter implements IWriter
             // Try opening the ZIP file
             if ($objZip->open($pFilename, $zipOverWrite) !== true) {
                 if ($objZip->open($pFilename, $zipCreate) !== true) {
-                    throw new \PHPExcel\Writer\Exception("Could not open " . $pFilename . " for writing.");
+                    throw new \PhpOffice\PhpExcel\Writer\Exception("Could not open " . $pFilename . " for writing.");
                 }
             }
 
@@ -344,7 +344,7 @@ class Excel2007 extends BaseWriter implements IWriter
 
             // Add media
             for ($i = 0; $i < $this->getDrawingHashTable()->count(); ++$i) {
-                if ($this->getDrawingHashTable()->getByIndex($i) instanceof \PHPExcel\Worksheet\Drawing) {
+                if ($this->getDrawingHashTable()->getByIndex($i) instanceof \PhpOffice\PhpExcel\Worksheet\Drawing) {
                     $imageContents = null;
                     $imagePath = $this->getDrawingHashTable()->getByIndex($i)->getPath();
                     if (strpos($imagePath, 'zip://') !== false) {
@@ -361,7 +361,7 @@ class Excel2007 extends BaseWriter implements IWriter
                     }
 
                     $objZip->addFromString('xl/media/' . str_replace(' ', '_', $this->getDrawingHashTable()->getByIndex($i)->getIndexedFilename()), $imageContents);
-                } elseif ($this->getDrawingHashTable()->getByIndex($i) instanceof \PHPExcel\Worksheet\MemoryDrawing) {
+                } elseif ($this->getDrawingHashTable()->getByIndex($i) instanceof \PhpOffice\PhpExcel\Worksheet\MemoryDrawing) {
                     ob_start();
                     call_user_func(
                         $this->getDrawingHashTable()->getByIndex($i)->getRenderingFunction(),
@@ -374,23 +374,23 @@ class Excel2007 extends BaseWriter implements IWriter
                 }
             }
 
-            \PHPExcel\Calculation\Functions::setReturnDateType($saveDateReturnType);
-            \PHPExcel\Calculation::getInstance($this->spreadSheet)->getDebugLog()->setWriteDebugLog($saveDebugLog);
+            \PhpOffice\PhpExcel\Calculation\Functions::setReturnDateType($saveDateReturnType);
+            \PhpOffice\PhpExcel\Calculation::getInstance($this->spreadSheet)->getDebugLog()->setWriteDebugLog($saveDebugLog);
 
             // Close file
             if ($objZip->close() === false) {
-                throw new \PHPExcel\Writer\Exception("Could not close zip file $pFilename.");
+                throw new \PhpOffice\PhpExcel\Writer\Exception("Could not close zip file $pFilename.");
             }
 
             // If a temporary file was used, copy it to the correct file stream
             if ($originalFilename != $pFilename) {
                 if (copy($pFilename, $originalFilename) === false) {
-                    throw new \PHPExcel\Writer\Exception("Could not copy temporary zip file $pFilename to $originalFilename.");
+                    throw new \PhpOffice\PhpExcel\Writer\Exception("Could not copy temporary zip file $pFilename to $originalFilename.");
                 }
                 @unlink($pFilename);
             }
         } else {
-            throw new \PHPExcel\Writer\Exception("PHPExcel object unassigned.");
+            throw new \PhpOffice\PhpExcel\Writer\Exception("PHPExcel object unassigned.");
         }
     }
 
@@ -398,25 +398,25 @@ class Excel2007 extends BaseWriter implements IWriter
      * Get PHPExcel object
      *
      * @return PHPExcel
-     * @throws \PHPExcel\Writer\Exception
+     * @throws \PhpOffice\PhpExcel\Writer\Exception
      */
     public function getPHPExcel()
     {
         if ($this->spreadSheet !== null) {
             return $this->spreadSheet;
         } else {
-            throw new \PHPExcel\Writer\Exception("No PHPExcel object assigned.");
+            throw new \PhpOffice\PhpExcel\Writer\Exception("No PHPExcel object assigned.");
         }
     }
 
     /**
      * Set PHPExcel object
      *
-     * @param     \PHPExcel\Spreadsheet     $pPHPExcel    PHPExcel object
+     * @param     \PhpOffice\PhpExcel\Spreadsheet     $pPHPExcel    PHPExcel object
      * @throws    Exception
      * @return    Excel2007
      */
-    public function setPHPExcel(\PHPExcel\Spreadsheet $pPHPExcel = null)
+    public function setPHPExcel(\PhpOffice\PhpExcel\Spreadsheet $pPHPExcel = null)
     {
         $this->spreadSheet = $pPHPExcel;
         return $this;
@@ -433,9 +433,9 @@ class Excel2007 extends BaseWriter implements IWriter
     }
 
     /**
-     * Get \PHPExcel\Style HashTable
+     * Get \PhpOffice\PhpExcel\Style HashTable
      *
-     * @return \PHPExcel\HashTable
+     * @return \PhpOffice\PhpExcel\HashTable
      */
     public function getStyleHashTable()
     {
@@ -443,9 +443,9 @@ class Excel2007 extends BaseWriter implements IWriter
     }
 
     /**
-     * Get \PHPExcel\Style\Conditional HashTable
+     * Get \PhpOffice\PhpExcel\Style\Conditional HashTable
      *
-     * @return \PHPExcel\HashTable
+     * @return \PhpOffice\PhpExcel\HashTable
      */
     public function getStylesConditionalHashTable()
     {
@@ -453,9 +453,9 @@ class Excel2007 extends BaseWriter implements IWriter
     }
 
     /**
-     * Get \PHPExcel\Style\Fill HashTable
+     * Get \PhpOffice\PhpExcel\Style\Fill HashTable
      *
-     * @return \PHPExcel\HashTable
+     * @return \PhpOffice\PhpExcel\HashTable
      */
     public function getFillHashTable()
     {
@@ -463,9 +463,9 @@ class Excel2007 extends BaseWriter implements IWriter
     }
 
     /**
-     * Get \PHPExcel\Style\Font HashTable
+     * Get \PhpOffice\PhpExcel\Style\Font HashTable
      *
-     * @return \PHPExcel\HashTable
+     * @return \PhpOffice\PhpExcel\HashTable
      */
     public function getFontHashTable()
     {
@@ -473,9 +473,9 @@ class Excel2007 extends BaseWriter implements IWriter
     }
 
     /**
-     * Get \PHPExcel\Style\Borders HashTable
+     * Get \PhpOffice\PhpExcel\Style\Borders HashTable
      *
-     * @return \PHPExcel\HashTable
+     * @return \PhpOffice\PhpExcel\HashTable
      */
     public function getBordersHashTable()
     {
@@ -483,9 +483,9 @@ class Excel2007 extends BaseWriter implements IWriter
     }
 
     /**
-     * Get \PHPExcel\Style\NumberFormat HashTable
+     * Get \PhpOffice\PhpExcel\Style\NumberFormat HashTable
      *
-     * @return \PHPExcel\HashTable
+     * @return \PhpOffice\PhpExcel\HashTable
      */
     public function getNumFmtHashTable()
     {
@@ -493,9 +493,9 @@ class Excel2007 extends BaseWriter implements IWriter
     }
 
     /**
-     * Get \PHPExcel\Worksheet\BaseDrawing HashTable
+     * Get \PhpOffice\PhpExcel\Worksheet\BaseDrawing HashTable
      *
-     * @return \PHPExcel\HashTable
+     * @return \PhpOffice\PhpExcel\HashTable
      */
     public function getDrawingHashTable()
     {

@@ -1,10 +1,10 @@
 <?php
-namespace PHPExcel\Writer\Excel2007;
+namespace PhpOffice\PhpExcel\Writer\Excel2007;
 
 /**
  * PHPExcel_Writer_Excel2007_ContentTypes
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -22,7 +22,7 @@ namespace PHPExcel\Writer\Excel2007;
  *
  * @category   PHPExcel
  * @package    PHPExcel_Writer_Excel2007
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -31,19 +31,19 @@ class ContentTypes extends WriterPart
     /**
      * Write content types to XML format
      *
-     * @param     \PHPExcel\Spreadsheet    $pPHPExcel
+     * @param     \PhpOffice\PhpExcel\Spreadsheet    $pPHPExcel
      * @param    boolean        $includeCharts    Flag indicating if we should include drawing details for charts
      * @return string                  XML Output
-     * @throws     \PHPExcel\Writer\Exception
+     * @throws     \PhpOffice\PhpExcel\Writer\Exception
      */
-    public function writeContentTypes(\PHPExcel\Spreadsheet $pPHPExcel = null, $includeCharts = false)
+    public function writeContentTypes(\PhpOffice\PhpExcel\Spreadsheet $pPHPExcel = null, $includeCharts = false)
     {
         // Create XML writer
         $objWriter = null;
         if ($this->getParentWriter()->getUseDiskCaching()) {
-            $objWriter = new \PHPExcel\Shared\XMLWriter(\PHPExcel\Shared\XMLWriter::STORAGE_DISK, $this->getParentWriter()->getDiskCachingDirectory());
+            $objWriter = new \PhpOffice\PhpExcel\Shared\XMLWriter(\PhpOffice\PhpExcel\Shared\XMLWriter::STORAGE_DISK, $this->getParentWriter()->getDiskCachingDirectory());
         } else {
-            $objWriter = new \PHPExcel\Shared\XMLWriter(\PHPExcel\Shared\XMLWriter::STORAGE_MEMORY);
+            $objWriter = new \PhpOffice\PhpExcel\Shared\XMLWriter(\PhpOffice\PhpExcel\Shared\XMLWriter::STORAGE_MEMORY);
         }
 
         // XML header
@@ -135,10 +135,10 @@ class ContentTypes extends WriterPart
             $extension     = '';
             $mimeType     = '';
 
-            if ($this->getParentWriter()->getDrawingHashTable()->getByIndex($i) instanceof \PHPExcel\Worksheet\Drawing) {
+            if ($this->getParentWriter()->getDrawingHashTable()->getByIndex($i) instanceof \PhpOffice\PhpExcel\Worksheet\Drawing) {
                 $extension = strtolower($this->getParentWriter()->getDrawingHashTable()->getByIndex($i)->getExtension());
                 $mimeType = $this->getImageMimeType($this->getParentWriter()->getDrawingHashTable()->getByIndex($i)->getPath());
-            } elseif ($this->getParentWriter()->getDrawingHashTable()->getByIndex($i) instanceof \PHPExcel\Worksheet\MemoryDrawing) {
+            } elseif ($this->getParentWriter()->getDrawingHashTable()->getByIndex($i) instanceof \PhpOffice\PhpExcel\Worksheet\MemoryDrawing) {
                 $extension = strtolower($this->getParentWriter()->getDrawingHashTable()->getByIndex($i)->getMimeType());
                 $extension = explode('/', $extension);
                 $extension = $extension[1];
@@ -185,27 +185,27 @@ class ContentTypes extends WriterPart
      *
      * @param     string    $pFile    Filename
      * @return     string    Mime Type
-     * @throws     \PHPExcel\Writer\Exception
+     * @throws     \PhpOffice\PhpExcel\Writer\Exception
      */
     private function getImageMimeType($pFile = '')
     {
-        if (\PHPExcel\Shared\File::file_exists($pFile)) {
+        if (\PhpOffice\PhpExcel\Shared\File::file_exists($pFile)) {
             $image = getimagesize($pFile);
             return image_type_to_mime_type($image[2]);
         } else {
-            throw new \PHPExcel\Writer\Exception("File $pFile does not exist");
+            throw new \PhpOffice\PhpExcel\Writer\Exception("File $pFile does not exist");
         }
     }
 
     /**
      * Write Default content type
      *
-     * @param     \PHPExcel\Shared\XMLWriter     $objWriter         XML Writer
+     * @param     \PhpOffice\PhpExcel\Shared\XMLWriter     $objWriter         XML Writer
      * @param     string                         $pPartname         Part name
      * @param     string                         $pContentType     Content type
-     * @throws     \PHPExcel\Writer\Exception
+     * @throws     \PhpOffice\PhpExcel\Writer\Exception
      */
-    private function writeDefaultContentType(\PHPExcel\Shared\XMLWriter $objWriter = null, $pPartname = '', $pContentType = '')
+    private function writeDefaultContentType(\PhpOffice\PhpExcel\Shared\XMLWriter $objWriter = null, $pPartname = '', $pContentType = '')
     {
         if ($pPartname != '' && $pContentType != '') {
             // Write content type
@@ -214,19 +214,19 @@ class ContentTypes extends WriterPart
             $objWriter->writeAttribute('ContentType', $pContentType);
             $objWriter->endElement();
         } else {
-            throw new \PHPExcel\Writer\Exception("Invalid parameters passed.");
+            throw new \PhpOffice\PhpExcel\Writer\Exception("Invalid parameters passed.");
         }
     }
 
     /**
      * Write Override content type
      *
-     * @param     \PHPExcel\Shared\XMLWriter     $objWriter         XML Writer
+     * @param     \PhpOffice\PhpExcel\Shared\XMLWriter     $objWriter         XML Writer
      * @param     string                         $pPartname         Part name
      * @param     string                         $pContentType     Content type
-     * @throws     \PHPExcel\Writer\Exception
+     * @throws     \PhpOffice\PhpExcel\Writer\Exception
      */
-    private function writeOverrideContentType(\PHPExcel\Shared\XMLWriter $objWriter = null, $pPartname = '', $pContentType = '')
+    private function writeOverrideContentType(\PhpOffice\PhpExcel\Shared\XMLWriter $objWriter = null, $pPartname = '', $pContentType = '')
     {
         if ($pPartname != '' && $pContentType != '') {
             // Write content type
@@ -235,7 +235,7 @@ class ContentTypes extends WriterPart
             $objWriter->writeAttribute('ContentType', $pContentType);
             $objWriter->endElement();
         } else {
-            throw new \PHPExcel\Writer\Exception("Invalid parameters passed.");
+            throw new \PhpOffice\PhpExcel\Writer\Exception("Invalid parameters passed.");
         }
     }
 }

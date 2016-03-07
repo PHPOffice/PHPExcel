@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel\Style;
+namespace PhpOffice\PhpExcel\Style;
 
 /**
  * PHPExcel_Style_Supervisor
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,7 +23,7 @@ namespace PHPExcel\Style;
  *
  * @category   PHPExcel
  * @package    PHPExcel_Style
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -39,7 +39,7 @@ abstract class Supervisor
     /**
      * Parent. Only used for supervisor
      *
-     * @var \PHPExcel\Style
+     * @var \PhpOffice\PhpExcel\Style
      */
     protected $parent;
 
@@ -81,7 +81,7 @@ abstract class Supervisor
     /**
      * Get the currently active sheet. Only used for supervisor
      *
-     * @return \PHPExcel\Worksheet
+     * @return \PhpOffice\PhpExcel\Worksheet
      */
     public function getActiveSheet()
     {

@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel\Style;
+namespace PhpOffice\PhpExcel\Style;
 
 /**
  * PHPExcel_Style_Conditional
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,11 +23,11 @@ namespace PHPExcel\Style;
  *
  * @category   PHPExcel
  * @package    PHPExcel_Style
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
-class Conditional implements \PHPExcel\IComparable
+class Conditional implements \PhpOffice\PhpExcel\IComparable
 {
     /* Condition types */
     const CONDITION_NONE         = 'none';
@@ -80,7 +80,7 @@ class Conditional implements \PHPExcel\IComparable
     /**
      * Style
      *
-     * @var \PHPExcel\Style
+     * @var \PhpOffice\PhpExcel\Style
      */
     private $style;
 
@@ -94,7 +94,7 @@ class Conditional implements \PHPExcel\IComparable
         $this->operatorType  = self::OPERATOR_NONE;
         $this->text          = null;
         $this->condition     = array();
-        $this->style         = new \PHPExcel\Style(false, true);
+        $this->style         = new \PhpOffice\PhpExcel\Style(false, true);
     }
 
     /**
@@ -234,7 +234,7 @@ class Conditional implements \PHPExcel\IComparable
     /**
      * Get Style
      *
-     * @return \PHPExcel\Style
+     * @return \PhpOffice\PhpExcel\Style
      */
     public function getStyle()
     {
@@ -244,11 +244,11 @@ class Conditional implements \PHPExcel\IComparable
     /**
      * Set Style
      *
-     * @param   \PHPExcel\Style $pValue
-     * @throws  \PHPExcel\Exception
+     * @param   \PhpOffice\PhpExcel\Style $pValue
+     * @throws  \PhpOffice\PhpExcel\Exception
      * @return  Conditional
      */
-    public function setStyle(\PHPExcel\Style $pValue = null)
+    public function setStyle(\PhpOffice\PhpExcel\Style $pValue = null)
     {
            $this->style = $pValue;
            return $this;

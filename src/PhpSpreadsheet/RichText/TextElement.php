@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPExcel\RichText;
+namespace PhpOffice\PhpExcel\RichText;
 
 /**
  * PHPExcel_RichText_TextElement
@@ -21,7 +21,7 @@ namespace PHPExcel\RichText;
  *
  * @category   PHPExcel
  * @package    PHPExcel_RichText
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -70,7 +70,7 @@ class TextElement implements ITextElement
     /**
      * Get font
      *
-     * @return \PHPExcel\Style\Font
+     * @return \PhpOffice\PhpExcel\Style\Font
      */
     public function getFont()
     {

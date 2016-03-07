@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel\Calculation;
+namespace PhpOffice\PhpExcel\Calculation;
 
 /**
  * PHPExcel_Calculation_LookupRef
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,7 +23,7 @@ namespace PHPExcel\Calculation;
  *
  * @category    PHPExcel
  * @package     PHPExcel_Calculation
- * @copyright   Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright   Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license     http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version     ##VERSION##, ##DATE##
  */
@@ -69,7 +69,7 @@ class LookupRef
         }
         if ((!is_bool($referenceStyle)) || $referenceStyle) {
             $rowRelative = $columnRelative = '$';
-            $column = \PHPExcel\Cell::stringFromColumnIndex($column-1);
+            $column = \PhpOffice\PhpExcel\Cell::stringFromColumnIndex($column-1);
             if (($relativity == 2) || ($relativity == 4)) {
                 $columnRelative = '';
             }
@@ -112,7 +112,7 @@ class LookupRef
         if (is_array($cellAddress)) {
             foreach ($cellAddress as $columnKey => $value) {
                 $columnKey = preg_replace('/[^a-z]/i', '', $columnKey);
-                return (integer) \PHPExcel\Cell::columnIndexFromString($columnKey);
+                return (integer) \PhpOffice\PhpExcel\Cell::columnIndexFromString($columnKey);
             }
         } else {
             if (strpos($cellAddress, '!') !== false) {
@@ -124,12 +124,12 @@ class LookupRef
                 $endAddress = preg_replace('/[^a-z]/i', '', $endAddress);
                 $returnValue = array();
                 do {
-                    $returnValue[] = (integer) \PHPExcel\Cell::columnIndexFromString($startAddress);
+                    $returnValue[] = (integer) \PhpOffice\PhpExcel\Cell::columnIndexFromString($startAddress);
                 } while ($startAddress++ != $endAddress);
                 return $returnValue;
             } else {
                 $cellAddress = preg_replace('/[^a-z]/i', '', $cellAddress);
-                return (integer) \PHPExcel\Cell::columnIndexFromString($cellAddress);
+                return (integer) \PhpOffice\PhpExcel\Cell::columnIndexFromString($cellAddress);
             }
         }
     }
@@ -156,7 +156,7 @@ class LookupRef
 
         reset($cellAddress);
         $isMatrix = (is_numeric(key($cellAddress)));
-        list($columns, $rows) = \PHPExcel\Calculation::_getMatrixDimensions($cellAddress);
+        list($columns, $rows) = \PhpOffice\PhpExcel\Calculation::_getMatrixDimensions($cellAddress);
 
         if ($isMatrix) {
             return $rows;
@@ -234,7 +234,7 @@ class LookupRef
 
         reset($cellAddress);
         $isMatrix = (is_numeric(key($cellAddress)));
-        list($columns, $rows) = \PHPExcel\Calculation::_getMatrixDimensions($cellAddress);
+        list($columns, $rows) = \PhpOffice\PhpExcel\Calculation::_getMatrixDimensions($cellAddress);
 
         if ($isMatrix) {
             return $columns;
@@ -254,10 +254,10 @@ class LookupRef
      * @category Logical Functions
      * @param    string            $linkURL        Value to check, is also the value returned when no error
      * @param    string            $displayName    Value to return when testValue is an error condition
-     * @param    \PHPExcel\Cell    $pCell            The cell to set the hyperlink in
+     * @param    \PhpOffice\PhpExcel\Cell    $pCell            The cell to set the hyperlink in
      * @return   mixed    The value of $displayName (or $linkURL if $displayName was blank)
      */
-    public static function HYPERLINK($linkURL = '', $displayName = null, \PHPExcel\Cell $pCell = null)
+    public static function HYPERLINK($linkURL = '', $displayName = null, \PhpOffice\PhpExcel\Cell $pCell = null)
     {
         $args = func_get_args();
         $pCell = array_pop($args);
@@ -292,13 +292,13 @@ class LookupRef
      * NOTE - INDIRECT() does not yet support the optional a1 parameter introduced in Excel 2010
      *
      * @param    cellAddress        $cellAddress    The cell address of the current cell (containing this formula)
-     * @param    \PHPExcel\Cell    $pCell            The current cell (containing this formula)
+     * @param    \PhpOffice\PhpExcel\Cell    $pCell            The current cell (containing this formula)
      * @return   mixed            The cells referenced by cellAddress
      *
      * @todo    Support for the optional a1 parameter introduced in Excel 2010
      *
      */
-    public static function INDIRECT($cellAddress = null, \PHPExcel\Cell $pCell = null)
+    public static function INDIRECT($cellAddress = null, \PhpOffice\PhpExcel\Cell $pCell = null)
     {
         $cellAddress    = Functions::flattenSingleValue($cellAddress);
         if (is_null($cellAddress) || $cellAddress === '') {
@@ -311,9 +311,9 @@ class LookupRef
             list($cellAddress1, $cellAddress2) = explode(':', $cellAddress);
         }
 
-        if ((!preg_match('/^'.\PHPExcel\Calculation::CALCULATION_REGEXP_CELLREF.'$/i', $cellAddress1, $matches)) ||
-            ((!is_null($cellAddress2)) && (!preg_match('/^'.\PHPExcel\Calculation::CALCULATION_REGEXP_CELLREF.'$/i', $cellAddress2, $matches)))) {
-            if (!preg_match('/^'.\PHPExcel\Calculation::CALCULATION_REGEXP_NAMEDRANGE.'$/i', $cellAddress1, $matches)) {
+        if ((!preg_match('/^'.\PhpOffice\PhpExcel\Calculation::CALCULATION_REGEXP_CELLREF.'$/i', $cellAddress1, $matches)) ||
+            ((!is_null($cellAddress2)) && (!preg_match('/^'.\PhpOffice\PhpExcel\Calculation::CALCULATION_REGEXP_CELLREF.'$/i', $cellAddress2, $matches)))) {
+            if (!preg_match('/^'.\PhpOffice\PhpExcel\Calculation::CALCULATION_REGEXP_NAMEDRANGE.'$/i', $cellAddress1, $matches)) {
                 return Functions::REF();
             }
 
@@ -325,7 +325,7 @@ class LookupRef
                 $pSheet = $pCell->getWorksheet();
             }
 
-            return \PHPExcel\Calculation::getInstance()->extractNamedRange($cellAddress, $pSheet, false);
+            return \PhpOffice\PhpExcel\Calculation::getInstance()->extractNamedRange($cellAddress, $pSheet, false);
         }
 
         if (strpos($cellAddress, '!') !== false) {
@@ -336,7 +336,7 @@ class LookupRef
             $pSheet = $pCell->getWorksheet();
         }
 
-        return \PHPExcel\Calculation::getInstance()->extractCellRange($cellAddress, $pSheet, false);
+        return \PhpOffice\PhpExcel\Calculation::getInstance()->extractCellRange($cellAddress, $pSheet, false);
     }
 
 
@@ -391,23 +391,23 @@ class LookupRef
         } else {
             $startCell = $endCell = $cellAddress;
         }
-        list($startCellColumn, $startCellRow) = \PHPExcel\Cell::coordinateFromString($startCell);
-        list($endCellColumn, $endCellRow) = \PHPExcel\Cell::coordinateFromString($endCell);
+        list($startCellColumn, $startCellRow) = \PhpOffice\PhpExcel\Cell::coordinateFromString($startCell);
+        list($endCellColumn, $endCellRow) = \PhpOffice\PhpExcel\Cell::coordinateFromString($endCell);
 
         $startCellRow += $rows;
-        $startCellColumn = \PHPExcel\Cell::columnIndexFromString($startCellColumn) - 1;
+        $startCellColumn = \PhpOffice\PhpExcel\Cell::columnIndexFromString($startCellColumn) - 1;
         $startCellColumn += $columns;
 
         if (($startCellRow <= 0) || ($startCellColumn < 0)) {
             return Functions::REF();
         }
-        $endCellColumn = \PHPExcel\Cell::columnIndexFromString($endCellColumn) - 1;
+        $endCellColumn = \PhpOffice\PhpExcel\Cell::columnIndexFromString($endCellColumn) - 1;
         if (($width != null) && (!is_object($width))) {
             $endCellColumn = $startCellColumn + $width - 1;
         } else {
             $endCellColumn += $columns;
         }
-        $startCellColumn = \PHPExcel\Cell::stringFromColumnIndex($startCellColumn);
+        $startCellColumn = \PhpOffice\PhpExcel\Cell::stringFromColumnIndex($startCellColumn);
 
         if (($height != null) && (!is_object($height))) {
             $endCellRow = $startCellRow + $height - 1;
@@ -418,7 +418,7 @@ class LookupRef
         if (($endCellRow <= 0) || ($endCellColumn < 0)) {
             return Functions::REF();
         }
-        $endCellColumn = \PHPExcel\Cell::stringFromColumnIndex($endCellColumn);
+        $endCellColumn = \PhpOffice\PhpExcel\Cell::stringFromColumnIndex($endCellColumn);
 
         $cellAddress = $startCellColumn.$startCellRow;
         if (($startCellColumn != $endCellColumn) || ($startCellRow != $endCellRow)) {
@@ -431,7 +431,7 @@ class LookupRef
             $pSheet = $pCell->getWorksheet();
         }
 
-        return \PHPExcel\Calculation::getInstance()->extractCellRange($cellAddress, $pSheet, false);
+        return \PhpOffice\PhpExcel\Calculation::getInstance()->extractCellRange($cellAddress, $pSheet, false);
     }
 
 

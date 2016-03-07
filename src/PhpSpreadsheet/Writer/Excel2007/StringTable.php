@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel\Writer\Excel2007;
+namespace PhpOffice\PhpExcel\Writer\Excel2007;
 
 /**
  * PHPExcel_Writer_Excel2007_StringTable
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,7 +23,7 @@ namespace PHPExcel\Writer\Excel2007;
  *
  * @category   PHPExcel
  * @package    PHPExcel_Writer_Excel2007
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -32,10 +32,10 @@ class StringTable extends WriterPart
     /**
      * Create worksheet stringtable
      *
-     * @param     \PHPExcel\Worksheet     $pSheet                Worksheet
+     * @param     \PhpOffice\PhpExcel\Worksheet     $pSheet                Worksheet
      * @param     string[]                 $pExistingTable     Existing table to eventually merge with
      * @return     string[]                 String table for worksheet
-     * @throws     \PHPExcel\Writer\Exception
+     * @throws     \PhpOffice\PhpExcel\Writer\Exception
      */
     public function createStringTable($pSheet = null, $pExistingTable = null)
     {
@@ -61,10 +61,10 @@ class StringTable extends WriterPart
                     ($cellValue !== null) &&
                     $cellValue !== '' &&
                     !isset($aFlippedStringTable[$cellValue]) &&
-                    ($cell->getDataType() == \PHPExcel\Cell\DataType::TYPE_STRING || $cell->getDataType() == \PHPExcel\Cell\DataType::TYPE_STRING2 || $cell->getDataType() == \PHPExcel\Cell\DataType::TYPE_NULL)) {
+                    ($cell->getDataType() == \PhpOffice\PhpExcel\Cell\DataType::TYPE_STRING || $cell->getDataType() == \PhpOffice\PhpExcel\Cell\DataType::TYPE_STRING2 || $cell->getDataType() == \PhpOffice\PhpExcel\Cell\DataType::TYPE_NULL)) {
                         $aStringTable[] = $cellValue;
                         $aFlippedStringTable[$cellValue] = true;
-                } elseif ($cellValue instanceof \PHPExcel\RichText &&
+                } elseif ($cellValue instanceof \PhpOffice\PhpExcel\RichText &&
                           ($cellValue !== null) &&
                           !isset($aFlippedStringTable[$cellValue->getHashCode()])) {
                                 $aStringTable[] = $cellValue;
@@ -74,7 +74,7 @@ class StringTable extends WriterPart
 
             return $aStringTable;
         } else {
-            throw new \PHPExcel\Writer\Exception("Invalid \PHPExcel\Worksheet object passed.");
+            throw new \PhpOffice\PhpExcel\Writer\Exception("Invalid \PhpOffice\PhpExcel\Worksheet object passed.");
         }
     }
 
@@ -83,7 +83,7 @@ class StringTable extends WriterPart
      *
      * @param     string[]     $pStringTable
      * @return string  XML Output
-     * @throws     \PHPExcel\Writer\Exception
+     * @throws     \PhpOffice\PhpExcel\Writer\Exception
      */
     public function writeStringTable($pStringTable = null)
     {
@@ -91,9 +91,9 @@ class StringTable extends WriterPart
             // Create XML writer
             $objWriter = null;
             if ($this->getParentWriter()->getUseDiskCaching()) {
-                $objWriter = new \PHPExcel\Shared\XMLWriter(\PHPExcel\Shared\XMLWriter::STORAGE_DISK, $this->getParentWriter()->getDiskCachingDirectory());
+                $objWriter = new \PhpOffice\PhpExcel\Shared\XMLWriter(\PhpOffice\PhpExcel\Shared\XMLWriter::STORAGE_DISK, $this->getParentWriter()->getDiskCachingDirectory());
             } else {
-                $objWriter = new \PHPExcel\Shared\XMLWriter(\PHPExcel\Shared\XMLWriter::STORAGE_MEMORY);
+                $objWriter = new \PhpOffice\PhpExcel\Shared\XMLWriter(\PhpOffice\PhpExcel\Shared\XMLWriter::STORAGE_MEMORY);
             }
 
             // XML header
@@ -108,15 +108,15 @@ class StringTable extends WriterPart
             foreach ($pStringTable as $textElement) {
                 $objWriter->startElement('si');
 
-                if (! $textElement instanceof \PHPExcel\RichText) {
-                    $textToWrite = \PHPExcel\Shared\String::ControlCharacterPHP2OOXML($textElement);
+                if (! $textElement instanceof \PhpOffice\PhpExcel\RichText) {
+                    $textToWrite = \PhpOffice\PhpExcel\Shared\String::ControlCharacterPHP2OOXML($textElement);
                     $objWriter->startElement('t');
                     if ($textToWrite !== trim($textToWrite)) {
                         $objWriter->writeAttribute('xml:space', 'preserve');
                     }
                     $objWriter->writeRawData($textToWrite);
                     $objWriter->endElement();
-                } elseif ($textElement instanceof \PHPExcel\RichText) {
+                } elseif ($textElement instanceof \PhpOffice\PhpExcel\RichText) {
                     $this->writeRichText($objWriter, $textElement);
                 }
 
@@ -127,19 +127,19 @@ class StringTable extends WriterPart
 
             return $objWriter->getData();
         } else {
-            throw new \PHPExcel\Writer\Exception("Invalid string table array passed.");
+            throw new \PhpOffice\PhpExcel\Writer\Exception("Invalid string table array passed.");
         }
     }
 
     /**
      * Write Rich Text
      *
-     * @param     \PHPExcel\Shared\XMLWriter    $objWriter         XML Writer
-     * @param     \PHPExcel\RichText            $pRichText        Rich text
+     * @param     \PhpOffice\PhpExcel\Shared\XMLWriter    $objWriter         XML Writer
+     * @param     \PhpOffice\PhpExcel\RichText            $pRichText        Rich text
      * @param     string                        $prefix            Optional Namespace prefix
-     * @throws     \PHPExcel\Writer\Exception
+     * @throws     \PhpOffice\PhpExcel\Writer\Exception
      */
-    public function writeRichText(\PHPExcel\Shared\XMLWriter $objWriter = null, \PHPExcel\RichText $pRichText = null, $prefix = null)
+    public function writeRichText(\PhpOffice\PhpExcel\Shared\XMLWriter $objWriter = null, \PhpOffice\PhpExcel\RichText $pRichText = null, $prefix = null)
     {
         if ($prefix !== null) {
             $prefix .= ':';
@@ -152,7 +152,7 @@ class StringTable extends WriterPart
             $objWriter->startElement($prefix.'r');
 
             // rPr
-            if ($element instanceof \PHPExcel\RichText\Run) {
+            if ($element instanceof \PhpOffice\PhpExcel\RichText\Run) {
                 // rPr
                 $objWriter->startElement($prefix.'rPr');
 
@@ -208,7 +208,7 @@ class StringTable extends WriterPart
             // t
             $objWriter->startElement($prefix.'t');
             $objWriter->writeAttribute('xml:space', 'preserve');
-            $objWriter->writeRawData(\PHPExcel\Shared\String::ControlCharacterPHP2OOXML($element->getText()));
+            $objWriter->writeRawData(\PhpOffice\PhpExcel\Shared\String::ControlCharacterPHP2OOXML($element->getText()));
             $objWriter->endElement();
 
             $objWriter->endElement();
@@ -218,16 +218,16 @@ class StringTable extends WriterPart
     /**
      * Write Rich Text
      *
-     * @param     \PHPExcel\Shared\XMLWriter    $objWriter         XML Writer
-     * @param     string|\PHPExcel\RichText    $pRichText        text string or Rich text
+     * @param     \PhpOffice\PhpExcel\Shared\XMLWriter    $objWriter         XML Writer
+     * @param     string|\PhpOffice\PhpExcel\RichText    $pRichText        text string or Rich text
      * @param     string                        $prefix            Optional Namespace prefix
-     * @throws     \PHPExcel\Writer\Exception
+     * @throws     \PhpOffice\PhpExcel\Writer\Exception
      */
-    public function writeRichTextForCharts(\PHPExcel\Shared\XMLWriter $objWriter = null, $pRichText = null, $prefix = null)
+    public function writeRichTextForCharts(\PhpOffice\PhpExcel\Shared\XMLWriter $objWriter = null, $pRichText = null, $prefix = null)
     {
-        if (!$pRichText instanceof \PHPExcel\RichText) {
+        if (!$pRichText instanceof \PhpOffice\PhpExcel\RichText) {
             $textRun = $pRichText;
-            $pRichText = new \PHPExcel\RichText();
+            $pRichText = new \PhpOffice\PhpExcel\RichText();
             $pRichText->createTextRun($textRun);
         }
 
@@ -283,7 +283,7 @@ class StringTable extends WriterPart
             // t
             $objWriter->startElement($prefix.'t');
 //                    $objWriter->writeAttribute('xml:space', 'preserve');    //    Excel2010 accepts, Excel2007 complains
-            $objWriter->writeRawData(\PHPExcel\Shared\String::ControlCharacterPHP2OOXML($element->getText()));
+            $objWriter->writeRawData(\PhpOffice\PhpExcel\Shared\String::ControlCharacterPHP2OOXML($element->getText()));
             $objWriter->endElement();
 
             $objWriter->endElement();
@@ -303,9 +303,9 @@ class StringTable extends WriterPart
 
         // Loop through stringtable and add flipped items to $returnValue
         foreach ($stringTable as $key => $value) {
-            if (! $value instanceof \PHPExcel\RichText) {
+            if (! $value instanceof \PhpOffice\PhpExcel\RichText) {
                 $returnValue[$value] = $key;
-            } elseif ($value instanceof \PHPExcel\RichText) {
+            } elseif ($value instanceof \PhpOffice\PhpExcel\RichText) {
                 $returnValue[$value->getHashCode()] = $key;
             }
         }

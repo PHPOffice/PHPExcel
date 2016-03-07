@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel\Worksheet;
+namespace PhpOffice\PhpExcel\Worksheet;
 
 /**
  * PHPExcel_Worksheet_Column
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,16 +23,16 @@ namespace PHPExcel\Worksheet;
  *
  * @category   PHPExcel
  * @package    PHPExcel_Worksheet
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
 class Column
 {
     /**
-     * \PHPExcel\Worksheet
+     * \PhpOffice\PhpExcel\Worksheet
      *
-     * @var \PHPExcel\Worksheet
+     * @var \PhpOffice\PhpExcel\Worksheet
      */
     private $parent;
 
@@ -46,10 +46,10 @@ class Column
     /**
      * Create a new column
      *
-     * @param \PHPExcel\Worksheet     $parent
+     * @param \PhpOffice\PhpExcel\Worksheet     $parent
      * @param string                $columnIndex
      */
-    public function __construct(\PHPExcel\Worksheet $parent = null, $columnIndex = 'A')
+    public function __construct(\PhpOffice\PhpExcel\Worksheet $parent = null, $columnIndex = 'A')
     {
         // Set parent and column index
         $this->parent         = $parent;

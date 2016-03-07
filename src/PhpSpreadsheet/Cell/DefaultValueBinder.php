@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel\Cell;
+namespace PhpOffice\PhpExcel\Cell;
 
 /**
  * PHPExcel_Cell_DefaultValueBinder
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,7 +23,7 @@ namespace PHPExcel\Cell;
  *
  * @category   PHPExcel
  * @package    PHPExcel_Cell
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -32,20 +32,20 @@ class DefaultValueBinder implements IValueBinder
     /**
      * Bind value to a cell
      *
-     * @param  \PHPExcel\Cell  $cell   Cell to bind value to
+     * @param  \PhpOffice\PhpExcel\Cell  $cell   Cell to bind value to
      * @param  mixed          $value  Value to bind in cell
      * @return boolean
      */
-    public function bindValue(\PHPExcel\Cell $cell, $value = null)
+    public function bindValue(\PhpOffice\PhpExcel\Cell $cell, $value = null)
     {
         // sanitize UTF-8 strings
         if (is_string($value)) {
-            $value = \PHPExcel\Shared\String::SanitizeUTF8($value);
+            $value = \PhpOffice\PhpExcel\Shared\String::SanitizeUTF8($value);
         } elseif (is_object($value)) {
             // Handle any objects that might be injected
             if ($value instanceof \DateTime) {
                 $value = $value->format('Y-m-d H:i:s');
-            } elseif (!($value instanceof \PHPExcel\RichText)) {
+            } elseif (!($value instanceof \PhpOffice\PhpExcel\RichText)) {
                 $value = (string) $value;
             }
         }
@@ -70,7 +70,7 @@ class DefaultValueBinder implements IValueBinder
             return DataType::TYPE_NULL;
         } elseif ($pValue === '') {
             return DataType::TYPE_STRING;
-        } elseif ($pValue instanceof \PHPExcel\RichText) {
+        } elseif ($pValue instanceof \PhpOffice\PhpExcel\RichText) {
             return DataType::TYPE_INLINE;
         } elseif ($pValue{0} === '=' && strlen($pValue) > 1) {
             return DataType::TYPE_FORMULA;

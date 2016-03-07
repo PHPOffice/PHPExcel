@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel;
+namespace PhpOffice\PhpExcel;
 
 /**
  * PHPExcel_Chart
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,7 +23,7 @@ namespace PHPExcel;
  *
  * @category    PHPExcel
  * @package     PHPExcel_Chart
- * @copyright   Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright   Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license     http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version     ##VERSION##, ##DATE##
  */
@@ -671,7 +671,7 @@ class Chart
             set_include_path(get_include_path() . PATH_SEPARATOR . $libraryPath);
         }
 
-        $rendererName = '\\PHPExcel\\Chart\\Renderer\\'.$libraryName;
+        $rendererName = '\\PhpOffice\PhpExcel\\Chart\\Renderer\\'.$libraryName;
         $renderer = new $rendererName($this);
 
         if ($outputDestination == 'php://output') {

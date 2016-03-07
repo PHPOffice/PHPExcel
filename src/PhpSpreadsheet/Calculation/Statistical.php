@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPExcel\Calculation;
+namespace PhpOffice\PhpExcel\Calculation;
 
 //require_once PHPEXCEL_ROOT . 'PHPExcel/Shared/trend/trendClass.php';
 
@@ -20,7 +20,7 @@ define('SQRT2PI', 2.5066282746310005024157652848110452530069867406099);
 /**
  * PHPExcel_Calculation_Statistical
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -38,7 +38,7 @@ define('SQRT2PI', 2.5066282746310005024157652848110452530069867406099);
  *
  * @category    PHPExcel
  * @package     PHPExcel_Calculation
- * @copyright   Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright   Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license     http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version     ##VERSION##, ##DATE##
  */
@@ -869,10 +869,10 @@ class Statistical
         $aCount = 0;
         foreach ($aArgs as $key => $arg) {
             if (!is_numeric($arg)) {
-                $arg = \PHPExcel\Calculation::wrapResult(strtoupper($arg));
+                $arg = \PhpOffice\PhpExcel\Calculation::wrapResult(strtoupper($arg));
             }
             $testCondition = '='.$arg.$condition;
-            if (\PHPExcel\Calculation::getInstance()->_calculateFormulaValue($testCondition)) {
+            if (\PhpOffice\PhpExcel\Calculation::getInstance()->_calculateFormulaValue($testCondition)) {
                 if ((is_null($returnValue)) || ($arg > $returnValue)) {
                     $returnValue += $arg;
                     ++$aCount;
@@ -1290,10 +1290,10 @@ class Statistical
         // Loop through arguments
         foreach ($aArgs as $arg) {
             if (!is_numeric($arg)) {
-                $arg = \PHPExcel\Calculation::wrapResult(strtoupper($arg));
+                $arg = \PhpOffice\PhpExcel\Calculation::wrapResult(strtoupper($arg));
             }
             $testCondition = '='.$arg.$condition;
-            if (\PHPExcel\Calculation::getInstance()->_calculateFormulaValue($testCondition)) {
+            if (\PhpOffice\PhpExcel\Calculation::getInstance()->_calculateFormulaValue($testCondition)) {
                 // Is it a value within our criteria
                 ++$returnValue;
             }
@@ -2282,10 +2282,10 @@ class Statistical
         // Loop through arguments
         foreach ($aArgs as $key => $arg) {
             if (!is_numeric($arg)) {
-                $arg = \PHPExcel\Calculation::wrapResult(strtoupper($arg));
+                $arg = \PhpOffice\PhpExcel\Calculation::wrapResult(strtoupper($arg));
             }
             $testCondition = '='.$arg.$condition;
-            if (\PHPExcel\Calculation::getInstance()->_calculateFormulaValue($testCondition)) {
+            if (\PhpOffice\PhpExcel\Calculation::getInstance()->_calculateFormulaValue($testCondition)) {
                 if ((is_null($returnValue)) || ($arg > $returnValue)) {
                     $returnValue = $arg;
                 }
@@ -2441,10 +2441,10 @@ class Statistical
         // Loop through arguments
         foreach ($aArgs as $key => $arg) {
             if (!is_numeric($arg)) {
-                $arg = \PHPExcel\Calculation::wrapResult(strtoupper($arg));
+                $arg = \PhpOffice\PhpExcel\Calculation::wrapResult(strtoupper($arg));
             }
             $testCondition = '='.$arg.$condition;
-            if (\PHPExcel\Calculation::getInstance()->_calculateFormulaValue($testCondition)) {
+            if (\PhpOffice\PhpExcel\Calculation::getInstance()->_calculateFormulaValue($testCondition)) {
                 if ((is_null($returnValue)) || ($arg < $returnValue)) {
                     $returnValue = $arg;
                 }

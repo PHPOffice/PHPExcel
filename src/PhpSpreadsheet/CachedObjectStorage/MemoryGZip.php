@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel\CachedObjectStorage;
+namespace PhpOffice\PhpExcel\CachedObjectStorage;
 
 /**
  * PHPExcel_CachedObjectStorage_MemoryGZip
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,7 +23,7 @@ namespace PHPExcel\CachedObjectStorage;
  *
  * @category   PHPExcel
  * @package    PHPExcel_CachedObjectStorage
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -34,7 +34,7 @@ class MemoryGZip extends CacheBase implements ICache
      *     and the 'nullify' the current cell object
      *
      * @return  void
-     * @throws  \PHPExcel\Exception
+     * @throws  \PhpOffice\PhpExcel\Exception
      */
     protected function storeData()
     {
@@ -52,11 +52,11 @@ class MemoryGZip extends CacheBase implements ICache
      * Add or Update a cell in cache identified by coordinate address
      *
      * @param   string            $pCoord        Coordinate address of the cell to update
-     * @param   \PHPExcel\Cell    $cell        Cell to update
-     * @return  \PHPExcel\Cell
-     * @throws  \PHPExcel\Exception
+     * @param   \PhpOffice\PhpExcel\Cell    $cell        Cell to update
+     * @return  \PhpOffice\PhpExcel\Cell
+     * @throws  \PhpOffice\PhpExcel\Exception
      */
-    public function addCacheData($pCoord, \PHPExcel\Cell $cell)
+    public function addCacheData($pCoord, \PhpOffice\PhpExcel\Cell $cell)
     {
         if (($pCoord !== $this->currentObjectID) && ($this->currentObjectID !== null)) {
             $this->storeData();
@@ -74,8 +74,8 @@ class MemoryGZip extends CacheBase implements ICache
      * Get cell at a specific coordinate
      *
      * @param   string             $pCoord        Coordinate of the cell
-     * @throws  \PHPExcel\Exception
-     * @return  \PHPExcel\Cell     Cell that was found, or null if not found
+     * @throws  \PhpOffice\PhpExcel\Exception
+     * @return  \PhpOffice\PhpExcel\Cell     Cell that was found, or null if not found
      */
     public function getCacheData($pCoord)
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPExcel\RichText;
+namespace PhpOffice\PhpExcel\RichText;
 
 /**
  * PHPExcel_RichText_Run
@@ -21,7 +21,7 @@ namespace PHPExcel\RichText;
  *
  * @category   PHPExcel
  * @package    PHPExcel_RichText
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -30,7 +30,7 @@ class Run extends TextElement implements ITextElement
     /**
      * Font
      *
-     * @var \PHPExcel\Style\Font
+     * @var \PhpOffice\PhpExcel\Style\Font
      */
     private $font;
 
@@ -43,13 +43,13 @@ class Run extends TextElement implements ITextElement
     {
         // Initialise variables
         $this->setText($pText);
-        $this->font = new \PHPExcel\Style\Font();
+        $this->font = new \PhpOffice\PhpExcel\Style\Font();
     }
 
     /**
      * Get font
      *
-     * @return \PHPExcel\Style\Font
+     * @return \PhpOffice\PhpExcel\Style\Font
      */
     public function getFont()
     {
@@ -59,11 +59,11 @@ class Run extends TextElement implements ITextElement
     /**
      * Set font
      *
-     * @param   \PHPExcel\Style\Font        $pFont        Font
-     * @throws  \PHPExcel\Exception
+     * @param   \PhpOffice\PhpExcel\Style\Font        $pFont        Font
+     * @throws  \PhpOffice\PhpExcel\Exception
      * @return  ITextElement
      */
-    public function setFont(\PHPExcel\Style\Font $pFont = null)
+    public function setFont(\PhpOffice\PhpExcel\Style\Font $pFont = null)
     {
         $this->font = $pFont;
         return $this;

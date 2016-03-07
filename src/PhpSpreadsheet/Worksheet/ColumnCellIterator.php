@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel\Worksheet;
+namespace PhpOffice\PhpExcel\Worksheet;
 
 /**
  * PHPExcel_Worksheet_ColumnCellIterator
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,7 +23,7 @@ namespace PHPExcel\Worksheet;
  *
  * @category   PHPExcel
  * @package    PHPExcel_Worksheet
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -53,16 +53,16 @@ class ColumnCellIterator extends CellIterator implements \Iterator
     /**
      * Create a new row iterator
      *
-     * @param    \PHPExcel\Worksheet    $subject        The worksheet to iterate over
+     * @param    \PhpOffice\PhpExcel\Worksheet    $subject        The worksheet to iterate over
      * @param    string              $columnIndex    The column that we want to iterate
      * @param    integer                $startRow        The row number at which to start iterating
      * @param    integer                $endRow            Optionally, the row number at which to stop iterating
      */
-    public function __construct(\PHPExcel\Worksheet $subject = null, $columnIndex = 'A', $startRow = 1, $endRow = null)
+    public function __construct(\PhpOffice\PhpExcel\Worksheet $subject = null, $columnIndex = 'A', $startRow = 1, $endRow = null)
     {
         // Set subject
         $this->subject = $subject;
-        $this->columnIndex = \PHPExcel\Cell::columnIndexFromString($columnIndex) - 1;
+        $this->columnIndex = \PhpOffice\PhpExcel\Cell::columnIndexFromString($columnIndex) - 1;
         $this->resetEnd($endRow);
         $this->resetStart($startRow);
     }
@@ -80,7 +80,7 @@ class ColumnCellIterator extends CellIterator implements \Iterator
      *
      * @param integer    $startRow    The row number at which to start iterating
      * @return ColumnCellIterator
-     * @throws \PHPExcel\Exception
+     * @throws \PhpOffice\PhpExcel\Exception
      */
     public function resetStart($startRow = 1)
     {
@@ -96,7 +96,7 @@ class ColumnCellIterator extends CellIterator implements \Iterator
      *
      * @param integer    $endRow    The row number at which to stop iterating
      * @return ColumnCellIterator
-     * @throws \PHPExcel\Exception
+     * @throws \PhpOffice\PhpExcel\Exception
      */
     public function resetEnd($endRow = null)
     {
@@ -111,14 +111,14 @@ class ColumnCellIterator extends CellIterator implements \Iterator
      *
      * @param integer    $row    The row number to set the current pointer at
      * @return ColumnCellIterator
-     * @throws \PHPExcel\Exception
+     * @throws \PhpOffice\PhpExcel\Exception
      */
     public function seek($row = 1)
     {
         if (($row < $this->startRow) || ($row > $this->endRow)) {
-            throw new \PHPExcel\Exception("Row $row is out of range ({$this->startRow} - {$this->endRow})");
+            throw new \PhpOffice\PhpExcel\Exception("Row $row is out of range ({$this->startRow} - {$this->endRow})");
         } elseif ($this->onlyExistingCells && !($this->subject->cellExistsByColumnAndRow($this->columnIndex, $row))) {
-            throw new \PHPExcel\Exception('In "IterateOnlyExistingCells" mode and Cell does not exist');
+            throw new \PhpOffice\PhpExcel\Exception('In "IterateOnlyExistingCells" mode and Cell does not exist');
         }
         $this->position = $row;
 
@@ -171,7 +171,7 @@ class ColumnCellIterator extends CellIterator implements \Iterator
     public function prev()
     {
         if ($this->position <= $this->startRow) {
-            throw new \PHPExcel\Exception("Row is already at the beginning of range ({$this->startRow} - {$this->endRow})");
+            throw new \PhpOffice\PhpExcel\Exception("Row is already at the beginning of range ({$this->startRow} - {$this->endRow})");
         }
 
         do {
@@ -194,7 +194,7 @@ class ColumnCellIterator extends CellIterator implements \Iterator
     /**
      * Validate start/end values for "IterateOnlyExistingCells" mode, and adjust if necessary
      *
-     * @throws \PHPExcel\Exception
+     * @throws \PhpOffice\PhpExcel\Exception
      */
     protected function adjustForExistingOnlyRange()
     {
@@ -204,14 +204,14 @@ class ColumnCellIterator extends CellIterator implements \Iterator
                 ++$this->startRow;
             }
             if ($this->startRow > $this->endRow) {
-                throw new \PHPExcel\Exception('No cells exist within the specified range');
+                throw new \PhpOffice\PhpExcel\Exception('No cells exist within the specified range');
             }
             while ((!$this->subject->cellExistsByColumnAndRow($this->columnIndex, $this->endRow)) &&
                 ($this->endRow >= $this->startRow)) {
                 --$this->endRow;
             }
             if ($this->endRow < $this->startRow) {
-                throw new \PHPExcel\Exception('No cells exist within the specified range');
+                throw new \PhpOffice\PhpExcel\Exception('No cells exist within the specified range');
             }
         }
     }

@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel;
+namespace PhpOffice\PhpExcel;
 
 /**
  * PHPExcel_Style
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,7 +23,7 @@ namespace PHPExcel;
  *
  * @category   PHPExcel
  * @package    PHPExcel_Style
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -178,7 +178,7 @@ class Style extends Style\Supervisor implements IComparable
      *                 'name'      => 'Arial',
      *                 'bold'      => true,
      *                 'italic'    => false,
-     *                 'underline' => \PHPExcel\Style\Font::UNDERLINE_DOUBLE,
+     *                 'underline' => \PhpOffice\PhpExcel\Style\Font::UNDERLINE_DOUBLE,
      *                 'strike'    => false,
      *                 'color'     => array(
      *                     'rgb' => '808080'
@@ -186,13 +186,13 @@ class Style extends Style\Supervisor implements IComparable
      *             ),
      *             'borders' => array(
      *                 'bottom'     => array(
-     *                     'style' => \PHPExcel\Style\Border::BORDER_DASHDOT,
+     *                     'style' => \PhpOffice\PhpExcel\Style\Border::BORDER_DASHDOT,
      *                     'color' => array(
      *                         'rgb' => '808080'
      *                     )
      *                 ),
      *                 'top'     => array(
-     *                     'style' => \PHPExcel\Style\Border::BORDER_DASHDOT,
+     *                     'style' => \PhpOffice\PhpExcel\Style\Border::BORDER_DASHDOT,
      *                     'color' => array(
      *                         'rgb' => '808080'
      *                     )

@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel\Calculation\Token;
+namespace PhpOffice\PhpExcel\Calculation\Token;
 
 /**
  * PHPExcel_Calculation_Token_Stack
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,7 +23,7 @@ namespace PHPExcel\Calculation\Token;
  *
  * @category   PHPExcel
  * @package    PHPExcel_Calculation
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -68,7 +68,7 @@ class Stack
             'reference' => $reference
         );
         if ($type == 'Function') {
-            $localeFunction = \PHPExcel\Calculation::localeFunc($value);
+            $localeFunction = \PhpOffice\PhpExcel\Calculation::localeFunc($value);
             if ($localeFunction != $value) {
                 $this->stack[($this->count - 1)]['localeValue'] = $localeFunction;
             }

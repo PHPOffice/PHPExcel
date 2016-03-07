@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel\Writer\Excel5;
+namespace PhpOffice\PhpExcel\Writer\Excel5;
 
 /**
- * \PHPExcel\Writer\Excel5\Escher
+ * \PhpOffice\PhpExcel\Writer\Excel5\Escher
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,7 +23,7 @@ namespace PHPExcel\Writer\Excel5;
  *
  * @category   PHPExcel
  * @package    PHPExcel_Writer_Excel5
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -74,7 +74,7 @@ class Escher
         $this->data = '';
 
         switch (get_class($this->object)) {
-            case '\\PHPExcel\\Shared\\Escher':
+            case '\\PhpOffice\PhpExcel\\Shared\\Escher':
                 if ($dggContainer = $this->object->getDggContainer()) {
                     $writer = new Escher($dggContainer);
                     $this->data = $writer->close();
@@ -85,7 +85,7 @@ class Escher
                     $this->spTypes = $writer->getSpTypes();
                 }
                 break;
-            case '\\PHPExcel\\Shared\\Escher\\DggContainer':
+            case '\\PhpOffice\PhpExcel\\Shared\\Escher\\DggContainer':
                 // this is a container record
 
                 // initialize
@@ -138,7 +138,7 @@ class Escher
 
                 $this->data = $header . $innerData;
                 break;
-            case '\\PHPExcel\\Shared\\Escher\\DggContainer\\BstoreContainer':
+            case '\\PhpOffice\PhpExcel\\Shared\\Escher\\DggContainer\\BstoreContainer':
                 // this is a container record
 
                 // initialize
@@ -165,7 +165,7 @@ class Escher
 
                 $this->data = $header . $innerData;
                 break;
-            case '\\PHPExcel\\Shared\\Escher\\DggContainer\\BstoreContainer\\BSE':
+            case '\\PhpOffice\PhpExcel\\Shared\\Escher\\DggContainer\\BstoreContainer\\BSE':
                 // this is a semi-container record
 
                 // initialize
@@ -214,12 +214,12 @@ class Escher
 
                 $this->data .= $data;
                 break;
-            case '\\PHPExcel\\Shared\\Escher\\DggContainer\\BstoreContainer\\BSE\\Blip':
+            case '\\PhpOffice\PhpExcel\\Shared\\Escher\\DggContainer\\BstoreContainer\\BSE\\Blip':
                 // this is an atom record
 
                 // write the record
                 switch ($this->object->getParent()->getBlipType()) {
-                    case \PHPExcel\Shared\Escher\DggContainer\BstoreContainer\BSE::BLIPTYPE_JPEG:
+                    case \PhpOffice\PhpExcel\Shared\Escher\DggContainer\BstoreContainer\BSE::BLIPTYPE_JPEG:
                         // initialize
                         $innerData = '';
 
@@ -246,7 +246,7 @@ class Escher
                         $this->data .= $innerData;
                         break;
 
-                    case \PHPExcel\Shared\Escher\DggContainer\BstoreContainer\BSE::BLIPTYPE_PNG:
+                    case \PhpOffice\PhpExcel\Shared\Escher\DggContainer\BstoreContainer\BSE::BLIPTYPE_PNG:
                         // initialize
                         $innerData = '';
 
@@ -274,7 +274,7 @@ class Escher
                         break;
                 }
                 break;
-            case '\\PHPExcel\\Shared\\Escher\\DgContainer':
+            case '\\PhpOffice\PhpExcel\\Shared\\Escher\\DgContainer':
                 // this is a container record
 
                 // initialize
@@ -327,7 +327,7 @@ class Escher
 
                 $this->data = $header . $innerData;
                 break;
-            case '\\PHPExcel\\Shared\\Escher\\DgContainer\\SpgrContainer':
+            case '\\PhpOffice\PhpExcel\\Shared\\Escher\\DgContainer\\SpgrContainer':
                 // this is a container record
 
                 // initialize
@@ -366,7 +366,7 @@ class Escher
                 $this->spOffsets = $spOffsets;
                 $this->spTypes = $spTypes;
                 break;
-            case '\\PHPExcel\\Shared\\Escher\\DgContainer\\SpgrContainer\\SpContainer':
+            case '\\PhpOffice\PhpExcel\\Shared\\Escher\\DgContainer\\SpgrContainer\\SpContainer':
                 // initialize
                 $data = '';
 
@@ -430,8 +430,8 @@ class Escher
                     $recType        = 0xF010;
 
                     // start coordinates
-                    list($column, $row) = \PHPExcel\Cell::coordinateFromString($this->object->getStartCoordinates());
-                    $c1 = \PHPExcel\Cell::columnIndexFromString($column) - 1;
+                    list($column, $row) = \PhpOffice\PhpExcel\Cell::coordinateFromString($this->object->getStartCoordinates());
+                    $c1 = \PhpOffice\PhpExcel\Cell::columnIndexFromString($column) - 1;
                     $r1 = $row - 1;
 
                     // start offsetX
@@ -441,8 +441,8 @@ class Escher
                     $startOffsetY = $this->object->getStartOffsetY();
 
                     // end coordinates
-                    list($column, $row) = \PHPExcel\Cell::coordinateFromString($this->object->getEndCoordinates());
-                    $c2 = \PHPExcel\Cell::columnIndexFromString($column) - 1;
+                    list($column, $row) = \PhpOffice\PhpExcel\Cell::coordinateFromString($this->object->getEndCoordinates());
+                    $c2 = \PhpOffice\PhpExcel\Cell::columnIndexFromString($column) - 1;
                     $r2 = $row - 1;
 
                     // end offsetX

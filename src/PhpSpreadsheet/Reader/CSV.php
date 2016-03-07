@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel\Reader;
+namespace PhpOffice\PhpExcel\Reader;
 
 /**
  * PHPExcel_Reader_CSV
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,7 +23,7 @@ namespace PHPExcel\Reader;
  *
  * @category   PHPExcel
  * @package    PHPExcel_Reader
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -184,7 +184,7 @@ class CSV extends BaseReader implements IReader
             $worksheetInfo[0]['lastColumnIndex'] = max($worksheetInfo[0]['lastColumnIndex'], count($rowData) - 1);
         }
 
-        $worksheetInfo[0]['lastColumnLetter'] = \PHPExcel\Cell::stringFromColumnIndex($worksheetInfo[0]['lastColumnIndex']);
+        $worksheetInfo[0]['lastColumnLetter'] = \PhpOffice\PhpExcel\Cell::stringFromColumnIndex($worksheetInfo[0]['lastColumnIndex']);
         $worksheetInfo[0]['totalColumns'] = $worksheetInfo[0]['lastColumnIndex'] + 1;
 
         // Close file
@@ -197,13 +197,13 @@ class CSV extends BaseReader implements IReader
      * Loads Spreadsheet from file
      *
      * @param     string         $pFilename
-     * @return \PHPExcel\Spreadsheet
+     * @return \PhpOffice\PhpExcel\Spreadsheet
      * @throws Exception
      */
     public function load($pFilename)
     {
         // Create new Spreadsheet
-        $objPHPExcel = new \PHPExcel\Spreadsheet();
+        $objPHPExcel = new \PhpOffice\PhpExcel\Spreadsheet();
 
         // Load into this instance
         return $this->loadIntoExisting($pFilename, $objPHPExcel);
@@ -259,7 +259,7 @@ class CSV extends BaseReader implements IReader
 
                     // Convert encoding if necessary
                     if ($this->inputEncoding !== 'UTF-8') {
-                        $rowDatum = \PHPExcel\Shared\String::ConvertEncoding($rowDatum, 'UTF-8', $this->inputEncoding);
+                        $rowDatum = \PhpOffice\PhpExcel\Shared\String::ConvertEncoding($rowDatum, 'UTF-8', $this->inputEncoding);
                     }
 
                     // Set cell value

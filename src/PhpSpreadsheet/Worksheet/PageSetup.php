@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel\Worksheet;
+namespace PhpOffice\PhpExcel\Worksheet;
 
 /**
- * \PHPExcel\Worksheet\PageSetup
+ * \PhpOffice\PhpExcel\Worksheet\PageSetup
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,7 +23,7 @@ namespace PHPExcel\Worksheet;
  *
  * @category   PHPExcel
  * @package    PHPExcel_Worksheet
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  *
@@ -100,7 +100,7 @@ namespace PHPExcel\Worksheet;
  *
  * @category   PHPExcel
  * @package    PHPExcel_Worksheet
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
 class PageSetup
 {
@@ -342,7 +342,7 @@ class PageSetup
      * @param   int?    $pValue
      * @param boolean    $pUpdate    Update fitToPage so scaling applies rather than fitToHeight / fitToWidth
      * @return PageSetup
-     * @throws     \PHPExcel\Exception
+     * @throws     \PhpOffice\PhpExcel\Exception
      */
     public function setScale($pValue = 100, $pUpdate = true)
     {
@@ -354,7 +354,7 @@ class PageSetup
                 $this->fitToPage = false;
             }
         } else {
-            throw new \PHPExcel\Exception("Scale must not be negative");
+            throw new \PhpOffice\PhpExcel\Exception("Scale must not be negative");
         }
         return $this;
     }
@@ -590,7 +590,7 @@ class PageSetup
      *                            Default behaviour, or a index value of 0, will return all ranges as a comma-separated string
      *                            Otherwise, the specific range identified by the value of $index will be returned
      *                            Print areas are numbered from 1
-     * @throws    \PHPExcel\Exception
+     * @throws    \PhpOffice\PhpExcel\Exception
      * @return    string
      */
     public function getPrintArea($index = 0)
@@ -602,7 +602,7 @@ class PageSetup
         if (isset($printAreas[$index-1])) {
             return $printAreas[$index-1];
         }
-        throw new \PHPExcel\Exception("Requested Print Area does not exist");
+        throw new \PhpOffice\PhpExcel\Exception("Requested Print Area does not exist");
     }
 
     /**
@@ -665,16 +665,16 @@ class PageSetup
      *                            Default behaviour, or the "O" method, overwrites existing print area
      *                            The "I" method, inserts the new print area before any specified index, or at the end of the list
      * @return    PageSetup
-     * @throws    \PHPExcel\Exception
+     * @throws    \PhpOffice\PhpExcel\Exception
      */
     public function setPrintArea($value, $index = 0, $method = self::SETPRINTRANGE_OVERWRITE)
     {
         if (strpos($value, '!') !== false) {
-            throw new \PHPExcel\Exception('Cell coordinate must not specify a worksheet.');
+            throw new \PhpOffice\PhpExcel\Exception('Cell coordinate must not specify a worksheet.');
         } elseif (strpos($value, ':') === false) {
-            throw new \PHPExcel\Exception('Cell coordinate must be a range of cells.');
+            throw new \PhpOffice\PhpExcel\Exception('Cell coordinate must be a range of cells.');
         } elseif (strpos($value, '$') !== false) {
-            throw new \PHPExcel\Exception('Cell coordinate must not be absolute.');
+            throw new \PhpOffice\PhpExcel\Exception('Cell coordinate must not be absolute.');
         }
         $value = strtoupper($value);
 
@@ -687,7 +687,7 @@ class PageSetup
                     $index = count($printAreas) - abs($index) + 1;
                 }
                 if (($index <= 0) || ($index > count($printAreas))) {
-                    throw new \PHPExcel\Exception('Invalid index for setting print range.');
+                    throw new \PhpOffice\PhpExcel\Exception('Invalid index for setting print range.');
                 }
                 $printAreas[$index-1] = $value;
                 $this->printArea = implode(',', $printAreas);
@@ -701,13 +701,13 @@ class PageSetup
                     $index = abs($index) - 1;
                 }
                 if ($index > count($printAreas)) {
-                    throw new \PHPExcel\Exception('Invalid index for setting print range.');
+                    throw new \PhpOffice\PhpExcel\Exception('Invalid index for setting print range.');
                 }
                 $printAreas = array_merge(array_slice($printAreas, 0, $index), array($value), array_slice($printAreas, $index));
                 $this->printArea = implode(',', $printAreas);
             }
         } else {
-            throw new \PHPExcel\Exception('Invalid method for setting print range.');
+            throw new \PhpOffice\PhpExcel\Exception('Invalid method for setting print range.');
         }
 
         return $this;
@@ -724,7 +724,7 @@ class PageSetup
      *                                list.
      *                            Print areas are numbered from 1
      * @return    PageSetup
-     * @throws    \PHPExcel\Exception
+     * @throws    \PhpOffice\PhpExcel\Exception
      */
     public function addPrintArea($value, $index = -1)
     {
@@ -752,12 +752,12 @@ class PageSetup
      *                                Default behaviour, or the "O" method, overwrites existing print area
      *                                The "I" method, inserts the new print area before any specified index, or at the end of the list
      * @return    PageSetup
-     * @throws    \PHPExcel\Exception
+     * @throws    \PhpOffice\PhpExcel\Exception
      */
     public function setPrintAreaByColumnAndRow($column1, $row1, $column2, $row2, $index = 0, $method = self::SETPRINTRANGE_OVERWRITE)
     {
         return $this->setPrintArea(
-            \PHPExcel\Cell::stringFromColumnIndex($column1) . $row1 . ':' . \PHPExcel\Cell::stringFromColumnIndex($column2) . $row2,
+            \PhpOffice\PhpExcel\Cell::stringFromColumnIndex($column1) . $row1 . ':' . \PhpOffice\PhpExcel\Cell::stringFromColumnIndex($column2) . $row2,
             $index,
             $method
         );
@@ -777,12 +777,12 @@ class PageSetup
      *                                    list.
      *                                Print areas are numbered from 1
      * @return    PageSetup
-     * @throws    \PHPExcel\Exception
+     * @throws    \PhpOffice\PhpExcel\Exception
      */
     public function addPrintAreaByColumnAndRow($column1, $row1, $column2, $row2, $index = -1)
     {
         return $this->setPrintArea(
-            \PHPExcel\Cell::stringFromColumnIndex($column1) . $row1 . ':' . \PHPExcel\Cell::stringFromColumnIndex($column2) . $row2,
+            \PhpOffice\PhpExcel\Cell::stringFromColumnIndex($column1) . $row1 . ':' . \PhpOffice\PhpExcel\Cell::stringFromColumnIndex($column2) . $row2,
             $index,
             self::SETPRINTRANGE_INSERT
         );

@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel\Cell;
+namespace PhpOffice\PhpExcel\Cell;
 
 /**
  * PHPExcel_Cell_AdvancedValueBinder
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,7 +23,7 @@ namespace PHPExcel\Cell;
  *
  * @category   PHPExcel
  * @package    PHPExcel_Cell
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -32,33 +32,33 @@ class AdvancedValueBinder extends DefaultValueBinder implements IValueBinder
     /**
      * Bind value to a cell
      *
-     * @param  \PHPExcel\Cell  $cell  Cell to bind value to
+     * @param  \PhpOffice\PhpExcel\Cell  $cell  Cell to bind value to
      * @param  mixed $value           Value to bind in cell
      * @return boolean
      */
-    public function bindValue(\PHPExcel\Cell $cell, $value = null)
+    public function bindValue(\PhpOffice\PhpExcel\Cell $cell, $value = null)
     {
         // sanitize UTF-8 strings
         if (is_string($value)) {
-            $value = \PHPExcel\Shared\String::SanitizeUTF8($value);
+            $value = \PhpOffice\PhpExcel\Shared\String::SanitizeUTF8($value);
         }
 
         // Find out data type
         $dataType = parent::dataTypeForValue($value);
 
         // Style logic - strings
-        if ($dataType === DataType::TYPE_STRING && !$value instanceof \PHPExcel\RichText) {
+        if ($dataType === DataType::TYPE_STRING && !$value instanceof \PhpOffice\PhpExcel\RichText) {
             //    Test for booleans using locale-setting
-            if ($value == \PHPExcel\Calculation::getTRUE()) {
+            if ($value == \PhpOffice\PhpExcel\Calculation::getTRUE()) {
                 $cell->setValueExplicit(true, DataType::TYPE_BOOL);
                 return true;
-            } elseif ($value == \PHPExcel\Calculation::getFALSE()) {
+            } elseif ($value == \PhpOffice\PhpExcel\Calculation::getFALSE()) {
                 $cell->setValueExplicit(false, DataType::TYPE_BOOL);
                 return true;
             }
 
             // Check for number in scientific format
-            if (preg_match('/^'.\PHPExcel\Calculation::CALCULATION_REGEXP_NUMBER.'$/', $value)) {
+            if (preg_match('/^'.\PhpOffice\PhpExcel\Calculation::CALCULATION_REGEXP_NUMBER.'$/', $value)) {
                 $cell->setValueExplicit((float) $value, DataType::TYPE_NUMERIC);
                 return true;
             }
@@ -95,14 +95,14 @@ class AdvancedValueBinder extends DefaultValueBinder implements IValueBinder
                 $cell->setValueExplicit($value, DataType::TYPE_NUMERIC);
                 // Set style
                 $cell->getWorksheet()->getStyle($cell->getCoordinate())
-                    ->getNumberFormat()->setFormatCode(\PHPExcel\Style\NumberFormat::FORMAT_PERCENTAGE_00);
+                    ->getNumberFormat()->setFormatCode(\PhpOffice\PhpExcel\Style\NumberFormat::FORMAT_PERCENTAGE_00);
                 return true;
             }
 
             // Check for currency
-            $currencyCode = \PHPExcel\Shared\String::getCurrencyCode();
-            $decimalSeparator = \PHPExcel\Shared\String::getDecimalSeparator();
-            $thousandsSeparator = \PHPExcel\Shared\String::getThousandsSeparator();
+            $currencyCode = \PhpOffice\PhpExcel\Shared\String::getCurrencyCode();
+            $decimalSeparator = \PhpOffice\PhpExcel\Shared\String::getDecimalSeparator();
+            $thousandsSeparator = \PhpOffice\PhpExcel\Shared\String::getThousandsSeparator();
             if (preg_match('/^'.preg_quote($currencyCode).' *(\d{1,3}('.preg_quote($thousandsSeparator).'\d{3})*|(\d+))('.preg_quote($decimalSeparator).'\d{2})?$/', $value)) {
                 // Convert value to number
                 $value = (float) trim(str_replace(array($currencyCode, $thousandsSeparator, $decimalSeparator), array('', '', '.'), $value));
@@ -110,7 +110,7 @@ class AdvancedValueBinder extends DefaultValueBinder implements IValueBinder
                 // Set style
                 $cell->getWorksheet()->getStyle($cell->getCoordinate())
                     ->getNumberFormat()->setFormatCode(
-                        str_replace('$', $currencyCode, \PHPExcel\Style\NumberFormat::FORMAT_CURRENCY_USD_SIMPLE)
+                        str_replace('$', $currencyCode, \PhpOffice\PhpExcel\Style\NumberFormat::FORMAT_CURRENCY_USD_SIMPLE)
                     );
                 return true;
             } elseif (preg_match('/^\$ *(\d{1,3}(\,\d{3})*|(\d+))(\.\d{2})?$/', $value)) {
@@ -119,7 +119,7 @@ class AdvancedValueBinder extends DefaultValueBinder implements IValueBinder
                 $cell->setValueExplicit($value, DataType::TYPE_NUMERIC);
                 // Set style
                 $cell->getWorksheet()->getStyle($cell->getCoordinate())
-                    ->getNumberFormat()->setFormatCode(\PHPExcel\Style\NumberFormat::FORMAT_CURRENCY_USD_SIMPLE);
+                    ->getNumberFormat()->setFormatCode(\PhpOffice\PhpExcel\Style\NumberFormat::FORMAT_CURRENCY_USD_SIMPLE);
                 return true;
             }
 
@@ -131,7 +131,7 @@ class AdvancedValueBinder extends DefaultValueBinder implements IValueBinder
                 $cell->setValueExplicit($days, DataType::TYPE_NUMERIC);
                 // Set style
                 $cell->getWorksheet()->getStyle($cell->getCoordinate())
-                    ->getNumberFormat()->setFormatCode(\PHPExcel\Style\NumberFormat::FORMAT_DATE_TIME3);
+                    ->getNumberFormat()->setFormatCode(\PhpOffice\PhpExcel\Style\NumberFormat::FORMAT_DATE_TIME3);
                 return true;
             }
 
@@ -144,12 +144,12 @@ class AdvancedValueBinder extends DefaultValueBinder implements IValueBinder
                 $cell->setValueExplicit($days, DataType::TYPE_NUMERIC);
                 // Set style
                 $cell->getWorksheet()->getStyle($cell->getCoordinate())
-                    ->getNumberFormat()->setFormatCode(\PHPExcel\Style\NumberFormat::FORMAT_DATE_TIME4);
+                    ->getNumberFormat()->setFormatCode(\PhpOffice\PhpExcel\Style\NumberFormat::FORMAT_DATE_TIME4);
                 return true;
             }
 
             // Check for datetime, e.g. '2008-12-31', '2008-12-31 15:59', '2008-12-31 15:59:10'
-            if (($d = \PHPExcel\Shared\Date::stringToExcel($value)) !== false) {
+            if (($d = \PhpOffice\PhpExcel\Shared\Date::stringToExcel($value)) !== false) {
                 // Convert value to number
                 $cell->setValueExplicit($d, DataType::TYPE_NUMERIC);
                 // Determine style. Either there is a time part or not. Look for ':'
@@ -165,7 +165,7 @@ class AdvancedValueBinder extends DefaultValueBinder implements IValueBinder
 
             // Check for newline character "\n"
             if (strpos($value, "\n") !== false) {
-                $value = \PHPExcel\Shared\String::SanitizeUTF8($value);
+                $value = \PhpOffice\PhpExcel\Shared\String::SanitizeUTF8($value);
                 $cell->setValueExplicit($value, DataType::TYPE_STRING);
                 // Set style
                 $cell->getWorksheet()->getStyle($cell->getCoordinate())

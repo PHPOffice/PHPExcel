@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel\Style;
+namespace PhpOffice\PhpExcel\Style;
 
 /**
  * PHPExcel_Style_Fill
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,11 +23,11 @@ namespace PHPExcel\Style;
  *
  * @category   PHPExcel
  * @package    PHPExcel_Style
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
-class Fill extends Supervisor implements \PHPExcel\IComparable
+class Fill extends Supervisor implements \PhpOffice\PhpExcel\IComparable
 {
     /* Fill types */
     const FILL_NONE                    = 'none';
@@ -137,7 +137,7 @@ class Fill extends Supervisor implements \PHPExcel\IComparable
      * <code>
      * $objPHPExcel->getActiveSheet()->getStyle('B2')->getFill()->applyFromArray(
      *        array(
-     *            'type'       => \PHPExcel\Style\Fill::FILL_GRADIENT_LINEAR,
+     *            'type'       => \PhpOffice\PhpExcel\Style\Fill::FILL_GRADIENT_LINEAR,
      *            'rotation'   => 0,
      *            'startcolor' => array(
      *                'rgb' => '000000'
@@ -150,7 +150,7 @@ class Fill extends Supervisor implements \PHPExcel\IComparable
      * </code>
      *
      * @param   array    $pStyles    Array containing style information
-     * @throws  \PHPExcel\Exception
+     * @throws  \PhpOffice\PhpExcel\Exception
      * @return Fill
      */
     public function applyFromArray($pStyles = null)
@@ -176,7 +176,7 @@ class Fill extends Supervisor implements \PHPExcel\IComparable
                 }
             }
         } else {
-            throw new \PHPExcel\Exception("Invalid style array passed.");
+            throw new \PhpOffice\PhpExcel\Exception("Invalid style array passed.");
         }
         return $this;
     }
@@ -255,7 +255,7 @@ class Fill extends Supervisor implements \PHPExcel\IComparable
      * Set Start Color
      *
      * @param   Color $pValue
-     * @throws  \PHPExcel\Exception
+     * @throws  \PhpOffice\PhpExcel\Exception
      * @return Fill
      */
     public function setStartColor(Color $pValue = null)
@@ -286,7 +286,7 @@ class Fill extends Supervisor implements \PHPExcel\IComparable
      * Set End Color
      *
      * @param    Color $pValue
-     * @throws   \PHPExcel\Exception
+     * @throws   \PhpOffice\PhpExcel\Exception
      * @return Fill
      */
     public function setEndColor(Color $pValue = null)

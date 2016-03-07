@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel\Worksheet;
+namespace PhpOffice\PhpExcel\Worksheet;
 
 /**
  * PHPExcel_Worksheet_BaseDrawing
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,11 +23,11 @@ namespace PHPExcel\Worksheet;
  *
  * @category   PHPExcel
  * @package    PHPExcel_Worksheet
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
-class BaseDrawing implements \PHPExcel\IComparable
+class BaseDrawing implements \PhpOffice\PhpExcel\IComparable
 {
     /**
      * Image counter
@@ -60,7 +60,7 @@ class BaseDrawing implements \PHPExcel\IComparable
     /**
      * Worksheet
      *
-     * @var \PHPExcel\Worksheet
+     * @var \PhpOffice\PhpExcel\Worksheet
      */
     protected $worksheet;
 
@@ -200,7 +200,7 @@ class BaseDrawing implements \PHPExcel\IComparable
     /**
      * Get Worksheet
      *
-     * @return \PHPExcel\Worksheet
+     * @return \PhpOffice\PhpExcel\Worksheet
      */
     public function getWorksheet()
     {
@@ -210,21 +210,21 @@ class BaseDrawing implements \PHPExcel\IComparable
     /**
      * Set Worksheet
      *
-     * @param     \PHPExcel\Worksheet     $pValue
+     * @param     \PhpOffice\PhpExcel\Worksheet     $pValue
      * @param     boolean                 $pOverrideOld    If a Worksheet has already been assigned, overwrite it and remove image from old Worksheet?
-     * @throws    \PHPExcel\Exception
+     * @throws    \PhpOffice\PhpExcel\Exception
      * @return    BaseDrawing
      */
-    public function setWorksheet(\PHPExcel\Worksheet $pValue = null, $pOverrideOld = false)
+    public function setWorksheet(\PhpOffice\PhpExcel\Worksheet $pValue = null, $pOverrideOld = false)
     {
         if (is_null($this->worksheet)) {
-            // Add drawing to \PHPExcel\Worksheet
+            // Add drawing to \PhpOffice\PhpExcel\Worksheet
             $this->worksheet = $pValue;
             $this->worksheet->getCell($this->coordinates);
             $this->worksheet->getDrawingCollection()->append($this);
         } else {
             if ($pOverrideOld) {
-                // Remove drawing from old \PHPExcel\Worksheet
+                // Remove drawing from old \PhpOffice\PhpExcel\Worksheet
                 $iterator = $this->worksheet->getDrawingCollection()->getIterator();
 
                 while ($iterator->valid()) {
@@ -235,10 +235,10 @@ class BaseDrawing implements \PHPExcel\IComparable
                     }
                 }
 
-                // Set new \PHPExcel\Worksheet
+                // Set new \PhpOffice\PhpExcel\Worksheet
                 $this->setWorksheet($pValue);
             } else {
-                throw new \PHPExcel\Exception("A \PHPExcel\Worksheet has already been assigned. Drawings can only exist on one \PHPExcel\Worksheet.");
+                throw new \PhpOffice\PhpExcel\Exception("A \PhpOffice\PhpExcel\Worksheet has already been assigned. Drawings can only exist on one \PhpOffice\PhpExcel\Worksheet.");
             }
         }
         return $this;
@@ -461,7 +461,7 @@ class BaseDrawing implements \PHPExcel\IComparable
      * Set Shadow
      *
      * @param     Drawing\Shadow $pValue
-     * @throws    \PHPExcel\Exception
+     * @throws    \PhpOffice\PhpExcel\Exception
      * @return    BaseDrawing
      */
     public function setShadow(Drawing\Shadow $pValue = null)

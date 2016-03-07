@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel\Helper;
+namespace PhpOffice\PhpExcel\Helper;
 
 /**
  * PHPExcel_Helper_HTML
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,7 +23,7 @@ namespace PHPExcel\Helper;
  *
  * @category   PHPExcel
  * @package    PHPExcel
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -623,7 +623,7 @@ class HTML
         //    Discard excess white space
         $dom->preserveWhiteSpace = false;
 
-        $this->richTextObject = new \PHPExcel\RichText();
+        $this->richTextObject = new \PhpOffice\PhpExcel\RichText();
         $this->parseElements($dom);
 
         // Clean any further spurious whitespace
@@ -661,7 +661,7 @@ class HTML
             $richtextRun->getFont()->setSize($this->size);
         }
         if ($this->color) {
-            $richtextRun->getFont()->setColor(new \PHPExcel\Style\Color('ff' . $this->color));
+            $richtextRun->getFont()->setColor(new \PhpOffice\PhpExcel\Style\Color('ff' . $this->color));
         }
         if ($this->bold) {
             $richtextRun->getFont()->setBold(true);
@@ -670,7 +670,7 @@ class HTML
             $richtextRun->getFont()->setItalic(true);
         }
         if ($this->underline) {
-            $richtextRun->getFont()->setUnderline(\PHPExcel\Style\Font::UNDERLINE_SINGLE);
+            $richtextRun->getFont()->setUnderline(\PhpOffice\PhpExcel\Style\Font::UNDERLINE_SINGLE);
         }
         if ($this->superscript) {
             $richtextRun->getFont()->setSuperScript(true);

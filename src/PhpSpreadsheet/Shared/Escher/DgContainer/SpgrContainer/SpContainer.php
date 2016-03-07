@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel\Shared\Escher\DgContainer\SpgrContainer;
+namespace PhpOffice\PhpExcel\Shared\Escher\DgContainer\SpgrContainer;
 
 /**
  * PHPExcel_Shared_Escher_DgContainer_SpgrContainer_SpContainer
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,7 +23,7 @@ namespace PHPExcel\Shared\Escher\DgContainer\SpgrContainer;
  *
  * @category   PHPExcel
  * @package    PHPExcel_Shared_Escher
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -32,7 +32,7 @@ class SpContainer
     /**
      * Parent Shape Group Container
      *
-     * @var \PHPExcel\Shared\Escher\DgContainer\SpgrContainer
+     * @var \PhpOffice\PhpExcel\Shared\Escher\DgContainer\SpgrContainer
      */
     private $parent;
 
@@ -116,7 +116,7 @@ class SpContainer
     /**
      * Set parent Shape Group Container
      *
-     * @param \PHPExcel\Shared\Escher\DgContainer\SpgrContainer $parent
+     * @param \PhpOffice\PhpExcel\Shared\Escher\DgContainer\SpgrContainer $parent
      */
     public function setParent($parent)
     {
@@ -126,7 +126,7 @@ class SpContainer
     /**
      * Get the parent Shape Group Container
      *
-     * @return \PHPExcel\Shared\Escher\DgContainer\SpgrContainer
+     * @return \PhpOffice\PhpExcel\Shared\Escher\DgContainer\SpgrContainer
      */
     public function getParent()
     {
@@ -380,7 +380,7 @@ class SpContainer
         $nestingLevel = 0;
 
         $parent = $this->getParent();
-        while ($parent instanceof \PHPExcel\Shared\Escher\DgContainer\SpgrContainer) {
+        while ($parent instanceof \PhpOffice\PhpExcel\Shared\Escher\DgContainer\SpgrContainer) {
             ++$nestingLevel;
             $parent = $parent->getParent();
         }

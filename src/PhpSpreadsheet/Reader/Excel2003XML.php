@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel\Reader;
+namespace PhpOffice\PhpExcel\Reader;
 
 /**
  * PHPExcel_Reader_Excel2003XML
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,7 +23,7 @@ namespace PHPExcel\Reader;
  *
  * @category   PHPExcel
  * @package    PHPExcel_Reader
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -125,7 +125,7 @@ class Excel2003XML extends BaseReader implements IReader
         $xml = simplexml_load_string(
             $this->securityScan(file_get_contents($pFilename)),
             'SimpleXMLElement',
-            \PHPExcel\Settings::getLibXmlLoaderOptions()
+            \PhpOffice\PhpExcel\Settings::getLibXmlLoaderOptions()
         );
         $namespaces = $xml->getNamespaces(true);
 
@@ -157,7 +157,7 @@ class Excel2003XML extends BaseReader implements IReader
         $xml = simplexml_load_string(
             $this->securityScan(file_get_contents($pFilename)),
             'SimpleXMLElement',
-            \PHPExcel\Settings::getLibXmlLoaderOptions()
+            \PhpOffice\PhpExcel\Settings::getLibXmlLoaderOptions()
         );
         $namespaces = $xml->getNamespaces(true);
 
@@ -203,7 +203,7 @@ class Excel2003XML extends BaseReader implements IReader
                 }
             }
 
-            $tmpInfo['lastColumnLetter'] = \PHPExcel\Cell::stringFromColumnIndex($tmpInfo['lastColumnIndex']);
+            $tmpInfo['lastColumnLetter'] = \PhpOffice\PhpExcel\Cell::stringFromColumnIndex($tmpInfo['lastColumnIndex']);
             $tmpInfo['totalColumns'] = $tmpInfo['lastColumnIndex'] + 1;
 
             $worksheetInfo[] = $tmpInfo;
@@ -218,7 +218,7 @@ class Excel2003XML extends BaseReader implements IReader
      * Loads PHPExcel from file
      *
      * @param     string         $pFilename
-     * @return     \PHPExcel\Spreadsheet
+     * @return     \PhpOffice\PhpExcel\Spreadsheet
      * @throws     Exception
      */
     public function load($pFilename)
@@ -289,25 +289,25 @@ class Excel2003XML extends BaseReader implements IReader
         $toFormats      = array('-', ' ');
 
         $underlineStyles = array (
-            \PHPExcel\Style\Font::UNDERLINE_NONE,
-            \PHPExcel\Style\Font::UNDERLINE_DOUBLE,
-            \PHPExcel\Style\Font::UNDERLINE_DOUBLEACCOUNTING,
-            \PHPExcel\Style\Font::UNDERLINE_SINGLE,
-            \PHPExcel\Style\Font::UNDERLINE_SINGLEACCOUNTING
+            \PhpOffice\PhpExcel\Style\Font::UNDERLINE_NONE,
+            \PhpOffice\PhpExcel\Style\Font::UNDERLINE_DOUBLE,
+            \PhpOffice\PhpExcel\Style\Font::UNDERLINE_DOUBLEACCOUNTING,
+            \PhpOffice\PhpExcel\Style\Font::UNDERLINE_SINGLE,
+            \PhpOffice\PhpExcel\Style\Font::UNDERLINE_SINGLEACCOUNTING
         );
         $verticalAlignmentStyles = array (
-            \PHPExcel\Style\Alignment::VERTICAL_BOTTOM,
-            \PHPExcel\Style\Alignment::VERTICAL_TOP,
-            \PHPExcel\Style\Alignment::VERTICAL_CENTER,
-            \PHPExcel\Style\Alignment::VERTICAL_JUSTIFY
+            \PhpOffice\PhpExcel\Style\Alignment::VERTICAL_BOTTOM,
+            \PhpOffice\PhpExcel\Style\Alignment::VERTICAL_TOP,
+            \PhpOffice\PhpExcel\Style\Alignment::VERTICAL_CENTER,
+            \PhpOffice\PhpExcel\Style\Alignment::VERTICAL_JUSTIFY
         );
         $horizontalAlignmentStyles = array (
-            \PHPExcel\Style\Alignment::HORIZONTAL_GENERAL,
-            \PHPExcel\Style\Alignment::HORIZONTAL_LEFT,
-            \PHPExcel\Style\Alignment::HORIZONTAL_RIGHT,
-            \PHPExcel\Style\Alignment::HORIZONTAL_CENTER,
-            \PHPExcel\Style\Alignment::HORIZONTAL_CENTER_CONTINUOUS,
-            \PHPExcel\Style\Alignment::HORIZONTAL_JUSTIFY
+            \PhpOffice\PhpExcel\Style\Alignment::HORIZONTAL_GENERAL,
+            \PhpOffice\PhpExcel\Style\Alignment::HORIZONTAL_LEFT,
+            \PhpOffice\PhpExcel\Style\Alignment::HORIZONTAL_RIGHT,
+            \PhpOffice\PhpExcel\Style\Alignment::HORIZONTAL_CENTER,
+            \PhpOffice\PhpExcel\Style\Alignment::HORIZONTAL_CENTER_CONTINUOUS,
+            \PhpOffice\PhpExcel\Style\Alignment::HORIZONTAL_JUSTIFY
         );
 
         $timezoneObj = new DateTimeZone('Europe/London');
@@ -325,7 +325,7 @@ class Excel2003XML extends BaseReader implements IReader
         $xml = simplexml_load_string(
             $this->securityScan(file_get_contents($pFilename)),
             'SimpleXMLElement',
-            \PHPExcel\Settings::getLibXmlLoaderOptions()
+            \PhpOffice\PhpExcel\Settings::getLibXmlLoaderOptions()
         );
         $namespaces = $xml->getNamespaces(true);
 
@@ -374,27 +374,27 @@ class Excel2003XML extends BaseReader implements IReader
         if (isset($xml->CustomDocumentProperties)) {
             foreach ($xml->CustomDocumentProperties[0] as $propertyName => $propertyValue) {
                 $propertyAttributes = $propertyValue->attributes($namespaces['dt']);
-                $propertyName = preg_replace_callback('/_x([0-9a-z]{4})_/', '\\PHPExcel\\Reader\\Excel2003XML::hex2str', $propertyName);
-                $propertyType = \PHPExcel\Document\Properties::PROPERTY_TYPE_UNKNOWN;
+                $propertyName = preg_replace_callback('/_x([0-9a-z]{4})_/', '\\PhpOffice\PhpExcel\\Reader\\Excel2003XML::hex2str', $propertyName);
+                $propertyType = \PhpOffice\PhpExcel\Document\Properties::PROPERTY_TYPE_UNKNOWN;
                 switch ((string) $propertyAttributes) {
                     case 'string':
-                        $propertyType = \PHPExcel\Document\Properties::PROPERTY_TYPE_STRING;
+                        $propertyType = \PhpOffice\PhpExcel\Document\Properties::PROPERTY_TYPE_STRING;
                         $propertyValue = trim($propertyValue);
                         break;
                     case 'boolean':
-                        $propertyType = \PHPExcel\Document\Properties::PROPERTY_TYPE_BOOLEAN;
+                        $propertyType = \PhpOffice\PhpExcel\Document\Properties::PROPERTY_TYPE_BOOLEAN;
                         $propertyValue = (bool) $propertyValue;
                         break;
                     case 'integer':
-                        $propertyType = \PHPExcel\Document\Properties::PROPERTY_TYPE_INTEGER;
+                        $propertyType = \PhpOffice\PhpExcel\Document\Properties::PROPERTY_TYPE_INTEGER;
                         $propertyValue = intval($propertyValue);
                         break;
                     case 'float':
-                        $propertyType = \PHPExcel\Document\Properties::PROPERTY_TYPE_FLOAT;
+                        $propertyType = \PhpOffice\PhpExcel\Document\Properties::PROPERTY_TYPE_FLOAT;
                         $propertyValue = floatval($propertyValue);
                         break;
                     case 'dateTime.tz':
-                        $propertyType = \PHPExcel\Document\Properties::PROPERTY_TYPE_DATE;
+                        $propertyType = \PhpOffice\PhpExcel\Document\Properties::PROPERTY_TYPE_DATE;
                         $propertyValue = strtotime(trim($propertyValue));
                         break;
                 }
@@ -440,7 +440,7 @@ class Excel2003XML extends BaseReader implements IReader
 //                                    echo $borderStyleKey.' = '.$borderStyleValue.'<br />';
                                 switch ($borderStyleKey) {
                                     case 'LineStyle':
-                                        $thisBorder['style'] = \PHPExcel\Style\Border::BORDER_MEDIUM;
+                                        $thisBorder['style'] = \PhpOffice\PhpExcel\Style\Border::BORDER_MEDIUM;
 //                                                $thisBorder['style'] = $borderStyleValue;
                                         break;
                                     case 'Weight':
@@ -555,7 +555,7 @@ class Excel2003XML extends BaseReader implements IReader
                 foreach ($worksheet->Table->Column as $columnData) {
                     $columnData_ss = $columnData->attributes($namespaces['ss']);
                     if (isset($columnData_ss['Index'])) {
-                        $columnID = \PHPExcel\Cell::stringFromColumnIndex($columnData_ss['Index']-1);
+                        $columnID = \PhpOffice\PhpExcel\Cell::stringFromColumnIndex($columnData_ss['Index']-1);
                     }
                     if (isset($columnData_ss['Width'])) {
                         $columnWidth = $columnData_ss['Width'];
@@ -581,7 +581,7 @@ class Excel2003XML extends BaseReader implements IReader
                     foreach ($rowData->Cell as $cell) {
                         $cell_ss = $cell->attributes($namespaces['ss']);
                         if (isset($cell_ss['Index'])) {
-                            $columnID = \PHPExcel\Cell::stringFromColumnIndex($cell_ss['Index']-1);
+                            $columnID = \PhpOffice\PhpExcel\Cell::stringFromColumnIndex($cell_ss['Index']-1);
                         }
                         $cellRange = $columnID.$rowID;
 
@@ -595,7 +595,7 @@ class Excel2003XML extends BaseReader implements IReader
                             $columnTo = $columnID;
                             if (isset($cell_ss['MergeAcross'])) {
                                 $additionalMergedCells += (int)$cell_ss['MergeAcross'];
-                                $columnTo = \PHPExcel\Cell::stringFromColumnIndex(\PHPExcel\Cell::columnIndexFromString($columnID) + $cell_ss['MergeAcross'] -1);
+                                $columnTo = \PhpOffice\PhpExcel\Cell::stringFromColumnIndex(\PhpOffice\PhpExcel\Cell::columnIndexFromString($columnID) + $cell_ss['MergeAcross'] -1);
                             }
                             $rowTo = $rowID;
                             if (isset($cell_ss['MergeDown'])) {
@@ -618,7 +618,7 @@ class Excel2003XML extends BaseReader implements IReader
                         }
                         if (isset($cell->Data)) {
                             $cellValue = $cellData = $cell->Data;
-                            $type = \PHPExcel\Cell_DataType::TYPE_NULL;
+                            $type = \PhpOffice\PhpExcel\Cell_DataType::TYPE_NULL;
                             $cellData_ss = $cellData->attributes($namespaces['ss']);
                             if (isset($cellData_ss['Type'])) {
                                 $cellDataType = $cellData_ss['Type'];
@@ -634,33 +634,33 @@ class Excel2003XML extends BaseReader implements IReader
                                     */
                                     case 'String':
                                         $cellValue = self::convertStringEncoding($cellValue, $this->charSet);
-                                        $type = \PHPExcel\Cell\DataType::TYPE_STRING;
+                                        $type = \PhpOffice\PhpExcel\Cell\DataType::TYPE_STRING;
                                         break;
                                     case 'Number':
-                                        $type = \PHPExcel\Cell\DataType::TYPE_NUMERIC;
+                                        $type = \PhpOffice\PhpExcel\Cell\DataType::TYPE_NUMERIC;
                                         $cellValue = (float) $cellValue;
                                         if (floor($cellValue) == $cellValue) {
                                             $cellValue = (integer) $cellValue;
                                         }
                                         break;
                                     case 'Boolean':
-                                        $type = \PHPExcel\Cell\DataType::TYPE_BOOL;
+                                        $type = \PhpOffice\PhpExcel\Cell\DataType::TYPE_BOOL;
                                         $cellValue = ($cellValue != 0);
                                         break;
                                     case 'DateTime':
-                                        $type = \PHPExcel\Cell\DataType::TYPE_NUMERIC;
-                                        $cellValue = \PHPExcel\Shared\Date::PHPToExcel(strtotime($cellValue));
+                                        $type = \PhpOffice\PhpExcel\Cell\DataType::TYPE_NUMERIC;
+                                        $cellValue = \PhpOffice\PhpExcel\Shared\Date::PHPToExcel(strtotime($cellValue));
                                         break;
                                     case 'Error':
-                                        $type = \PHPExcel\Cell\DataType::TYPE_ERROR;
+                                        $type = \PhpOffice\PhpExcel\Cell\DataType::TYPE_ERROR;
                                         break;
                                 }
                             }
 
                             if ($hasCalculatedValue) {
 //                                echo 'FORMULA<br />';
-                                $type = \PHPExcel\Cell\DataType::TYPE_FORMULA;
-                                $columnNumber = \PHPExcel\Cell::columnIndexFromString($columnID);
+                                $type = \PhpOffice\PhpExcel\Cell\DataType::TYPE_FORMULA;
+                                $columnNumber = \PhpOffice\PhpExcel\Cell::columnIndexFromString($columnID);
                                 if (substr($cellDataFormula, 0, 3) == 'of:') {
                                     $cellDataFormula = substr($cellDataFormula, 3);
 //                                    echo 'Before: ', $cellDataFormula,'<br />';
@@ -706,7 +706,7 @@ class Excel2003XML extends BaseReader implements IReader
                                                 if ($columnReference{0} == '[') {
                                                     $columnReference = $columnNumber + trim($columnReference, '[]');
                                                 }
-                                                $A1CellReference = \PHPExcel\Cell::stringFromColumnIndex($columnReference-1).$rowReference;
+                                                $A1CellReference = \PhpOffice\PhpExcel\Cell::stringFromColumnIndex($columnReference-1).$rowReference;
                                                 $value = substr_replace($value, $A1CellReference, $cellReference[0][1], strlen($cellReference[0][0]));
                                             }
                                         }
@@ -789,7 +789,7 @@ class Excel2003XML extends BaseReader implements IReader
     protected static function convertStringEncoding($string, $charset)
     {
         if ($charset != 'UTF-8') {
-            return \PHPExcel\Shared\String::ConvertEncoding($string, 'UTF-8', $charset);
+            return \PhpOffice\PhpExcel\Shared\String::ConvertEncoding($string, 'UTF-8', $charset);
         }
         return $string;
     }
@@ -797,7 +797,7 @@ class Excel2003XML extends BaseReader implements IReader
 
     protected function parseRichText($is = '')
     {
-        $value = new \PHPExcel\RichText();
+        $value = new \PhpOffice\PhpExcel\RichText();
 
         $value->createText(self::convertStringEncoding($is, $this->charSet));
 

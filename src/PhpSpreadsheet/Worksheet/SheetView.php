@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel\Worksheet;
+namespace PhpOffice\PhpExcel\Worksheet;
 
 /**
  * PHPExcel_Worksheet_SheetView
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,7 +23,7 @@ namespace PHPExcel\Worksheet;
  *
  * @category   PHPExcel
  * @package    PHPExcel_Worksheet
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -91,7 +91,7 @@ class SheetView
      * Valid values range from 10 to 400.
      *
      * @param   int     $pValue
-     * @throws  \PHPExcel\Exception
+     * @throws  \PhpOffice\PhpExcel\Exception
      * @return  SheetView
      */
     public function setZoomScale($pValue = 100)
@@ -101,7 +101,7 @@ class SheetView
         if (($pValue >= 1) || is_null($pValue)) {
             $this->zoomScale = $pValue;
         } else {
-            throw new \PHPExcel\Exception("Scale must be greater than or equal to 1.");
+            throw new \PhpOffice\PhpExcel\Exception("Scale must be greater than or equal to 1.");
         }
         return $this;
     }
@@ -122,7 +122,7 @@ class SheetView
      * Valid values range from 10 to 400.
      *
      * @param   int     $pValue
-     * @throws  \PHPExcel\Exception
+     * @throws  \PhpOffice\PhpExcel\Exception
      * @return  SheetView
      */
     public function setZoomScaleNormal($pValue = 100)
@@ -130,7 +130,7 @@ class SheetView
         if (($pValue >= 1) || is_null($pValue)) {
             $this->zoomScaleNormal = $pValue;
         } else {
-            throw new \PHPExcel\Exception("Scale must be greater than or equal to 1.");
+            throw new \PhpOffice\PhpExcel\Exception("Scale must be greater than or equal to 1.");
         }
         return $this;
     }
@@ -154,7 +154,7 @@ class SheetView
      *        'pageBreakPreview'  self::SHEETVIEW_PAGE_BREAK_PREVIEW
      *
      * @param    string     $pValue
-     * @throws   \PHPExcel\Exception
+     * @throws   \PhpOffice\PhpExcel\Exception
      * @return   SheetView
      */
     public function setView($pValue = null)
@@ -166,7 +166,7 @@ class SheetView
         if (in_array($pValue, self::$sheetViewTypes)) {
             $this->sheetviewType = $pValue;
         } else {
-            throw new \PHPExcel\Exception("Invalid sheetview layout type.");
+            throw new \PhpOffice\PhpExcel\Exception("Invalid sheetview layout type.");
         }
 
         return $this;

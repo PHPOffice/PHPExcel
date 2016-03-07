@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel\Writer;
+namespace PhpOffice\PhpExcel\Writer;
 
 /**
  * PHPExcel_Writer_CSV
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,7 +23,7 @@ namespace PHPExcel\Writer;
  *
  * @category   PHPExcel
  * @package    PHPExcel_Writer_CSV
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -81,9 +81,9 @@ class CSV extends BaseWriter implements IWriter
     /**
      * Create a new CSV
      *
-     * @param    \PHPExcel\Spreadsheet    $phpExcel    Spreadsheet object
+     * @param    \PhpOffice\PhpExcel\Spreadsheet    $phpExcel    Spreadsheet object
      */
-    public function __construct(\PHPExcel\Spreadsheet $phpExcel)
+    public function __construct(\PhpOffice\PhpExcel\Spreadsheet $phpExcel)
     {
         $this->phpExcel = $phpExcel;
     }
@@ -99,10 +99,10 @@ class CSV extends BaseWriter implements IWriter
         // Fetch sheet
         $sheet = $this->phpExcel->getSheet($this->sheetIndex);
 
-        $saveDebugLog = \PHPExcel\Calculation::getInstance($this->phpExcel)->getDebugLog()->getWriteDebugLog();
-        \PHPExcel\Calculation::getInstance($this->phpExcel)->getDebugLog()->setWriteDebugLog(false);
-        $saveArrayReturnType = \PHPExcel\Calculation::getArrayReturnType();
-        \PHPExcel\Calculation::setArrayReturnType(\PHPExcel\Calculation::RETURN_ARRAY_AS_VALUE);
+        $saveDebugLog = \PhpOffice\PhpExcel\Calculation::getInstance($this->phpExcel)->getDebugLog()->getWriteDebugLog();
+        \PhpOffice\PhpExcel\Calculation::getInstance($this->phpExcel)->getDebugLog()->setWriteDebugLog(false);
+        $saveArrayReturnType = \PhpOffice\PhpExcel\Calculation::getArrayReturnType();
+        \PhpOffice\PhpExcel\Calculation::setArrayReturnType(\PhpOffice\PhpExcel\Calculation::RETURN_ARRAY_AS_VALUE);
 
         // Open file
         $fileHandle = fopen($pFilename, 'wb+');
@@ -136,8 +136,8 @@ class CSV extends BaseWriter implements IWriter
         // Close file
         fclose($fileHandle);
 
-        \PHPExcel\Calculation::setArrayReturnType($saveArrayReturnType);
-        \PHPExcel\Calculation::getInstance($this->phpExcel)->getDebugLog()->setWriteDebugLog($saveDebugLog);
+        \PhpOffice\PhpExcel\Calculation::setArrayReturnType($saveArrayReturnType);
+        \PhpOffice\PhpExcel\Calculation::getInstance($this->phpExcel)->getDebugLog()->setWriteDebugLog($saveDebugLog);
     }
 
     /**

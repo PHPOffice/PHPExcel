@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel\Shared;
+namespace PhpOffice\PhpExcel\Shared;
 
 /**
  * PHPExcel_Shared_ZipStreamWrapper
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,7 +23,7 @@ namespace PHPExcel\Shared;
  *
  * @category   PHPExcel
  * @package    PHPExcel_Shared
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -74,13 +74,13 @@ class ZipStreamWrapper
      * @param    int        $options        mask of STREAM_REPORT_ERRORS and STREAM_USE_PATH
      * @param    string  &$openedPath    absolute path of the opened stream (out parameter)
      * @return   bool    true on success
-     * @throws   \PHPExcel\Reader\Exception
+     * @throws   \PhpOffice\PhpExcel\Reader\Exception
      */
     public function stream_open($path, $mode, $options, &$opened_path)
     {
         // Check for mode
         if ($mode{0} != 'r') {
-            throw new \PHPExcel\Reader\Exception('Mode ' . $mode . ' is not supported. Only read mode is supported.');
+            throw new \PhpOffice\PhpExcel\Reader\Exception('Mode ' . $mode . ' is not supported. Only read mode is supported.');
         }
 
         $pos = strrpos($path, '#');

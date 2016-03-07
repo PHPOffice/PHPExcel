@@ -3,7 +3,7 @@
 /**
  * PHPExcel_Writer_OpenDocument
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -21,7 +21,7 @@
  *
  * @category   PHPExcel
  * @package    PHPExcel_Writer_OpenDocument
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -44,9 +44,9 @@ class PHPExcel_Writer_OpenDocument extends PHPExcel_Writer_Abstract implements P
     /**
      * Create a new PHPExcel_Writer_OpenDocument
      *
-     * @param \PHPExcel\SpreadSheet $pPHPExcel
+     * @param \PhpOffice\PhpExcel\SpreadSheet $pPHPExcel
      */
-    public function __construct(\PHPExcel\SpreadSheet $pPHPExcel = null)
+    public function __construct(\PhpOffice\PhpExcel\SpreadSheet $pPHPExcel = null)
     {
         $this->setPHPExcel($pPHPExcel);
 
@@ -69,7 +69,7 @@ class PHPExcel_Writer_OpenDocument extends PHPExcel_Writer_Abstract implements P
      * Get writer part
      *
      * @param  string  $pPartName  Writer part name
-     * @return \PHPExcel\Writer\Excel2007\WriterPart
+     * @return \PhpOffice\PhpExcel\Writer\Excel2007\WriterPart
      */
     public function getWriterPart($pPartName = '')
     {
@@ -84,12 +84,12 @@ class PHPExcel_Writer_OpenDocument extends PHPExcel_Writer_Abstract implements P
      * Save PHPExcel to file
      *
      * @param  string  $pFilename
-     * @throws \PHPExcel\Writer\Exception
+     * @throws \PhpOffice\PhpExcel\Writer\Exception
      */
     public function save($pFilename = null)
     {
         if (!$this->spreadSheet) {
-            throw new \PHPExcel\Writer\Exception('PHPExcel object unassigned.');
+            throw new \PhpOffice\PhpExcel\Writer\Exception('PHPExcel object unassigned.');
         }
 
         // garbage collect
@@ -116,13 +116,13 @@ class PHPExcel_Writer_OpenDocument extends PHPExcel_Writer_Abstract implements P
 
         // Close file
         if ($objZip->close() === false) {
-            throw new \PHPExcel\Writer\Exception("Could not close zip file $pFilename.");
+            throw new \PhpOffice\PhpExcel\Writer\Exception("Could not close zip file $pFilename.");
         }
 
         // If a temporary file was used, copy it to the correct file stream
         if ($originalFilename != $pFilename) {
             if (copy($pFilename, $originalFilename) === false) {
-                throw new \PHPExcel\Writer\Exception("Could not copy temporary zip file $pFilename to $originalFilename.");
+                throw new \PhpOffice\PhpExcel\Writer\Exception("Could not copy temporary zip file $pFilename to $originalFilename.");
             }
             @unlink($pFilename);
         }
@@ -132,13 +132,13 @@ class PHPExcel_Writer_OpenDocument extends PHPExcel_Writer_Abstract implements P
      * Create zip object
      *
      * @param string $pFilename
-     * @throws \PHPExcel\Writer\Exception
+     * @throws \PhpOffice\PhpExcel\Writer\Exception
      * @return ZipArchive
      */
     private function createZip($pFilename)
     {
         // Create new ZIP file and open it for writing
-        $zipClass = \PHPExcel\Settings::getZipClass();
+        $zipClass = \PhpOffice\PhpExcel\Settings::getZipClass();
         $objZip = new $zipClass();
 
         // Retrieve OVERWRITE and CREATE constants from the instantiated zip class
@@ -153,7 +153,7 @@ class PHPExcel_Writer_OpenDocument extends PHPExcel_Writer_Abstract implements P
         // Try opening the ZIP file
         if ($objZip->open($pFilename, $zipOverWrite) !== true) {
             if ($objZip->open($pFilename, $zipCreate) !== true) {
-                throw new \PHPExcel\Writer\Exception("Could not open $pFilename for writing.");
+                throw new \PhpOffice\PhpExcel\Writer\Exception("Could not open $pFilename for writing.");
             }
         }
 
@@ -164,14 +164,14 @@ class PHPExcel_Writer_OpenDocument extends PHPExcel_Writer_Abstract implements P
      * Get PHPExcel object
      *
      * @return PHPExcel
-     * @throws \PHPExcel\Writer\Exception
+     * @throws \PhpOffice\PhpExcel\Writer\Exception
      */
     public function getPHPExcel()
     {
         if ($this->spreadSheet !== null) {
             return $this->spreadSheet;
         } else {
-            throw new \PHPExcel\Writer\Exception('No PHPExcel assigned.');
+            throw new \PhpOffice\PhpExcel\Writer\Exception('No PHPExcel assigned.');
         }
     }
 
@@ -179,10 +179,10 @@ class PHPExcel_Writer_OpenDocument extends PHPExcel_Writer_Abstract implements P
      * Set PHPExcel object
      *
      * @param  PHPExcel  $pPHPExcel  PHPExcel object
-     * @throws \PHPExcel\Writer\Exception
+     * @throws \PhpOffice\PhpExcel\Writer\Exception
      * @return PHPExcel_Writer_Excel2007
      */
-    public function setPHPExcel(\PHPExcel\SpreadSheet $pPHPExcel = null)
+    public function setPHPExcel(\PhpOffice\PhpExcel\SpreadSheet $pPHPExcel = null)
     {
         $this->spreadSheet = $pPHPExcel;
         return $this;

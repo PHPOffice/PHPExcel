@@ -1,11 +1,11 @@
 <?php
 
-namespace \PHPExcel\Shared\Escher\DggContainer\BstoreContainer\BSE;
+namespace \PhpOffice\PhpExcel\Shared\Escher\DggContainer\BstoreContainer\BSE;
 
 /**
  * PHPExcel_Shared_Escher_DggContainer_BstoreContainer_BSE_Blip
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,7 +23,7 @@ namespace \PHPExcel\Shared\Escher\DggContainer\BstoreContainer\BSE;
  *
  * @category   PHPExcel
  * @package    PHPExcel_Shared_Escher
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -32,7 +32,7 @@ class Blip
     /**
      * The parent BSE
      *
-     * @var \PHPExcel\Shared\Escher\DggContainer\BstoreContainer\BSE
+     * @var \PhpOffice\PhpExcel\Shared\Escher\DggContainer\BstoreContainer\BSE
      */
     private $parent;
 
@@ -66,7 +66,7 @@ class Blip
     /**
      * Set parent BSE
      *
-     * @param \PHPExcel\Shared\Escher\DggContainer\BstoreContainer\BSE $parent
+     * @param \PhpOffice\PhpExcel\Shared\Escher\DggContainer\BstoreContainer\BSE $parent
      */
     public function setParent($parent)
     {
@@ -76,7 +76,7 @@ class Blip
     /**
      * Get parent BSE
      *
-     * @return \PHPExcel\Shared\Escher\DggContainer\BstoreContainer\BSE $parent
+     * @return \PhpOffice\PhpExcel\Shared\Escher\DggContainer\BstoreContainer\BSE $parent
      */
     public function getParent()
     {

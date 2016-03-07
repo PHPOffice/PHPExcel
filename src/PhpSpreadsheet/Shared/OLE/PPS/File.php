@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPExcel\Shared\OLE\PPS;
+namespace PhpOffice\PhpExcel\Shared\OLE\PPS;
 
 /* vim: set expandtab tabstop=4 shiftwidth=4: */
 // +----------------------------------------------------------------------+
@@ -30,7 +30,7 @@ namespace PHPExcel\Shared\OLE\PPS;
 * @category PHPExcel
 * @package  PHPExcel_Shared_OLE
 */
-class File extends \PHPExcel\Shared\OLE\PPS
+class File extends \PhpOffice\PhpExcel\Shared\OLE\PPS
 {
     /**
     * The constructor
@@ -41,7 +41,7 @@ class File extends \PHPExcel\Shared\OLE\PPS
     */
     public function __construct($name)
     {
-        parent::__construct(null, $name, \PHPExcel\Shared\OLE::OLE_PPS_TYPE_FILE, null, null, null, null, null, '', array());
+        parent::__construct(null, $name, \PhpOffice\PhpExcel\Shared\OLE::OLE_PPS_TYPE_FILE, null, null, null, null, null, '', array());
     }
 
     /**

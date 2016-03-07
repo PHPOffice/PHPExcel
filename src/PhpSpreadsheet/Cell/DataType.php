@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel\Cell;
+namespace PhpOffice\PhpExcel\Cell;
 
 /**
  * PHPExcel_Cell_DataType
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,7 +23,7 @@ namespace PHPExcel\Cell;
  *
  * @category   PHPExcel
  * @package    PHPExcel_Cell
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -67,7 +67,7 @@ class DataType
     /**
      * DataType for value
      *
-     * @deprecated  Replaced by \PHPExcel\Cell\IValueBinder infrastructure, will be removed in version 1.8.0
+     * @deprecated  Replaced by \PhpOffice\PhpExcel\Cell\IValueBinder infrastructure, will be removed in version 1.8.0
      * @param       mixed  $pValue
      * @return      string
      */
@@ -84,13 +84,13 @@ class DataType
      */
     public static function checkString($pValue = null)
     {
-        if ($pValue instanceof \PHPExcel\RichText) {
+        if ($pValue instanceof \PhpOffice\PhpExcel\RichText) {
             // TODO: Sanitize Rich-Text string (max. character count is 32,767)
             return $pValue;
         }
 
         // string must never be longer than 32,767 characters, truncate if necessary
-        $pValue = \PHPExcel\Shared\String::Substring($pValue, 0, 32767);
+        $pValue = \PhpOffice\PhpExcel\Shared\String::Substring($pValue, 0, 32767);
 
         // we require that newline is represented as "\n" in core, not as "\r\n" or "\r"
         $pValue = str_replace(array("\r\n", "\r"), "\n", $pValue);

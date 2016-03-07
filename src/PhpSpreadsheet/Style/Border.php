@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel\Style;
+namespace PhpOffice\PhpExcel\Style;
 
 /**
  * PHPExcel_Style_Border
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,11 +23,11 @@ namespace PHPExcel\Style;
  *
  * @category   PHPExcel
  * @package    PHPExcel_Style
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
-class Border extends Supervisor implements \PHPExcel\IComparable
+class Border extends Supervisor implements \PhpOffice\PhpExcel\IComparable
 {
     /* Border style */
     const BORDER_NONE             = 'none';
@@ -109,7 +109,7 @@ class Border extends Supervisor implements \PHPExcel\IComparable
      * Only used for style supervisor
      *
      * @return Border
-     * @throws \PHPExcel\Exception
+     * @throws \PhpOffice\PhpExcel\Exception
      */
     public function getSharedComponent()
     {
@@ -119,7 +119,7 @@ class Border extends Supervisor implements \PHPExcel\IComparable
             case 'inside':
             case 'outline':
             case 'vertical':
-                throw new \PHPExcel\Exception('Cannot get shared component for a pseudo-border.');
+                throw new \PhpOffice\PhpExcel\Exception('Cannot get shared component for a pseudo-border.');
                 break;
             case 'bottom':
                 return $this->parent->getSharedComponent()->getBottom();
@@ -165,7 +165,7 @@ class Border extends Supervisor implements \PHPExcel\IComparable
      * <code>
      * $objPHPExcel->getActiveSheet()->getStyle('B2')->getBorders()->getTop()->applyFromArray(
      *        array(
-     *            'style' => \PHPExcel\Style\Border::BORDER_DASHDOT,
+     *            'style' => \PhpOffice\PhpExcel\Style\Border::BORDER_DASHDOT,
      *            'color' => array(
      *                'rgb' => '808080'
      *            )
@@ -174,7 +174,7 @@ class Border extends Supervisor implements \PHPExcel\IComparable
      * </code>
      *
      * @param   array    $pStyles    Array containing style information
-     * @throws  \PHPExcel\Exception
+     * @throws  \PhpOffice\PhpExcel\Exception
      * @return  Border
      */
     public function applyFromArray($pStyles = null)
@@ -191,7 +191,7 @@ class Border extends Supervisor implements \PHPExcel\IComparable
                 }
             }
         } else {
-            throw new \PHPExcel\Exception("Invalid style array passed.");
+            throw new \PhpOffice\PhpExcel\Exception("Invalid style array passed.");
         }
         return $this;
     }
@@ -248,7 +248,7 @@ class Border extends Supervisor implements \PHPExcel\IComparable
      * Set Border Color
      *
      * @param   Color $pValue
-     * @throws  \PHPExcel\Exception
+     * @throws  \PhpOffice\PhpExcel\Exception
      * @return  Border
      */
     public function setColor(Color $pValue = null)

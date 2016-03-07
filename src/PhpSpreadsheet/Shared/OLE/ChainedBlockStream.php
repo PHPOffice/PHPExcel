@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel\Shared\OLE;
+namespace PhpOffice\PhpExcel\Shared\OLE;
 
 /**
  * PHPExcel_Shared_OLE_ChainedBlockStream
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public

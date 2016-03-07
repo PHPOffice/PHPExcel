@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel\Shared;
+namespace PhpOffice\PhpExcel\Shared;
 
 /**
  * PHPExcel_Shared_String
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,7 +23,7 @@ namespace PHPExcel\Shared;
  *
  * @category   PHPExcel
  * @package    PHPExcel_Shared
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -681,7 +681,7 @@ class String
         if (preg_match('/^'.self::STRING_REGEXP_FRACTION.'$/i', $operand, $match)) {
             $sign = ($match[1] == '-') ? '-' : '+';
             $fractionFormula = '='.$sign.$match[2].$sign.$match[3];
-            $operand = \PHPExcel\Calculation::getInstance()->_calculateFormulaValue($fractionFormula);
+            $operand = \PhpOffice\PhpExcel\Calculation::getInstance()->_calculateFormulaValue($fractionFormula);
             return true;
         }
         return false;
@@ -709,8 +709,8 @@ class String
     }
 
     /**
-     * Set the decimal separator. Only used by \PHPExcel\Style\NumberFormat::toFormattedString()
-     * to format output by \PHPExcel\Writer\HTML and \PHPExcel\Writer\PDF
+     * Set the decimal separator. Only used by \PhpOffice\PhpExcel\Style\NumberFormat::toFormattedString()
+     * to format output by \PhpOffice\PhpExcel\Writer\HTML and \PhpOffice\PhpExcel\Writer\PDF
      *
      * @param string $pValue Character for decimal separator
      */
@@ -741,8 +741,8 @@ class String
     }
 
     /**
-     * Set the thousands separator. Only used by \PHPExcel\Style\NumberFormat::toFormattedString()
-     * to format output by \PHPExcel\Writer\HTML and \PHPExcel\Writer\PDF
+     * Set the thousands separator. Only used by \PhpOffice\PhpExcel\Style\NumberFormat::toFormattedString()
+     * to format output by \PhpOffice\PhpExcel\Writer\HTML and \PhpOffice\PhpExcel\Writer\PDF
      *
      * @param string $pValue Character for thousands separator
      */
@@ -773,8 +773,8 @@ class String
     }
 
     /**
-     * Set the currency code. Only used by \PHPExcel\Style\NumberFormat::toFormattedString()
-     *        to format output by \PHPExcel\Writer\HTML and \PHPExcel\Writer\PDF
+     * Set the currency code. Only used by \PhpOffice\PhpExcel\Style\NumberFormat::toFormattedString()
+     *        to format output by \PhpOffice\PhpExcel\Writer\HTML and \PhpOffice\PhpExcel\Writer\PDF
      *
      * @param string $pValue Character for currency code
      */

@@ -320,7 +320,9 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
             );
         }
 
-        return $contents;
+        //according to https://msdn.microsoft.com/en-us/library/office/gg278316.aspx
+        //.xlsx includes NameSpace x: this type of files doesn't work without replace
+        return str_replace('x:', '', $contents);
     }
 
 

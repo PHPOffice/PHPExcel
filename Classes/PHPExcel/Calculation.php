@@ -2132,6 +2132,7 @@ class PHPExcel_Calculation
     public function flushInstance()
     {
         $this->clearCalculationCache();
+        $this->clearTokenStackCache();
     }
 
 
@@ -2232,6 +2233,7 @@ class PHPExcel_Calculation
     {
         $this->calculationCacheEnabled = $pValue;
         $this->clearCalculationCache();
+        $this->clearTokenStackCache();
     }
 
 
@@ -2259,6 +2261,13 @@ class PHPExcel_Calculation
     public function clearCalculationCache()
     {
         $this->calculationCache = array();
+    }
+
+    /**
+     * Clear calculation token-stack cache
+     */
+    public function clearTokenStackCache() {
+        $this->_tokenStackCache = array();
     }
 
     /**
@@ -2797,7 +2806,16 @@ class PHPExcel_Calculation
 
         //    Parse the formula onto the token stack and calculate the value
         $this->cyclicReferenceStack->push($wsCellReference);
-        $cellValue = $this->processTokenStack($this->_parseFormula($formula, $pCell), $cellID, $pCell);
+        if (($this->calculationCacheEnabled) && (isset($this->_tokenStackCache[$wsCellReference]))) {
+            $this->_debugLog->writeDebugLog('Retrieving tokenStack for cell ', $wsCellReference, ' from cache');
+            $tokenStack = $this->_tokenStackCache[$wsCellReference];
+        } else {
+            $tokenStack = $this->_parseFormula($formula, $pCell);
+            if ($this->calculationCacheEnabled) {
+                $this->_tokenStackCache[$wsCellReference] = $tokenStack;
+            }
+        }
+        $cellValue = $this->_processTokenStack($tokenStack, $cellID, $pCell);
         $this->cyclicReferenceStack->pop();
 
         // Save to calculation cache

@@ -16,7 +16,7 @@ define('PRECISION', 8.88E-016);
 
 
 /**
- * PHPExcel_Calculation_Functions
+ * PhpOffice\PhpExcel\Calculation\Functions
  *
  * Copyright (c) 2006 - 2016 PHPExcel
  *
@@ -35,7 +35,7 @@ define('PRECISION', 8.88E-016);
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *
  * @category    PHPExcel
- * @package     PHPExcel_Calculation
+ * @package     PhpOffice\PhpExcel\Calculation
  * @copyright   Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license     http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version     ##VERSION##, ##DATE##

@@ -5,7 +5,7 @@ namespace PhpOffice\PhpExcel\Chart\Renderer;
 require_once(\PhpOffice\PhpExcel\Settings::getChartRendererPath().'/jpgraph.php');
 
 /**
- * PHPExcel_Chart_Renderer_jpgraph
+ * PhpOffice\PhpExcel\Chart\Renderer\jpgraph
  *
  * Copyright (c) 2006 - 2016 PHPExcel
  *
@@ -24,10 +24,10 @@ require_once(\PhpOffice\PhpExcel\Settings::getChartRendererPath().'/jpgraph.php'
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category    PHPExcel
- * @package        PHPExcel_Chart_Renderer
- * @copyright    Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
- * @license        http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
- * @version        ##VERSION##, ##DATE##
+ * @package     PhpOffice\PhpExcel\Chart\Renderer
+ * @copyright   Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @license     http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
+ * @version     ##VERSION##, ##DATE##
  */
 class jpgraph
 {

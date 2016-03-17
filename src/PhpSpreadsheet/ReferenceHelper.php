@@ -3,7 +3,7 @@
 namespace PhpOffice\PhpExcel;
 
 /**
- * PHPExcel_ReferenceHelper (Singleton)
+ * PhpOffice\PhpExcel\ReferenceHelper (Singleton)
  *
  * Copyright (c) 2006 - 2016 PHPExcel
  *
@@ -22,7 +22,7 @@ namespace PhpOffice\PhpExcel;
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel
+ * @package    PhpOffice\PhpExcel
  * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
@@ -258,7 +258,7 @@ class ReferenceHelper
         ($pNumCols > 0 || $pNumRows > 0) ?
             uksort($aDataValidationCollection, array('self','cellReverseSort')) :
             uksort($aDataValidationCollection, array('self','cellSort'));
-        
+
         foreach ($aDataValidationCollection as $key => $value) {
             $newReference = $this->updateCellReference($key, $pBefore, $pNumCols, $pNumRows);
             if ($key != $newReference) {

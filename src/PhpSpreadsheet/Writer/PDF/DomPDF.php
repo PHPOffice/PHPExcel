@@ -11,7 +11,7 @@ if (file_exists($pdfRendererClassFile)) {
 }
 
 /**
- *  PHPExcel_Writer_PDF_DomPDF
+ *  \PhpOffice\PhpExcel\Writer\PDF\DomPDF
  *
  *  Copyright (c) 2006 - 2016 PHPExcel
  *
@@ -30,7 +30,7 @@ if (file_exists($pdfRendererClassFile)) {
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  *  @category    PHPExcel
- *  @package     PHPExcel_Writer_PDF
+ *  @package     PhpOffice\PhpExcel\Writer\PDF
  *  @copyright   Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  *  @license     http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  *  @version     ##VERSION##, ##DATE##

@@ -3,7 +3,7 @@
 namespace PhpOffice\PhpExcel;
 
 /**
- * PHPExcel_CachedObjectStorageFactory
+ * PhpOffice\PhpExcel\CachedObjectStorageFactory
  *
  * Copyright (c) 2006 - 2016 PHPExcel
  *
@@ -22,7 +22,7 @@ namespace PhpOffice\PhpExcel;
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_CachedObjectStorage
+ * @package    PhpOffice\PhpExcel
  * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
@@ -152,7 +152,7 @@ class CachedObjectStorageFactory
     {
         $activeMethods = array();
         foreach (self::$storageMethods as $storageMethod) {
-            $cacheStorageClass = '\\PhpOffice\PhpExcel\\CachedObjectStorage\\' . $storageMethod;
+            $cacheStorageClass = '\\PhpOffice\\PhpExcel\\CachedObjectStorage\\' . $storageMethod;
             if (call_user_func(array($cacheStorageClass, 'cacheMethodIsAvailable'))) {
                 $activeMethods[] = $storageMethod;
             }
@@ -174,7 +174,7 @@ class CachedObjectStorageFactory
             return false;
         }
 
-        $cacheStorageClass = '\\PhpOffice\PhpExcel\\CachedObjectStorage\\'.$method;
+        $cacheStorageClass = '\\PhpOffice\\PhpExcel\\CachedObjectStorage\\'.$method;
         if (!call_user_func([$cacheStorageClass, 'cacheMethodIsAvailable'])) {
             return false;
         }
@@ -187,7 +187,7 @@ class CachedObjectStorageFactory
         }
 
         if (self::$cacheStorageMethod === null) {
-            self::$cacheStorageClass = '\\PhpOffice\PhpExcel\\CachedObjectStorage\\' . $method;
+            self::$cacheStorageClass = '\\PhpOffice\\PhpExcel\\CachedObjectStorage\\' . $method;
             self::$cacheStorageMethod = $method;
         }
         return true;

@@ -3,7 +3,7 @@
 namespace PhpOffice\PhpExcel\Worksheet;
 
 /**
- * PHPExcel_Worksheet_RowIterator
+ * PhpOffice\PhpExcel\Worksheet\RowIterator
  *
  * Copyright (c) 2006 - 2016 PHPExcel
  *
@@ -22,7 +22,7 @@ namespace PhpOffice\PhpExcel\Worksheet;
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Worksheet
+ * @package    PhpOffice\PhpExcel\Worksheet
  * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
@@ -30,7 +30,7 @@ namespace PhpOffice\PhpExcel\Worksheet;
 class RowIterator implements \Iterator
 {
     /**
-     * \PhpOffice\PhpExcel\Worksheet to iterate
+     * PhpOffice\PhpExcel\Worksheet to iterate
      *
      * @var \PhpOffice\PhpExcel\Worksheet
      */
@@ -87,12 +87,12 @@ class RowIterator implements \Iterator
      *
      * @param integer    $startRow    The row number at which to start iterating
      * @return RowIterator
-     * @throws PHPExcel_Exception
+     * @throws \PhpOffice\PhpExcel\Exception
      */
     public function resetStart($startRow = 1)
     {
         if ($startRow > $this->subject->getHighestRow()) {
-            throw new PHPExcel_Exception("Start row ({$startRow}) is beyond highest row ({$this->subject->getHighestRow()})");
+            throw new \PhpOffice\PhpExcel\Exception("Start row ({$startRow}) is beyond highest row ({$this->subject->getHighestRow()})");
         }
 
         $this->startRow = $startRow;

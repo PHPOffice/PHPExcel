@@ -3,7 +3,7 @@
 namespace PhpOffice\PhpExcel\Calculation;
 
 /**
- * PHPExcel_Calculation_ExceptionHandler
+ * PhpOffice\PhpExcel\Calculation\ExceptionHandler
  *
  * Copyright (c) 2006 - 2016 PHPExcel
  *
@@ -22,7 +22,7 @@ namespace PhpOffice\PhpExcel\Calculation;
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Calculation
+ * @package    PhpOffice\PhpExcel\Calculation
  * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
@@ -34,7 +34,7 @@ class ExceptionHandler
      */
     public function __construct()
     {
-        set_error_handler(array('\\PhpOffice\PhpExcel\\Calculation\\Exception', 'errorHandlerCallback'), E_ALL);
+        set_error_handler(array('\\PhpOffice\\PhpExcel\\Calculation\\Exception', 'errorHandlerCallback'), E_ALL);
     }
 
     /**

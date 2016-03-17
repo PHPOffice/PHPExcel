@@ -28,7 +28,7 @@ namespace PhpOffice\PhpExcel\Shared\OLE;
 *
 * @author   Xavier Noguer <xnoguer@php.net>
 * @category PHPExcel
-* @package  PHPExcel_Shared_OLE
+* @package  PhpOffice\PhpExcel\Shared\OLE
 */
 class PPS
 {

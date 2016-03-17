@@ -3,7 +3,7 @@
 namespace PhpOffice\PhpExcel;
 
 /**
- * PHPExcel_Chart
+ * PhpOffice\PhpExcel\Chart
  *
  * Copyright (c) 2006 - 2016 PHPExcel
  *
@@ -22,7 +22,7 @@ namespace PhpOffice\PhpExcel;
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category    PHPExcel
- * @package     PHPExcel_Chart
+ * @package     PhpOffice\PhpExcel
  * @copyright   Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license     http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version     ##VERSION##, ##DATE##
@@ -671,7 +671,7 @@ class Chart
             set_include_path(get_include_path() . PATH_SEPARATOR . $libraryPath);
         }
 
-        $rendererName = '\\PhpOffice\PhpExcel\\Chart\\Renderer\\'.$libraryName;
+        $rendererName = '\\PhpOffice\\PhpExcel\\Chart\\Renderer\\'.$libraryName;
         $renderer = new $rendererName($this);
 
         if ($outputDestination == 'php://output') {

@@ -1,9 +1,11 @@
 <?php
 
+namespace PhpOffice\PhpExcel\Writer\OpenDocument;
+
 /**
- * PHPExcel
+ * PhpOffice\PhpExcel\Writer\OpenDocument\Mimetype
  *
- * PHPExcel_Writer_OpenDocument_Mimetype
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,12 +22,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Writer_OpenDocument
+ * @package    PhpOffice\PhpExcel\Writer\OpenDocument
  * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
-class PHPExcel_Writer_OpenDocument_Mimetype extends PHPExcel_Writer_OpenDocument_WriterPart
+class Mimetype extends WriterPart
 {
     /**
      * Write mimetype to plain text format

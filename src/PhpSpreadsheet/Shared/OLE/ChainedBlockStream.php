@@ -3,7 +3,7 @@
 namespace PhpOffice\PhpExcel\Shared\OLE;
 
 /**
- * PHPExcel_Shared_OLE_ChainedBlockStream
+ * PhpOffice\PhpExcel\Shared\OLE\ChainedBlockStream
  *
  * Copyright (c) 2006 - 2016 PHPExcel
  *
@@ -22,7 +22,7 @@ namespace PhpOffice\PhpExcel\Shared\OLE;
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Shared_OLE
+ * @package    PhpOffice\PhpExcel\Shared\OLE
  * @copyright  Copyright (c) 2006 - 2007 Christian Schmidt
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version ##VERSION##, ##DATE##

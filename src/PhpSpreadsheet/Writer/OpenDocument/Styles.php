@@ -1,7 +1,9 @@
 <?php
 
+namespace PhpOffice\PhpExcel\Writer\OpenDocument;
+
 /**
- * PHPExcel_Writer_OpenDocument_Styles
+ * PhpOffice\PhpExcel\Writer\OpenDocument\Styles
  *
  * Copyright (c) 2006 - 2016 PHPExcel
  *
@@ -20,12 +22,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Writer_OpenDocument
+ * @package    PhpOffice\PhpExcel\Writer\OpenDocument
  * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
-class PHPExcel_Writer_OpenDocument_Styles extends PHPExcel_Writer_OpenDocument_WriterPart
+class Styles extends WriterPart
 {
     /**
      * Write styles.xml to XML format
@@ -42,9 +44,9 @@ class PHPExcel_Writer_OpenDocument_Styles extends PHPExcel_Writer_OpenDocument_W
 
         $objWriter = null;
         if ($this->getParentWriter()->getUseDiskCaching()) {
-            $objWriter = new PHPExcel_Shared_XMLWriter(PHPExcel_Shared_XMLWriter::STORAGE_DISK, $this->getParentWriter()->getDiskCachingDirectory());
+            $objWriter = new \PhpOffice\PhpExcel\Shared\XMLWriter(\PhpOffice\PhpExcel\Shared\XMLWriter::STORAGE_DISK, $this->getParentWriter()->getDiskCachingDirectory());
         } else {
-            $objWriter = new PHPExcel_Shared_XMLWriter(PHPExcel_Shared_XMLWriter::STORAGE_MEMORY);
+            $objWriter = new \PhpOffice\PhpExcel\Shared\XMLWriter(\PhpOffice\PhpExcel\Shared\XMLWriter::STORAGE_MEMORY);
         }
 
         // XML header

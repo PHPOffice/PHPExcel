@@ -28,7 +28,7 @@ namespace PhpOffice\PhpExcel\Shared\OLE\PPS;
 *
 * @author   Xavier Noguer <xnoguer@php.net>
 * @category PHPExcel
-* @package  PHPExcel_Shared_OLE
+* @package  PhpOffice\PhpExcel\Shared\OLE
 */
 class Root extends \PhpOffice\PhpExcel\Shared\OLE\PPS
 {

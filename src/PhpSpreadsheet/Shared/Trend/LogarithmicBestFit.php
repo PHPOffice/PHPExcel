@@ -1,9 +1,9 @@
 <?php
 
-require_once(PHPEXCEL_ROOT . 'PHPExcel/Shared/trend/bestFitClass.php');
+namespace PhpOffice\PhpExcel\Shared\Trend;
 
 /**
- * PHPExcel_Logarithmic_Best_Fit
+ * PhpOffice\PhpExcel\Shared\Trend\LogarithmicBestFit
  *
  * Copyright (c) 2006 - 2016 PHPExcel
  *
@@ -22,12 +22,12 @@ require_once(PHPEXCEL_ROOT . 'PHPExcel/Shared/trend/bestFitClass.php');
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Shared_Trend
+ * @package    PhpOffice\PhpExcel\Shared\Trend
  * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
-class PHPExcel_Logarithmic_Best_Fit extends PHPExcel_Best_Fit
+class LogarithmicBestFit extends BestFit
 {
     /**
      * Algorithm type to use for best-fit

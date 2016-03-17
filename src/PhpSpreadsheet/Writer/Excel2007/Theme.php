@@ -1,5 +1,7 @@
 <?php
+
 namespace PhpOffice\PhpExcel\Writer\Excel2007;
+
 /**
  * PHPExcel
  *
@@ -20,7 +22,7 @@ namespace PhpOffice\PhpExcel\Writer\Excel2007;
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Writer_Excel2007
+ * @package    PhpOffice\PhpExcel\Writer\Excel2007
  * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
@@ -28,10 +30,10 @@ namespace PhpOffice\PhpExcel\Writer\Excel2007;
 
 
 /**
- * PHPExcel_Writer_Excel2007_Theme
+ * PhpOffice\PhpExcel\Writer\Excel2007\Theme
  *
  * @category   PHPExcel
- * @package    PHPExcel_Writer_Excel2007
+ * @package    PhpOffice\PhpExcel\Writer\Excel2007
  * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  */
 class Theme extends WriterPart

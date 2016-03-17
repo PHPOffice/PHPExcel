@@ -3,7 +3,7 @@
 namespace PhpOffice\PhpExcel\Reader;
 
 /**
- * PHPExcel_Reader_Excel5
+ * PhpOffice\PhpExcel\Reader\Excel5
  *
  * Copyright (c) 2006 - 2016 PHPExcel
  *
@@ -22,7 +22,7 @@ namespace PhpOffice\PhpExcel\Reader;
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Reader_Excel5
+ * @package    PhpOffice\PhpExcel\Reader\Excel5
  * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
@@ -146,7 +146,7 @@ class Excel5 extends BaseReader implements IReader
     const MS_BIFF_CRYPTO_NONE           = 0;
     const MS_BIFF_CRYPTO_XOR            = 1;
     const MS_BIFF_CRYPTO_RC4            = 2;
-    
+
     // Size of stream blocks when using RC4 encryption
     const REKEY_BLOCK                   = 0x400;
 
@@ -375,7 +375,7 @@ class Excel5 extends BaseReader implements IReader
      * @var int
      */
     private $encryption = 0;
-    
+
     /**
      * The position in the stream after which contents are encrypted
      *
@@ -1206,7 +1206,7 @@ class Excel5 extends BaseReader implements IReader
 
         return $this->phpExcel;
     }
-    
+
     /**
      * Read record data from stream, decrypting as required
      *
@@ -1219,12 +1219,12 @@ class Excel5 extends BaseReader implements IReader
     private function readRecordData($data, $pos, $len)
     {
         $data = substr($data, $pos, $len);
-        
+
         // File not encrypted, or record before encryption start point
         if ($this->encryption == self::MS_BIFF_CRYPTO_NONE || $pos < $this->encryptionStartPos) {
             return $data;
         }
-    
+
         $recordData = '';
         if ($this->encryption == self::MS_BIFF_CRYPTO_RC4) {
             $oldBlock = floor($this->rc4Pos / self::REKEY_BLOCK);
@@ -1764,7 +1764,7 @@ class Excel5 extends BaseReader implements IReader
         for ($i = 0; $i < 5; $i++) {
             $pwarray[$i] = $valContext[$i];
         }
-        
+
         $pwarray[5] = chr($block & 0xff);
         $pwarray[6] = chr(($block >> 8) & 0xff);
         $pwarray[7] = chr(($block >> 16) & 0xff);
@@ -1853,7 +1853,7 @@ class Excel5 extends BaseReader implements IReader
 
         $salt = $key->RC4($salt_data);
         $hashedsalt = $key->RC4($hashedsalt_data);
-        
+
         $salt .= "\x80" . str_repeat("\0", 47);
         $salt[56] = "\x80";
 

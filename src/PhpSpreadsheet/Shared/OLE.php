@@ -36,7 +36,7 @@ $GLOBALS['_OLE_INSTANCES'] = array();
 * @author   Xavier Noguer <xnoguer@php.net>
 * @author   Christian Schmidt <schmidt@php.net>
 * @category   PHPExcel
-* @package    PHPExcel_Shared_OLE
+* @package    PhpOffice\PhpExcel\Shared\OLE
 */
 class OLE
 {
@@ -202,7 +202,7 @@ class OLE
     {
         static $isRegistered = false;
         if (!$isRegistered) {
-            stream_wrapper_register('ole-chainedblockstream', '\\PhpOffice\PhpExcel\\Shared\\OLE\\ChainedBlockStream');
+            stream_wrapper_register('ole-chainedblockstream', '\\PhpOffice\\PhpExcel\\Shared\\OLE\\ChainedBlockStream');
             $isRegistered = true;
         }
 

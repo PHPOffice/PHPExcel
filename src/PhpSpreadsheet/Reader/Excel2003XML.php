@@ -3,7 +3,7 @@
 namespace PhpOffice\PhpExcel\Reader;
 
 /**
- * PHPExcel_Reader_Excel2003XML
+ * PhpOffice\PhpExcel\Reader\Excel2003XML
  *
  * Copyright (c) 2006 - 2016 PHPExcel
  *
@@ -22,7 +22,7 @@ namespace PhpOffice\PhpExcel\Reader;
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Reader
+ * @package    PhpOffice\PhpExcel\Reader
  * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
@@ -374,7 +374,7 @@ class Excel2003XML extends BaseReader implements IReader
         if (isset($xml->CustomDocumentProperties)) {
             foreach ($xml->CustomDocumentProperties[0] as $propertyName => $propertyValue) {
                 $propertyAttributes = $propertyValue->attributes($namespaces['dt']);
-                $propertyName = preg_replace_callback('/_x([0-9a-z]{4})_/', '\\PhpOffice\PhpExcel\\Reader\\Excel2003XML::hex2str', $propertyName);
+                $propertyName = preg_replace_callback('/_x([0-9a-z]{4})_/', '\\PhpOffice\\PhpExcel\\Reader\\Excel2003XML::hex2str', $propertyName);
                 $propertyType = \PhpOffice\PhpExcel\Document\Properties::PROPERTY_TYPE_UNKNOWN;
                 switch ((string) $propertyAttributes) {
                     case 'string':

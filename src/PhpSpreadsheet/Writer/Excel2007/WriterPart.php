@@ -3,7 +3,7 @@
 namespace PhpOffice\PhpExcel\Writer\Excel2007;
 
 /**
- * \PhpOffice\PhpExcel\Writer\Excel2007\WriterPart
+ * PhpOffice\PhpExcel\Writer\Excel2007\WriterPart
  *
  * Copyright (c) 2006 - 2016 PHPExcel
  *
@@ -22,7 +22,7 @@ namespace PhpOffice\PhpExcel\Writer\Excel2007;
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Writer_Excel2007
+ * @package    PhpOffice\PhpExcel\Writer\Excel2007
  * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
@@ -58,7 +58,7 @@ abstract class WriterPart
         if (!is_null($this->parentWriter)) {
             return $this->parentWriter;
         } else {
-            throw new \PhpOffice\PhpExcel\Writer\Exception("No parent \\PhpOffice\PhpExcel\\Writer\\IWriter assigned.");
+            throw new \PhpOffice\PhpExcel\Writer\Exception("No parent \\PhpOffice\\PhpExcel\\Writer\\IWriter assigned.");
         }
     }
 

@@ -3,7 +3,7 @@
 namespace PhpOffice\PhpExcel\Writer\PDF;
 
 /**
- *  PHPExcel_Writer_PDF_Core
+ *  \PhpOffice\PhpExcel\Writer\PDF\Core
  *
  *  Copyright (c) 2006 - 2016 PHPExcel
  *
@@ -22,7 +22,7 @@ namespace PhpOffice\PhpExcel\Writer\PDF;
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  *  @category    PHPExcel
- *  @package     PHPExcel_Writer_PDF
+ *  @package     PhpOffice\PhpExcel\Writer\PDF
  *  @copyright   Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  *  @license     http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  *  @version     ##VERSION##, ##DATE##
@@ -214,7 +214,7 @@ abstract class Core extends \PhpOffice\PhpExcel\Writer\HTML
     {
         parent::__construct($phpExcel);
         $this->setUseInlineCss(true);
-        $this->tempDir = PHPExcel_Shared_File::sys_get_temp_dir();
+        $this->tempDir = \PhpOffice\PhpExcel\Shared\File::sys_get_temp_dir();
     }
 
     /**
@@ -256,7 +256,7 @@ abstract class Core extends \PhpOffice\PhpExcel\Writer\HTML
      *  Set Paper Size
      *
      *  @param  string  $pValue Paper size
-     *  @return PHPExcel_Writer_PDF
+     *  @return \PhpOffice\PhpExcel\Writer\PDF
      */
     public function setPaperSize($pValue = \PhpOffice\PhpExcel\Worksheet\PageSetup::PAPERSIZE_LETTER)
     {
@@ -278,7 +278,7 @@ abstract class Core extends \PhpOffice\PhpExcel\Writer\HTML
      *  Set Orientation
      *
      *  @param string $pValue  Page orientation
-     *  @return PHPExcel_Writer_PDF
+     *  @return \PhpOffice\PhpExcel\Writer\PDF
      */
     public function setOrientation($pValue = \PhpOffice\PhpExcel\Worksheet\PageSetup::ORIENTATION_DEFAULT)
     {
@@ -301,7 +301,7 @@ abstract class Core extends \PhpOffice\PhpExcel\Writer\HTML
      *
      *  @param     string        $pValue        Temporary storage directory
      *  @throws    \PhpOffice\PhpExcel\Writer\Exception    when directory does not exist
-     *  @return    PHPExcel_Writer_PDF
+     *  @return    \PhpOffice\PhpExcel\Writer\PDF
      */
     public function setTempDir($pValue = '')
     {
@@ -324,8 +324,8 @@ abstract class Core extends \PhpOffice\PhpExcel\Writer\HTML
         //  garbage collect
         $this->phpExcel->garbageCollect();
 
-        $this->saveArrayReturnType = PHPExcel_Calculation::getArrayReturnType();
-        PHPExcel_Calculation::setArrayReturnType(PHPExcel_Calculation::RETURN_ARRAY_AS_VALUE);
+        $this->saveArrayReturnType = \PhpOffice\PhpExcel\Calculation::getArrayReturnType();
+        \PhpOffice\PhpExcel\Calculation::setArrayReturnType(PhpOffice\PhpExcel\Calculation::RETURN_ARRAY_AS_VALUE);
 
         //  Open file
         $fileHandle = fopen($pFilename, 'w');
@@ -352,6 +352,6 @@ abstract class Core extends \PhpOffice\PhpExcel\Writer\HTML
         //  Close file
         fclose($fileHandle);
 
-        PHPExcel_Calculation::setArrayReturnType($this->saveArrayReturnType);
+        \PhpOffice\PhpExcel\Calculation::setArrayReturnType($this->saveArrayReturnType);
     }
 }

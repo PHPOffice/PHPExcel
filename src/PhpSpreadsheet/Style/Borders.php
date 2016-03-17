@@ -3,7 +3,7 @@
 namespace PhpOffice\PhpExcel\Style;
 
 /**
- * PHPExcel_Style_Borders
+ * PhpOffice\PhpExcel\Style\Borders
  *
  * Copyright (c) 2006 - 2016 PHPExcel
  *
@@ -22,7 +22,7 @@ namespace PhpOffice\PhpExcel\Style;
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Style
+ * @package    PhpOffice\PhpExcel\Style
  * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##

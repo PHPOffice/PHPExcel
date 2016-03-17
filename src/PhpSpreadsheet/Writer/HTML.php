@@ -3,7 +3,7 @@
 namespace PhpOffice\PhpExcel\Writer;
 
 /**
- * PHPExcel_Writer_HTML
+ * PhpOffice\PhpExcel\Writer\HTML
  *
  * Copyright (c) 2006 - 2016 PHPExcel
  *
@@ -22,7 +22,7 @@ namespace PhpOffice\PhpExcel\Writer;
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Writer_HTML
+ * @package    PhpOffice\PhpExcel\Writer
  * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
@@ -128,7 +128,7 @@ class HTML extends BaseWriter implements IWriter
     private $generateSheetNavigationBlock = true;
 
     /**
-     * Create a new PHPExcel_Writer_HTML
+     * Create a new \PhpOffice\PhpExcel\Writer\HTML
      *
      * @param    PHPExcel    $phpExcel    PHPExcel object
      */
@@ -287,7 +287,7 @@ class HTML extends BaseWriter implements IWriter
      * Set sheet index
      *
      * @param    int        $pValue        Sheet index
-     * @return PHPExcel_Writer_HTML
+     * @return \PhpOffice\PhpExcel\Writer\HTML
      */
     public function setSheetIndex($pValue = 0)
     {
@@ -309,7 +309,7 @@ class HTML extends BaseWriter implements IWriter
      * Set sheet index
      *
      * @param    boolean        $pValue        Flag indicating whether the sheet navigation block should be generated or not
-     * @return PHPExcel_Writer_HTML
+     * @return \PhpOffice\PhpExcel\Writer\HTML
      */
     public function setGenerateSheetNavigationBlock($pValue = true)
     {
@@ -553,7 +553,7 @@ class HTML extends BaseWriter implements IWriter
         $colMax = 'A';
         if ($this->includeCharts) {
             foreach ($pSheet->getChartCollection() as $chart) {
-                if ($chart instanceof PHPExcel_Chart) {
+                if ($chart instanceof \PhpOffice\PhpExcel\Chart) {
                     $chartCoordinates = $chart->getTopLeftPosition();
                     $chartTL = \PhpOffice\PhpExcel\Cell::coordinateFromString($chartCoordinates['cell']);
                     $chartCol = \PhpOffice\PhpExcel\Cell::columnIndexFromString($chartTL[0]);
@@ -694,10 +694,10 @@ class HTML extends BaseWriter implements IWriter
 
         // Write charts
         foreach ($pSheet->getChartCollection() as $chart) {
-            if ($chart instanceof PHPExcel_Chart) {
+            if ($chart instanceof \PhpOffice\PhpExcel\Chart) {
                 $chartCoordinates = $chart->getTopLeftPosition();
                 if ($chartCoordinates['cell'] == $coordinates) {
-                    $chartFileName = PHPExcel_Shared_File::sys_get_temp_dir().'/'.uniqid().'.png';
+                    $chartFileName = \PhpOffice\PhpExcel\Shared\File::sys_get_temp_dir().'/'.uniqid().'.png';
                     if (!$chart->render($chartFileName)) {
                         return;
                     }
@@ -927,7 +927,7 @@ class HTML extends BaseWriter implements IWriter
     /**
      * Create CSS style
      *
-     * @param    \PhpOffice\PhpExcel\Style        $pStyle            PHPExcel_Style
+     * @param    \PhpOffice\PhpExcel\Style        $pStyle            \PhpOffice\PhpExcel\Style
      * @return    array
      */
     private function createCSSStyle(\PhpOffice\PhpExcel\Style $pStyle)
@@ -1323,7 +1323,7 @@ class HTML extends BaseWriter implements IWriter
                     if (!$this->useInlineCss) {
                         $html .= ' class="' . $cssClass . '"';
                     } else {
-                        //** Necessary redundant code for the sake of PHPExcel_Writer_PDF **
+                        //** Necessary redundant code for the sake of \PhpOffice\PhpExcel\Writer\PDF **
                         // We must explicitly write the width of the <td> element because TCPDF
                         // does not recognize e.g. <col style="width:42pt">
                         $width = 0;
@@ -1414,7 +1414,7 @@ class HTML extends BaseWriter implements IWriter
      * Set images root
      *
      * @param string $pValue
-     * @return PHPExcel_Writer_HTML
+     * @return \PhpOffice\PhpExcel\Writer\HTML
      */
     public function setImagesRoot($pValue = '.')
     {
@@ -1436,7 +1436,7 @@ class HTML extends BaseWriter implements IWriter
      * Set embed images
      *
      * @param boolean $pValue
-     * @return PHPExcel_Writer_HTML
+     * @return \PhpOffice\PhpExcel\Writer\HTML
      */
     public function setEmbedImages($pValue = '.')
     {
@@ -1458,7 +1458,7 @@ class HTML extends BaseWriter implements IWriter
      * Set use inline CSS?
      *
      * @param boolean $pValue
-     * @return PHPExcel_Writer_HTML
+     * @return \PhpOffice\PhpExcel\Writer\HTML
      */
     public function setUseInlineCss($pValue = false)
     {

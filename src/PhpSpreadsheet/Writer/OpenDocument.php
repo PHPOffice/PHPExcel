@@ -1,7 +1,7 @@
 <?php
 
 /**
- * PHPExcel_Writer_OpenDocument
+ * PhpOffice\PhpExcel\Writer\OpenDocument
  *
  * Copyright (c) 2006 - 2016 PHPExcel
  *
@@ -20,17 +20,17 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Writer_OpenDocument
+ * @package    PhpOffice\PhpExcel\Writer
  * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
-class PHPExcel_Writer_OpenDocument extends PHPExcel_Writer_Abstract implements PHPExcel_Writer_IWriter
+class OpenDocument extends BaseWriter implements IWriter
 {
     /**
      * Private writer parts
      *
-     * @var PHPExcel_Writer_OpenDocument_WriterPart[]
+     * @var \PhpOffice\PhpExcel\Writer\OpenDocument_WriterPart[]
      */
     private $writerParts = array();
 
@@ -42,7 +42,7 @@ class PHPExcel_Writer_OpenDocument extends PHPExcel_Writer_Abstract implements P
     private $spreadSheet;
 
     /**
-     * Create a new PHPExcel_Writer_OpenDocument
+     * Create a new \PhpOffice\PhpExcel\Writer\OpenDocument
      *
      * @param \PhpOffice\PhpExcel\SpreadSheet $pPHPExcel
      */
@@ -51,13 +51,13 @@ class PHPExcel_Writer_OpenDocument extends PHPExcel_Writer_Abstract implements P
         $this->setPHPExcel($pPHPExcel);
 
         $writerPartsArray = array(
-            'content'    => 'PHPExcel_Writer_OpenDocument_Content',
-            'meta'       => 'PHPExcel_Writer_OpenDocument_Meta',
-            'meta_inf'   => 'PHPExcel_Writer_OpenDocument_MetaInf',
-            'mimetype'   => 'PHPExcel_Writer_OpenDocument_Mimetype',
-            'settings'   => 'PHPExcel_Writer_OpenDocument_Settings',
-            'styles'     => 'PHPExcel_Writer_OpenDocument_Styles',
-            'thumbnails' => 'PHPExcel_Writer_OpenDocument_Thumbnails'
+            'content'    => 'PhpOffice\PhpExcel\Writer\OpenDocument_Content',
+            'meta'       => 'PhpOffice\PhpExcel\Writer\OpenDocument_Meta',
+            'meta_inf'   => 'PhpOffice\PhpExcel\Writer\OpenDocument_MetaInf',
+            'mimetype'   => 'PhpOffice\PhpExcel\Writer\OpenDocument_Mimetype',
+            'settings'   => 'PhpOffice\PhpExcel\Writer\OpenDocument_Settings',
+            'styles'     => 'PhpOffice\PhpExcel\Writer\OpenDocument_Styles',
+            'thumbnails' => 'PhpOffice\PhpExcel\Writer\OpenDocument_Thumbnails'
         );
 
         foreach ($writerPartsArray as $writer => $class) {
@@ -98,7 +98,7 @@ class PHPExcel_Writer_OpenDocument extends PHPExcel_Writer_Abstract implements P
         // If $pFilename is php://output or php://stdout, make it a temporary file...
         $originalFilename = $pFilename;
         if (strtolower($pFilename) == 'php://output' || strtolower($pFilename) == 'php://stdout') {
-            $pFilename = @tempnam(PHPExcel_Shared_File::sys_get_temp_dir(), 'phpxltmp');
+            $pFilename = @tempnam(\PhpOffice\PhpExcel\Shared\File::sys_get_temp_dir(), 'phpxltmp');
             if ($pFilename == '') {
                 $pFilename = $originalFilename;
             }
@@ -180,7 +180,7 @@ class PHPExcel_Writer_OpenDocument extends PHPExcel_Writer_Abstract implements P
      *
      * @param  PHPExcel  $pPHPExcel  PHPExcel object
      * @throws \PhpOffice\PhpExcel\Writer\Exception
-     * @return PHPExcel_Writer_Excel2007
+     * @return \PhpOffice\PhpExcel\Writer\Excel2007
      */
     public function setPHPExcel(\PhpOffice\PhpExcel\SpreadSheet $pPHPExcel = null)
     {

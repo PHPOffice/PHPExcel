@@ -3,7 +3,7 @@
 namespace PhpOffice\PhpExcel\CalcEngine;
 
 /**
- * PHPExcel_CalcEngine_Logger
+ * PhpOffice\PhpExcel\CalcEngine\Logger
  *
  * Copyright (c) 2006 - 2016 PHPExcel
  *
@@ -22,7 +22,7 @@ namespace PhpOffice\PhpExcel\CalcEngine;
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Calculation
+ * @package    PhpOffice\PhpExcel\CalcEngine
  * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##

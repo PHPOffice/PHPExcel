@@ -3,7 +3,7 @@
 namespace PhpOffice\PhpExcel\Reader\Excel5;
 
 /**
- * PHPExcel_Reader_Excel5_MD5
+ * PhpOffice\PhpExcel\Reader\Excel5\MD5
  *
  * Copyright (c) 2006 - 2016 PHPExcel
  *
@@ -22,7 +22,7 @@ namespace PhpOffice\PhpExcel\Reader\Excel5;
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Reader_Excel5
+ * @package    PhpOffice\PhpExcel\Reader\Excel5
  * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt        LGPL
  * @version    ##VERSION##, ##DATE##

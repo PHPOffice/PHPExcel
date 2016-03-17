@@ -3,7 +3,7 @@
 namespace PhpOffice\PhpExcel\Writer;
 
 /**
- * PHPExcel\Writer\Excel2007
+ * PhpOffice\PhpExcel\Writer\Excel2007
  *
  * Copyright (c) 2006 - 2016 PHPExcel
  *
@@ -22,7 +22,7 @@ namespace PhpOffice\PhpExcel\Writer;
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Writer_Excel2007
+ * @package    PhpOffice\PhpExcel\Writer
  * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
@@ -117,19 +117,19 @@ class Excel2007 extends BaseWriter implements IWriter
         $this->setPHPExcel($pPHPExcel);
 
         $writerPartsArray = [
-            'stringtable'       => '\\PhpOffice\PhpExcel\\Writer\\Excel2007\\StringTable',
-            'contenttypes'      => '\\PhpOffice\PhpExcel\\Writer\\Excel2007\\ContentTypes',
-            'docprops'          => '\\PhpOffice\PhpExcel\\Writer\\Excel2007\\DocProps',
-            'rels'              => '\\PhpOffice\PhpExcel\\Writer\\Excel2007\\Rels',
-            'theme'             => '\\PhpOffice\PhpExcel\\Writer\\Excel2007\\Theme',
-            'style'             => '\\PhpOffice\PhpExcel\\Writer\\Excel2007\\Style',
-            'workbook'          => '\\PhpOffice\PhpExcel\\Writer\\Excel2007\\Workbook',
-            'worksheet'         => '\\PhpOffice\PhpExcel\\Writer\\Excel2007\\Worksheet',
-            'drawing'           => '\\PhpOffice\PhpExcel\\Writer\\Excel2007\\Drawing',
-            'comments'          => '\\PhpOffice\PhpExcel\\Writer\\Excel2007\\Comments',
-            'chart'             => '\\PhpOffice\PhpExcel\\Writer\\Excel2007\\Chart',
-            'relsvba'           => '\\PhpOffice\PhpExcel\\Writer\\Excel2007\\RelsVBA',
-            'relsribbonobjects' => '\\PhpOffice\PhpExcel\\Writer\\Excel2007\\RelsRibbon'
+            'stringtable'       => '\\PhpOffice\\PhpExcel\\Writer\\Excel2007\\StringTable',
+            'contenttypes'      => '\\PhpOffice\\PhpExcel\\Writer\\Excel2007\\ContentTypes',
+            'docprops'          => '\\PhpOffice\\PhpExcel\\Writer\\Excel2007\\DocProps',
+            'rels'              => '\\PhpOffice\\PhpExcel\\Writer\\Excel2007\\Rels',
+            'theme'             => '\\PhpOffice\\PhpExcel\\Writer\\Excel2007\\Theme',
+            'style'             => '\\PhpOffice\\PhpExcel\\Writer\\Excel2007\\Style',
+            'workbook'          => '\\PhpOffice\\PhpExcel\\Writer\\Excel2007\\Workbook',
+            'worksheet'         => '\\PhpOffice\\PhpExcel\\Writer\\Excel2007\\Worksheet',
+            'drawing'           => '\\PhpOffice\\PhpExcel\\Writer\\Excel2007\\Drawing',
+            'comments'          => '\\PhpOffice\\PhpExcel\\Writer\\Excel2007\\Comments',
+            'chart'             => '\\PhpOffice\\PhpExcel\\Writer\\Excel2007\\Chart',
+            'relsvba'           => '\\PhpOffice\\PhpExcel\\Writer\\Excel2007\\RelsVBA',
+            'relsribbonobjects' => '\\PhpOffice\\PhpExcel\\Writer\\Excel2007\\RelsRibbon'
         ];
 
         //    Initialise writer parts
@@ -516,7 +516,7 @@ class Excel2007 extends BaseWriter implements IWriter
      * Set Office2003 compatibility
      *
      * @param boolean $pValue    Office2003 compatibility?
-     * @return PHPExcel_Writer_Excel2007
+     * @return \PhpOffice\PhpExcel\Writer\Excel2007
      */
     public function setOffice2003Compatibility($pValue = false)
     {

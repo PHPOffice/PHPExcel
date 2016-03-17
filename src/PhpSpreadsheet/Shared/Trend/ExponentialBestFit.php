@@ -1,9 +1,9 @@
 <?php
 
-require_once PHPEXCEL_ROOT . 'PHPExcel/Shared/trend/bestFitClass.php';
+namespace PhpOffice\PhpExcel\Shared\Trend;
 
 /**
- * PHPExcel_Power_Best_Fit
+ * PhpOffice\PhpExcel\Shared\Trend\ExponentialBestFit
  *
  * Copyright (c) 2006 - 2016 PHPExcel
  *
@@ -22,12 +22,12 @@ require_once PHPEXCEL_ROOT . 'PHPExcel/Shared/trend/bestFitClass.php';
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Shared_Trend
+ * @package    PhpOffice\PhpExcel\Shared\Trend
  * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
-class PHPExcel_Power_Best_Fit extends PHPExcel_Best_Fit
+class ExponentialBestFit extends BestFit
 {
     /**
      * Algorithm type to use for best-fit
@@ -35,8 +35,7 @@ class PHPExcel_Power_Best_Fit extends PHPExcel_Best_Fit
      *
      * @var    string
      **/
-    protected $bestFitType        = 'power';
-
+    protected $bestFitType        = 'exponential';
 
     /**
      * Return the Y-Value for a specified value of X
@@ -46,9 +45,8 @@ class PHPExcel_Power_Best_Fit extends PHPExcel_Best_Fit
      **/
     public function getValueOfYForX($xValue)
     {
-        return $this->getIntersect() * pow(($xValue - $this->xOffset), $this->getSlope());
+        return $this->getIntersect() * pow($this->getSlope(), ($xValue - $this->xOffset));
     }
-
 
     /**
      * Return the X-Value for a specified value of Y
@@ -58,9 +56,8 @@ class PHPExcel_Power_Best_Fit extends PHPExcel_Best_Fit
      **/
     public function getValueOfXForY($yValue)
     {
-        return pow((($yValue + $this->yOffset) / $this->getIntersect()), (1 / $this->getSlope()));
+        return log(($yValue + $this->yOffset) / $this->getIntersect()) / log($this->getSlope());
     }
-
 
     /**
      * Return the Equation of the best-fit line
@@ -73,9 +70,22 @@ class PHPExcel_Power_Best_Fit extends PHPExcel_Best_Fit
         $slope = $this->getSlope($dp);
         $intersect = $this->getIntersect($dp);
 
-        return 'Y = ' . $intersect . ' * X^' . $slope;
+        return 'Y = ' . $intersect . ' * ' . $slope . '^X';
     }
 
+    /**
+     * Return the Slope of the line
+     *
+     * @param     int        $dp        Number of places of decimal precision to display
+     * @return     string
+     **/
+    public function getSlope($dp = 0)
+    {
+        if ($dp != 0) {
+            return round(exp($this->_slope), $dp);
+        }
+        return exp($this->_slope);
+    }
 
     /**
      * Return the Value of X where it intersects Y = 0
@@ -91,7 +101,6 @@ class PHPExcel_Power_Best_Fit extends PHPExcel_Best_Fit
         return exp($this->intersect);
     }
 
-
     /**
      * Execute the regression and calculate the goodness of fit for a set of X and Y data values
      *
@@ -99,16 +108,8 @@ class PHPExcel_Power_Best_Fit extends PHPExcel_Best_Fit
      * @param     float[]    $xValues    The set of X-values for this regression
      * @param     boolean    $const
      */
-    private function powerRegression($yValues, $xValues, $const)
+    private function exponentialRegression($yValues, $xValues, $const)
     {
-        foreach ($xValues as &$value) {
-            if ($value < 0.0) {
-                $value = 0 - log(abs($value));
-            } elseif ($value > 0.0) {
-                $value = log($value);
-            }
-        }
-        unset($value);
         foreach ($yValues as &$value) {
             if ($value < 0.0) {
                 $value = 0 - log(abs($value));
@@ -121,18 +122,17 @@ class PHPExcel_Power_Best_Fit extends PHPExcel_Best_Fit
         $this->leastSquareFit($yValues, $xValues, $const);
     }
 
-
     /**
      * Define the regression and calculate the goodness of fit for a set of X and Y data values
      *
-     * @param     float[]    $yValues    The set of Y-values for this regression
-     * @param     float[]    $xValues    The set of X-values for this regression
-     * @param     boolean    $const
+     * @param    float[]        $yValues    The set of Y-values for this regression
+     * @param    float[]        $xValues    The set of X-values for this regression
+     * @param    boolean        $const
      */
     public function __construct($yValues, $xValues = array(), $const = true)
     {
         if (parent::__construct($yValues, $xValues) !== false) {
-            $this->powerRegression($yValues, $xValues, $const);
+            $this->exponentialRegression($yValues, $xValues, $const);
         }
     }
 }

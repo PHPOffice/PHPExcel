@@ -85,11 +85,11 @@ class Drawing extends WriterPart
      * Write drawings to XML format
      *
      * @param     \PhpOffice\PhpExcel\Shared\XMLWriter    $objWriter         XML Writer
-     * @param     PHPExcel_Chart                $pChart
+     * @param     \PhpOffice\PhpExcel\Chart                $pChart
      * @param     int                            $pRelationId
      * @throws     \PhpOffice\PhpExcel\Writer\Exception
      */
-    public function writeChart(\PhpOffice\PhpExcel\Shared\XMLWriter $objWriter = null, PHPExcel_Chart $pChart = null, $pRelationId = -1)
+    public function writeChart(\PhpOffice\PhpExcel\Shared\XMLWriter $objWriter = null, \PhpOffice\PhpExcel\Chart $pChart = null, $pRelationId = -1)
     {
         $tl = $pChart->getTopLeftPosition();
         $tl['colRow'] = \PhpOffice\PhpExcel\Cell::coordinateFromString($tl['cell']);

@@ -2,25 +2,25 @@
 
 namespace PhpOffice\PhpExcel\Reader\Excel5\Style;
 
-use \PhpOffice\PhpExcel\Style\Border;
+use \PhpOffice\PhpExcel\Style\Border As BaseBorder;
 
 class Border
 {
     protected static $map = array(
-        0x00 => Border::BORDER_NONE,
-        0x01 => Border::BORDER_THIN,
-        0x02 => Border::BORDER_MEDIUM,
-        0x03 => Border::BORDER_DASHED,
-        0x04 => Border::BORDER_DOTTED,
-        0x05 => Border::BORDER_THICK,
-        0x06 => Border::BORDER_DOUBLE,
-        0x07 => Border::BORDER_HAIR,
-        0x08 => Border::BORDER_MEDIUMDASHED,
-        0x09 => Border::BORDER_DASHDOT,
-        0x0A => Border::BORDER_MEDIUMDASHDOT,
-        0x0B => Border::BORDER_DASHDOTDOT,
-        0x0C => Border::BORDER_MEDIUMDASHDOTDOT,
-        0x0D => Border::BORDER_SLANTDASHDOT,
+        0x00 => BaseBorder::BORDER_NONE,
+        0x01 => BaseBorder::BORDER_THIN,
+        0x02 => BaseBorder::BORDER_MEDIUM,
+        0x03 => BaseBorder::BORDER_DASHED,
+        0x04 => BaseBorder::BORDER_DOTTED,
+        0x05 => BaseBorder::BORDER_THICK,
+        0x06 => BaseBorder::BORDER_DOUBLE,
+        0x07 => BaseBorder::BORDER_HAIR,
+        0x08 => BaseBorder::BORDER_MEDIUMDASHED,
+        0x09 => BaseBorder::BORDER_DASHDOT,
+        0x0A => BaseBorder::BORDER_MEDIUMDASHDOT,
+        0x0B => BaseBorder::BORDER_DASHDOTDOT,
+        0x0C => BaseBorder::BORDER_MEDIUMDASHDOTDOT,
+        0x0D => BaseBorder::BORDER_SLANTDASHDOT,
     );
 
     /**
@@ -35,6 +35,6 @@ class Border
         if (isset(self::$map[$index])) {
             return self::$map[$index];
         }
-        return Border::BORDER_NONE;
+        return BaseBorder::BORDER_NONE;
     }
 }

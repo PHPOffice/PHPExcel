@@ -5,7 +5,7 @@ namespace PhpOffice\PhpExcel\Shared;
 if (!defined('PCLZIP_TEMPORARY_DIR')) {
     define('PCLZIP_TEMPORARY_DIR', File::sys_get_temp_dir() . DIRECTORY_SEPARATOR);
 }
-require_once PHPEXCEL_ROOT . 'PHPExcel/Shared/PCLZip/pclzip.lib.php';
+require_once 'PCLZip/pclzip.lib.php';
 
 /**
  * PHPExcel_Shared_ZipArchive
@@ -64,7 +64,7 @@ class ZipArchive
     public function open($fileName)
     {
         $this->tempDir = File::sys_get_temp_dir();
-        $this->zip = new PclZip($fileName);
+        $this->zip = new \PclZip($fileName);
 
         return true;
     }

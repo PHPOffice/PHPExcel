@@ -1,4 +1,5 @@
 <?php
+
 namespace PhpOffice\PhpExcel\Writer\Excel2007;
 
 /**
@@ -306,10 +307,10 @@ class Workbook extends WriterPart
      * Write Defined Name for named range
      *
      * @param     \PhpOffice\PhpExcel\Shared\XMLWriter    $objWriter         XML Writer
-     * @param     PHPExcel_NamedRange            $pNamedRange
-     * @throws     \PhpOffice\PhpExcel\Writer\Exception
+     * @param     \PhpOffice\PhpExcel\NamedRange            $pNamedRange
+     * @throws    \PhpOffice\PhpExcel\Writer\Exception
      */
-    private function writeDefinedNameForNamedRange(\PhpOffice\PhpExcel\Shared\XMLWriter $objWriter = null, PHPExcel_NamedRange $pNamedRange)
+    private function writeDefinedNameForNamedRange(\PhpOffice\PhpExcel\Shared\XMLWriter $objWriter = null, \PhpOffice\PhpExcel\NamedRange $pNamedRange)
     {
         // definedName for named range
         $objWriter->startElement('definedName');

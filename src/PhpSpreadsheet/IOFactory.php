@@ -37,8 +37,8 @@ class IOFactory
      * @static
      */
     private static $searchLocations = array(
-        array( 'type' => 'IWriter', 'path' => 'PHPExcel/Writer/{0}.php', 'class' => '\\PhpOffice\PhpExcel\\Writer\\{0}' ),
-        array( 'type' => 'IReader', 'path' => 'PHPExcel/Reader/{0}.php', 'class' => '\\PhpOffice\PhpExcel\\Reader\\{0}' )
+        array( 'type' => 'IWriter', 'path' => 'PhpExcel/Writer/{0}.php', 'class' => '\\PhpOffice\PhpExcel\\Writer\\{0}' ),
+        array( 'type' => 'IReader', 'path' => 'PhpExcel/Reader/{0}.php', 'class' => '\\PhpOffice\PhpExcel\\Reader\\{0}' )
     );
 
     /**
@@ -198,7 +198,7 @@ class IOFactory
     {
         $reader = self::createReaderForFile($pFilename);
         $className = get_class($reader);
-        $classType = explode('_', $className);
+        $classType = explode('\\', $className);
         unset($reader);
         return array_pop($classType);
     }

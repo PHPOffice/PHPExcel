@@ -217,7 +217,7 @@ class CSV extends BaseReader implements IReader
      * @return     PHPExcel
      * @throws     Exception
      */
-    public function loadIntoExisting($pFilename, PHPExcel $objPHPExcel)
+    public function loadIntoExisting($pFilename, \PhpOffice\PhpExcel\Spreadsheet $objPHPExcel)
     {
         $lineEnding = ini_get('auto_detect_line_endings');
         ini_set('auto_detect_line_endings', true);

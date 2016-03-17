@@ -1,6 +1,6 @@
 <?php
 
-namespace \PhpOffice\PhpExcel\Shared\Escher\DggContainer\BstoreContainer;
+namespace PhpOffice\PhpExcel\Shared\Escher\DggContainer\BstoreContainer;
 
 /**
  * PHPExcel_Shared_Escher_DggContainer_BstoreContainer_BSE

@@ -1,6 +1,6 @@
 <?php
 
-namespace \PhpOffice\PhpExcel\Shared\Escher;
+namespace PhpOffice\PhpExcel\Shared\Escher;
 
 /**
  * PHPExcel_Shared_Escher_DgContainer

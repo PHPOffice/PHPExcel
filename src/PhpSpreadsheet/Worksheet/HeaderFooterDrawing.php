@@ -179,7 +179,7 @@ class HeaderFooterDrawing extends Drawing implements \PhpOffice\PhpExcel\ICompar
     {
         // Resize proportional?
         if ($this->resizeProportional && $pValue != 0) {
-            $ratio = $this->width / $this->height;
+            $ratio = $this->height / $this->width;
             $this->height = round($ratio * $pValue);
         }
 

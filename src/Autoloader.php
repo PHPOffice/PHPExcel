@@ -52,14 +52,14 @@ class Autoloader
      */
     public static function load($className)
     {
-        if ((class_exists($className, false)) || (strpos($className, 'PHPExcel\\') !== 0)) {
+        if ((class_exists($className, false)) || (strpos($className, 'PhpOffice\\PhpExcel\\') !== 0)) {
             // Either already loaded, or not a PHPExcel class request
             return false;
         }
 
         $classFilePath = __DIR__ . DIRECTORY_SEPARATOR .
             'PhpSpreadsheet' . DIRECTORY_SEPARATOR .
-            str_replace(['PHPExcel\\', '\\'], ['', '/'], $className) .
+            str_replace(['PhpOffice\\PhpExcel\\', '\\'], ['', '/'], $className) .
             '.php';
 
         if ((file_exists($classFilePath) === false) || (is_readable($classFilePath) === false)) {

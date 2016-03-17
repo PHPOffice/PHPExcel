@@ -39,22 +39,22 @@ date_default_timezone_set('Europe/London');
 /** Include path **/
 set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__) . '/../Classes/');
 
-/** PHPExcel_IOFactory */
-include 'PHPExcel/IOFactory.php';
+/** \PhpOffice\PhpExcel\IOFactory */
+require_once dirname(__FILE__) . '/../src/Bootstrap.php';
 
 
 //	Change these values to select the Rendering library that you wish to use
 //		for PDF files, and its directory location on your server
-//$rendererName = PHPExcel_Settings::PDF_RENDERER_TCPDF;
-$rendererName = PHPExcel_Settings::PDF_RENDERER_MPDF;
-//$rendererName = PHPExcel_Settings::PDF_RENDERER_DOMPDF;
+//$rendererName = \PhpOffice\PhpExcel\Settings::PDF_RENDERER_TCPDF;
+$rendererName = \PhpOffice\PhpExcel\Settings::PDF_RENDERER_MPDF;
+//$rendererName = \PhpOffice\PhpExcel\Settings::PDF_RENDERER_DOMPDF;
 //$rendererLibrary = 'tcPDF5.9';
 $rendererLibrary = 'mPDF5.4';
 //$rendererLibrary = 'domPDF0.6.0beta3';
 $rendererLibraryPath = '/php/libraries/PDF/' . $rendererLibrary;
 
 
-if (!PHPExcel_Settings::setPdfRenderer(
+if (!\PhpOffice\PhpExcel\Settings::setPdfRenderer(
 		$rendererName,
 		$rendererLibraryPath
 	)) {
@@ -68,12 +68,12 @@ if (!PHPExcel_Settings::setPdfRenderer(
 
 //	Change these values to select the Rendering library that you wish to use
 //		for Chart images, and its directory location on your server
-$rendererName = PHPExcel_Settings::CHART_RENDERER_JPGRAPH;
+$rendererName = \PhpOffice\PhpExcel\Settings::CHART_RENDERER_JPGRAPH;
 $rendererLibrary = 'jpgraph3.5.0b1/src/';
 $rendererLibraryPath = '/php/libraries/Charts/' . $rendererLibrary;
 
 
-if (!PHPExcel_Settings::setChartRenderer(
+if (!\PhpOffice\PhpExcel\Settings::setChartRenderer(
 		$rendererName,
 		$rendererLibraryPath
 	)) {
@@ -106,7 +106,7 @@ foreach($inputFileNames as $inputFileName) {
 
 	echo date('H:i:s') , " Load Test from $inputFileType file " , $inputFileNameShort , EOL;
 
-	$objReader = PHPExcel_IOFactory::createReader($inputFileType);
+	$objReader = \PhpOffice\PhpExcel\IOFactory::createReader($inputFileType);
 	$objReader->setIncludeCharts(TRUE);
 	$objPHPExcel = $objReader->load($inputFileName);
 
@@ -157,7 +157,7 @@ foreach($inputFileNames as $inputFileName) {
 	$outputFileName = str_replace('.xlsx', '.pdf', basename($inputFileName));
 
 	echo date('H:i:s') , " Write Tests to HTML file " , EOL;
-	$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'PDF');
+	$objWriter = \PhpOffice\PhpExcel\IOFactory::createWriter($objPHPExcel, 'PDF');
 	$objWriter->setIncludeCharts(TRUE);
 	$objWriter->save($outputFileName);
 	echo date('H:i:s') , " File written to " , $outputFileName , EOL;

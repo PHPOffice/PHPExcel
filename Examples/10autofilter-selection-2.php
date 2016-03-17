@@ -34,12 +34,12 @@ date_default_timezone_set('Europe/London');
 define('EOL',(PHP_SAPI == 'cli') ? PHP_EOL : '<br />');
 
 /** Include PHPExcel */
-require_once dirname(__FILE__) . '/../Classes/PHPExcel.php';
+require_once dirname(__FILE__) . '/../src/Bootstrap.php';
 
 
 // Create new PHPExcel object
 echo date('H:i:s').' Create new PHPExcel object'.EOL;
-$objPHPExcel = new PHPExcel();
+$objPHPExcel = new \PhpOffice\PhpExcel\Spreadsheet();
 
 // Set document properties
 echo date('H:i:s').' Set document properties'.EOL;
@@ -77,7 +77,7 @@ foreach($years as $year) {
 		foreach($countries as $country) {
 			$endDays = date('t',mktime(0,0,0,$period,1,$year));
 			for($i = 1; $i <= $endDays; ++$i) {
-				$eDate = PHPExcel_Shared_Date::FormattedPHPToExcel(
+				$eDate = \PhpOffice\PhpExcel\Shared\Date::FormattedPHPToExcel(
 					$year,
 					$period,
 					$i
@@ -116,8 +116,8 @@ $objPHPExcel->getActiveSheet()->getStyle('A1:F1')->getFont()->setBold(true);
 $objPHPExcel->getActiveSheet()->getStyle('A1:F1')->getAlignment()->setWrapText(TRUE);
 $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(12.5);
 $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(10.5);
-$objPHPExcel->getActiveSheet()->getStyle('D2:D'.$row)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_DATE_YYYYMMDD2);
-$objPHPExcel->getActiveSheet()->getStyle('E2:F'.$row)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_CURRENCY_USD_SIMPLE);
+$objPHPExcel->getActiveSheet()->getStyle('D2:D'.$row)->getNumberFormat()->setFormatCode(\PhpOffice\PhpExcel\Style\NumberFormat::FORMAT_DATE_YYYYMMDD2);
+$objPHPExcel->getActiveSheet()->getStyle('E2:F'.$row)->getNumberFormat()->setFormatCode(\PhpOffice\PhpExcel\Style\NumberFormat::FORMAT_CURRENCY_USD_SIMPLE);
 $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth(14);
 $objPHPExcel->getActiveSheet()->freezePane('A2');
 
@@ -136,39 +136,39 @@ echo date('H:i:s').' Set active filters'.EOL;
 // Filter the Country column on a filter value of Germany
 //	As it's just a simple value filter, we can use FILTERTYPE_FILTER
 $autoFilter->getColumn('C')
-    ->setFilterType(PHPExcel_Worksheet_AutoFilter_Column::AUTOFILTER_FILTERTYPE_FILTER)
+    ->setFilterType(\PhpOffice\PhpExcel\Worksheet\AutoFilter\Column::AUTOFILTER_FILTERTYPE_FILTER)
     ->createRule()
 		->setRule(
-			PHPExcel_Worksheet_AutoFilter_Column_Rule::AUTOFILTER_COLUMN_RULE_EQUAL,
+			\PhpOffice\PhpExcel\Worksheet\AutoFilter\Column\Rule::AUTOFILTER_COLUMN_RULE_EQUAL,
 			'Germany'
 		);
 // Filter the Date column on a filter value of the year to date
 $autoFilter->getColumn('D')
-	->setFilterType(PHPExcel_Worksheet_AutoFilter_Column::AUTOFILTER_FILTERTYPE_DYNAMICFILTER)
+	->setFilterType(\PhpOffice\PhpExcel\Worksheet\AutoFilter\Column::AUTOFILTER_FILTERTYPE_DYNAMICFILTER)
 	->createRule()
 		->setRule(
-			PHPExcel_Worksheet_AutoFilter_Column_Rule::AUTOFILTER_COLUMN_RULE_EQUAL,
+			\PhpOffice\PhpExcel\Worksheet\AutoFilter\Column\Rule::AUTOFILTER_COLUMN_RULE_EQUAL,
 			NULL,
-			PHPExcel_Worksheet_AutoFilter_Column_Rule::AUTOFILTER_RULETYPE_DYNAMIC_YEARTODATE
+			\PhpOffice\PhpExcel\Worksheet\AutoFilter\Column\Rule::AUTOFILTER_RULETYPE_DYNAMIC_YEARTODATE
 		)
-		->setRuleType(PHPExcel_Worksheet_AutoFilter_Column_Rule::AUTOFILTER_RULETYPE_DYNAMICFILTER);
+		->setRuleType(\PhpOffice\PhpExcel\Worksheet\AutoFilter\Column\Rule::AUTOFILTER_RULETYPE_DYNAMICFILTER);
 // Display only sales values that are between 400 and 600
 $autoFilter->getColumn('E')
-    ->setFilterType(PHPExcel_Worksheet_AutoFilter_Column::AUTOFILTER_FILTERTYPE_CUSTOMFILTER)
+    ->setFilterType(\PhpOffice\PhpExcel\Worksheet\AutoFilter\Column::AUTOFILTER_FILTERTYPE_CUSTOMFILTER)
     ->createRule()
 		->setRule(
-			PHPExcel_Worksheet_AutoFilter_Column_Rule::AUTOFILTER_COLUMN_RULE_GREATERTHANOREQUAL,
+			\PhpOffice\PhpExcel\Worksheet\AutoFilter\Column\Rule::AUTOFILTER_COLUMN_RULE_GREATERTHANOREQUAL,
 			400
 		)
-		->setRuleType(PHPExcel_Worksheet_AutoFilter_Column_Rule::AUTOFILTER_RULETYPE_CUSTOMFILTER);
+		->setRuleType(\PhpOffice\PhpExcel\Worksheet\AutoFilter\Column\Rule::AUTOFILTER_RULETYPE_CUSTOMFILTER);
 $autoFilter->getColumn('E')
-    ->setJoin(PHPExcel_Worksheet_AutoFilter_Column::AUTOFILTER_COLUMN_JOIN_AND)
+    ->setJoin(\PhpOffice\PhpExcel\Worksheet\AutoFilter\Column::AUTOFILTER_COLUMN_JOIN_AND)
     ->createRule()
 		->setRule(
-			PHPExcel_Worksheet_AutoFilter_Column_Rule::AUTOFILTER_COLUMN_RULE_LESSTHANOREQUAL,
+			\PhpOffice\PhpExcel\Worksheet\AutoFilter\Column\Rule::AUTOFILTER_COLUMN_RULE_LESSTHANOREQUAL,
 			600
 		)
-		->setRuleType(PHPExcel_Worksheet_AutoFilter_Column_Rule::AUTOFILTER_RULETYPE_CUSTOMFILTER);
+		->setRuleType(\PhpOffice\PhpExcel\Worksheet\AutoFilter\Column\Rule::AUTOFILTER_RULETYPE_CUSTOMFILTER);
 
 
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
@@ -179,7 +179,7 @@ $objPHPExcel->setActiveSheetIndex(0);
 echo date('H:i:s') , " Write to Excel2007 format" , EOL;
 $callStartTime = microtime(true);
 
-$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+$objWriter = \PhpOffice\PhpExcel\IOFactory::createWriter($objPHPExcel, 'Excel2007');
 $objWriter->save(str_replace('.php', '.xlsx', __FILE__));
 $callEndTime = microtime(true);
 $callTime = $callEndTime - $callStartTime;
@@ -194,7 +194,7 @@ echo date('H:i:s') , ' Current memory usage: ' , (memory_get_usage(true) / 1024 
 echo date('H:i:s') , " Write to Excel5 format" , EOL;
 $callStartTime = microtime(true);
 
-$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+$objWriter = \PhpOffice\PhpExcel\IOFactory::createWriter($objPHPExcel, 'Excel5');
 $objWriter->save(str_replace('.php', '.xls', __FILE__));
 $callEndTime = microtime(true);
 $callTime = $callEndTime - $callStartTime;

@@ -37,15 +37,15 @@ date_default_timezone_set('Europe/London');
 
 include "05featuredemo.inc.php";
 
-/** PHPExcel_IOFactory */
-require_once dirname(__FILE__) . '/../Classes/PHPExcel/IOFactory.php';
+/** \PhpOffice\PhpExcel\IOFactory */
+require_once dirname(__FILE__) . '/../src/Bootstrap.php';
 
 
 //	Change these values to select the Rendering library that you wish to use
 //		and its directory location on your server
-//$rendererName = PHPExcel_Settings::PDF_RENDERER_TCPDF;
-//$rendererName = PHPExcel_Settings::PDF_RENDERER_MPDF;
-$rendererName = PHPExcel_Settings::PDF_RENDERER_DOMPDF;
+//$rendererName = \PhpOffice\PhpExcel\Settings::PDF_RENDERER_TCPDF;
+//$rendererName = \PhpOffice\PhpExcel\Settings::PDF_RENDERER_MPDF;
+$rendererName = \PhpOffice\PhpExcel\Settings::PDF_RENDERER_DOMPDF;
 //$rendererLibrary = 'tcPDF5.9';
 //$rendererLibrary = 'mPDF5.4';
 $rendererLibrary = 'domPDF0.6.0beta3';
@@ -56,12 +56,12 @@ echo date('H:i:s') , " Hide grid lines" , EOL;
 $objPHPExcel->getActiveSheet()->setShowGridLines(false);
 
 echo date('H:i:s') , " Set orientation to landscape" , EOL;
-$objPHPExcel->getActiveSheet()->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
+$objPHPExcel->getActiveSheet()->getPageSetup()->setOrientation(\PhpOffice\PhpExcel\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
 
 
 echo date('H:i:s') , " Write to PDF format using {$rendererName}" , EOL;
 
-if (!PHPExcel_Settings::setPdfRenderer(
+if (!\PhpOffice\PhpExcel\Settings::setPdfRenderer(
 		$rendererName,
 		$rendererLibraryPath
 	)) {
@@ -75,7 +75,7 @@ if (!PHPExcel_Settings::setPdfRenderer(
 
 $callStartTime = microtime(true);
 
-$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'PDF');
+$objWriter = \PhpOffice\PhpExcel\IOFactory::createWriter($objPHPExcel, 'PDF');
 $objWriter->setSheetIndex(0);
 $objWriter->save(str_replace('.php', '_'.$rendererName.'.pdf', __FILE__));
 $callEndTime = microtime(true);

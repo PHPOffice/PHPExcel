@@ -2,7 +2,7 @@
 /**
  * PHPExcel
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,7 +20,7 @@
  *
  * @category   PHPExcel
  * @package    PHPExcel
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -37,17 +37,17 @@ date_default_timezone_set('Europe/London');
 mt_srand(1234567890);
 
 /** Include PHPExcel */
-require_once dirname(__FILE__) . '/../Classes/PHPExcel.php';
+require_once dirname(__FILE__) . '/../src/Bootstrap.php';
 
 
 // List functions
 echo date('H:i:s') , " List implemented functions" , EOL;
-$objCalc = PHPExcel_Calculation::getInstance();
+$objCalc = \PhpOffice\PhpExcel\Calculation::getInstance();
 print_r($objCalc->listFunctionNames());
 
 // Create new PHPExcel object
 echo date('H:i:s') , " Create new PHPExcel object" , EOL;
-$objPHPExcel = new PHPExcel();
+$objPHPExcel = new \PhpOffice\PhpExcel\Spreadsheet();
 
 // Add some data, we will use some formulas here
 echo date('H:i:s') , " Add some data and formulas" , EOL;
@@ -207,7 +207,7 @@ for ($col = 'B'; $col != 'G'; ++$col) {
 echo date('H:i:s') , " Write to Excel2007 format" , EOL;
 $callStartTime = microtime(true);
 
-$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+$objWriter = \PhpOffice\PhpExcel\IOFactory::createWriter($objPHPExcel, 'Excel2007');
 
 //
 //  If we set Pre Calculated Formulas to true then PHPExcel will calculate all formulae in the

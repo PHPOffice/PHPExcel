@@ -1,14 +1,14 @@
 <?php
 
-namespace PHPExcel\Calculation;
+namespace PhpOffice\PhpExcel\Calculation;
 
 /** EULER */
 define('EULER', 2.71828182845904523536);
 
 /**
- * PHPExcel_Calculation_Engineering
+ * PhpOffice\PhpExcel\Calculation\Engineering
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -25,10 +25,10 @@ define('EULER', 2.71828182845904523536);
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *
  * @category    PHPExcel
- * @package        PHPExcel_Calculation
- * @copyright    Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
- * @license        http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
- * @version        ##VERSION##, ##DATE##
+ * @package     PhpOffice\PhpExcel\Calculation
+ * @copyright   Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @license     http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
+ * @version     ##VERSION##, ##DATE##
  */
 class Engineering
 {

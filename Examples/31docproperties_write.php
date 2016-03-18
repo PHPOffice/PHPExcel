@@ -2,7 +2,7 @@
 /**
  * PHPExcel
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,7 +20,7 @@
  *
  * @category   PHPExcel
  * @package    PHPExcel
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -35,7 +35,7 @@ define('EOL',(PHP_SAPI == 'cli') ? PHP_EOL : '<br />');
 date_default_timezone_set('Europe/London');
 
 /** Include PHPExcel */
-require_once dirname(__FILE__) . '/../Classes/PHPExcel.php';
+require_once dirname(__FILE__) . '/../src/Bootstrap.php';
 
 
 $inputFileType = 'Excel2007';
@@ -45,7 +45,7 @@ $inputFileName = 'templates/31docproperties.xlsx';
 echo date('H:i:s') , " Load Tests from $inputFileType file" , EOL;
 $callStartTime = microtime(true);
 
-$objPHPExcelReader = PHPExcel_IOFactory::createReader($inputFileType);
+$objPHPExcelReader = \PhpOffice\PhpExcel\IOFactory::createReader($inputFileType);
 $objPHPExcel = $objPHPExcelReader->load($inputFileName);
 
 $callEndTime = microtime(true);
@@ -64,7 +64,7 @@ $objPHPExcel->getProperties()->setTitle("Office 2007 XLSX Test Document")
 
 // Save Excel 2007 file
 echo date('H:i:s') , " Write to Excel2007 format" , EOL;
-$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+$objWriter = \PhpOffice\PhpExcel\IOFactory::createWriter($objPHPExcel, 'Excel2007');
 $objWriter->save(str_replace('.php', '.xlsx', __FILE__));
 echo date('H:i:s') , " File written to " , str_replace('.php', '.xlsx', pathinfo(__FILE__, PATHINFO_BASENAME)) , EOL;
 
@@ -76,7 +76,7 @@ echo date('H:i:s') , " Peak memory usage: " . (memory_get_peak_usage(true) / 102
 echo EOL;
 // Reread File
 echo date('H:i:s') , " Reread Excel2007 file" , EOL;
-$objPHPExcelRead = PHPExcel_IOFactory::load(str_replace('.php', '.xlsx', __FILE__));
+$objPHPExcelRead = \PhpOffice\PhpExcel\IOFactory::load(str_replace('.php', '.xlsx', __FILE__));
 
 // Set properties
 echo date('H:i:s') , " Get properties" , EOL;
@@ -106,13 +106,13 @@ foreach($customProperties as $customProperty) {
 	$propertyValue = $objPHPExcel->getProperties()->getCustomPropertyValue($customProperty);
 	$propertyType = $objPHPExcel->getProperties()->getCustomPropertyType($customProperty);
 	echo '    ' , $customProperty , ' - (' , $propertyType , ') - ';
-	if ($propertyType == PHPExcel_DocumentProperties::PROPERTY_TYPE_DATE) {
-		echo date('d-M-Y H:i:s',$propertyValue) , EOL;
-	} elseif ($propertyType == PHPExcel_DocumentProperties::PROPERTY_TYPE_BOOLEAN) {
-		echo (($propertyValue) ? 'TRUE' : 'FALSE') , EOL;
-	} else {
+//	if ($propertyType == \PhpOffice\PhpExcel\DocumentProperties::PROPERTY_TYPE_DATE) {
+//		echo date('d-M-Y H:i:s',$propertyValue) , EOL;
+//	} elseif ($propertyType == \PhpOffice\PhpExcel\DocumentProperties::PROPERTY_TYPE_BOOLEAN) {
+//		echo (($propertyValue) ? 'TRUE' : 'FALSE') , EOL;
+//	} else {
 		echo $propertyValue , EOL;
-	}
+//	}
 }
 
 // Echo memory peak usage

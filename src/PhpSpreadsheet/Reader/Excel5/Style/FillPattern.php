@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPExcel\Reader\Excel5\Style;
+namespace PhpOffice\PhpExcel\Reader\Excel5\Style;
 
-use \PHPExcel\Style\Fill;
+use \PhpOffice\PhpExcel\Style\Fill;
 
 class FillPattern
 {

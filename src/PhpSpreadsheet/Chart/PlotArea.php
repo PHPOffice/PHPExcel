@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel\Chart;
+namespace PhpOffice\PhpExcel\Chart;
 
 /**
- * PHPExcel_Chart_PlotArea
+ * PhpOffice\PhpExcel\Chart\PlotArea
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -22,8 +22,8 @@ namespace PHPExcel\Chart;
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category    PHPExcel
- * @package     PHPExcel_Chart
- * @copyright   Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @package     PhpOffice\PhpExcel\Chart
+ * @copyright   Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license     http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version     ##VERSION##, ##DATE##
  */
@@ -119,7 +119,7 @@ class PlotArea
         return $this;
     }
 
-    public function refresh(\PHPExcel\Worksheet $worksheet)
+    public function refresh(\PhpOffice\PhpExcel\Worksheet $worksheet)
     {
         foreach ($this->plotSeries as $plotSeries) {
             $plotSeries->refresh($worksheet);

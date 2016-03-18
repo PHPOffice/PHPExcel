@@ -1,11 +1,11 @@
 <?php
 
-namespace \PHPExcel\Shared\Escher;
+namespace PhpOffice\PhpExcel\Shared\Escher;
 
 /**
- * PHPExcel_Shared_Escher_DggContainer
+ * PhpOffice\PhpExcel\Shared\Escher\DggContainer
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -22,8 +22,8 @@ namespace \PHPExcel\Shared\Escher;
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Shared_Escher
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @package    PhpOffice\PhpExcel\Shared\Escher
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */

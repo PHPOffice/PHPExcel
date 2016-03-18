@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel\Reader;
+namespace PhpOffice\PhpExcel\Reader;
 
 /**
- * PHPExcel_Reader_HTML
+ * PhpOffice\PhpExcel\Reader\HTML
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -22,8 +22,8 @@ namespace PHPExcel\Reader;
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Reader
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @package    PhpOffice\PhpExcel\Reader
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -91,16 +91,16 @@ class HTML extends BaseReader implements IReader
             'font' => array(
                 'underline' => true,
                 'color' => array(
-                    'argb' => \PHPExcel\Style\Color::COLOR_BLUE,
+                    'argb' => \PhpOffice\PhpExcel\Style\Color::COLOR_BLUE,
                 ),
             ),
         ), //    Blue underlined
         'hr' => array(
             'borders' => array(
                 'bottom' => array(
-                    'style' => \PHPExcel\Style\Border::BORDER_THIN,
+                    'style' => \PhpOffice\PhpExcel\Style\Border::BORDER_THIN,
                     'color' => array(
-                        \PHPExcel\Style\Color::COLOR_BLACK,
+                        \PhpOffice\PhpExcel\Style\Color::COLOR_BLACK,
                     ),
                 ),
             ),
@@ -421,7 +421,7 @@ class HTML extends BaseReader implements IReader
                                 ++$columnTo;
                             }
                             $range = $column . $row . ':' . $columnTo . ($row + $attributeArray['rowspan'] - 1);
-                            foreach (\PHPExcel\Cell::extractAllCellReferencesInRange($range) as $value) {
+                            foreach (\PhpOffice\PhpExcel\Cell::extractAllCellReferencesInRange($range) as $value) {
                                 $this->rowspan[$value] = true;
                             }
                             $sheet->mergeCells($range);
@@ -429,7 +429,7 @@ class HTML extends BaseReader implements IReader
                         } elseif (isset($attributeArray['rowspan'])) {
                             //create merging rowspan
                             $range = $column . $row . ':' . $column . ($row + $attributeArray['rowspan'] - 1);
-                            foreach (\PHPExcel\Cell::extractAllCellReferencesInRange($range) as $value) {
+                            foreach (\PhpOffice\PhpExcel\Cell::extractAllCellReferencesInRange($range) as $value) {
                                 $this->rowspan[$value] = true;
                             }
                             $sheet->mergeCells($range);

@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel\Calculation;
+namespace PhpOffice\PhpExcel\Calculation;
 
 /**
- * PHPExcel_Calculation_Logical
+ * PhpOffice\PhpExcel\Calculation\Logical
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -22,10 +22,10 @@ namespace PHPExcel\Calculation;
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *
  * @category    PHPExcel
- * @package        PHPExcel_Calculation
- * @copyright    Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
- * @license        http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
- * @version        ##VERSION##, ##DATE##
+ * @package     PhpOffice\PhpExcel\Calculation
+ * @copyright   Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @license     http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
+ * @version     ##VERSION##, ##DATE##
  */
 class Logical
 {
@@ -102,9 +102,9 @@ class Logical
                 $returnValue = $returnValue && ($arg != 0);
             } elseif (is_string($arg)) {
                 $arg = strtoupper($arg);
-                if (($arg == 'TRUE') || ($arg == \PHPExcel\Calculation::getTRUE())) {
+                if (($arg == 'TRUE') || ($arg == \PhpOffice\PhpExcel\Calculation::getTRUE())) {
                     $arg = true;
-                } elseif (($arg == 'FALSE') || ($arg == \PHPExcel\Calculation::getFALSE())) {
+                } elseif (($arg == 'FALSE') || ($arg == \PhpOffice\PhpExcel\Calculation::getFALSE())) {
                     $arg = false;
                 } else {
                     return Functions::VALUE();
@@ -158,9 +158,9 @@ class Logical
                 $returnValue = $returnValue || ($arg != 0);
             } elseif (is_string($arg)) {
                 $arg = strtoupper($arg);
-                if (($arg == 'TRUE') || ($arg == \PHPExcel\Calculation::getTRUE())) {
+                if (($arg == 'TRUE') || ($arg == \PhpOffice\PhpExcel\Calculation::getTRUE())) {
                     $arg = true;
-                } elseif (($arg == 'FALSE') || ($arg == \PHPExcel\Calculation::getFALSE())) {
+                } elseif (($arg == 'FALSE') || ($arg == \PhpOffice\PhpExcel\Calculation::getFALSE())) {
                     $arg = false;
                 } else {
                     return Functions::VALUE();
@@ -202,9 +202,9 @@ class Logical
         $logical = Functions::flattenSingleValue($logical);
         if (is_string($logical)) {
             $logical = strtoupper($logical);
-            if (($logical == 'TRUE') || ($logical == \PHPExcel\Calculation::getTRUE())) {
+            if (($logical == 'TRUE') || ($logical == \PhpOffice\PhpExcel\Calculation::getTRUE())) {
                 return false;
-            } elseif (($logical == 'FALSE') || ($logical == \PHPExcel\Calculation::getFALSE())) {
+            } elseif (($logical == 'FALSE') || ($logical == \PhpOffice\PhpExcel\Calculation::getFALSE())) {
                 return true;
             } else {
                 return Functions::VALUE();

@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel\Shared\Escher\DgContainer;
+namespace PhpOffice\PhpExcel\Shared\Escher\DgContainer;
 
 /**
- * PHPExcel_Shared_Escher_DgContainer_SpgrContainer
+ * PhpOffice\PhpExcel\Shared\Escher\DgContainer\SpgrContainer
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -22,8 +22,8 @@ namespace PHPExcel\Shared\Escher\DgContainer;
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Shared_Escher
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @package    PhpOffice\PhpExcel\Shared\Escher
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -32,7 +32,7 @@ class SpgrContainer
     /**
      * Parent Shape Group Container
      *
-     * @var \PHPExcel\Shared\Escher\DgContainer\SpgrContainer
+     * @var \PhpOffice\PhpExcel\Shared\Escher\DgContainer\SpgrContainer
      */
     private $parent;
 
@@ -46,7 +46,7 @@ class SpgrContainer
     /**
      * Set parent Shape Group Container
      *
-     * @param \PHPExcel\Shared\Escher\DgContainer\SpgrContainer $parent
+     * @param \PhpOffice\PhpExcel\Shared\Escher\DgContainer\SpgrContainer $parent
      */
     public function setParent($parent)
     {
@@ -56,7 +56,7 @@ class SpgrContainer
     /**
      * Get the parent Shape Group Container if any
      *
-     * @return \PHPExcel\Shared\Escher\DgContainer\SpgrContainer|null
+     * @return \PhpOffice\PhpExcel\Shared\Escher\DgContainer\SpgrContainer|null
      */
     public function getParent()
     {

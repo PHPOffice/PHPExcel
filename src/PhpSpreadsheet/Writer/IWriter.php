@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel\Writer;
+namespace PhpOffice\PhpExcel\Writer;
 
 /**
- *  PHPExcel_Writer_IWriter
+ *  \PhpOffice\PhpExcel\Writer\IWriter
  *
- *  Copyright (c) 2006 - 2015 PHPExcel
+ *  Copyright (c) 2006 - 2016 PHPExcel
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -22,8 +22,8 @@ namespace PHPExcel\Writer;
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  *  @category   PHPExcel
- *  @package    PHPExcel_Writer
- *  @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ *  @package    PhpOffice\PhpExcel\Writer
+ *  @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  *  @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  *  @version    ##VERSION##, ##DATE##
  */
@@ -33,7 +33,7 @@ interface IWriter
      *  Save PHPExcel to file
      *
      *  @param   string       $pFilename  Name of the file to save
-     *  @throws  \PHPExcel\Writer\Exception
+     *  @throws  \PhpOffice\PhpExcel\Writer\Exception
      */
     public function save($pFilename = null);
 }

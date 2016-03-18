@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel\Worksheet;
+namespace PhpOffice\PhpExcel\Worksheet;
 
 /**
- * PHPExcel_Worksheet_RowIterator
+ * PhpOffice\PhpExcel\Worksheet\RowIterator
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -22,17 +22,17 @@ namespace PHPExcel\Worksheet;
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Worksheet
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @package    PhpOffice\PhpExcel\Worksheet
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
 class RowIterator implements \Iterator
 {
     /**
-     * \PHPExcel\Worksheet to iterate
+     * PhpOffice\PhpExcel\Worksheet to iterate
      *
-     * @var \PHPExcel\Worksheet
+     * @var \PhpOffice\PhpExcel\Worksheet
      */
     private $subject;
 
@@ -62,11 +62,11 @@ class RowIterator implements \Iterator
     /**
      * Create a new row iterator
      *
-     * @param    \PHPExcel\Worksheet    $subject    The worksheet to iterate over
+     * @param    \PhpOffice\PhpExcel\Worksheet    $subject    The worksheet to iterate over
      * @param    integer                $startRow   The row number at which to start iterating
      * @param    integer                $endRow     Optionally, the row number at which to stop iterating
      */
-    public function __construct(\PHPExcel\Worksheet $subject, $startRow = 1, $endRow = null)
+    public function __construct(\PhpOffice\PhpExcel\Worksheet $subject, $startRow = 1, $endRow = null)
     {
         // Set subject
         $this->subject = $subject;
@@ -87,12 +87,12 @@ class RowIterator implements \Iterator
      *
      * @param integer    $startRow    The row number at which to start iterating
      * @return RowIterator
-     * @throws PHPExcel_Exception
+     * @throws \PhpOffice\PhpExcel\Exception
      */
     public function resetStart($startRow = 1)
     {
         if ($startRow > $this->subject->getHighestRow()) {
-            throw new PHPExcel_Exception("Start row ({$startRow}) is beyond highest row ({$this->subject->getHighestRow()})");
+            throw new \PhpOffice\PhpExcel\Exception("Start row ({$startRow}) is beyond highest row ({$this->subject->getHighestRow()})");
         }
 
         $this->startRow = $startRow;
@@ -122,12 +122,12 @@ class RowIterator implements \Iterator
      *
      * @param integer    $row    The row number to set the current pointer at
      * @return RowIterator
-     * @throws \PHPExcel\Exception
+     * @throws \PhpOffice\PhpExcel\Exception
      */
     public function seek($row = 1)
     {
         if (($row < $this->startRow) || ($row > $this->endRow)) {
-            throw new \PHPExcel\Exception("Row $row is out of range ({$this->startRow} - {$this->endRow})");
+            throw new \PhpOffice\PhpExcel\Exception("Row $row is out of range ({$this->startRow} - {$this->endRow})");
         }
         $this->position = $row;
 
@@ -173,12 +173,12 @@ class RowIterator implements \Iterator
     /**
      * Set the iterator to its previous value
      *
-     * @throws \PHPExcel\Exception
+     * @throws \PhpOffice\PhpExcel\Exception
      */
     public function prev()
     {
         if ($this->position <= $this->startRow) {
-            throw new \PHPExcel\Exception("Row is already at the beginning of range ({$this->startRow} - {$this->endRow})");
+            throw new \PhpOffice\PhpExcel\Exception("Row is already at the beginning of range ({$this->startRow} - {$this->endRow})");
         }
 
         --$this->position;

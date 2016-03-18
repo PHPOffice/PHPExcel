@@ -13,7 +13,7 @@ date_default_timezone_set('Europe/London');
 /**
  * PHPExcel
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -31,7 +31,7 @@ date_default_timezone_set('Europe/London');
  *
  * @category   PHPExcel
  * @package    PHPExcel
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -39,8 +39,8 @@ date_default_timezone_set('Europe/London');
 /** Include path **/
 set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__) . '/../Classes/');
 
-/** PHPExcel_IOFactory */
-include 'PHPExcel/IOFactory.php';
+/** \PhpOffice\PhpExcel\IOFactory */
+require_once dirname(__FILE__) . '/../src/Bootstrap.php';
 
 $inputFileType = 'Excel2007';
 $inputFileNames = 'templates/32readwrite*[0-9].xlsx';
@@ -63,7 +63,7 @@ foreach($inputFileNames as $inputFileName) {
 
 	echo date('H:i:s') , " Load Test from $inputFileType file " , $inputFileNameShort , EOL;
 
-	$objReader = PHPExcel_IOFactory::createReader($inputFileType);
+	$objReader = \PhpOffice\PhpExcel\IOFactory::createReader($inputFileType);
 	$objReader->setIncludeCharts(TRUE);
 	$objPHPExcel = $objReader->load($inputFileName);
 
@@ -114,7 +114,7 @@ foreach($inputFileNames as $inputFileName) {
 	$outputFileName = basename($inputFileName);
 
 	echo date('H:i:s') , " Write Tests to Excel2007 file " , EOL;
-	$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+	$objWriter = \PhpOffice\PhpExcel\IOFactory::createWriter($objPHPExcel, 'Excel2007');
 	$objWriter->setIncludeCharts(TRUE);
 	$objWriter->save($outputFileName);
 	echo date('H:i:s') , " File written to " , $outputFileName , EOL;

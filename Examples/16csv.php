@@ -2,7 +2,7 @@
 /**
  * PHPExcel
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,7 +20,7 @@
  *
  * @category   PHPExcel
  * @package    PHPExcel
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -37,14 +37,14 @@ date_default_timezone_set('Europe/London');
 
 include "05featuredemo.inc.php";
 
-/** PHPExcel_IOFactory */
-require_once '../Classes/PHPExcel/IOFactory.php';
+/** \PhpOffice\PhpExcel\IOFactory */
+require_once dirname(__FILE__) . '/../src/Bootstrap.php';
 
 
 echo date('H:i:s') , " Write to CSV format" , EOL;
 $callStartTime = microtime(true);
 
-$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'CSV')->setDelimiter(',')
+$objWriter = \PhpOffice\PhpExcel\IOFactory::createWriter($objPHPExcel, 'CSV')->setDelimiter(',')
                                                                   ->setEnclosure('"')
                                                                   ->setSheetIndex(0)
                                                                   ->save(str_replace('.php', '.csv', __FILE__));
@@ -58,7 +58,7 @@ echo date('H:i:s') , ' Current memory usage: ' , (memory_get_usage(true) / 1024 
 
 echo date('H:i:s') , " Read from CSV format" , EOL;
 $callStartTime = microtime(true);
-$objReader = PHPExcel_IOFactory::createReader('CSV')->setDelimiter(',')
+$objReader = \PhpOffice\PhpExcel\IOFactory::createReader('CSV')->setDelimiter(',')
                                                     ->setEnclosure('"')
                                                     ->setSheetIndex(0);
 $objPHPExcelFromCSV = $objReader->load(str_replace('.php', '.csv', __FILE__));
@@ -73,7 +73,7 @@ echo date('H:i:s') , ' Current memory usage: ' , (memory_get_usage(true) / 1024 
 echo date('H:i:s') , " Write to Excel2007 format" , EOL;
 $callStartTime = microtime(true);
 
-$objWriter2007 = PHPExcel_IOFactory::createWriter($objPHPExcelFromCSV, 'Excel2007');
+$objWriter2007 = \PhpOffice\PhpExcel\IOFactory::createWriter($objPHPExcelFromCSV, 'Excel2007');
 $objWriter2007->save(str_replace('.php', '.xlsx', __FILE__));
 $callEndTime = microtime(true);
 $callTime = $callEndTime - $callStartTime;
@@ -86,7 +86,7 @@ echo date('H:i:s') , ' Current memory usage: ' , (memory_get_usage(true) / 1024 
 echo date('H:i:s') , " Write to CSV format" , EOL;
 $callStartTime = microtime(true);
 
-$objWriterCSV = PHPExcel_IOFactory::createWriter($objPHPExcelFromCSV, 'CSV');
+$objWriterCSV = \PhpOffice\PhpExcel\IOFactory::createWriter($objPHPExcelFromCSV, 'CSV');
 $objWriterCSV->setExcelCompatibility(true);
 $objWriterCSV->save(str_replace('.php', '_excel.csv', __FILE__));
 $callEndTime = microtime(true);

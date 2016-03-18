@@ -1,19 +1,19 @@
 <?php
 
-namespace PHPExcel\Writer\PDF;
+namespace PhpOffice\PhpExcel\Writer\PDF;
 
 /**  Require mPDF library */
-$pdfRendererClassFile = \PHPExcel\Settings::getPdfRendererPath() . '/mpdf.php';
+$pdfRendererClassFile = \PhpOffice\PhpExcel\Settings::getPdfRendererPath() . '/mpdf.php';
 if (file_exists($pdfRendererClassFile)) {
     require_once $pdfRendererClassFile;
 } else {
-    throw new \PHPExcel\Writer\Exception('Unable to load PDF Rendering library');
+    throw new \PhpOffice\PhpExcel\Writer\Exception('Unable to load PDF Rendering library');
 }
 
 /**
- *  PHPExcel_Writer_PDF_mPDF
+ *  \PhpOffice\PhpExcel\Writer\PDF\mPDF
  *
- *  Copyright (c) 2006 - 2015 PHPExcel
+ *  Copyright (c) 2006 - 2016 PHPExcel
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -30,19 +30,19 @@ if (file_exists($pdfRendererClassFile)) {
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  *  @category    PHPExcel
- *  @package     PHPExcel_Writer_PDF
- *  @copyright   Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ *  @package     PhpOffice\PhpExcel\Writer\PDF
+ *  @copyright   Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  *  @license     http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  *  @version     ##VERSION##, ##DATE##
  */
-class mPDF extends Core implements \PHPExcel\Writer\IWriter
+class mPDF extends Core implements \PhpOffice\PhpExcel\Writer\IWriter
 {
     /**
      *  Create a mPDF Writer instance
      *
-     *  @param  \PHPExcel\Spreadsheet  $phpExcel  Spreadsheet object
+     *  @param  \PhpOffice\PhpExcel\Spreadsheet  $phpExcel  Spreadsheet object
      */
-    public function __construct(\PHPExcel\Spreadsheet $phpExcel)
+    public function __construct(\PhpOffice\PhpExcel\Spreadsheet $phpExcel)
     {
         parent::__construct($phpExcel);
     }
@@ -51,7 +51,7 @@ class mPDF extends Core implements \PHPExcel\Writer\IWriter
      *  Save Spreadsheet to file
      *
      *  @param     string     $pFilename   Name of the file to save as
-     *  @throws    \PHPExcel\Writer\Exception
+     *  @throws    \PhpOffice\PhpExcel\Writer\Exception
      */
     public function save($pFilename = null)
     {
@@ -63,12 +63,12 @@ class mPDF extends Core implements \PHPExcel\Writer\IWriter
         //  Check for paper size and page orientation
         if (is_null($this->getSheetIndex())) {
             $orientation = ($this->phpExcel->getSheet(0)->getPageSetup()->getOrientation()
-                == \PHPExcel\Worksheet\PageSetup::ORIENTATION_LANDSCAPE) ? 'L' : 'P';
+                == \PhpOffice\PhpExcel\Worksheet\PageSetup::ORIENTATION_LANDSCAPE) ? 'L' : 'P';
             $printPaperSize = $this->phpExcel->getSheet(0)->getPageSetup()->getPaperSize();
             $printMargins = $this->phpExcel->getSheet(0)->getPageMargins();
         } else {
             $orientation = ($this->phpExcel->getSheet($this->getSheetIndex())->getPageSetup()->getOrientation()
-                == \PHPExcel\Worksheet\PageSetup::ORIENTATION_LANDSCAPE) ? 'L' : 'P';
+                == \PhpOffice\PhpExcel\Worksheet\PageSetup::ORIENTATION_LANDSCAPE) ? 'L' : 'P';
             $printPaperSize = $this->phpExcel->getSheet($this->getSheetIndex())->getPageSetup()->getPaperSize();
             $printMargins = $this->phpExcel->getSheet($this->getSheetIndex())->getPageMargins();
         }
@@ -76,8 +76,8 @@ class mPDF extends Core implements \PHPExcel\Writer\IWriter
 
         //  Override Page Orientation
         if (!is_null($this->getOrientation())) {
-            $orientation = ($this->getOrientation() == \PHPExcel\Worksheet\PageSetup::ORIENTATION_DEFAULT)
-                ? \PHPExcel\Worksheet\PageSetup::ORIENTATION_PORTRAIT
+            $orientation = ($this->getOrientation() == \PhpOffice\PhpExcel\Worksheet\PageSetup::ORIENTATION_DEFAULT)
+                ? \PhpOffice\PhpExcel\Worksheet\PageSetup::ORIENTATION_PORTRAIT
                 : $this->getOrientation();
         }
         $orientation = strtoupper($orientation);

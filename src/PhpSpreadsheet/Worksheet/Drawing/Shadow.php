@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel\Worksheet\Drawing;
+namespace PhpOffice\PhpExcel\Worksheet\Drawing;
 
 /**
- * PHPExcel_Worksheet_Drawing_Shadow
+ * PhpOffice\PhpExcel\Worksheet\Drawing\Shadow
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -22,12 +22,12 @@ namespace PHPExcel\Worksheet\Drawing;
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Worksheet_Drawing
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @package    PhpOffice\PhpExcel\Worksheet\Drawing
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
-class Shadow implements \PHPExcel\IComparable
+class Shadow implements \PhpOffice\PhpExcel\IComparable
 {
     /* Shadow alignment */
     const SHADOW_BOTTOM       = 'b';
@@ -81,7 +81,7 @@ class Shadow implements \PHPExcel\IComparable
     /**
      * Color
      *
-     * @var \PHPExcel\Style\Color
+     * @var \PhpOffice\PhpExcel\Style\Color
      */
     private $color;
 
@@ -103,7 +103,7 @@ class Shadow implements \PHPExcel\IComparable
         $this->distance    = 2;
         $this->direction   = 0;
         $this->alignment   = self::SHADOW_BOTTOM_RIGHT;
-        $this->color       = new \PHPExcel\Style\Color(\PHPExcel\Style\Color::COLOR_BLACK);
+        $this->color       = new \PhpOffice\PhpExcel\Style\Color(\PhpOffice\PhpExcel\Style\Color::COLOR_BLACK);
         $this->alpha       = 50;
     }
 
@@ -220,7 +220,7 @@ class Shadow implements \PHPExcel\IComparable
    /**
      * Get Color
      *
-     * @return \PHPExcel\Style\Color
+     * @return \PhpOffice\PhpExcel\Style\Color
      */
     public function getColor()
     {
@@ -230,11 +230,11 @@ class Shadow implements \PHPExcel\IComparable
     /**
      * Set Color
      *
-     * @param    \PHPExcel\Style_Color $pValue
-     * @throws   \PHPExcel\Exception
+     * @param    \PhpOffice\PhpExcel\Style_Color $pValue
+     * @throws   \PhpOffice\PhpExcel\Exception
      * @return   Shadow
      */
-    public function setColor(\PHPExcel\Style\Color $pValue = null)
+    public function setColor(\PhpOffice\PhpExcel\Style\Color $pValue = null)
     {
            $this->color = $pValue;
            return $this;

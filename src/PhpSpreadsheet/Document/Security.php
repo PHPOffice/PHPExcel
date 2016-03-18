@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel\Document;
+namespace PhpOffice\PhpExcel\Document;
 
 /**
- * PHPExcel_Document_Security
+ * PhpOffice\PhpExcel\Document\Security
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -22,8 +22,8 @@ namespace PHPExcel\Document;
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @package    PhpOffice\PhpExcel\Document
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -169,7 +169,7 @@ class Security
     public function setRevisionsPassword($pValue = '', $pAlreadyHashed = false)
     {
         if (!$pAlreadyHashed) {
-            $pValue = \PHPExcel\Shared\PasswordHasher::hashPassword($pValue);
+            $pValue = \PhpOffice\PhpExcel\Shared\PasswordHasher::hashPassword($pValue);
         }
         $this->revisionsPassword = $pValue;
         return $this;
@@ -195,7 +195,7 @@ class Security
     public function setWorkbookPassword($pValue = '', $pAlreadyHashed = false)
     {
         if (!$pAlreadyHashed) {
-            $pValue = \PHPExcel\Shared\PasswordHasher::hashPassword($pValue);
+            $pValue = \PhpOffice\PhpExcel\Shared\PasswordHasher::hashPassword($pValue);
         }
         $this->workbookPassword = $pValue;
         return $this;

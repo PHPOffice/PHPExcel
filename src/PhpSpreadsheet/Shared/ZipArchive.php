@@ -1,16 +1,16 @@
 <?php
 
-namespace PHPExcel\Shared;
+namespace PhpOffice\PhpExcel\Shared;
 
 if (!defined('PCLZIP_TEMPORARY_DIR')) {
     define('PCLZIP_TEMPORARY_DIR', File::sys_get_temp_dir() . DIRECTORY_SEPARATOR);
 }
-require_once PHPEXCEL_ROOT . 'PHPExcel/Shared/PCLZip/pclzip.lib.php';
+require_once 'PCLZip/pclzip.lib.php';
 
 /**
- * PHPExcel_Shared_ZipArchive
+ * PhpOffice\PhpExcel\Shared\ZipArchive
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -27,8 +27,8 @@ require_once PHPEXCEL_ROOT . 'PHPExcel/Shared/PCLZip/pclzip.lib.php';
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Shared_ZipArchive
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @package    PhpOffice\PhpExcel\Shared\ZipArchive
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -64,7 +64,7 @@ class ZipArchive
     public function open($fileName)
     {
         $this->tempDir = File::sys_get_temp_dir();
-        $this->zip = new PclZip($fileName);
+        $this->zip = new \PclZip($fileName);
 
         return true;
     }
@@ -84,7 +84,7 @@ class ZipArchive
      *
      * @param    string    $localname        Directory/Name of the file to add to the zip archive
      * @param    string    $contents        String of data to add to the zip archive
-     * @throws   \PHPExcel\Writer\Exception
+     * @throws   \PhpOffice\PhpExcel\Writer\Exception
      */
     public function addFromString($localname, $contents)
     {
@@ -96,7 +96,7 @@ class ZipArchive
 
         $res = $this->zip->add($this->tempDir.'/'.$filenameParts["basename"], PCLZIP_OPT_REMOVE_PATH, $this->tempDir, PCLZIP_OPT_ADD_PATH, $filenameParts["dirname"]);
         if ($res == 0) {
-            throw new \PHPExcel\Writer\Exception("Error zipping files : " . $this->zip->errorInfo(true));
+            throw new \PhpOffice\PhpExcel\Writer\Exception("Error zipping files : " . $this->zip->errorInfo(true));
         }
 
         unlink($this->tempDir.'/'.$filenameParts["basename"]);

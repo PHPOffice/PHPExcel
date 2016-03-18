@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPExcel\RichText;
+namespace PhpOffice\PhpExcel\RichText;
 
 /**
- * PHPExcel_RichText_ITextElement
+ * PhpOffice\PhpExcel\RichText\ITextElement
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,8 +20,8 @@ namespace PHPExcel\RichText;
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_RichText
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @package    PhpOffice\PhpExcel\RichText
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -45,7 +45,7 @@ interface ITextElement
     /**
      * Get font
      *
-     * @return \PHPExcel\Style\Font
+     * @return \PhpOffice\PhpExcel\Style\Font
      */
     public function getFont();
 

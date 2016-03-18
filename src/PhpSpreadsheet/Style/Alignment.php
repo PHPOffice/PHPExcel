@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel\Style;
+namespace PhpOffice\PhpExcel\Style;
 
 /**
- * PHPExcel_Style_Alignment
+ * PhpOffice\PhpExcel\Style\Alignment
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -22,12 +22,12 @@ namespace PHPExcel\Style;
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Style
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @package    PhpOffice\PhpExcel\Style
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
-class Alignment extends Supervisor implements \PHPExcel\IComparable
+class Alignment extends Supervisor implements \PhpOffice\PhpExcel\IComparable
 {
     /* Horizontal alignment styles */
     const HORIZONTAL_GENERAL           = 'general';
@@ -150,8 +150,8 @@ class Alignment extends Supervisor implements \PHPExcel\IComparable
      * <code>
      * $objPHPExcel->getActiveSheet()->getStyle('B2')->getAlignment()->applyFromArray(
      *        array(
-     *            'horizontal' => \PHPExcel\Style\Alignment::HORIZONTAL_CENTER,
-     *            'vertical'   => \PHPExcel\Style\Alignment::VERTICAL_CENTER,
+     *            'horizontal' => \PhpOffice\PhpExcel\Style\Alignment::HORIZONTAL_CENTER,
+     *            'vertical'   => \PhpOffice\PhpExcel\Style\Alignment::VERTICAL_CENTER,
      *            'rotation'   => 0,
      *            'wrap'            => TRUE
      *        )
@@ -159,7 +159,7 @@ class Alignment extends Supervisor implements \PHPExcel\IComparable
      * </code>
      *
      * @param   array    $pStyles    Array containing style information
-     * @throws  \PHPExcel\Exception
+     * @throws  \PhpOffice\PhpExcel\Exception
      * @return  Alignment
      */
     public function applyFromArray($pStyles = null)
@@ -192,7 +192,7 @@ class Alignment extends Supervisor implements \PHPExcel\IComparable
                 }
             }
         } else {
-            throw new \PHPExcel\Exception("Invalid style array passed.");
+            throw new \PhpOffice\PhpExcel\Exception("Invalid style array passed.");
         }
         return $this;
     }
@@ -282,7 +282,7 @@ class Alignment extends Supervisor implements \PHPExcel\IComparable
      * Set TextRotation
      *
      * @param int $pValue
-     * @throws \PHPExcel\Exception
+     * @throws \PhpOffice\PhpExcel\Exception
      * @return Alignment
      */
     public function setTextRotation($pValue = 0)
@@ -301,7 +301,7 @@ class Alignment extends Supervisor implements \PHPExcel\IComparable
                 $this->textRotation = $pValue;
             }
         } else {
-            throw new \PHPExcel\Exception("Text rotation should be a value between -90 and 90.");
+            throw new \PhpOffice\PhpExcel\Exception("Text rotation should be a value between -90 and 90.");
         }
 
         return $this;

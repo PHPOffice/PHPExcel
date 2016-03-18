@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel\Calculation;
+namespace PhpOffice\PhpExcel\Calculation;
 
 /**
- * PHPExcel_Calculation_TextData
+ * PhpOffice\PhpExcel\Calculation\TextData
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -22,8 +22,8 @@ namespace PHPExcel\Calculation;
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Calculation
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @package    PhpOffice\PhpExcel\Calculation
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -85,7 +85,7 @@ class TextData
         $stringValue    = Functions::flattenSingleValue($stringValue);
 
         if (is_bool($stringValue)) {
-            return ($stringValue) ? \PHPExcel\Calculation::getTRUE() : \PHPExcel\Calculation::getFALSE();
+            return ($stringValue) ? \PhpOffice\PhpExcel\Calculation::getTRUE() : \PhpOffice\PhpExcel\Calculation::getFALSE();
         }
 
         if (self::$invalidChars == null) {
@@ -109,7 +109,7 @@ class TextData
     {
         $stringValue = Functions::flattenSingleValue($stringValue);
         if (is_bool($stringValue)) {
-            return ($stringValue) ? \PHPExcel\Calculation::getTRUE() : \PHPExcel\Calculation::getFALSE();
+            return ($stringValue) ? \PhpOffice\PhpExcel\Calculation::getTRUE() : \PhpOffice\PhpExcel\Calculation::getFALSE();
         }
 
         if (is_string($stringValue) || is_numeric($stringValue)) {
@@ -135,7 +135,7 @@ class TextData
             if (Functions::getCompatibilityMode() == Functions::COMPATIBILITY_OPENOFFICE) {
                 $characters = (int) $characters;
             } else {
-                $characters = ($characters) ? \PHPExcel\Calculation::getTRUE() : \PHPExcel\Calculation::getFALSE();
+                $characters = ($characters) ? \PhpOffice\PhpExcel\Calculation::getTRUE() : \PhpOffice\PhpExcel\Calculation::getFALSE();
             }
         }
 
@@ -170,7 +170,7 @@ class TextData
                 if (Functions::getCompatibilityMode() == Functions::COMPATIBILITY_OPENOFFICE) {
                     $arg = (int) $arg;
                 } else {
-                    $arg = ($arg) ? \PHPExcel\Calculation::getTRUE() : \PHPExcel\Calculation::getFALSE();
+                    $arg = ($arg) ? \PhpOffice\PhpExcel\Calculation::getTRUE() : \PhpOffice\PhpExcel\Calculation::getFALSE();
                 }
             }
             $returnValue .= $arg;
@@ -214,7 +214,7 @@ class TextData
             $value = MathTrig::MROUND($value, $round);
         }
 
-        return \PHPExcel\Style\NumberFormat::toFormattedString($value, $mask);
+        return \PhpOffice\PhpExcel\Style\NumberFormat::toFormattedString($value, $mask);
 
     }
 
@@ -235,11 +235,11 @@ class TextData
 
         if (!is_bool($needle)) {
             if (is_bool($haystack)) {
-                $haystack = ($haystack) ? \PHPExcel\Calculation::getTRUE() : \PHPExcel\Calculation::getFALSE();
+                $haystack = ($haystack) ? \PhpOffice\PhpExcel\Calculation::getTRUE() : \PhpOffice\PhpExcel\Calculation::getFALSE();
             }
 
-            if (($offset > 0) && (\PHPExcel\Shared\String::CountCharacters($haystack) > $offset)) {
-                if (\PHPExcel\Shared\String::CountCharacters($needle) == 0) {
+            if (($offset > 0) && (\PhpOffice\PhpExcel\Shared\String::CountCharacters($haystack) > $offset)) {
+                if (\PhpOffice\PhpExcel\Shared\String::CountCharacters($needle) == 0) {
                     return $offset;
                 }
                 if (function_exists('mb_strpos')) {
@@ -272,11 +272,11 @@ class TextData
 
         if (!is_bool($needle)) {
             if (is_bool($haystack)) {
-                $haystack = ($haystack) ? \PHPExcel\Calculation::getTRUE() : \PHPExcel\Calculation::getFALSE();
+                $haystack = ($haystack) ? \PhpOffice\PhpExcel\Calculation::getTRUE() : \PhpOffice\PhpExcel\Calculation::getFALSE();
             }
 
-            if (($offset > 0) && (\PHPExcel\Shared\String::CountCharacters($haystack) > $offset)) {
-                if (\PHPExcel\Shared\String::CountCharacters($needle) == 0) {
+            if (($offset > 0) && (\PhpOffice\PhpExcel\Shared\String::CountCharacters($haystack) > $offset)) {
+                if (\PhpOffice\PhpExcel\Shared\String::CountCharacters($needle) == 0) {
                     return $offset;
                 }
                 if (function_exists('mb_stripos')) {
@@ -342,7 +342,7 @@ class TextData
         }
 
         if (is_bool($value)) {
-            $value = ($value) ? \PHPExcel\Calculation::getTRUE() : \PHPExcel\Calculation::getFALSE();
+            $value = ($value) ? \PhpOffice\PhpExcel\Calculation::getTRUE() : \PhpOffice\PhpExcel\Calculation::getFALSE();
         }
 
         if (function_exists('mb_substr')) {
@@ -372,7 +372,7 @@ class TextData
         }
 
         if (is_bool($value)) {
-            $value = ($value) ? \PHPExcel\Calculation::getTRUE() : \PHPExcel\Calculation::getFALSE();
+            $value = ($value) ? \PhpOffice\PhpExcel\Calculation::getTRUE() : \PhpOffice\PhpExcel\Calculation::getFALSE();
         }
 
         if (function_exists('mb_substr')) {
@@ -400,7 +400,7 @@ class TextData
         }
 
         if (is_bool($value)) {
-            $value = ($value) ? \PHPExcel\Calculation::getTRUE() : \PHPExcel\Calculation::getFALSE();
+            $value = ($value) ? \PhpOffice\PhpExcel\Calculation::getTRUE() : \PhpOffice\PhpExcel\Calculation::getFALSE();
         }
 
         if ((function_exists('mb_substr')) && (function_exists('mb_strlen'))) {
@@ -422,7 +422,7 @@ class TextData
         $value = Functions::flattenSingleValue($value);
 
         if (is_bool($value)) {
-            $value = ($value) ? \PHPExcel\Calculation::getTRUE() : \PHPExcel\Calculation::getFALSE();
+            $value = ($value) ? \PhpOffice\PhpExcel\Calculation::getTRUE() : \PhpOffice\PhpExcel\Calculation::getFALSE();
         }
 
         if (function_exists('mb_strlen')) {
@@ -446,10 +446,10 @@ class TextData
         $mixedCaseString = Functions::flattenSingleValue($mixedCaseString);
 
         if (is_bool($mixedCaseString)) {
-            $mixedCaseString = ($mixedCaseString) ? \PHPExcel\Calculation::getTRUE() : \PHPExcel\Calculation::getFALSE();
+            $mixedCaseString = ($mixedCaseString) ? \PhpOffice\PhpExcel\Calculation::getTRUE() : \PhpOffice\PhpExcel\Calculation::getFALSE();
         }
 
-        return \PHPExcel\Shared\String::StrToLower($mixedCaseString);
+        return \PhpOffice\PhpExcel\Shared\String::StrToLower($mixedCaseString);
     }
 
 
@@ -466,10 +466,10 @@ class TextData
         $mixedCaseString = Functions::flattenSingleValue($mixedCaseString);
 
         if (is_bool($mixedCaseString)) {
-            $mixedCaseString = ($mixedCaseString) ? \PHPExcel\Calculation::getTRUE() : \PHPExcel\Calculation::getFALSE();
+            $mixedCaseString = ($mixedCaseString) ? \PhpOffice\PhpExcel\Calculation::getTRUE() : \PhpOffice\PhpExcel\Calculation::getFALSE();
         }
 
-        return \PHPExcel\Shared\String::StrToUpper($mixedCaseString);
+        return \PhpOffice\PhpExcel\Shared\String::StrToUpper($mixedCaseString);
     }
 
 
@@ -486,10 +486,10 @@ class TextData
         $mixedCaseString = Functions::flattenSingleValue($mixedCaseString);
 
         if (is_bool($mixedCaseString)) {
-            $mixedCaseString = ($mixedCaseString) ? \PHPExcel\Calculation::getTRUE() : \PHPExcel\Calculation::getFALSE();
+            $mixedCaseString = ($mixedCaseString) ? \PhpOffice\PhpExcel\Calculation::getTRUE() : \PhpOffice\PhpExcel\Calculation::getFALSE();
         }
 
-        return \PHPExcel\Shared\String::StrToTitle($mixedCaseString);
+        return \PhpOffice\PhpExcel\Shared\String::StrToTitle($mixedCaseString);
     }
 
 
@@ -593,11 +593,11 @@ class TextData
         $value  = Functions::flattenSingleValue($value);
         $format = Functions::flattenSingleValue($format);
 
-        if ((is_string($value)) && (!is_numeric($value)) && \PHPExcel\Shared\Date::isDateTimeFormatCode($format)) {
+        if ((is_string($value)) && (!is_numeric($value)) && \PhpOffice\PhpExcel\Shared\Date::isDateTimeFormatCode($format)) {
             $value = DateTime::DATEVALUE($value);
         }
 
-        return (string) \PHPExcel\Style\NumberFormat::toFormattedString($value, $format);
+        return (string) \PhpOffice\PhpExcel\Style\NumberFormat::toFormattedString($value, $format);
     }
 
     /**
@@ -612,9 +612,9 @@ class TextData
 
         if (!is_numeric($value)) {
             $numberValue = str_replace(
-                \PHPExcel\Shared\String::getThousandsSeparator(),
+                \PhpOffice\PhpExcel\Shared\String::getThousandsSeparator(),
                 '',
-                trim($value, " \t\n\r\0\x0B" . \PHPExcel\Shared\String::getCurrencyCode())
+                trim($value, " \t\n\r\0\x0B" . \PhpOffice\PhpExcel\Shared\String::getCurrencyCode())
             );
             if (is_numeric($numberValue)) {
                 return (float) $numberValue;

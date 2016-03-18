@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel\CachedObjectStorage;
+namespace PhpOffice\PhpExcel\CachedObjectStorage;
 
 /**
- * PHPExcel_CachedObjectStorage_APC
+ * PhpOffice\PhpExcel\CachedObjectStorage\APC
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -22,8 +22,8 @@ namespace PHPExcel\CachedObjectStorage;
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_CachedObjectStorage
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @package    PhpOffice\PhpExcel\CachedObjectStorage
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -50,7 +50,7 @@ class APC extends CacheBase implements ICache
      *     and the 'nullify' the current cell object
      *
      * @access  private
-     * @throws  \PHPExcel\Exception
+     * @throws  \PhpOffice\PhpExcel\Exception
      */
     protected function storeData()
     {
@@ -63,7 +63,7 @@ class APC extends CacheBase implements ICache
                 $this->cacheTime
             )) {
                 $this->__destruct();
-                throw new \PHPExcel\Exception('Failed to store cell ' . $this->currentObjectID . ' in APC');
+                throw new \PhpOffice\PhpExcel\Exception('Failed to store cell ' . $this->currentObjectID . ' in APC');
             }
             $this->currentCellIsDirty = false;
         }
@@ -75,11 +75,11 @@ class APC extends CacheBase implements ICache
      *
      * @access  public
      * @param   string         $pCoord  Coordinate address of the cell to update
-     * @param   \PHPExcel\Cell  $cell    Cell to update
-     * @return  \PHPExcel\Cell
-     * @throws  \PHPExcel\Exception
+     * @param   \PhpOffice\PhpExcel\Cell  $cell    Cell to update
+     * @return  \PhpOffice\PhpExcel\Cell
+     * @throws  \PhpOffice\PhpExcel\Exception
      */
-    public function addCacheData($pCoord, \PHPExcel\Cell $cell)
+    public function addCacheData($pCoord, \PhpOffice\PhpExcel\Cell $cell)
     {
         if (($pCoord !== $this->currentObjectID) && ($this->currentObjectID !== null)) {
             $this->storeData();
@@ -94,11 +94,11 @@ class APC extends CacheBase implements ICache
     }
 
     /**
-     * Is a value set in the current \PHPExcel\CachedObjectStorage\ICache for an indexed cell?
+     * Is a value set in the current \PhpOffice\PhpExcel\CachedObjectStorage\ICache for an indexed cell?
      *
      * @access  public
      * @param   string  $pCoord  Coordinate address of the cell to check
-     * @throws  \PHPExcel\Exception
+     * @throws  \PhpOffice\PhpExcel\Exception
      * @return  boolean
      */
     public function isDataSet($pCoord)
@@ -113,7 +113,7 @@ class APC extends CacheBase implements ICache
             if ($success === false) {
                 //    Entry no longer exists in APC, so clear it from the cache array
                 parent::deleteCacheData($pCoord);
-                throw new \PHPExcel\Exception('Cell entry '.$pCoord.' no longer exists in APC cache');
+                throw new \PhpOffice\PhpExcel\Exception('Cell entry '.$pCoord.' no longer exists in APC cache');
             }
             return true;
         }
@@ -125,8 +125,8 @@ class APC extends CacheBase implements ICache
      *
      * @access  public
      * @param   string         $pCoord  Coordinate of the cell
-     * @throws  \PHPExcel\Exception
-     * @return  \PHPExcel\Cell  Cell that was found, or null if not found
+     * @throws  \PhpOffice\PhpExcel\Exception
+     * @return  \PhpOffice\PhpExcel\Cell  Cell that was found, or null if not found
      */
     public function getCacheData($pCoord)
     {
@@ -141,7 +141,7 @@ class APC extends CacheBase implements ICache
             if ($obj === false) {
                 //    Entry no longer exists in APC, so clear it from the cache array
                 parent::deleteCacheData($pCoord);
-                throw new \PHPExcel\Exception('Cell entry '.$pCoord.' no longer exists in APC cache');
+                throw new \PhpOffice\PhpExcel\Exception('Cell entry '.$pCoord.' no longer exists in APC cache');
             }
         } else {
             //    Return null if requested entry doesn't exist in cache
@@ -177,7 +177,7 @@ class APC extends CacheBase implements ICache
      *
      * @access  public
      * @param   string  $pCoord  Coordinate address of the cell to delete
-     * @throws  \PHPExcel\Exception
+     * @throws  \PhpOffice\PhpExcel\Exception
      */
     public function deleteCacheData($pCoord)
     {
@@ -192,10 +192,10 @@ class APC extends CacheBase implements ICache
      * Clone the cell collection
      *
      * @access  public
-     * @param   \PHPExcel\Worksheet  $parent  The new worksheet that we're copying to
-     * @throws  \PHPExcel\Exception
+     * @param   \PhpOffice\PhpExcel\Worksheet  $parent  The new worksheet that we're copying to
+     * @throws  \PhpOffice\PhpExcel\Exception
      */
-    public function copyCellCollection(\PHPExcel\Worksheet $parent)
+    public function copyCellCollection(\PhpOffice\PhpExcel\Worksheet $parent)
     {
         parent::copyCellCollection($parent);
         //    Get a new id for the new file name
@@ -208,11 +208,11 @@ class APC extends CacheBase implements ICache
                 if ($obj === false) {
                     //    Entry no longer exists in APC, so clear it from the cache array
                     parent::deleteCacheData($cellID);
-                    throw new \PHPExcel\Exception('Cell entry ' . $cellID . ' no longer exists in APC');
+                    throw new \PhpOffice\PhpExcel\Exception('Cell entry ' . $cellID . ' no longer exists in APC');
                 }
                 if (!apc_store($newCachePrefix . $cellID . '.cache', $obj, $this->cacheTime)) {
                     $this->__destruct();
-                    throw new \PHPExcel\Exception('Failed to store cell ' . $cellID . ' in APC');
+                    throw new \PhpOffice\PhpExcel\Exception('Failed to store cell ' . $cellID . ' in APC');
                 }
             }
         }
@@ -243,10 +243,10 @@ class APC extends CacheBase implements ICache
     /**
      * Initialise this new cell collection
      *
-     * @param  \PHPExcel\Worksheet  $parent     The worksheet for this cell collection
+     * @param  \PhpOffice\PhpExcel\Worksheet  $parent     The worksheet for this cell collection
      * @param  array of mixed      $arguments  Additional initialisation arguments
      */
-    public function __construct(\PHPExcel\Worksheet $parent, $arguments)
+    public function __construct(\PhpOffice\PhpExcel\Worksheet $parent, $arguments)
     {
         $cacheTime = (isset($arguments['cacheTime'])) ? $arguments['cacheTime'] : 600;
 

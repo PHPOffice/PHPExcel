@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel\Reader;
+namespace PhpOffice\PhpExcel\Reader;
 
 /**
- * PHPExcel_Reader_Gnumeric
+ * PhpOffice\PhpExcel\Reader\Gnumeric
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -22,8 +22,8 @@ namespace PHPExcel\Reader;
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Reader
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @package    PhpOffice\PhpExcel\Reader
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -51,7 +51,7 @@ class Gnumeric extends BaseReader implements IReader
     public function __construct()
     {
         $this->readFilter     = new DefaultReadFilter();
-        $this->referenceHelper = \PHPExcel\ReferenceHelper::getInstance();
+        $this->referenceHelper = \PhpOffice\PhpExcel\ReferenceHelper::getInstance();
     }
 
     /**
@@ -99,7 +99,7 @@ class Gnumeric extends BaseReader implements IReader
         }
 
         $xml = new XMLReader();
-        $xml->xml($this->securityScanFile('compress.zlib://'.realpath($pFilename)), null, \PHPExcel\Settings::getLibXmlLoaderOptions());
+        $xml->xml($this->securityScanFile('compress.zlib://'.realpath($pFilename)), null, \PhpOffice\PhpExcel\Settings::getLibXmlLoaderOptions());
         $xml->setParserProperty(2, true);
 
         $worksheetNames = array();
@@ -130,7 +130,7 @@ class Gnumeric extends BaseReader implements IReader
         }
 
         $xml = new XMLReader();
-        $xml->xml($this->securityScanFile('compress.zlib://'.realpath($pFilename)), null, \PHPExcel\Settings::getLibXmlLoaderOptions());
+        $xml->xml($this->securityScanFile('compress.zlib://'.realpath($pFilename)), null, \PhpOffice\PhpExcel\Settings::getLibXmlLoaderOptions());
         $xml->setParserProperty(2, true);
 
         $worksheetInfo = array();
@@ -158,7 +158,7 @@ class Gnumeric extends BaseReader implements IReader
                         break;
                     }
                 }
-                $tmpInfo['lastColumnLetter'] = \PHPExcel\Cell::stringFromColumnIndex($tmpInfo['lastColumnIndex']);
+                $tmpInfo['lastColumnLetter'] = \PhpOffice\PhpExcel\Cell::stringFromColumnIndex($tmpInfo['lastColumnIndex']);
                 $worksheetInfo[] = $tmpInfo;
             }
         }
@@ -219,7 +219,7 @@ class Gnumeric extends BaseReader implements IReader
 //        echo htmlentities($gFileData,ENT_QUOTES,'UTF-8');
 //        echo '</pre><hr />';
 //
-        $xml = simplexml_load_string($this->securityScan($gFileData), 'SimpleXMLElement', \PHPExcel\Settings::getLibXmlLoaderOptions());
+        $xml = simplexml_load_string($this->securityScan($gFileData), 'SimpleXMLElement', \PhpOffice\PhpExcel\Settings::getLibXmlLoaderOptions());
         $namespacesMeta = $xml->getNamespaces(true);
 
 //        var_dump($namespacesMeta);
@@ -393,7 +393,7 @@ class Gnumeric extends BaseReader implements IReader
                     $maxCol = $column;
                 }
 
-                $column = \PHPExcel\Cell::stringFromColumnIndex($column);
+                $column = \PhpOffice\PhpExcel\Cell::stringFromColumnIndex($column);
 
                 // Read cell?
                 if ($this->getReadFilter() !== null) {
@@ -407,7 +407,7 @@ class Gnumeric extends BaseReader implements IReader
 //                echo 'Cell ', $column, $row,'<br />';
 //                echo 'Type is ', $ValueType,'<br />';
 //                echo 'Value is ', $cell,'<br />';
-                $type = \PHPExcel\Cell\DataType::TYPE_FORMULA;
+                $type = \PhpOffice\PhpExcel\Cell\DataType::TYPE_FORMULA;
                 if ($ExprID > '') {
                     if (((string) $cell) > '') {
                         $this->expressions[$ExprID] = array(
@@ -429,27 +429,27 @@ class Gnumeric extends BaseReader implements IReader
 //                        echo 'SHARED EXPRESSION ', $ExprID,'<br />';
 //                        echo 'New Value is ', $cell,'<br />';
                     }
-                    $type = \PHPExcel\Cell\DataType::TYPE_FORMULA;
+                    $type = \PhpOffice\PhpExcel\Cell\DataType::TYPE_FORMULA;
                 } else {
                     switch ($ValueType) {
                         case '10':        //    NULL
-                            $type = \PHPExcel\Cell\DataType::TYPE_NULL;
+                            $type = \PhpOffice\PhpExcel\Cell\DataType::TYPE_NULL;
                             break;
                         case '20':        //    Boolean
-                            $type = \PHPExcel\Cell\DataType::TYPE_BOOL;
+                            $type = \PhpOffice\PhpExcel\Cell\DataType::TYPE_BOOL;
                             $cell = ($cell == 'TRUE') ? true: false;
                             break;
                         case '30':        //    Integer
                             $cell = intval($cell);
                             // Excel 2007+ doesn't differentiate between integer and float, so set the value and dropthru to the next (numeric) case
                         case '40':        //    Float
-                            $type = \PHPExcel\Cell\DataType::TYPE_NUMERIC;
+                            $type = \PhpOffice\PhpExcel\Cell\DataType::TYPE_NUMERIC;
                             break;
                         case '50':        //    Error
-                            $type = \PHPExcel\Cell\DataType::TYPE_ERROR;
+                            $type = \PhpOffice\PhpExcel\Cell\DataType::TYPE_ERROR;
                             break;
                         case '60':        //    String
-                            $type = \PHPExcel\Cell\DataType::TYPE_STRING;
+                            $type = \PhpOffice\PhpExcel\Cell\DataType::TYPE_STRING;
                             break;
                         case '70':        //    Cell Range
                         case '80':        //    Array
@@ -473,11 +473,11 @@ class Gnumeric extends BaseReader implements IReader
                 $styleAttributes = $styleRegion->attributes();
                 if (($styleAttributes['startRow'] <= $maxRow) &&
                     ($styleAttributes['startCol'] <= $maxCol)) {
-                    $startColumn = \PHPExcel\Cell::stringFromColumnIndex((int) $styleAttributes['startCol']);
+                    $startColumn = \PhpOffice\PhpExcel\Cell::stringFromColumnIndex((int) $styleAttributes['startCol']);
                     $startRow = $styleAttributes['startRow'] + 1;
 
                     $endColumn = ($styleAttributes['endCol'] > $maxCol) ? $maxCol : (int) $styleAttributes['endCol'];
-                    $endColumn = \PHPExcel\Cell::stringFromColumnIndex($endColumn);
+                    $endColumn = \PhpOffice\PhpExcel\Cell::stringFromColumnIndex($endColumn);
                     $endRow = ($styleAttributes['endRow'] > $maxRow) ? $maxRow : $styleAttributes['endRow'];
                     $endRow += 1;
                     $cellRange = $startColumn.$startRow.':'.$endColumn.$endRow;
@@ -489,45 +489,45 @@ class Gnumeric extends BaseReader implements IReader
 
                     //    We still set the number format mask for date/time values, even if readDataOnly is true
                     if ((!$this->readDataOnly) ||
-                        (\PHPExcel\Shared\Date::isDateTimeFormatCode((string) $styleAttributes['Format']))) {
+                        (\PhpOffice\PhpExcel\Shared\Date::isDateTimeFormatCode((string) $styleAttributes['Format']))) {
                         $styleArray = array();
                         $styleArray['numberformat']['code'] = (string) $styleAttributes['Format'];
                         //    If readDataOnly is false, we set all formatting information
                         if (!$this->readDataOnly) {
                             switch ($styleAttributes['HAlign']) {
                                 case '1':
-                                    $styleArray['alignment']['horizontal'] = \PHPExcel\Style\Alignment::HORIZONTAL_GENERAL;
+                                    $styleArray['alignment']['horizontal'] = \PhpOffice\PhpExcel\Style\Alignment::HORIZONTAL_GENERAL;
                                     break;
                                 case '2':
-                                    $styleArray['alignment']['horizontal'] = \PHPExcel\Style\Alignment::HORIZONTAL_LEFT;
+                                    $styleArray['alignment']['horizontal'] = \PhpOffice\PhpExcel\Style\Alignment::HORIZONTAL_LEFT;
                                     break;
                                 case '4':
-                                    $styleArray['alignment']['horizontal'] = \PHPExcel\Style\Alignment::HORIZONTAL_RIGHT;
+                                    $styleArray['alignment']['horizontal'] = \PhpOffice\PhpExcel\Style\Alignment::HORIZONTAL_RIGHT;
                                     break;
                                 case '8':
-                                    $styleArray['alignment']['horizontal'] = \PHPExcel\Style\Alignment::HORIZONTAL_CENTER;
+                                    $styleArray['alignment']['horizontal'] = \PhpOffice\PhpExcel\Style\Alignment::HORIZONTAL_CENTER;
                                     break;
                                 case '16':
                                 case '64':
-                                    $styleArray['alignment']['horizontal'] = \PHPExcel\Style\Alignment::HORIZONTAL_CENTER_CONTINUOUS;
+                                    $styleArray['alignment']['horizontal'] = \PhpOffice\PhpExcel\Style\Alignment::HORIZONTAL_CENTER_CONTINUOUS;
                                     break;
                                 case '32':
-                                    $styleArray['alignment']['horizontal'] = \PHPExcel\Style\Alignment::HORIZONTAL_JUSTIFY;
+                                    $styleArray['alignment']['horizontal'] = \PhpOffice\PhpExcel\Style\Alignment::HORIZONTAL_JUSTIFY;
                                     break;
                             }
 
                             switch ($styleAttributes['VAlign']) {
                                 case '1':
-                                    $styleArray['alignment']['vertical'] = \PHPExcel\Style\Alignment::VERTICAL_TOP;
+                                    $styleArray['alignment']['vertical'] = \PhpOffice\PhpExcel\Style\Alignment::VERTICAL_TOP;
                                     break;
                                 case '2':
-                                    $styleArray['alignment']['vertical'] = \PHPExcel\Style\Alignment::VERTICAL_BOTTOM;
+                                    $styleArray['alignment']['vertical'] = \PhpOffice\PhpExcel\Style\Alignment::VERTICAL_BOTTOM;
                                     break;
                                 case '4':
-                                    $styleArray['alignment']['vertical'] = \PHPExcel\Style\Alignment::VERTICAL_CENTER;
+                                    $styleArray['alignment']['vertical'] = \PhpOffice\PhpExcel\Style\Alignment::VERTICAL_CENTER;
                                     break;
                                 case '8':
-                                    $styleArray['alignment']['vertical'] = \PHPExcel\Style\Alignment::VERTICAL_JUSTIFY;
+                                    $styleArray['alignment']['vertical'] = \PhpOffice\PhpExcel\Style\Alignment::VERTICAL_JUSTIFY;
                                     break;
                             }
 
@@ -545,64 +545,64 @@ class Gnumeric extends BaseReader implements IReader
                                 $styleArray['fill']['endcolor']['rgb'] = $RGB2;
                                 switch ($shade) {
                                     case '1':
-                                        $styleArray['fill']['type'] = \PHPExcel\Style\Fill::FILL_SOLID;
+                                        $styleArray['fill']['type'] = \PhpOffice\PhpExcel\Style\Fill::FILL_SOLID;
                                         break;
                                     case '2':
-                                        $styleArray['fill']['type'] = \PHPExcel\Style\Fill::FILL_GRADIENT_LINEAR;
+                                        $styleArray['fill']['type'] = \PhpOffice\PhpExcel\Style\Fill::FILL_GRADIENT_LINEAR;
                                         break;
                                     case '3':
-                                        $styleArray['fill']['type'] = \PHPExcel\Style\Fill::FILL_GRADIENT_PATH;
+                                        $styleArray['fill']['type'] = \PhpOffice\PhpExcel\Style\Fill::FILL_GRADIENT_PATH;
                                         break;
                                     case '4':
-                                        $styleArray['fill']['type'] = \PHPExcel\Style\Fill::FILL_PATTERN_DARKDOWN;
+                                        $styleArray['fill']['type'] = \PhpOffice\PhpExcel\Style\Fill::FILL_PATTERN_DARKDOWN;
                                         break;
                                     case '5':
-                                        $styleArray['fill']['type'] = \PHPExcel\Style\Fill::FILL_PATTERN_DARKGRAY;
+                                        $styleArray['fill']['type'] = \PhpOffice\PhpExcel\Style\Fill::FILL_PATTERN_DARKGRAY;
                                         break;
                                     case '6':
-                                        $styleArray['fill']['type'] = \PHPExcel\Style\Fill::FILL_PATTERN_DARKGRID;
+                                        $styleArray['fill']['type'] = \PhpOffice\PhpExcel\Style\Fill::FILL_PATTERN_DARKGRID;
                                         break;
                                     case '7':
-                                        $styleArray['fill']['type'] = \PHPExcel\Style\Fill::FILL_PATTERN_DARKHORIZONTAL;
+                                        $styleArray['fill']['type'] = \PhpOffice\PhpExcel\Style\Fill::FILL_PATTERN_DARKHORIZONTAL;
                                         break;
                                     case '8':
-                                        $styleArray['fill']['type'] = \PHPExcel\Style\Fill::FILL_PATTERN_DARKTRELLIS;
+                                        $styleArray['fill']['type'] = \PhpOffice\PhpExcel\Style\Fill::FILL_PATTERN_DARKTRELLIS;
                                         break;
                                     case '9':
-                                        $styleArray['fill']['type'] = \PHPExcel\Style\Fill::FILL_PATTERN_DARKUP;
+                                        $styleArray['fill']['type'] = \PhpOffice\PhpExcel\Style\Fill::FILL_PATTERN_DARKUP;
                                         break;
                                     case '10':
-                                        $styleArray['fill']['type'] = \PHPExcel\Style\Fill::FILL_PATTERN_DARKVERTICAL;
+                                        $styleArray['fill']['type'] = \PhpOffice\PhpExcel\Style\Fill::FILL_PATTERN_DARKVERTICAL;
                                         break;
                                     case '11':
-                                        $styleArray['fill']['type'] = \PHPExcel\Style\Fill::FILL_PATTERN_GRAY0625;
+                                        $styleArray['fill']['type'] = \PhpOffice\PhpExcel\Style\Fill::FILL_PATTERN_GRAY0625;
                                         break;
                                     case '12':
-                                        $styleArray['fill']['type'] = \PHPExcel\Style\Fill::FILL_PATTERN_GRAY125;
+                                        $styleArray['fill']['type'] = \PhpOffice\PhpExcel\Style\Fill::FILL_PATTERN_GRAY125;
                                         break;
                                     case '13':
-                                        $styleArray['fill']['type'] = \PHPExcel\Style\Fill::FILL_PATTERN_LIGHTDOWN;
+                                        $styleArray['fill']['type'] = \PhpOffice\PhpExcel\Style\Fill::FILL_PATTERN_LIGHTDOWN;
                                         break;
                                     case '14':
-                                        $styleArray['fill']['type'] = \PHPExcel\Style\Fill::FILL_PATTERN_LIGHTGRAY;
+                                        $styleArray['fill']['type'] = \PhpOffice\PhpExcel\Style\Fill::FILL_PATTERN_LIGHTGRAY;
                                         break;
                                     case '15':
-                                        $styleArray['fill']['type'] = \PHPExcel\Style\Fill::FILL_PATTERN_LIGHTGRID;
+                                        $styleArray['fill']['type'] = \PhpOffice\PhpExcel\Style\Fill::FILL_PATTERN_LIGHTGRID;
                                         break;
                                     case '16':
-                                        $styleArray['fill']['type'] = \PHPExcel\Style\Fill::FILL_PATTERN_LIGHTHORIZONTAL;
+                                        $styleArray['fill']['type'] = \PhpOffice\PhpExcel\Style\Fill::FILL_PATTERN_LIGHTHORIZONTAL;
                                         break;
                                     case '17':
-                                        $styleArray['fill']['type'] = \PHPExcel\Style\Fill::FILL_PATTERN_LIGHTTRELLIS;
+                                        $styleArray['fill']['type'] = \PhpOffice\PhpExcel\Style\Fill::FILL_PATTERN_LIGHTTRELLIS;
                                         break;
                                     case '18':
-                                        $styleArray['fill']['type'] = \PHPExcel\Style\Fill::FILL_PATTERN_LIGHTUP;
+                                        $styleArray['fill']['type'] = \PhpOffice\PhpExcel\Style\Fill::FILL_PATTERN_LIGHTUP;
                                         break;
                                     case '19':
-                                        $styleArray['fill']['type'] = \PHPExcel\Style\Fill::FILL_PATTERN_LIGHTVERTICAL;
+                                        $styleArray['fill']['type'] = \PhpOffice\PhpExcel\Style\Fill::FILL_PATTERN_LIGHTVERTICAL;
                                         break;
                                     case '20':
-                                        $styleArray['fill']['type'] = \PHPExcel\Style\Fill::FILL_PATTERN_MEDIUMGRAY;
+                                        $styleArray['fill']['type'] = \PhpOffice\PhpExcel\Style\Fill::FILL_PATTERN_MEDIUMGRAY;
                                         break;
                                 }
                             }
@@ -617,19 +617,19 @@ class Gnumeric extends BaseReader implements IReader
                             $styleArray['font']['strike'] = ($fontAttributes['StrikeThrough'] == '1') ? true : false;
                             switch ($fontAttributes['Underline']) {
                                 case '1':
-                                    $styleArray['font']['underline'] = \PHPExcel\Style\Font::UNDERLINE_SINGLE;
+                                    $styleArray['font']['underline'] = \PhpOffice\PhpExcel\Style\Font::UNDERLINE_SINGLE;
                                     break;
                                 case '2':
-                                    $styleArray['font']['underline'] = \PHPExcel\Style\Font::UNDERLINE_DOUBLE;
+                                    $styleArray['font']['underline'] = \PhpOffice\PhpExcel\Style\Font::UNDERLINE_DOUBLE;
                                     break;
                                 case '3':
-                                    $styleArray['font']['underline'] = \PHPExcel\Style\Font::UNDERLINE_SINGLEACCOUNTING;
+                                    $styleArray['font']['underline'] = \PhpOffice\PhpExcel\Style\Font::UNDERLINE_SINGLEACCOUNTING;
                                     break;
                                 case '4':
-                                    $styleArray['font']['underline'] = \PHPExcel\Style\Font::UNDERLINE_DOUBLEACCOUNTING;
+                                    $styleArray['font']['underline'] = \PhpOffice\PhpExcel\Style\Font::UNDERLINE_DOUBLEACCOUNTING;
                                     break;
                                 default:
-                                    $styleArray['font']['underline'] = \PHPExcel\Style\Font::UNDERLINE_NONE;
+                                    $styleArray['font']['underline'] = \PhpOffice\PhpExcel\Style\Font::UNDERLINE_NONE;
                                     break;
                             }
                             switch ($fontAttributes['Script']) {
@@ -656,13 +656,13 @@ class Gnumeric extends BaseReader implements IReader
                                 }
                                 if ((isset($styleRegion->Style->StyleBorder->Diagonal)) && (isset($styleRegion->Style->StyleBorder->{'Rev-Diagonal'}))) {
                                     $styleArray['borders']['diagonal'] = self::parseBorderAttributes($styleRegion->Style->StyleBorder->Diagonal->attributes());
-                                    $styleArray['borders']['diagonaldirection'] = \PHPExcel\Style\Borders::DIAGONAL_BOTH;
+                                    $styleArray['borders']['diagonaldirection'] = \PhpOffice\PhpExcel\Style\Borders::DIAGONAL_BOTH;
                                 } elseif (isset($styleRegion->Style->StyleBorder->Diagonal)) {
                                     $styleArray['borders']['diagonal'] = self::parseBorderAttributes($styleRegion->Style->StyleBorder->Diagonal->attributes());
-                                    $styleArray['borders']['diagonaldirection'] = \PHPExcel\Style\Borders::DIAGONAL_UP;
+                                    $styleArray['borders']['diagonaldirection'] = \PhpOffice\PhpExcel\Style\Borders::DIAGONAL_UP;
                                 } elseif (isset($styleRegion->Style->StyleBorder->{'Rev-Diagonal'})) {
                                     $styleArray['borders']['diagonal'] = self::parseBorderAttributes($styleRegion->Style->StyleBorder->{'Rev-Diagonal'}->attributes());
-                                    $styleArray['borders']['diagonaldirection'] = \PHPExcel\Style\Borders::DIAGONAL_DOWN;
+                                    $styleArray['borders']['diagonaldirection'] = \PhpOffice\PhpExcel\Style\Borders::DIAGONAL_DOWN;
                                 }
                             }
                             if (isset($styleRegion->Style->HyperLink)) {
@@ -689,19 +689,19 @@ class Gnumeric extends BaseReader implements IReader
                     $hidden = ((isset($columnAttributes['Hidden'])) && ($columnAttributes['Hidden'] == '1')) ? true : false;
                     $columnCount = (isset($columnAttributes['Count'])) ? $columnAttributes['Count'] : 1;
                     while ($c < $column) {
-                        $objPHPExcel->getActiveSheet()->getColumnDimension(\PHPExcel\Cell::stringFromColumnIndex($c))->setWidth($defaultWidth);
+                        $objPHPExcel->getActiveSheet()->getColumnDimension(\PhpOffice\PhpExcel\Cell::stringFromColumnIndex($c))->setWidth($defaultWidth);
                         ++$c;
                     }
                     while (($c < ($column+$columnCount)) && ($c <= $maxCol)) {
-                        $objPHPExcel->getActiveSheet()->getColumnDimension(\PHPExcel\Cell::stringFromColumnIndex($c))->setWidth($columnWidth);
+                        $objPHPExcel->getActiveSheet()->getColumnDimension(\PhpOffice\PhpExcel\Cell::stringFromColumnIndex($c))->setWidth($columnWidth);
                         if ($hidden) {
-                            $objPHPExcel->getActiveSheet()->getColumnDimension(\PHPExcel\Cell::stringFromColumnIndex($c))->setVisible(false);
+                            $objPHPExcel->getActiveSheet()->getColumnDimension(\PhpOffice\PhpExcel\Cell::stringFromColumnIndex($c))->setVisible(false);
                         }
                         ++$c;
                     }
                 }
                 while ($c <= $maxCol) {
-                    $objPHPExcel->getActiveSheet()->getColumnDimension(\PHPExcel\Cell::stringFromColumnIndex($c))->setWidth($defaultWidth);
+                    $objPHPExcel->getActiveSheet()->getColumnDimension(\PhpOffice\PhpExcel\Cell::stringFromColumnIndex($c))->setWidth($defaultWidth);
                     ++$c;
                 }
             }
@@ -761,7 +761,7 @@ class Gnumeric extends BaseReader implements IReader
                 $range[0] = trim($range[0], "'");
                 if ($worksheet = $objPHPExcel->getSheetByName($range[0])) {
                     $extractedRange = str_replace('$', '', $range[1]);
-                    $objPHPExcel->addNamedRange(new \PHPExcel\NamedRange($name, $worksheet, $extractedRange));
+                    $objPHPExcel->addNamedRange(new \PhpOffice\PhpExcel\NamedRange($name, $worksheet, $extractedRange));
                 }
             }
         }
@@ -779,46 +779,46 @@ class Gnumeric extends BaseReader implements IReader
 
         switch ($borderAttributes["Style"]) {
             case '0':
-                $styleArray['style'] = \PHPExcel\Style\Border::BORDER_NONE;
+                $styleArray['style'] = \PhpOffice\PhpExcel\Style\Border::BORDER_NONE;
                 break;
             case '1':
-                $styleArray['style'] = \PHPExcel\Style\Border::BORDER_THIN;
+                $styleArray['style'] = \PhpOffice\PhpExcel\Style\Border::BORDER_THIN;
                 break;
             case '2':
-                $styleArray['style'] = \PHPExcel\Style\Border::BORDER_MEDIUM;
+                $styleArray['style'] = \PhpOffice\PhpExcel\Style\Border::BORDER_MEDIUM;
                 break;
             case '3':
-                $styleArray['style'] = \PHPExcel\Style\Border::BORDER_SLANTDASHDOT;
+                $styleArray['style'] = \PhpOffice\PhpExcel\Style\Border::BORDER_SLANTDASHDOT;
                 break;
             case '4':
-                $styleArray['style'] = \PHPExcel\Style\Border::BORDER_DASHED;
+                $styleArray['style'] = \PhpOffice\PhpExcel\Style\Border::BORDER_DASHED;
                 break;
             case '5':
-                $styleArray['style'] = \PHPExcel\Style\Border::BORDER_THICK;
+                $styleArray['style'] = \PhpOffice\PhpExcel\Style\Border::BORDER_THICK;
                 break;
             case '6':
-                $styleArray['style'] = \PHPExcel\Style\Border::BORDER_DOUBLE;
+                $styleArray['style'] = \PhpOffice\PhpExcel\Style\Border::BORDER_DOUBLE;
                 break;
             case '7':
-                $styleArray['style'] = \PHPExcel\Style\Border::BORDER_DOTTED;
+                $styleArray['style'] = \PhpOffice\PhpExcel\Style\Border::BORDER_DOTTED;
                 break;
             case '8':
-                $styleArray['style'] = \PHPExcel\Style\Border::BORDER_MEDIUMDASHED;
+                $styleArray['style'] = \PhpOffice\PhpExcel\Style\Border::BORDER_MEDIUMDASHED;
                 break;
             case '9':
-                $styleArray['style'] = \PHPExcel\Style\Border::BORDER_DASHDOT;
+                $styleArray['style'] = \PhpOffice\PhpExcel\Style\Border::BORDER_DASHDOT;
                 break;
             case '10':
-                $styleArray['style'] = \PHPExcel\Style\Border::BORDER_MEDIUMDASHDOT;
+                $styleArray['style'] = \PhpOffice\PhpExcel\Style\Border::BORDER_MEDIUMDASHDOT;
                 break;
             case '11':
-                $styleArray['style'] = \PHPExcel\Style\Border::BORDER_DASHDOTDOT;
+                $styleArray['style'] = \PhpOffice\PhpExcel\Style\Border::BORDER_DASHDOTDOT;
                 break;
             case '12':
-                $styleArray['style'] = \PHPExcel\Style\Border::BORDER_MEDIUMDASHDOTDOT;
+                $styleArray['style'] = \PhpOffice\PhpExcel\Style\Border::BORDER_MEDIUMDASHDOTDOT;
                 break;
             case '13':
-                $styleArray['style'] = \PHPExcel\Style\Border::BORDER_MEDIUMDASHDOTDOT;
+                $styleArray['style'] = \PhpOffice\PhpExcel\Style\Border::BORDER_MEDIUMDASHDOTDOT;
                 break;
         }
         return $styleArray;
@@ -826,7 +826,7 @@ class Gnumeric extends BaseReader implements IReader
 
     private function parseRichText($is = '')
     {
-        $value = new \PHPExcel\RichText();
+        $value = new \PhpOffice\PhpExcel\RichText();
         $value->createText($is);
 
         return $value;

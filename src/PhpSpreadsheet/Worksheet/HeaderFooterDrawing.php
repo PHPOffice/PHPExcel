@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel\Worksheet;
+namespace PhpOffice\PhpExcel\Worksheet;
 
 /**
- * PHPExcel_Worksheet_HeaderFooterDrawing
+ * PhpOffice\PhpExcel\Worksheet\HeaderFooterDrawing
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -22,12 +22,12 @@ namespace PHPExcel\Worksheet;
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Worksheet
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @package    PhpOffice\PhpExcel\Worksheet
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
-class HeaderFooterDrawing extends Drawing implements \PHPExcel\IComparable
+class HeaderFooterDrawing extends Drawing implements \PhpOffice\PhpExcel\IComparable
 {
     /**
      * Path
@@ -179,7 +179,7 @@ class HeaderFooterDrawing extends Drawing implements \PHPExcel\IComparable
     {
         // Resize proportional?
         if ($this->resizeProportional && $pValue != 0) {
-            $ratio = $this->width / $this->height;
+            $ratio = $this->height / $this->width;
             $this->height = round($ratio * $pValue);
         }
 
@@ -306,7 +306,7 @@ class HeaderFooterDrawing extends Drawing implements \PHPExcel\IComparable
      *
      * @param    string         $pValue            File path
      * @param    boolean        $pVerifyFile    Verify file
-     * @throws   \PHPExcel\Exception
+     * @throws   \PhpOffice\PhpExcel\Exception
      * @return   HeaderFooterDrawing
      */
     public function setPath($pValue = '', $pVerifyFile = true)
@@ -320,7 +320,7 @@ class HeaderFooterDrawing extends Drawing implements \PHPExcel\IComparable
                     list($this->width, $this->height) = getimagesize($pValue);
                 }
             } else {
-                throw new \PHPExcel\Exception("File $pValue not found!");
+                throw new \PhpOffice\PhpExcel\Exception("File $pValue not found!");
             }
         } else {
             $this->path = $pValue;

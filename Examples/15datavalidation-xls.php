@@ -2,7 +2,7 @@
 /**
  * PHPExcel
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,7 +20,7 @@
  *
  * @category   PHPExcel
  * @package    PHPExcel
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -36,12 +36,12 @@ define('EOL',(PHP_SAPI == 'cli') ? PHP_EOL : '<br />');
 date_default_timezone_set('Europe/London');
 
 /** Include PHPExcel */
-require_once dirname(__FILE__) . '/../Classes/PHPExcel.php';
+require_once dirname(__FILE__) . '/../src/Bootstrap.php';
 
 
 // Create new PHPExcel object
 echo date('H:i:s') , " Create new PHPExcel object" , EOL;
-$objPHPExcel = new PHPExcel();
+$objPHPExcel = new \PhpOffice\PhpExcel\Spreadsheet();
 
 
 // Set document properties
@@ -76,8 +76,8 @@ $objPHPExcel->getActiveSheet()->setCellValue('A1', "Cell B3 and B5 contain data 
 // Set data validation
 echo date('H:i:s') , " Set data validation" , EOL;
 $objValidation = $objPHPExcel->getActiveSheet()->getCell('B3')->getDataValidation();
-$objValidation->setType( PHPExcel_Cell_DataValidation::TYPE_WHOLE );
-$objValidation->setErrorStyle( PHPExcel_Cell_DataValidation::STYLE_STOP );
+$objValidation->setType( \PhpOffice\PhpExcel\Cell\DataValidation::TYPE_WHOLE );
+$objValidation->setErrorStyle( \PhpOffice\PhpExcel\Cell\DataValidation::STYLE_STOP );
 $objValidation->setAllowBlank(true);
 $objValidation->setShowInputMessage(true);
 $objValidation->setShowErrorMessage(true);
@@ -89,8 +89,8 @@ $objValidation->setFormula1(10);
 $objValidation->setFormula2(20);
 
 $objValidation = $objPHPExcel->getActiveSheet()->getCell('B5')->getDataValidation();
-$objValidation->setType( PHPExcel_Cell_DataValidation::TYPE_LIST );
-$objValidation->setErrorStyle( PHPExcel_Cell_DataValidation::STYLE_INFORMATION );
+$objValidation->setType( \PhpOffice\PhpExcel\Cell\DataValidation::TYPE_LIST );
+$objValidation->setErrorStyle( \PhpOffice\PhpExcel\Cell\DataValidation::STYLE_INFORMATION );
 $objValidation->setAllowBlank(false);
 $objValidation->setShowInputMessage(true);
 $objValidation->setShowErrorMessage(true);
@@ -102,8 +102,8 @@ $objValidation->setPrompt('Please pick a value from the drop-down list.');
 $objValidation->setFormula1('"Item A,Item B,Item C"');	// Make sure to put the list items between " and "  !!!
 
 $objValidation = $objPHPExcel->getActiveSheet()->getCell('B7')->getDataValidation();
-$objValidation->setType( PHPExcel_Cell_DataValidation::TYPE_LIST );
-$objValidation->setErrorStyle( PHPExcel_Cell_DataValidation::STYLE_INFORMATION );
+$objValidation->setType( \PhpOffice\PhpExcel\Cell\DataValidation::TYPE_LIST );
+$objValidation->setErrorStyle( \PhpOffice\PhpExcel\Cell\DataValidation::STYLE_INFORMATION );
 $objValidation->setAllowBlank(false);
 $objValidation->setShowInputMessage(true);
 $objValidation->setShowErrorMessage(true);
@@ -123,7 +123,7 @@ $objPHPExcel->setActiveSheetIndex(0);
 echo date('H:i:s') , " Write to Excel5 format" , EOL;
 $callStartTime = microtime(true);
 
-$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+$objWriter = \PhpOffice\PhpExcel\IOFactory::createWriter($objPHPExcel, 'Excel5');
 $objWriter->save(str_replace('.php', '.xls', __FILE__));
 $callEndTime = microtime(true);
 $callTime = $callEndTime - $callStartTime;

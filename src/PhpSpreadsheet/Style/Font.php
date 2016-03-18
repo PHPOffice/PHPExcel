@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel\Style;
+namespace PhpOffice\PhpExcel\Style;
 
 /**
- * PHPExcel_Style_Font
+ * PhpOffice\PhpExcel\Style\Font
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -22,12 +22,12 @@ namespace PHPExcel\Style;
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Style
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @package    PhpOffice\PhpExcel\Style
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
-class Font extends Supervisor implements \PHPExcel\IComparable
+class Font extends Supervisor implements \PhpOffice\PhpExcel\IComparable
 {
     /* Underline types */
     const UNDERLINE_NONE             = 'none';
@@ -165,7 +165,7 @@ class Font extends Supervisor implements \PHPExcel\IComparable
      *            'name'      => 'Arial',
      *            'bold'      => TRUE,
      *            'italic'    => FALSE,
-     *            'underline' => \PHPExcel\Style\Font::UNDERLINE_DOUBLE,
+     *            'underline' => \PhpOffice\PhpExcel\Style\Font::UNDERLINE_DOUBLE,
      *            'strike'    => FALSE,
      *            'color'     => array(
      *                'rgb' => '808080'
@@ -175,7 +175,7 @@ class Font extends Supervisor implements \PHPExcel\IComparable
      * </code>
      *
      * @param   array    $pStyles    Array containing style information
-     * @throws  \PHPExcel\Exception
+     * @throws  \PhpOffice\PhpExcel\Exception
      * @return Font
      */
     public function applyFromArray($pStyles = null)
@@ -213,7 +213,7 @@ class Font extends Supervisor implements \PHPExcel\IComparable
                 }
             }
         } else {
-            throw new \PHPExcel\Exception("Invalid style array passed.");
+            throw new \PhpOffice\PhpExcel\Exception("Invalid style array passed.");
         }
         return $this;
     }
@@ -434,7 +434,7 @@ class Font extends Supervisor implements \PHPExcel\IComparable
     /**
      * Set Underline
      *
-     * @param string|boolean $pValue    \PHPExcel\Style\Font underline type
+     * @param string|boolean $pValue    \PhpOffice\PhpExcel\Style\Font underline type
      *                                    If a boolean is passed, then TRUE equates to UNDERLINE_SINGLE,
      *                                        false equates to UNDERLINE_NONE
      * @return Font
@@ -502,7 +502,7 @@ class Font extends Supervisor implements \PHPExcel\IComparable
      * Set Color
      *
      * @param    Color $pValue
-     * @throws   \PHPExcel\Exception
+     * @throws   \PhpOffice\PhpExcel\Exception
      * @return Font
      */
     public function setColor(Color $pValue = null)

@@ -2,7 +2,7 @@
 /**
  * PHPExcel
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,7 +20,7 @@
  *
  * @category   PHPExcel
  * @package    PHPExcel
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -34,8 +34,8 @@ define('EOL',(PHP_SAPI == 'cli') ? PHP_EOL : '<br />');
 
 date_default_timezone_set('Europe/London');
 
-/** PHPExcel_IOFactory */
-require_once dirname(__FILE__) . '/../Classes/PHPExcel/IOFactory.php';
+/** \PhpOffice\PhpExcel\IOFactory */
+require_once dirname(__FILE__) . '/../src/Bootstrap.php';
 
 
 if (!file_exists("05featuredemo.xlsx")) {
@@ -43,7 +43,7 @@ if (!file_exists("05featuredemo.xlsx")) {
 }
 
 echo date('H:i:s') , " Load from Excel2007 file" , EOL;
-$objReader = PHPExcel_IOFactory::createReader('Excel2007');
+$objReader = \PhpOffice\PhpExcel\IOFactory::createReader('Excel2007');
 $objPHPExcel = $objReader->load("05featuredemo.xlsx");
 
 echo date('H:i:s') , " Iterate worksheets" , EOL;

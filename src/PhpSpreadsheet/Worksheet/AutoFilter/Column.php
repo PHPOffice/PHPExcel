@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel\Worksheet\AutoFilter;
+namespace PhpOffice\PhpExcel\Worksheet\AutoFilter;
 
 /**
- * PHPExcel_Worksheet_AutoFilter_Column
+ * PhpOffice\PhpExcel\Worksheet\AutoFilter\Column
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -22,10 +22,10 @@ namespace PHPExcel\Worksheet\AutoFilter;
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category    PHPExcel
- * @package        PHPExcel_Worksheet
- * @copyright    Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
- * @license        http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
- * @version        ##VERSION##, ##DATE##
+ * @package     PhpOffice\PhpExcel\Worksheet
+ * @copyright   Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @license     http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
+ * @version     ##VERSION##, ##DATE##
  */
 class Column
 {
@@ -71,7 +71,7 @@ class Column
     /**
      * Autofilter
      *
-     * @var \PHPExcel\Worksheet\AutoFilter
+     * @var \PhpOffice\PhpExcel\Worksheet\AutoFilter
      */
     private $parent;
 
@@ -120,9 +120,9 @@ class Column
      * Create a new Column
      *
      *    @param    string                           $pColumn        Column (e.g. A)
-     *    @param    \PHPExcel\Worksheet\AutoFilter  $pParent        Autofilter for this column
+     *    @param    \PhpOffice\PhpExcel\Worksheet\AutoFilter  $pParent        Autofilter for this column
      */
-    public function __construct($pColumn, \PHPExcel\Worksheet\AutoFilter $pParent = null)
+    public function __construct($pColumn, \PhpOffice\PhpExcel\Worksheet\AutoFilter $pParent = null)
     {
         $this->columnIndex = $pColumn;
         $this->parent = $pParent;
@@ -142,7 +142,7 @@ class Column
      *    Set AutoFilter Column Index
      *
      *    @param    string        $pColumn        Column (e.g. A)
-     *    @throws    \PHPExcel\Exception
+     *    @throws    \PhpOffice\PhpExcel\Exception
      *    @return Column
      */
     public function setColumnIndex($pColumn)
@@ -161,7 +161,7 @@ class Column
     /**
      * Get this Column's AutoFilter Parent
      *
-     * @return \PHPExcel\Worksheet\AutoFilter
+     * @return \PhpOffice\PhpExcel\Worksheet\AutoFilter
      */
     public function getParent()
     {
@@ -171,10 +171,10 @@ class Column
     /**
      * Set this Column's AutoFilter Parent
      *
-     * @param \PHPExcel\Worksheet\AutoFilter
+     * @param \PhpOffice\PhpExcel\Worksheet\AutoFilter
      * @return Column
      */
-    public function setParent(\PHPExcel\Worksheet\AutoFilter $pParent = null)
+    public function setParent(\PhpOffice\PhpExcel\Worksheet\AutoFilter $pParent = null)
     {
         $this->parent = $pParent;
 
@@ -195,13 +195,13 @@ class Column
      *    Set AutoFilter Type
      *
      *    @param    string        $pFilterType
-     *    @throws    \PHPExcel\Exception
+     *    @throws    \PhpOffice\PhpExcel\Exception
      *    @return Column
      */
     public function setFilterType($pFilterType = self::AUTOFILTER_FILTERTYPE_FILTER)
     {
         if (!in_array($pFilterType, self::$filterTypes)) {
-            throw new \PHPExcel\Exception('Invalid filter type for column AutoFilter.');
+            throw new \PhpOffice\PhpExcel\Exception('Invalid filter type for column AutoFilter.');
         }
 
         $this->filterType = $pFilterType;
@@ -223,7 +223,7 @@ class Column
      *    Set AutoFilter Multiple Rules And/Or
      *
      *    @param   string        $pJoin        And/Or
-     *    @throws  \PHPExcel\Exception
+     *    @throws  \PhpOffice\PhpExcel\Exception
      *    @return  Column
      */
     public function setJoin($pJoin = self::AUTOFILTER_COLUMN_JOIN_OR)
@@ -231,7 +231,7 @@ class Column
         // Lowercase And/Or
         $pJoin = strtolower($pJoin);
         if (!in_array($pJoin, self::$ruleJoins)) {
-            throw new \PHPExcel\Exception('Invalid rule connection for column AutoFilter.');
+            throw new \PhpOffice\PhpExcel\Exception('Invalid rule connection for column AutoFilter.');
         }
 
         $this->join = $pJoin;
@@ -243,7 +243,7 @@ class Column
      *    Set AutoFilter Attributes
      *
      *    @param    string[]        $pAttributes
-     *    @throws   \PHPExcel\Exception
+     *    @throws   \PhpOffice\PhpExcel\Exception
      *    @return   Column
      */
     public function setAttributes($pAttributes = array())
@@ -258,7 +258,7 @@ class Column
      *
      *    @param    string        $pName        Attribute Name
      *    @param    string        $pValue        Attribute Value
-     *    @throws   \PHPExcel\Exception
+     *    @throws   \PhpOffice\PhpExcel\Exception
      *    @return   Column
      */
     public function setAttribute($pName, $pValue)
@@ -295,7 +295,7 @@ class Column
     /**
      * Get all AutoFilter Column Rules
      *
-     * @throws   \PHPExcel\Exception
+     * @throws   \PhpOffice\PhpExcel\Exception
      * @return   Column\Rule[]
      */
     public function getRules()
@@ -392,7 +392,7 @@ class Column
                     $this->$key = clone $value;
                 }
             } elseif ((is_array($value)) && ($key == 'ruleset')) {
-                //    The columns array of \PHPExcel\Worksheet\AutoFilter objects
+                //    The columns array of \PhpOffice\PhpExcel\Worksheet\AutoFilter objects
                 $this->$key = array();
                 foreach ($value as $k => $v) {
                     $this->$key[$k] = clone $v;

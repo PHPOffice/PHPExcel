@@ -13,7 +13,7 @@ date_default_timezone_set('Europe/London');
 /**
  * PHPExcel
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -31,16 +31,16 @@ date_default_timezone_set('Europe/London');
  *
  * @category   PHPExcel
  * @package    PHPExcel
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
  * @version    ##VERSION##, ##DATE##
  */
 
 /** PHPExcel */
-require_once dirname(__FILE__) . '/../Classes/PHPExcel.php';
+require_once dirname(__FILE__) . '/../src/Bootstrap.php';
 
 
-$objPHPExcel = new PHPExcel();
+$objPHPExcel = new \PhpOffice\PhpExcel\Spreadsheet();
 $objWorksheet = $objPHPExcel->getActiveSheet();
 $objWorksheet->fromArray(
 	array(
@@ -68,9 +68,9 @@ $objWorksheet->fromArray(
 //		Data values
 //		Data Marker
 $dataSeriesLabels = array(
-	new PHPExcel_Chart_DataSeriesValues('String', 'Worksheet!$C$1', NULL, 1),	//	'Budget'
-	new PHPExcel_Chart_DataSeriesValues('String', 'Worksheet!$D$1', NULL, 1),	//	'Forecast'
-	new PHPExcel_Chart_DataSeriesValues('String', 'Worksheet!$E$1', NULL, 1),	//	'Actual'
+	new \PhpOffice\PhpExcel\Chart\DataSeriesValues('String', 'Worksheet!$C$1', NULL, 1),	//	'Budget'
+	new \PhpOffice\PhpExcel\Chart\DataSeriesValues('String', 'Worksheet!$D$1', NULL, 1),	//	'Forecast'
+	new \PhpOffice\PhpExcel\Chart\DataSeriesValues('String', 'Worksheet!$E$1', NULL, 1),	//	'Actual'
 );
 //	Set the X-Axis Labels
 //		Datatype
@@ -80,7 +80,7 @@ $dataSeriesLabels = array(
 //		Data values
 //		Data Marker
 $xAxisTickValues = array(
-	new PHPExcel_Chart_DataSeriesValues('String', 'Worksheet!$A$2:$B$13', NULL, 12),	//	Q1 to Q4 for 2010 to 2012
+	new \PhpOffice\PhpExcel\Chart\DataSeriesValues('String', 'Worksheet!$A$2:$B$13', NULL, 12),	//	Q1 to Q4 for 2010 to 2012
 );
 //	Set the Data values for each data series we want to plot
 //		Datatype
@@ -90,15 +90,15 @@ $xAxisTickValues = array(
 //		Data values
 //		Data Marker
 $dataSeriesValues = array(
-	new PHPExcel_Chart_DataSeriesValues('Number', 'Worksheet!$C$2:$C$13', NULL, 12),
-	new PHPExcel_Chart_DataSeriesValues('Number', 'Worksheet!$D$2:$D$13', NULL, 12),
-	new PHPExcel_Chart_DataSeriesValues('Number', 'Worksheet!$E$2:$E$13', NULL, 12),
+	new \PhpOffice\PhpExcel\Chart\DataSeriesValues('Number', 'Worksheet!$C$2:$C$13', NULL, 12),
+	new \PhpOffice\PhpExcel\Chart\DataSeriesValues('Number', 'Worksheet!$D$2:$D$13', NULL, 12),
+	new \PhpOffice\PhpExcel\Chart\DataSeriesValues('Number', 'Worksheet!$E$2:$E$13', NULL, 12),
 );
 
 //	Build the dataseries
-$series = new PHPExcel_Chart_DataSeries(
-	PHPExcel_Chart_DataSeries::TYPE_BARCHART,		// plotType
-	PHPExcel_Chart_DataSeries::GROUPING_CLUSTERED,	// plotGrouping
+$series = new \PhpOffice\PhpExcel\Chart\DataSeries(
+	\PhpOffice\PhpExcel\Chart\DataSeries::TYPE_BARCHART,		// plotType
+	\PhpOffice\PhpExcel\Chart\DataSeries::GROUPING_CLUSTERED,	// plotGrouping
 	range(0, count($dataSeriesValues)-1),			// plotOrder
 	$dataSeriesLabels,								// plotLabel
 	$xAxisTickValues,								// plotCategory
@@ -106,20 +106,20 @@ $series = new PHPExcel_Chart_DataSeries(
 );
 //	Set additional dataseries parameters
 //		Make it a vertical column rather than a horizontal bar graph
-$series->setPlotDirection(PHPExcel_Chart_DataSeries::DIRECTION_COL);
+$series->setPlotDirection(\PhpOffice\PhpExcel\Chart\DataSeries::DIRECTION_COL);
 
 //	Set the series in the plot area
-$plotArea = new PHPExcel_Chart_PlotArea(NULL, array($series));
+$plotArea = new \PhpOffice\PhpExcel\Chart\PlotArea(NULL, array($series));
 //	Set the chart legend
-$legend = new PHPExcel_Chart_Legend(PHPExcel_Chart_Legend::POSITION_BOTTOM, NULL, false);
+$legend = new \PhpOffice\PhpExcel\Chart\Legend(\PhpOffice\PhpExcel\Chart\Legend::POSITION_BOTTOM, NULL, false);
 
-$title = new PHPExcel_Chart_Title('Test Grouped Column Chart');
-$xAxisLabel = new PHPExcel_Chart_Title('Financial Period');
-$yAxisLabel = new PHPExcel_Chart_Title('Value ($k)');
+$title = new \PhpOffice\PhpExcel\Chart\Title('Test Grouped Column Chart');
+$xAxisLabel = new \PhpOffice\PhpExcel\Chart\Title('Financial Period');
+$yAxisLabel = new \PhpOffice\PhpExcel\Chart\Title('Value ($k)');
 
 
 //	Create the chart
-$chart = new PHPExcel_Chart(
+$chart = new \PhpOffice\PhpExcel\Chart(
 	'chart1',		// name
 	$title,			// title
 	$legend,		// legend
@@ -140,7 +140,7 @@ $objWorksheet->addChart($chart);
 
 // Save Excel 2007 file
 echo date('H:i:s') , " Write to Excel2007 format" , EOL;
-$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+$objWriter = \PhpOffice\PhpExcel\IOFactory::createWriter($objPHPExcel, 'Excel2007');
 $objWriter->setIncludeCharts(TRUE);
 $objWriter->save(str_replace('.php', '.xlsx', __FILE__));
 echo date('H:i:s') , " File written to " , str_replace('.php', '.xlsx', pathinfo(__FILE__, PATHINFO_BASENAME)) , EOL;

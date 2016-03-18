@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel;
+namespace PhpOffice\PhpExcel;
 
 /**
- * PHPExcel\Worksheet
+ * PhpOffice\PhpExcel\Worksheet
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -22,8 +22,8 @@ namespace PHPExcel;
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Worksheet
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @package    PhpOffice\PhpExcel
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -1382,7 +1382,7 @@ class Worksheet implements IComparable
     }
 
     /**
-     * Set default style - should only be used by \PHPExcel\IReader implementations!
+     * Set default style - should only be used by \PhpOffice\PhpExcel\IReader implementations!
      *
      * @deprecated
      * @param Style $pValue
@@ -1655,7 +1655,7 @@ class Worksheet implements IComparable
      *
      * @param integer $pColumn Numeric column coordinate of the cell
      * @param integer $pRow Numeric row coordinate of the cell
-     * @param  integer $pBreak Break type (type of \PHPExcel\Worksheet::BREAK_*)
+     * @param  integer $pBreak Break type (type of \PhpOffice\PhpExcel\Worksheet::BREAK_*)
      * @return Worksheet
      */
     public function setBreakByColumnAndRow($pColumn = 0, $pRow = 1, $pBreak = Worksheet::BREAK_NONE)

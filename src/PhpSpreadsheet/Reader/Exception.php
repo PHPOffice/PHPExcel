@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel\Reader;
+namespace PhpOffice\PhpExcel\Reader;
 
 /**
- * PHPExcel_Reader_Exception
+ * PhpOffice\PhpExcel\Reader\Exception
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -22,12 +22,12 @@ namespace PHPExcel\Reader;
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Reader
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @package    PhpOffice\PhpExcel\Reader
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
-class Exception extends \PHPExcel\Exception
+class Exception extends \PhpOffice\PhpExcel\Exception
 {
     /**
      * Error handler callback

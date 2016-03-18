@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel\Worksheet;
+namespace PhpOffice\PhpExcel\Worksheet;
 
 /**
- * PHPExcel_Worksheet_Dimension
+ * PhpOffice\PhpExcel\Worksheet\Dimension
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -22,8 +22,8 @@ namespace PHPExcel\Worksheet;
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Worksheet
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @package    PhpOffice\PhpExcel\Worksheet
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -106,13 +106,13 @@ abstract class Dimension
      * Value must be between 0 and 7
      *
      * @param  integer $pValue
-     * @throws \PHPExcel\Exception
+     * @throws \PhpOffice\PhpExcel\Exception
      * @return Dimension
      */
     public function setOutlineLevel($pValue)
     {
         if ($pValue < 0 || $pValue > 7) {
-            throw new \PHPExcel\Exception("Outline level must range between 0 and 7.");
+            throw new \PhpOffice\PhpExcel\Exception("Outline level must range between 0 and 7.");
         }
 
         $this->outlineLevel = $pValue;

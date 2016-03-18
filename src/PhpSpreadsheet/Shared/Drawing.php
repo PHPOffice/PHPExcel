@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel\Shared;
+namespace PhpOffice\PhpExcel\Shared;
 
 /**
- * PHPExcel_Shared_Drawing
+ * PhpOffice\PhpExcel\Shared\Drawing
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -22,8 +22,8 @@ namespace PHPExcel\Shared;
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Shared
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @package    PhpOffice\PhpExcel\Shared
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -61,22 +61,22 @@ class Drawing
      * This gives a conversion factor of 7. Also, we assume that pixels and font size are proportional.
      *
      * @param    int $pValue    Value in pixels
-     * @param    \PHPExcel\Style\Font $pDefaultFont    Default font of the workbook
+     * @param    \PhpOffice\PhpExcel\Style\Font $pDefaultFont    Default font of the workbook
      * @return   int            Value in cell dimension
      */
-    public static function pixelsToCellDimension($pValue = 0, \PHPExcel\Style\Font $pDefaultFont)
+    public static function pixelsToCellDimension($pValue = 0, \PhpOffice\PhpExcel\Style\Font $pDefaultFont)
     {
         // Font name and size
         $name = $pDefaultFont->getName();
         $size = $pDefaultFont->getSize();
 
-        if (isset(\PHPExcel\Shared\Font::$defaultColumnWidths[$name][$size])) {
+        if (isset(\PhpOffice\PhpExcel\Shared\Font::$defaultColumnWidths[$name][$size])) {
             // Exact width can be determined
-            $colWidth = $pValue * \PHPExcel\Shared\Font::$defaultColumnWidths[$name][$size]['width'] / \PHPExcel\Shared\Font::$defaultColumnWidths[$name][$size]['px'];
+            $colWidth = $pValue * \PhpOffice\PhpExcel\Shared\Font::$defaultColumnWidths[$name][$size]['width'] / \PhpOffice\PhpExcel\Shared\Font::$defaultColumnWidths[$name][$size]['px'];
         } else {
             // We don't have data for this particular font and size, use approximation by
             // extrapolating from Calibri 11
-            $colWidth = $pValue * 11 * \PHPExcel\Shared\Font::$defaultColumnWidths['Calibri'][11]['width'] / \PHPExcel\Shared\Font::$defaultColumnWidths['Calibri'][11]['px'] / $size;
+            $colWidth = $pValue * 11 * \PhpOffice\PhpExcel\Shared\Font::$defaultColumnWidths['Calibri'][11]['width'] / \PhpOffice\PhpExcel\Shared\Font::$defaultColumnWidths['Calibri'][11]['px'] / $size;
         }
 
         return $colWidth;
@@ -86,22 +86,22 @@ class Drawing
      * Convert column width from (intrinsic) Excel units to pixels
      *
      * @param   float    $pValue        Value in cell dimension
-     * @param   \PHPExcel\Style\Font $pDefaultFont    Default font of the workbook
+     * @param   \PhpOffice\PhpExcel\Style\Font $pDefaultFont    Default font of the workbook
      * @return  int        Value in pixels
      */
-    public static function cellDimensionToPixels($pValue = 0, \PHPExcel\Style\Font $pDefaultFont)
+    public static function cellDimensionToPixels($pValue = 0, \PhpOffice\PhpExcel\Style\Font $pDefaultFont)
     {
         // Font name and size
         $name = $pDefaultFont->getName();
         $size = $pDefaultFont->getSize();
 
-        if (isset(\PHPExcel\Shared\Font::$defaultColumnWidths[$name][$size])) {
+        if (isset(\PhpOffice\PhpExcel\Shared\Font::$defaultColumnWidths[$name][$size])) {
             // Exact width can be determined
-            $colWidth = $pValue * \PHPExcel\Shared\Font::$defaultColumnWidths[$name][$size]['px'] / \PHPExcel\Shared\Font::$defaultColumnWidths[$name][$size]['width'];
+            $colWidth = $pValue * \PhpOffice\PhpExcel\Shared\Font::$defaultColumnWidths[$name][$size]['px'] / \PhpOffice\PhpExcel\Shared\Font::$defaultColumnWidths[$name][$size]['width'];
         } else {
             // We don't have data for this particular font and size, use approximation by
             // extrapolating from Calibri 11
-            $colWidth = $pValue * $size * \PHPExcel\Shared\Font::$defaultColumnWidths['Calibri'][11]['px'] / \PHPExcel\Shared\Font::$defaultColumnWidths['Calibri'][11]['width'] / 11;
+            $colWidth = $pValue * $size * \PhpOffice\PhpExcel\Shared\Font::$defaultColumnWidths['Calibri'][11]['px'] / \PhpOffice\PhpExcel\Shared\Font::$defaultColumnWidths['Calibri'][11]['width'] / 11;
         }
 
         // Round pixels to closest integer

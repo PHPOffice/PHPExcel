@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel\Worksheet\AutoFilter\Column;
+namespace PhpOffice\PhpExcel\Worksheet\AutoFilter\Column;
 
 /**
- * PHPExcel_Worksheet_AutoFilter_Column_Rule
+ * PhpOffice\PhpExcel\Worksheet\AutoFilter\Column\Rule
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -22,8 +22,8 @@ namespace PHPExcel\Worksheet\AutoFilter\Column;
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category    PHPExcel
- * @package     PHPExcel_Worksheet
- * @copyright   Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @package     PhpOffice\PhpExcel\Worksheet
+ * @copyright   Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license     http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version     ##VERSION##, ##DATE##
  */
@@ -226,7 +226,7 @@ class Rule
     /**
      * Autofilter Column
      *
-     * @var \PHPExcel\Worksheet\AutoFilter\Column
+     * @var \PhpOffice\PhpExcel\Worksheet\AutoFilter\Column
      */
     private $parent = null;
 
@@ -264,9 +264,9 @@ class Rule
     /**
      * Create a new Rule
      *
-     * @param \PHPExcel\Worksheet\AutoFilter\Column $pParent
+     * @param \PhpOffice\PhpExcel\Worksheet\AutoFilter\Column $pParent
      */
-    public function __construct(\PHPExcel\Worksheet\AutoFilter\Column $pParent = null)
+    public function __construct(\PhpOffice\PhpExcel\Worksheet\AutoFilter\Column $pParent = null)
     {
         $this->parent = $pParent;
     }
@@ -285,13 +285,13 @@ class Rule
      *    Set AutoFilter Rule Type
      *
      *    @param   string        $pRuleType
-     *    @throws  \PHPExcel\Exception
-     *    @return  \PHPExcel\Worksheet\AutoFilter\Column
+     *    @throws  \PhpOffice\PhpExcel\Exception
+     *    @return  \PhpOffice\PhpExcel\Worksheet\AutoFilter\Column
      */
     public function setRuleType($pRuleType = self::AUTOFILTER_RULETYPE_FILTER)
     {
         if (!in_array($pRuleType, self::$ruleTypes)) {
-            throw new \PHPExcel\Exception('Invalid rule type for column AutoFilter Rule.');
+            throw new \PhpOffice\PhpExcel\Exception('Invalid rule type for column AutoFilter Rule.');
         }
 
         $this->ruleType = $pRuleType;
@@ -313,7 +313,7 @@ class Rule
      *    Set AutoFilter Rule Value
      *
      *    @param    string|string[]        $pValue
-     *    @throws   \PHPExcel\Exception
+     *    @throws   \PhpOffice\PhpExcel\Exception
      *    @return Rule
      */
     public function setValue($pValue = '')
@@ -331,7 +331,7 @@ class Rule
                 }
             }
             if (count($pValue) == 0) {
-                throw new \PHPExcel\Exception('Invalid rule value for column AutoFilter Rule.');
+                throw new \PhpOffice\PhpExcel\Exception('Invalid rule value for column AutoFilter Rule.');
             }
             //    Set the dateTime grouping that we've anticipated
             $this->setGrouping(self::$dateTimeGroups[$grouping]);
@@ -355,7 +355,7 @@ class Rule
      *    Set AutoFilter Rule Operator
      *
      *    @param    string        $pOperator
-     *    @throws   \PHPExcel\Exception
+     *    @throws   \PhpOffice\PhpExcel\Exception
      *    @return   Rule
      */
     public function setOperator($pOperator = self::AUTOFILTER_COLUMN_RULE_EQUAL)
@@ -365,7 +365,7 @@ class Rule
         }
         if ((!in_array($pOperator, self::$operators)) &&
             (!in_array($pOperator, self::$topTenValue))) {
-            throw new \PHPExcel\Exception('Invalid operator for column AutoFilter Rule.');
+            throw new \PhpOffice\PhpExcel\Exception('Invalid operator for column AutoFilter Rule.');
         }
         $this->operator = $pOperator;
 
@@ -386,7 +386,7 @@ class Rule
      *    Set AutoFilter Rule Grouping
      *
      *    @param    string        $pGrouping
-     *    @throws   \PHPExcel\Exception
+     *    @throws   \PhpOffice\PhpExcel\Exception
      *    @return   Rule
      */
     public function setGrouping($pGrouping = null)
@@ -395,7 +395,7 @@ class Rule
             (!in_array($pGrouping, self::$dateTimeGroups)) &&
             (!in_array($pGrouping, self::$dynamicTypes)) &&
             (!in_array($pGrouping, self::$topTenType))) {
-            throw new \PHPExcel\Exception('Invalid rule type for column AutoFilter Rule.');
+            throw new \PhpOffice\PhpExcel\Exception('Invalid rule type for column AutoFilter Rule.');
         }
         $this->grouping = $pGrouping;
 
@@ -408,7 +408,7 @@ class Rule
      *    @param    string                $pOperator
      *    @param    string|string[]        $pValue
      *    @param    string                $pGrouping
-     *    @throws   \PHPExcel\Exception
+     *    @throws   \PhpOffice\PhpExcel\Exception
      *    @return   Rule
      */
     public function setRule($pOperator = self::AUTOFILTER_COLUMN_RULE_EQUAL, $pValue = '', $pGrouping = null)
@@ -428,7 +428,7 @@ class Rule
     /**
      * Get this Rule's AutoFilter Column Parent
      *
-     * @return \PHPExcel\Worksheet\AutoFilter\Column
+     * @return \PhpOffice\PhpExcel\Worksheet\AutoFilter\Column
      */
     public function getParent()
     {
@@ -438,10 +438,10 @@ class Rule
     /**
      * Set this Rule's AutoFilter Column Parent
      *
-     * @param  \PHPExcel\Worksheet\AutoFilter\Column
+     * @param  \PhpOffice\PhpExcel\Worksheet\AutoFilter\Column
      * @return Rule
      */
-    public function setParent(\PHPExcel\Worksheet\AutoFilter\Column $pParent = null)
+    public function setParent(\PhpOffice\PhpExcel\Worksheet\AutoFilter\Column $pParent = null)
     {
         $this->parent = $pParent;
 

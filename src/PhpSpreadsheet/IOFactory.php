@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel;
+namespace PhpOffice\PhpExcel;
 
 /**
- * PHPExcel_IOFactory
+ * PhpOffice\PhpExcel\IOFactory
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -22,8 +22,8 @@ namespace PHPExcel;
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @package    PhpOffice\PhpExcel
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
@@ -37,8 +37,8 @@ class IOFactory
      * @static
      */
     private static $searchLocations = array(
-        array( 'type' => 'IWriter', 'path' => 'PHPExcel/Writer/{0}.php', 'class' => '\\PHPExcel\\Writer\\{0}' ),
-        array( 'type' => 'IReader', 'path' => 'PHPExcel/Reader/{0}.php', 'class' => '\\PHPExcel\\Reader\\{0}' )
+        array( 'type' => 'IWriter', 'path' => 'PhpExcel/Writer/{0}.php', 'class' => '\\PhpOffice\\PhpExcel\\Writer\\{0}' ),
+        array( 'type' => 'IReader', 'path' => 'PhpExcel/Reader/{0}.php', 'class' => '\\PhpOffice\\PhpExcel\\Reader\\{0}' )
     );
 
     /**
@@ -198,7 +198,7 @@ class IOFactory
     {
         $reader = self::createReaderForFile($pFilename);
         $className = get_class($reader);
-        $classType = explode('_', $className);
+        $classType = explode('\\', $className);
         unset($reader);
         return array_pop($classType);
     }

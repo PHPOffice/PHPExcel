@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPExcel\Worksheet;
+namespace PhpOffice\PhpExcel\Worksheet;
 
 /**
- * PHPExcel_Worksheet_CellIterator
+ * PhpOffice\PhpExcel\Worksheet\CellIterator
  *
- * Copyright (c) 2006 - 2015 PHPExcel
+ * Copyright (c) 2006 - 2016 PHPExcel
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -22,17 +22,17 @@ namespace PHPExcel\Worksheet;
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * @category   PHPExcel
- * @package    PHPExcel_Worksheet
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @package    PhpOffice\PhpExcel\Worksheet
+ * @copyright  Copyright (c) 2006 - 2016 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
 abstract class CellIterator
 {
     /**
-     * \PHPExcel\Worksheet to iterate
+     * PhpOffice\PhpExcel\Worksheet to iterate
      *
-     * @var \PHPExcel\Worksheet
+     * @var \PhpOffice\PhpExcel\Worksheet
      */
     protected $subject;
 
@@ -71,7 +71,7 @@ abstract class CellIterator
     /**
      * Validate start/end values for "IterateOnlyExistingCells" mode, and adjust if necessary
      *
-     * @throws \PHPExcel\Exception
+     * @throws \PhpOffice\PhpExcel\Exception
      */
     abstract protected function adjustForExistingOnlyRange();
 
@@ -79,7 +79,7 @@ abstract class CellIterator
      * Set the iterator to loop only existing cells
      *
      * @param    boolean        $value
-     * @throws \PHPExcel\Exception
+     * @throws \PhpOffice\PhpExcel\Exception
      */
     public function setIterateOnlyExistingCells($value = true)
     {

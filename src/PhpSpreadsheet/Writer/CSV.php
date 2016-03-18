@@ -258,7 +258,7 @@ class CSV extends BaseWriter implements IWriter
      * Set whether a separator line should be included as the first line of the file
      *
      * @param    boolean    $pValue        Use separator line? Defaults to false
-     * @return PHPExcel_Writer_CSV
+     * @return \PhpOffice\PhpExcel\Writer\CSV
      */
     public function setIncludeSeparatorLine($pValue = false)
     {

@@ -1,6 +1,6 @@
 <?php
 /**
- * PHPExcel.
+ * PHPExcel..
  *
  * Copyright (c) 2006 - 2015 PHPExcel
  *

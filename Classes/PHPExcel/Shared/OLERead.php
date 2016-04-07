@@ -306,18 +306,34 @@ class PHPExcel_Shared_OLERead
         // FIX: represent numbers correctly on 64-bit system
         // http://sourceforge.net/tracker/index.php?func=detail&aid=1487372&group_id=99160&atid=623334
         // Hacked by Andreas Rehm 2006 to ensure correct result of the <<24 block on 32 and 64bit systems
-        if(!isset($data[$pos + 3])){
-            $error_message = 'EXCEPTION (InvalidBlockException) :: CORRUPT BLOCKS IN XLS FILE'."\nCallStack: \n";
-            foreach(debug_backtrace() as $ik=>$kk){
+        
+        // Handling Errors : Dependancy of code on $pos of $data. Hence added a check to make sure the block is valid/readable.
+        // Throwing Exception incase of any error.
+
+        if (!isset($data[$pos + 3])) {
+            //String $error_message : Declaration only once
+            $error_message = 'EXCEPTION (InvalidBlockException) :: CORRUPT BLOCKS IN XLS FILE'."\nCallStack:\n";
+            
+            foreach (debug_backtrace() as $arr_info_element) {
+                //String $message : Redeclaration
                 $message = '';
-                foreach($kk as $ikk=>$kkk){
-                  if($ikk=='object' || $ikk=='args' || $ikk=='type') continue;
-                  $message .= ''.$ikk.'=>['.$kkk.']'." ";
+                
+                foreach ($arr_info_element as $info_property => $info_value) {
+                    // ignoring the properties [object], [args] and [type] as it causes essay effect while printing error message.
+                    if ($info_property == 'object' || $info_property == 'args' || $info_property == 'type') {
+                        continue;
+                    }
+                    
+                    $message .= $info_property.'=>['.$info_value.'] ';
                 }
-                if(!empty($message)) $error_message.=$message."\n";
+                
+                //add error message
+                if (!empty($message)) {
+                    $error_message .= $message."\n";
+                }
             }
-            throw new InvalidArgumentException($error_message);
-        }//if
+            throw new InvalidArgumentException($error_message);       
+        }
         $_or_24 = ord($data[$pos + 3]);
         if ($_or_24 >= 128) {
             // negative number

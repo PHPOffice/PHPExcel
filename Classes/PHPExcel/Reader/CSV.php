@@ -170,8 +170,10 @@ class PHPExcel_Reader_CSV extends PHPExcel_Reader_Abstract implements PHPExcel_R
 
         if ((strlen(trim($line)) == 5) && (strpos($line, 'sep=') !== 0)) {
             return $this->skipBOM();
+        } elseif ((strlen(trim($line)) == 5) && (strpos($line, 'sep=') === 0)) {
+            $this->delimiter = substr($line, 4, 1);
+            return;
         }
-        $this->delimiter = substr($line, 4, 1);
     }
 
     /**

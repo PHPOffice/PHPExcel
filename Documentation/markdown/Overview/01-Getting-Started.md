@@ -149,8 +149,6 @@ Thanks to peterrlynch for the following advice on resolving issues between the [
    [http://openxmldeveloper.org][18]
  - __French PHPExcel tutorial__  
    [http://g-ernaelsten.developpez.com/tutoriels/excel2007/][19]
- - __Russian PHPExcel Blog Postings__  
-   [http://www.web-junior.net/sozdanie-excel-fajjlov-s-pomoshhyu-phpexcel/][20]
  - __A Japanese-language introduction to PHPExcel__  
   [http://journal.mycom.co.jp/articles/2009/03/06/phpexcel/index.html][21]
 

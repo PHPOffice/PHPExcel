@@ -1191,7 +1191,7 @@ class Chart extends WriterPart
                     $objWriter->startElement('c:cat');
                 }
 
-                $this->writePlotSeriesValues($plotSeriesCategory, $objWriter, $groupType, 'str');
+                $this->writePlotSeriesValues($plotSeriesCategory, $objWriter, $groupType);
                 $objWriter->endElement();
             }
 
@@ -1205,7 +1205,7 @@ class Chart extends WriterPart
                     $objWriter->startElement('c:val');
                 }
 
-                $this->writePlotSeriesValues($plotSeriesValues, $objWriter, $groupType, 'num');
+                $this->writePlotSeriesValues($plotSeriesValues, $objWriter, $groupType);
                 $objWriter->endElement();
             }
 
@@ -1265,10 +1265,22 @@ class Chart extends WriterPart
      *
      * @throws  \PHPExcel\Writer\Exception
      */
-    private function writePlotSeriesValues($plotSeriesValues, $objWriter, $groupType, $dataType = 'str')
+    private function writePlotSeriesValues($plotSeriesValues, $objWriter, $groupType, $dataType = false)
     {
         if (is_null($plotSeriesValues)) {
             return;
+        }
+        
+        if (!$dataType) {
+            switch ($plotSeriesValues->getDataType()) {
+                case DataSeriesValues::DATASERIES_TYPE_NUMBER:
+                    $dataType = 'num';
+                    break;
+                case DataSeriesValues::DATASERIES_TYPE_STRING:
+                default:
+                    $dataType = 'str';
+                    break;
+            }
         }
 
         if ($plotSeriesValues->isMultiLevelSeries()) {

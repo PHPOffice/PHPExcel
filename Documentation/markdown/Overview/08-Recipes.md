@@ -765,6 +765,22 @@ $objValidation->setFormula1(10);
 $objValidation->setFormula2(20);
 ```
 
+This validation will limit the length of text that can be entered in a cell to 6 characters.
+
+```
+$objValidation = $objPHPExcel->getActiveSheet()->getCell('B9')->getDataValidation();
+$objValidation->setType( PHPExcel_Cell_DataValidation::TYPE_TEXTLENGTH );
+$objValidation->setErrorStyle( PHPExcel_Cell_DataValidation::STYLE_STOP );
+$objValidation->setAllowBlank(true);
+$objValidation->setShowInputMessage(true);
+$objValidation->setShowErrorMessage(true);
+$objValidation->setErrorTitle('Input error');
+$objValidation->setError('Text exceeds maximum length');
+$objValidation->setPromptTitle('Allowed input');
+$objValidation->setPrompt('Maximum text length is 6 characters.');
+$objValidation->setFormula1(6);
+```
+
 The following piece of code only allows an item picked from a list of data to be entered in cell B3:
 
 ```php

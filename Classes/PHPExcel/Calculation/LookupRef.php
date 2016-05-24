@@ -281,6 +281,7 @@ class PHPExcel_Calculation_LookupRef
         }
 
         $pCell->getHyperlink()->setUrl($linkURL);
+        $pCell->getHyperlink()->setTooltip($displayName);
 
         return $displayName;
     }

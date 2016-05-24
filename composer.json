@@ -32,7 +32,7 @@
     },
     "recommend": {
         "ext-zip": "*",
-        "ext-gd2": "*"
+        "ext-gd": "*"
     },
     "autoload": {
         "psr-0": {

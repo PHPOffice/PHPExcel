@@ -65,7 +65,7 @@ class PHPExcel_Worksheet_Column
     /**
      * Get column index
      *
-     * @return int
+     * @return string
      */
     public function getColumnIndex()
     {

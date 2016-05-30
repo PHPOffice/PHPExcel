@@ -2409,10 +2409,11 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
      * @param mixed $nullValue Value in source array that stands for blank cell
      * @param string $startCell Insert array starting from this cell address as the top left coordinate
      * @param boolean $strictNullComparison Apply strict comparison when testing for null values in the array
+     * @param array $setColumnsToText array of the columns we need to set as text (eg A,B,C)
      * @throws PHPExcel_Exception
      * @return PHPExcel_Worksheet
      */
-    public function fromArray($source = null, $nullValue = null, $startCell = 'A1', $strictNullComparison = false)
+    public function fromArray($source = null, $nullValue = null, $startCell = 'A1', $strictNullComparison = false, $setColumnsToText = array())
     {
         if (is_array($source)) {
             //    Convert a 1-D array to 2-D (for ease of looping)
@@ -2431,6 +2432,11 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
                         if ($cellValue !== $nullValue) {
                             // Set cell value
                             $this->getCell($currentColumn . $startRow)->setValue($cellValue);
+                        }
+                    } else if (!empty($setColumnsToText) && (in_array($currentColumn,$setColumnsToText))) {
+                        if ($cellValue != $nullValue) {
+                            // Set cell value explicitly to string to avoid string '8524510E4' converting to '85245100000'
+                            $this->getCell($currentColumn . $startRow)->setValueExplicit($cellValue,PHPExcel_Cell_DataType::TYPE_STRING);
                         }
                     } else {
                         if ($cellValue != $nullValue) {

@@ -87,11 +87,11 @@ class PHPExcel_Writer_Excel2007_Chart extends PHPExcel_Writer_Excel2007_WriterPa
         $this->writeLegend($pChart->getLegend(), $objWriter);
 
         $objWriter->startElement('c:plotVisOnly');
-        $objWriter->writeAttribute('val', 1);
+        $objWriter->writeAttribute('val', ($pChart->getPlotVisibleOnly()) ? 1 : 0);
         $objWriter->endElement();
 
         $objWriter->startElement('c:dispBlanksAs');
-        $objWriter->writeAttribute('val', "gap");
+        $objWriter->writeAttribute('val', $pChart->getDisplayBlanksAs());
         $objWriter->endElement();
 
         $objWriter->startElement('c:showDLblsOverMax');

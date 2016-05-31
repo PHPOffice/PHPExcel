@@ -193,7 +193,7 @@ class PHPExcel_Chart
         $this->yAxisLabel = $yAxisLabel;
         $this->plotArea = $plotArea;
         $this->plotVisibleOnly = $plotVisibleOnly;
-        $this->displayBlanksAs = (in_array($displayBlanksAs,$this->displayBlanksAsValues)) ? $displayBlanksAs : self::DISPLAY_BLANKS_AS_GAP;
+        $this->displayBlanksAs = (in_array($displayBlanksAs,self::$displayBlanksAsValues)) ? $displayBlanksAs : self::DISPLAY_BLANKS_AS_GAP;
         $this->xAxis = $xAxis;
         $this->yAxis = $yAxis;
         $this->majorGridlines = $majorGridlines;
@@ -377,7 +377,7 @@ class PHPExcel_Chart
      */
     public function setDisplayBlanksAs($displayBlanksAs = self::DISPLAY_BLANKS_AS_GAP)
     {
-        $this->displayBlanksAs = (in_array($displayBlanksAs,$this->displayBlanksAsValues)) ? $displayBlanksAs : self::DISPLAY_BLANKS_AS_GAP;
+        $this->displayBlanksAs = (in_array($displayBlanksAs,self::$displayBlanksAsValues)) ? $displayBlanksAs : self::DISPLAY_BLANKS_AS_GAP;
     }
 
 

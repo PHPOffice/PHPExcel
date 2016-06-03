@@ -98,7 +98,7 @@ class PHPExcel_Calculation_DateTime
                 (PHPExcel_Calculation_Functions::getCompatibilityMode() == PHPExcel_Calculation_Functions::COMPATIBILITY_GNUMERIC)) {
                 return PHPExcel_Calculation_Functions::VALUE();
             }
-            if ((is_object($dateValue)) && ($dateValue instanceof DateTime)) {
+            if ((is_object($dateValue)) && ($dateValue instanceof DateTimeInterface)) {
                 $dateValue = PHPExcel_Shared_Date::PHPToExcel($dateValue);
             } else {
                 $saveReturnDateType = PHPExcel_Calculation_Functions::getReturnDateType();

@@ -36,13 +36,6 @@ define('EOL',(PHP_SAPI == 'cli') ? PHP_EOL : '<br />');
 /** Include PHPExcel */
 require_once dirname(__FILE__) . '/../Classes/PHPExcel.php';
 
-
-
-$count = 39;
-$columnLetter = PHPExcel_Cell::stringFromColumnIndex($count); 
-
-var_dump($columnLetter);
-die();
 // Create new PHPExcel object
 echo date('H:i:s') , " Create new PHPExcel object" , EOL;
 $objPHPExcel = new PHPExcel();

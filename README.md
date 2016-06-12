@@ -15,6 +15,13 @@ To install with composer:
 composer require phpoffice/phpexcel
 ```
 
+So, use code like this to autoload the PHPExcel library classes
+
+```php
+use PHPExcel;
+use PHPExcel_IOFactory;
+```
+
 ## File Formats supported
 
 ### Reading

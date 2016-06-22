@@ -306,7 +306,7 @@ class PHPExcel_Chart_DataSeriesValues
             } else {
                 $cellRange = explode('!', $this->dataSource);
                 if (count($cellRange) > 1) {
-                    list(, $cellRange) = $cellRange;
+                    list($unusedParamA, $cellRange) = $cellRange;
                 }
 
                 $dimensions = PHPExcel_Cell::rangeDimension(str_replace('$', '', $cellRange));

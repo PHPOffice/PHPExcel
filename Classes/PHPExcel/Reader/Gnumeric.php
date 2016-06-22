@@ -289,7 +289,7 @@ class PHPExcel_Reader_Gnumeric extends PHPExcel_Reader_Abstract implements PHPEx
                             $docProps->setModified($creationDate);
                             break;
                         case 'user-defined':
-                            list(, $attrName) = explode(':', $attributes['name']);
+                            list($unusedParamA, $attrName) = explode(':', $attributes['name']);
                             switch ($attrName) {
                                 case 'publisher':
                                     $docProps->setCompany(trim($propertyValue));

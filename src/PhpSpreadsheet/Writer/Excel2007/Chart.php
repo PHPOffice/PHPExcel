@@ -44,8 +44,9 @@ class Chart extends WriterPart
      *
      * @param  \PHPExcel\Chart $pChart
      *
-     * @return  string            XML Output
-     * @throws  \PHPExcel\Writer\Exception
+     * @param bool $calculateCellValues
+     * @return string XML Output
+     * @throws \PHPExcel\Writer\Exception
      */
     public function writeChart(\PHPExcel\Chart $pChart = null, $calculateCellValues = true)
     {
@@ -220,11 +221,14 @@ class Chart extends WriterPart
      * @param  PlotArea $plotArea
      * @param  Title $xAxisLabel
      * @param  Title $yAxisLabel
-     * @param  Axis $xAxis
-     * @param  Axis $yAxis
      * @param  \PHPExcel\Shared\XMLWriter $objWriter XML Writer
      *
-     * @throws  \PHPExcel\Writer\Exception
+     * @param \PHPExcel\Worksheet $pSheet
+     * @param  Axis $xAxis
+     * @param  Axis $yAxis
+     * @param GridLines $majorGridlines
+     * @param GridLines $minorGridlines
+     * @throws \PHPExcel\Writer\Exception
      */
     private function writePlotArea(PlotArea $plotArea, Title $xAxisLabel, Title $yAxisLabel, $objWriter, \PHPExcel\Worksheet $pSheet, Axis $xAxis, Axis $yAxis, GridLines $majorGridlines, GridLines $minorGridlines)
     {
@@ -414,7 +418,8 @@ class Chart extends WriterPart
      * @param  string $id2
      * @param  boolean $isMultiLevelSeries
      *
-     * @throws  \PHPExcel\Writer\Exception
+     * @param $xAxis
+     * @param $yAxis
      */
     private function writeCategoryAxis($objWriter, PlotArea $plotArea, $xAxisLabel, $groupType, $id1, $id2, $isMultiLevelSeries, $xAxis, $yAxis)
     {
@@ -536,7 +541,10 @@ class Chart extends WriterPart
      * @param  string $id2
      * @param  boolean $isMultiLevelSeries
      *
-     * @throws  \PHPExcel\Writer\Exception
+     * @param $xAxis
+     * @param $yAxis
+     * @param $majorGridlines
+     * @param $minorGridlines
      */
     private function writeValueAxis($objWriter, PlotArea $plotArea, $yAxisLabel, $groupType, $id1, $id2, $isMultiLevelSeries, $xAxis, $yAxis, $majorGridlines, $minorGridlines)
     {

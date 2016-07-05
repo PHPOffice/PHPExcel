@@ -408,7 +408,7 @@ class Chart extends WriterPart
      *
      * @param  \PHPExcel\Shared\XMLWriter $objWriter XML Writer
      * @param  PlotArea $plotArea
-     * @param  PHPExcel_Chart_Title $xAxisLabel
+     * @param  \PHPExcel\Chart\Title $xAxisLabel
      * @param  string $groupType Chart type
      * @param  string $id1
      * @param  string $id2
@@ -529,8 +529,8 @@ class Chart extends WriterPart
      * Write Value Axis
      *
      * @param  \PHPExcel\Shared\XMLWriter $objWriter XML Writer
-     * @param  PHPExcel_Chart_PlotArea $plotArea
-     * @param  PHPExcel_Chart_Title $yAxisLabel
+     * @param  \PHPExcel\Chart\PlotArea $plotArea
+     * @param  \PHPExcel\Chart\Title $yAxisLabel
      * @param  string $groupType Chart type
      * @param  string $id1
      * @param  string $id2
@@ -1015,7 +1015,7 @@ class Chart extends WriterPart
     /**
      * Get the data series type(s) for a chart plot series
      *
-     * @param  PHPExcel_Chart_PlotArea $plotArea
+     * @param  \PHPExcel\Chart\PlotArea $plotArea
      *
      * @return  string|array
      * @throws  \PHPExcel\Writer\Exception
@@ -1260,10 +1260,9 @@ class Chart extends WriterPart
      * @param  DataSeriesValues $plotSeriesValues
      * @param  \PHPExcel\Shared\XMLWriter $objWriter XML Writer
      * @param  string $groupType Type of plot for dataseries
-     * @param  string $dataType Datatype of series values
-     * @param  \PHPExcel\Worksheet $pSheet
+     * @param bool|string $dataType Datatype of series values
+     * @internal param \PHPExcel\Worksheet $pSheet
      *
-     * @throws  \PHPExcel\Writer\Exception
      */
     private function writePlotSeriesValues($plotSeriesValues, $objWriter, $groupType, $dataType = false)
     {

@@ -101,7 +101,7 @@ class PHPExcel_Writer_Excel2007_Chart extends
     $this->_writeLegend($pChart->getLegend(), $objWriter);
 
     $objWriter->startElement('c:plotVisOnly');
-    $objWriter->writeAttribute('val', 1);
+    $objWriter->writeAttribute('val', $pChart->getPlotVisibleOnly());
     $objWriter->endElement();
 
     $objWriter->startElement('c:dispBlanksAs');

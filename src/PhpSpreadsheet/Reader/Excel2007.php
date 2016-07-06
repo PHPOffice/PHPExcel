@@ -2,6 +2,9 @@
 
 namespace PHPExcel\Reader;
 
+use XMLReader;
+use ZipArchive as ZIPARCHIVE;
+
 /**
  * PHPExcel_Reader_Excel2007
  *

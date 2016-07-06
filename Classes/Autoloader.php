@@ -172,12 +172,7 @@ class Autoloader
             //      ) . DIRECTORY_SEPARATOR;
             //  }
             $fileName = str_replace(array('\\','_'), DIRECTORY_SEPARATOR, $className) . $this->fileExtension;
-echo 'Filename: '; var_dump($fileName);
-$fullFilename = ($this->includePath !== null ? $this->includePath . DIRECTORY_SEPARATOR : '') . $fileName;
-echo 'Full Filename: '; var_dump($fullFilename);
-if (!file_exists($fullFilename)) {
-    var_dump(debug_backtrace());
-}
+            $fullFilename = ($this->includePath !== null ? $this->includePath . DIRECTORY_SEPARATOR : '') . $fileName;
             require ($this->includePath !== null ? $this->includePath . DIRECTORY_SEPARATOR : '') . $fileName;
         }
     }

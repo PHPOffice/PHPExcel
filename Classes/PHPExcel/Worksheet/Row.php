@@ -77,7 +77,7 @@ class PHPExcel_Worksheet_Row
      *
      * @param    string                $startColumn    The column address at which to start iterating
      * @param    string                $endColumn        Optionally, the column address at which to stop iterating
-     * @return PHPExcel_Worksheet_CellIterator
+     * @return PHPExcel_Worksheet_RowCellIterator
      */
     public function getCellIterator($startColumn = 'A', $endColumn = null)
     {

@@ -90,10 +90,10 @@ class PHPExcel_Writer_PDF_DomPDF extends PHPExcel_Writer_PDF_Core implements PHP
 
 
         //  Create PDF
-        $pdf = new DOMPDF();
-        $pdf->set_paper(strtolower($paperSize), $orientation);
+        $pdf = new \Dompdf\Dompdf();
+        $pdf->setPaper(strtolower($paperSize), $orientation);
 
-        $pdf->load_html(
+        $pdf->loadHtml(
             $this->generateHTMLHeader(false) .
             $this->generateSheetData() .
             $this->generateHTMLFooter()

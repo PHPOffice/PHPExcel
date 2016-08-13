@@ -89,6 +89,7 @@ $series = new PHPExcel_Chart_DataSeries(
 	$dataSeriesLabels,								// plotLabel
 	$xAxisTickValues,								// plotCategory
 	$dataSeriesValues,								// plotValues
+    NULL,                                           // plotDirection
 	NULL,											// smooth line
 	PHPExcel_Chart_DataSeries::STYLE_LINEMARKER		// plotStyle
 );

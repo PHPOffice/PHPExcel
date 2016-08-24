@@ -27,6 +27,13 @@ namespace PHPExcel\Reader;
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  * @version    ##VERSION##, ##DATE##
  */
+use DOMDocument;
+use DOMElement;
+use DOMNode;
+use DOMText;
+use PHPExcel\Cell;
+use PHPExcel\Spreadsheet;
+
 /** PHPExcel root directory */
 class HTML extends BaseReader implements IReader
 {
@@ -127,7 +134,7 @@ class HTML extends BaseReader implements IReader
         //    Reading 2048 bytes should be enough to validate that the format is HTML
         $data = fread($this->fileHandle, 2048);
         if ((strpos($data, '<') !== false) &&
-                (strlen($data) !== strlen(strip_tags($data)))) {
+            (strlen($data) !== strlen(strip_tags($data)))) {
             return true;
         }
 
@@ -144,7 +151,7 @@ class HTML extends BaseReader implements IReader
     public function load($pFilename)
     {
         // Create new PHPExcel
-        $objPHPExcel = new PHPExcel();
+        $objPHPExcel = new Spreadsheet();
 
         // Load into this instance
         return $this->loadIntoExisting($pFilename, $objPHPExcel);
@@ -285,7 +292,7 @@ class HTML extends BaseReader implements IReader
                             $this->flushCell($sheet, $column, $row, $cellContent);
                         }
                         ++$row;
-                        // Add a break after a horizontal rule, simply by allowing the code to dropthru
+                    // Add a break after a horizontal rule, simply by allowing the code to dropthru
                     case 'br':
                         if ($this->tableLevel > 0) {
                             //    If we're inside a table, replace with a \n
@@ -421,7 +428,7 @@ class HTML extends BaseReader implements IReader
                                 ++$columnTo;
                             }
                             $range = $column . $row . ':' . $columnTo . ($row + $attributeArray['rowspan'] - 1);
-                            foreach (\PHPExcel\Cell::extractAllCellReferencesInRange($range) as $value) {
+                            foreach (Cell::extractAllCellReferencesInRange($range) as $value) {
                                 $this->rowspan[$value] = true;
                             }
                             $sheet->mergeCells($range);
@@ -429,7 +436,7 @@ class HTML extends BaseReader implements IReader
                         } elseif (isset($attributeArray['rowspan'])) {
                             //create merging rowspan
                             $range = $column . $row . ':' . $column . ($row + $attributeArray['rowspan'] - 1);
-                            foreach (\PHPExcel\Cell::extractAllCellReferencesInRange($range) as $value) {
+                            foreach (Cell::extractAllCellReferencesInRange($range) as $value) {
                                 $this->rowspan[$value] = true;
                             }
                             $sheet->mergeCells($range);
@@ -466,7 +473,7 @@ class HTML extends BaseReader implements IReader
      * @return PHPExcel
      * @throws Exception
      */
-    public function loadIntoExisting($pFilename, PHPExcel $objPHPExcel)
+    public function loadIntoExisting($pFilename, Spreadsheet $objPHPExcel)
     {
         // Open file to validate
         $this->openFile($pFilename);
@@ -484,7 +491,7 @@ class HTML extends BaseReader implements IReader
         $objPHPExcel->setActiveSheetIndex($this->sheetIndex);
 
         //    Create a new DOM object
-        $dom = new domDocument;
+        $dom = new DOMDocument();
         //    Reload the HTML file into the DOM object
         $loaded = $dom->loadHTML(mb_convert_encoding($this->securityScanFile($pFilename), 'HTML-ENTITIES', 'UTF-8'));
         if ($loaded === false) {

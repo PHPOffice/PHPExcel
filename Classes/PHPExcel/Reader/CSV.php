@@ -271,10 +271,9 @@ class PHPExcel_Reader_CSV extends PHPExcel_Reader_Abstract implements PHPExcel_R
 					// Unescape enclosures
 					$rowDatum = str_replace($escapeEnclosures, $this->_enclosure, $rowDatum);
 
-					// Convert encoding if necessary
-					if ($this->_inputEncoding !== 'UTF-8') {
-						$rowDatum = PHPExcel_Shared_String::ConvertEncoding($rowDatum, 'UTF-8', $this->_inputEncoding);
-					}
+          // always convert $rowDatum to utf8
+          $rowDatum = utf8_encode($rowDatum);
+
 
 					// Set cell value
 					$sheet->getCell($columnLetter . $currentRow)->setValue($rowDatum);

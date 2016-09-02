@@ -100,7 +100,7 @@ class PHPExcel_Worksheet_Drawing extends PHPExcel_Worksheet_BaseDrawing implemen
     public function setPath($pValue = '', $pVerifyFile = true)
     {
         if ($pVerifyFile) {
-            if (file_exists($pValue)) {
+            if (file_exists($pValue) || ( strpos($pValue,'http') === 0 && $this->getUrlState($pValue))) {
                 $this->path = $pValue;
 
                 if ($this->width == 0 && $this->height == 0) {
@@ -114,6 +114,29 @@ class PHPExcel_Worksheet_Drawing extends PHPExcel_Worksheet_BaseDrawing implemen
             $this->path = $pValue;
         }
         return $this;
+    }
+    /**
+     * To test wether the url exists.
+     */
+    private function getUrlState($url)
+    {
+        if($url==null || $url=='')
+            return false;
+        $ch = curl_init (); 
+        curl_setopt($ch, CURLOPT_URL, $url); 
+        curl_setopt($ch, CURLOPT_TIMEOUT, 3); 
+        curl_setopt($ch, CURLOPT_HEADER, FALSE); 
+        curl_setopt($ch, CURLOPT_NOBODY, true); 
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE); 
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, FALSE); 
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET'); 
+        curl_exec($ch); 
+        $httpCode = curl_getinfo($ch,CURLINFO_HTTP_CODE);
+        curl_close($ch);
+        if($httpCode == 200)
+            return true;
+        else
+            return false;
     }
 
     /**

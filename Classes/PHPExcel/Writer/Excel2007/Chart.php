@@ -540,8 +540,6 @@ class PHPExcel_Writer_Excel2007_Chart extends PHPExcel_Writer_Excel2007_WriterPa
         }
 
         $objWriter->startElement('c:scaling');
-        $objWriter->startElement('c:orientation');
-        $objWriter->writeAttribute('val', $xAxis->getAxisOptionsProperty('orientation'));
 
         if (!is_null($xAxis->getAxisOptionsProperty('maximum'))) {
             $objWriter->startElement('c:max');
@@ -554,6 +552,10 @@ class PHPExcel_Writer_Excel2007_Chart extends PHPExcel_Writer_Excel2007_WriterPa
             $objWriter->writeAttribute('val', $xAxis->getAxisOptionsProperty('minimum'));
             $objWriter->endElement();
         }
+
+        $objWriter->startElement('c:orientation');
+        $objWriter->writeAttribute('val', $xAxis->getAxisOptionsProperty('orientation'));
+
 
         $objWriter->endElement();
         $objWriter->endElement();

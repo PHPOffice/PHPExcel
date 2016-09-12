@@ -47,30 +47,31 @@ $objPHPExcel = new PHPExcel();
 // Set document properties
 echo date('H:i:s') , " Set document properties" , EOL;
 $objPHPExcel->getProperties()->setCreator("Maarten Balliauw")
-							 ->setLastModifiedBy("Maarten Balliauw")
-							 ->setTitle("Office 2007 XLSX Test Document")
-							 ->setSubject("Office 2007 XLSX Test Document")
-							 ->setDescription("Test document for Office 2007 XLSX, generated using PHP classes.")
-							 ->setKeywords("office 2007 openxml php")
-							 ->setCategory("Test result file");
+	->setLastModifiedBy("Maarten Balliauw")
+	->setTitle("Office 2007 XLSX Test Document")
+	->setSubject("Office 2007 XLSX Test Document")
+	->setDescription("Test document for Office 2007 XLSX, generated using PHP classes.")
+	->setKeywords("office 2007 openxml php")
+	->setCategory("Test result file");
 
 
 // Create a first sheet
 echo date('H:i:s') , " Add data" , EOL;
 $objPHPExcel->setActiveSheetIndex(0);
 $objPHPExcel->getActiveSheet()->setCellValue('A1', "Cell B3 and B5 contain data validation...")
-                              ->setCellValue('A3', "Number:")
-                              ->setCellValue('B3', "10")
-                              ->setCellValue('A5', "List:")
-                              ->setCellValue('B5', "Item A")
-                              ->setCellValue('A7', "List #2:")
-                              ->setCellValue('B7', "Item #2")
-                              ->setCellValue('D2', "Item #1")
-                              ->setCellValue('D3', "Item #2")
-                              ->setCellValue('D4', "Item #3")
-                              ->setCellValue('D5', "Item #4")
-                              ->setCellValue('D6', "Item #5")
-                              ;
+    ->setCellValue('A3', "Number:")
+    ->setCellValue('B3', "10")
+    ->setCellValue('A5', "List:")
+    ->setCellValue('B5', "Item A")
+    ->setCellValue('A7', "List #2:")
+    ->setCellValue('B7', "Item #2")
+    ->setCellValue('D2', "Item #1")
+    ->setCellValue('D3', "Item #2")
+    ->setCellValue('D4', "Item #3")
+    ->setCellValue('D5', "Item #4")
+    ->setCellValue('D6', "Item #5")
+    ->setCellValue('A9', 'Text:')
+    ;
 
 
 // Set data validation
@@ -113,6 +114,18 @@ $objValidation->setError('Value is not in list.');
 $objValidation->setPromptTitle('Pick from list');
 $objValidation->setPrompt('Please pick a value from the drop-down list.');
 $objValidation->setFormula1('$D$2:$D$6');	// Make sure NOT to put a range of cells or a formula between " and "  !!!
+
+$objValidation = $objPHPExcel->getActiveSheet()->getCell('B9')->getDataValidation();
+$objValidation->setType( PHPExcel_Cell_DataValidation::TYPE_TEXTLENGTH );
+$objValidation->setErrorStyle( PHPExcel_Cell_DataValidation::STYLE_STOP );
+$objValidation->setAllowBlank(true);
+$objValidation->setShowInputMessage(true);
+$objValidation->setShowErrorMessage(true);
+$objValidation->setErrorTitle('Input error');
+$objValidation->setError('Text exceeds maximum length');
+$objValidation->setPromptTitle('Allowed input');
+$objValidation->setPrompt('Maximum text length is 6 characters.');
+$objValidation->setFormula1(6);
 
 
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet

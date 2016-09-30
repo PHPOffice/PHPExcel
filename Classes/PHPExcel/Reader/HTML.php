@@ -492,7 +492,16 @@ class PHPExcel_Reader_HTML extends PHPExcel_Reader_Abstract implements PHPExcel_
         //    Create a new DOM object
         $dom = new domDocument;
         //    Reload the HTML file into the DOM object
-        $loaded = $dom->loadHTML(mb_convert_encoding($this->securityScanFile($pFilename), 'HTML-ENTITIES', 'UTF-8'));
+        $html = mb_convert_encoding($this->securityScanFile($pFilename), 'HTML-ENTITIES', 'UTF-8');
+        $html = preg_replace(array( // fix Downlevel Revealed conditional comments to valid DOM comments
+        		'@<!(\[if .*?\])>@s', // https://css-tricks.com/downlevel-hidden-downlevel-revealed/
+        		'@<!(\[endif\])>@s',
+        	), array(
+        			'<!--\1><!-->',
+        			'<!--<!\1-->',
+        	), $html);
+        $loaded = $dom->loadHTML($html);
+        unset($html);
         if ($loaded === false) {
             throw new PHPExcel_Reader_Exception('Failed to load ' . $pFilename . ' as a DOM Document');
         }

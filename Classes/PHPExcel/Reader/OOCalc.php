@@ -523,8 +523,7 @@ class PHPExcel_Reader_OOCalc extends PHPExcel_Reader_Abstract implements PHPExce
                                     // text:p newlines, but text:span does not.
                                     // Also, here we assume there is no text data is span fields are specified, since
                                     // we have no way of knowing proper positioning anyway.
-                                    foreach ($cellDataText->p as $pData)
-                                    {
+                                    foreach ($cellDataText->p as $pData) {
                                         if (isset($pData->span)) {
                                             // span sections do not newline, so we just create one large string here
                                             $spanSection = "";

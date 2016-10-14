@@ -49,6 +49,11 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
      * @var PHPExcel_Reader_Excel2007_Theme
      */
     private static $theme = null;
+    
+    /**
+     * TODO
+     */
+    private $readDataOnly = false;
 
     /**
      * Create a new PHPExcel_Reader_Excel2007 instance

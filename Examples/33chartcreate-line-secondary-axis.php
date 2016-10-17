@@ -62,6 +62,9 @@ $objWorksheet->fromArray(
 $dataSeriesLabels = array(
 	new PHPExcel_Chart_DataSeriesValues('String', 'Worksheet!$B$1', NULL, 1),	//	2010
 	new PHPExcel_Chart_DataSeriesValues('String', 'Worksheet!$C$1', NULL, 1),	//	2011
+);
+
+$dataSeriesSeconddaryLabels = array(
 	new PHPExcel_Chart_DataSeriesValues('String', 'Worksheet!$D$1', NULL, 1),	//	2012
 );
 //	Set the X-Axis Labels
@@ -84,6 +87,9 @@ $xAxisTickValues = array(
 $dataSeriesValues = array(
 	new PHPExcel_Chart_DataSeriesValues('Number', 'Worksheet!$B$2:$B$5', NULL, 4),
 	new PHPExcel_Chart_DataSeriesValues('Number', 'Worksheet!$C$2:$C$5', NULL, 4),
+);
+
+$dataSeriesSecondaryValues = array(
 	new PHPExcel_Chart_DataSeriesValues('Number', 'Worksheet!$D$2:$D$5', NULL, 4),
 );
 
@@ -97,15 +103,24 @@ $series = new PHPExcel_Chart_DataSeries(
 	$dataSeriesValues								// plotValues
 );
 
+$seriesSecondary = new PHPExcel_Chart_DataSeries(
+	PHPExcel_Chart_DataSeries::TYPE_LINECHART,		// plotType
+	PHPExcel_Chart_DataSeries::GROUPING_STACKED,	// plotGrouping
+	range(0, count($dataSeriesSecondaryValues)-1),	// plotOrder
+	$dataSeriesSeconddaryLabels,					// plotLabel
+	$xAxisTickValues,								// plotCategory
+	$dataSeriesSecondaryValues						// plotValues
+);
+
 //	Set the series in the plot area
-$plotArea = new PHPExcel_Chart_PlotArea(NULL, array($series));
+$plotArea = new PHPExcel_Chart_PlotArea(NULL, array($series),array($seriesSecondary));
 //	Set the chart legend
 $legend = new PHPExcel_Chart_Legend(PHPExcel_Chart_Legend::POSITION_TOPRIGHT, NULL, false);
 
 $title = new PHPExcel_Chart_Title('Test Stacked Line Chart');
 $yAxisLabel = new PHPExcel_Chart_Title('Value ($k)');
 
-
+$secondaryYAxisLabel = new PHPExcel_Chart_Title('Value ($M)');
 //	Create the chart
 $chart = new PHPExcel_Chart(
 	'chart1',		// name
@@ -115,7 +130,12 @@ $chart = new PHPExcel_Chart(
 	true,			// plotVisibleOnly
 	0,				// displayBlanksAs
 	NULL,			// xAxisLabel
-	$yAxisLabel		// yAxisLabel
+	$yAxisLabel,	// yAxisLabel
+    null,
+    null,
+    null,
+    null,
+    $secondaryYAxisLabel    // secondaryYAxisLabel
 );
 
 //	Set the position where the chart should appear in the worksheet

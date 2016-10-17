@@ -96,6 +96,13 @@ class PHPExcel_Chart
      * @var PHPExcel_Chart_Axis
      */
     private $yAxis;
+    
+    /**
+	 * Secondary Y-Axis Label
+	 *
+	 * @var PHPExcel_Chart_Title
+	 */
+    private $secondaryYAxisLabel = null;
 
     /**
      * Chart Asix X as
@@ -169,7 +176,7 @@ class PHPExcel_Chart
     /**
      * Create a new PHPExcel_Chart
      */
-    public function __construct($name, PHPExcel_Chart_Title $title = null, PHPExcel_Chart_Legend $legend = null, PHPExcel_Chart_PlotArea $plotArea = null, $plotVisibleOnly = true, $displayBlanksAs = '0', PHPExcel_Chart_Title $xAxisLabel = null, PHPExcel_Chart_Title $yAxisLabel = null, PHPExcel_Chart_Axis $xAxis = null, PHPExcel_Chart_Axis $yAxis = null, PHPExcel_Chart_GridLines $majorGridlines = null, PHPExcel_Chart_GridLines $minorGridlines = null)
+    public function __construct($name, PHPExcel_Chart_Title $title = null, PHPExcel_Chart_Legend $legend = null, PHPExcel_Chart_PlotArea $plotArea = null, $plotVisibleOnly = true, $displayBlanksAs = '0', PHPExcel_Chart_Title $xAxisLabel = null, PHPExcel_Chart_Title $yAxisLabel = null, PHPExcel_Chart_Axis $xAxis = null, PHPExcel_Chart_Axis $yAxis = null, PHPExcel_Chart_GridLines $majorGridlines = null, PHPExcel_Chart_GridLines $minorGridlines = null, PHPExcel_Chart_Title $secondaryYAxisLabel = null)
     {
         $this->name = $name;
         $this->title = $title;
@@ -183,6 +190,7 @@ class PHPExcel_Chart
         $this->yAxis = $yAxis;
         $this->majorGridlines = $majorGridlines;
         $this->minorGridlines = $minorGridlines;
+        $this->secondaryYAxisLabel = $secondaryYAxisLabel;
     }
 
     /**
@@ -297,6 +305,16 @@ class PHPExcel_Chart
     {
         return $this->yAxisLabel;
     }
+    
+        
+    /**
+	 * Get Secondary Y-Axis Label
+	 *
+	 * @return PHPExcel_Chart_Title
+	 */
+	public function getSecondaryYAxisLabel() {
+		return $this->secondaryYAxisLabel;
+	}
 
     /**
      * Set Y-Axis Label

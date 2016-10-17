@@ -2127,7 +2127,6 @@ class PHPExcel_Calculation
      *        but only if a PHPExcel_Calculation instance exists
      *
      * @access    public
-     * @return null
      */
     public function flushInstance()
     {

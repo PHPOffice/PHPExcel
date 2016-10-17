@@ -91,7 +91,7 @@ class PHPExcel_Cell
     /**
      *    Send notification to the cache controller
      *
-     *    @return void
+     *    @return $this
      **/
     public function notifyCacheController()
     {

@@ -335,7 +335,6 @@ class PHPExcel_Shared_JAMA_Matrix
      *    @param int $i Row position
      *    @param int $j Column position
      *    @param mixed $c Int/float/double value
-     *    @return mixed Element (int/float/double)
      */
     public function set($i = null, $j = null, $c = null)
     {

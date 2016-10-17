@@ -132,8 +132,6 @@ class PHPExcel_Chart_Axis extends PHPExcel_Chart_Properties
 
     /**
      * Get Series Data Type
-     *
-     * @return  string
      */
     public function setAxisNumberProperties($format_code)
     {

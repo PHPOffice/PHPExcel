@@ -224,7 +224,6 @@ abstract class PHPExcel_Reader_Abstract implements PHPExcel_Reader_IReader
      *
      * @param string $pFilename
      * @throws    PHPExcel_Reader_Exception
-     * @return resource
      */
     protected function openFile($pFilename)
     {

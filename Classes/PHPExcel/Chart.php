@@ -363,8 +363,9 @@ class PHPExcel_Chart
     public function setDisplayBlanksAs($displayBlanksAs = '0')
     {
         $this->displayBlanksAs = $displayBlanksAs;
-    }
 
+        return $this;
+    }
 
     /**
      * Get yAxis

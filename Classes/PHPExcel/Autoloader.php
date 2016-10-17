@@ -59,6 +59,7 @@ class PHPExcel_Autoloader
      * Autoload a class identified by name
      *
      * @param    string    $pClassName        Name of the object to load
+     * @return bool
      */
     public static function load($pClassName)
     {

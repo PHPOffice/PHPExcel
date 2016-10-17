@@ -55,9 +55,9 @@ class PHPExcel_Shared_JAMA_LUDecomposition
 
     /**
      *    LU Decomposition constructor.
-     *
-     *    @param $A Rectangular matrix
-     *    @return Structure to access L, U and piv.
+     *    Structure to access L, U and piv.
+     *    @param Matrix $A Rectangular matrix
+     *    @throws PHPExcel_Calculation_Exception
      */
     public function __construct($A)
     {

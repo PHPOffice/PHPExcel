@@ -425,6 +425,7 @@ class PHPExcel_Shared_Font
      *
      * @param PHPExcel_Style_Font
      * @return string Path to TrueType font file
+     * @throws PHPExcel_Exception
      */
     public static function getTrueTypeFontFileFromFont($font)
     {

@@ -132,6 +132,8 @@ class PHPExcel_Chart_Axis extends PHPExcel_Chart_Properties
 
     /**
      * Get Series Data Type
+     *
+     * @param $format_code
      */
     public function setAxisNumberProperties($format_code)
     {
@@ -328,14 +330,14 @@ class PHPExcel_Chart_Axis extends PHPExcel_Chart_Properties
     /**
      * Set Shadow Properties
      *
-     * @param int $shadow_presets
+     * @param $sh_presets
      * @param string $sh_color_value
      * @param string $sh_color_type
      * @param string $sh_color_alpha
      * @param float $sh_blur
      * @param int $sh_angle
      * @param float $sh_distance
-     *
+     * @internal param int $shadow_presets
      */
     public function setShadowProperties($sh_presets, $sh_color_value = null, $sh_color_type = null, $sh_color_alpha = null, $sh_blur = null, $sh_angle = null, $sh_distance = null)
     {
@@ -467,6 +469,7 @@ class PHPExcel_Chart_Axis extends PHPExcel_Chart_Properties
      * @param string $color_value
      * @param int $color_alpha
      * @param string $color_type
+     * @return $this
      */
     public function getShadowProperty($elements)
     {

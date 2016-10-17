@@ -1783,6 +1783,7 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
      * a single cell range.
      *
      * @param array
+     * @return $this
      */
     public function setMergeCells($pValue = array())
     {
@@ -2679,6 +2680,7 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
      * Get hyperlink
      *
      * @param string $pCellCoordinate    Cell coordinate to get hyperlink for
+     * @return mixed
      */
     public function getHyperlink($pCellCoordinate = 'A1')
     {
@@ -2734,6 +2736,7 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
      * Get data validation
      *
      * @param string $pCellCoordinate Cell coordinate to get data validation for
+     * @return mixed
      */
     public function getDataValidation($pCellCoordinate = 'A1')
     {

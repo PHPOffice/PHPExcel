@@ -48,16 +48,17 @@ class PHPExcel_Shared_OLE_PPS_Root extends PHPExcel_Shared_OLE_PPS
     }
 
     /**
-    * Method for saving the whole OLE container (including files).
-    * In fact, if called with an empty argument (or '-'), it saves to a
-    * temporary file and then outputs it's contents to stdout.
-    * If a resource pointer to a stream created by fopen() is passed
-    * it will be used, but you have to close such stream by yourself.
-    *
-    * @param string|resource $filename The name of the file or stream where to save the OLE container.
-    * @access public
-    * @return mixed true on success
-    */
+     * Method for saving the whole OLE container (including files).
+     * In fact, if called with an empty argument (or '-'), it saves to a
+     * temporary file and then outputs it's contents to stdout.
+     * If a resource pointer to a stream created by fopen() is passed
+     * it will be used, but you have to close such stream by yourself.
+     *
+     * @param string|resource $filename The name of the file or stream where to save the OLE container.
+     * @return mixed true on success
+     * @throws PHPExcel_Writer_Exception
+     * @access public
+     */
     public function save($filename)
     {
         // Initial Setting for saving
@@ -298,6 +299,7 @@ class PHPExcel_Shared_OLE_PPS_Root extends PHPExcel_Shared_OLE_PPS
     *
     * @access public
     * @param array &$raList Reference to array of PPS's
+    * @return string
     */
     public function _makeSmallData(&$raList)
     {

@@ -88,6 +88,7 @@ class PHPExcel_Reader_Excel5_Escher
      * Load Escher stream data. May be a partial Escher stream.
      *
      * @param string $data
+     * @return mixed
      */
     public function load($data)
     {

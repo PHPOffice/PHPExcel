@@ -68,6 +68,7 @@ class PHPExcel_CalcEngine_CyclicReferenceStack
      * Test to see if a specified entry exists on the stack
      *
      * @param  mixed  $value  The value to test
+     * @return bool
      */
     public function onStack($value)
     {

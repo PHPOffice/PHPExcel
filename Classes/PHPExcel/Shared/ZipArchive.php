@@ -80,8 +80,9 @@ class PHPExcel_Shared_ZipArchive
     /**
      * Add a new file to the zip archive from a string of raw data.
      *
-     * @param    string    $localname        Directory/Name of the file to add to the zip archive
-     * @param    string    $contents        String of data to add to the zip archive
+     * @param    string $localname Directory/Name of the file to add to the zip archive
+     * @param    string $contents String of data to add to the zip archive
+     * @throws PHPExcel_Writer_Exception
      */
     public function addFromString($localname, $contents)
     {

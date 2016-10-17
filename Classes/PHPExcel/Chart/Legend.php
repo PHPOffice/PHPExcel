@@ -96,6 +96,7 @@ class PHPExcel_Chart_Legend
      * Get legend position using an excel string value
      *
      * @param    string    $position
+     * @return bool
      */
     public function setPosition($position = self::POSITION_RIGHT)
     {
@@ -120,7 +121,8 @@ class PHPExcel_Chart_Legend
     /**
      * Set legend position using an Excel internal numeric value
      *
-     * @param    number    $positionXL
+     * @param  $positionXL
+     * @return bool
      */
     public function setPositionXL($positionXL = self::xlLegendPositionRight)
     {

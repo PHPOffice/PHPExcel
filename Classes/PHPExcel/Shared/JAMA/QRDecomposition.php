@@ -48,8 +48,8 @@ class PHPExcel_Shared_JAMA_QRDecomposition
     /**
      *    QR Decomposition computed by Householder reflections.
      *
-     *    @param matrix $A Rectangular matrix
-     *    @return Structure to access R and the Householder vectors and compute Q.
+     * @param matrix $A Rectangular matrix
+     * @throws PHPExcel_Calculation_Exception
      */
     public function __construct($A)
     {
@@ -189,8 +189,9 @@ class PHPExcel_Shared_JAMA_QRDecomposition
     /**
      *    Least squares solution of A*X = B
      *
-     *    @param Matrix $B A Matrix with as many rows as A and any number of columns.
-     *    @return Matrix Matrix that minimizes the two norm of Q*R*X-B.
+     * @param Matrix $B A Matrix with as many rows as A and any number of columns.
+     * @return Matrix Matrix that minimizes the two norm of Q*R*X-B.
+     * @throws PHPExcel_Calculation_Exception
      */
     public function solve($B)
     {

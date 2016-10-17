@@ -97,8 +97,9 @@ class PHPExcel_CachedObjectStorage_Wincache extends PHPExcel_CachedObjectStorage
     /**
      * Is a value set in the current PHPExcel_CachedObjectStorage_ICache for an indexed cell?
      *
-     * @param    string        $pCoord        Coordinate address of the cell to check
-     * @return    boolean
+     * @param    string $pCoord Coordinate address of the cell to check
+     * @return bool
+     * @throws PHPExcel_Exception
      */
     public function isDataSet($pCoord)
     {
@@ -192,8 +193,8 @@ class PHPExcel_CachedObjectStorage_Wincache extends PHPExcel_CachedObjectStorage
     /**
      * Clone the cell collection
      *
-     * @param    PHPExcel_Worksheet    $parent        The new worksheet
-     * @return    void
+     * @param    PHPExcel_Worksheet $parent The new worksheet
+     * @throws PHPExcel_Exception
      */
     public function copyCellCollection(PHPExcel_Worksheet $parent)
     {

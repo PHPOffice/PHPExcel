@@ -2820,6 +2820,7 @@ class PHPExcel_Calculation
      *                                            0 = no resize
      *                                            1 = shrink to fit
      *                                            2 = extend to fit
+     * @return array
      */
     private static function checkMatrixOperands(&$operand1, &$operand2, $resize = 1)
     {

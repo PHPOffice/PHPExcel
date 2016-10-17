@@ -749,6 +749,7 @@ class PHPExcel_Writer_Excel5_Worksheet extends PHPExcel_Writer_Excel5_BIFFwriter
      * @param integer $row    Zero indexed row
      * @param integer $col    Zero indexed column
      * @param string  $note   The note to write
+     * @return int
      */
     private function writeNote($row, $col, $note)
     {
@@ -787,6 +788,7 @@ class PHPExcel_Writer_Excel5_Worksheet extends PHPExcel_Writer_Excel5_BIFFwriter
      * @param integer $row    Zero indexed row
      * @param integer $col    Zero indexed column
      * @param mixed   $xfIndex The XF format index
+     * @return int
      */
     public function writeBlank($row, $col, $xfIndex)
     {
@@ -807,6 +809,7 @@ class PHPExcel_Writer_Excel5_Worksheet extends PHPExcel_Writer_Excel5_BIFFwriter
      * @param int $value
      * @param boolean $isError Error or Boolean?
      * @param int $xfIndex
+     * @return int
      */
     private function writeBoolErr($row, $col, $value, $isError, $xfIndex)
     {
@@ -2558,6 +2561,7 @@ class PHPExcel_Writer_Excel5_Worksheet extends PHPExcel_Writer_Excel5_BIFFwriter
      * @access private
      * @param string $bitmap The bitmap to process
      * @return array Array with data and properties of the bitmap
+     * @throws PHPExcel_Writer_Exception
      */
     public function processBitmap($bitmap)
     {

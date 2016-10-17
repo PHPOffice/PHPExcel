@@ -32,6 +32,12 @@ class AdvancedValueBinderTest extends PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider provider
+     * @param $value
+     * @param $valueBinded
+     * @param $format
+     * @param $thousandsSeparator
+     * @param $decimalSeparator
+     * @param $currencyCode
      */
     public function testCurrency($value, $valueBinded, $format, $thousandsSeparator, $decimalSeparator, $currencyCode)
     {

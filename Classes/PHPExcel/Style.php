@@ -582,6 +582,7 @@ class PHPExcel_Style extends PHPExcel_Style_Supervisor implements PHPExcel_IComp
      * Set quote prefix
      *
      * @param boolean $pValue
+     * @return $this
      */
     public function setQuotePrefix($pValue)
     {

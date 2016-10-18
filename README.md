@@ -36,13 +36,7 @@ Develop: [![Build Status](https://travis-ci.org/PHPOffice/PHPExcel.png?branch=de
 
 ## Want to contribute?
 
-If you would like to contribute, here are some notes and guidlines:
- - All new development happens on the 1.8 branch, so it is always the most up-to-date
- - The master branch only contains tagged releases
- - If you are going to be submitting a pull request, please fork from 1.8, and submit your pull request back to that 1.8 branch
- - Wherever possible, code changes should conform as closely as possible to PSR-2 standards
- - [Helpful article about forking](https://help.github.com/articles/fork-a-repo/ "Forking a Github repository")
- - [Helpful article about pull requests](https://help.github.com/articles/using-pull-requests/ "Pull Requests")
+PHPExcel developement for next version has moved under its new name PhpSpreadsheet. So please head over to [PhpSpreadsheet](https://github.com/PHPOffice/PhpSpreadsheet#want-to-contribute) to contribute patches and features.
 
 
 ## License

@@ -2,7 +2,7 @@
     "name": "phpoffice/phpexcel",
     "description": "PHPExcel - OpenXML - Read, Create and Write Spreadsheet documents in PHP - Spreadsheet engine",
     "keywords": ["PHP","Excel","OpenXML","xlsx","xls","spreadsheet"],
-    "homepage": "http://phpexcel.codeplex.com",
+    "homepage": "https://github.com/PHPOffice/PHPExcel",
     "type": "library",
     "license": "LGPL-2.1",
     "authors": [
@@ -11,7 +11,8 @@
             "homepage": "http://blog.maartenballiauw.be"
         },
         {
-            "name": "Mark Baker"
+            "name": "Mark Baker",
+            "homepage": "http://markbakeruk.net"
         },
         {
             "name": "Franck Lefevre",

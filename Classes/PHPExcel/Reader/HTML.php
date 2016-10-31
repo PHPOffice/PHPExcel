@@ -447,12 +447,12 @@ class PHPExcel_Reader_HTML extends PHPExcel_Reader_Abstract implements PHPExcel_
                             }
                             $sheet->mergeCells($column . $row . ':' . $columnTo . $row);
                             $column = $columnTo;
-                        } elseif (isset($attributeArray['background-color'])) {
+                        } elseif (isset($attributeArray['bgcolor'])) {
 							$sheet->getStyle($column.$row)->applyFromArray(
 							    array(
 							        'fill' => array(
 							            'type' => PHPExcel_Style_Fill::FILL_SOLID,
-							            'color' => array('rgb' => $attributeArray['background-color'])
+							            'color' => array('rgb' => $attributeArray['bgcolor'])
 							        )
 							    )
 							);

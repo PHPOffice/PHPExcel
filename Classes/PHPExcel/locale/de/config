@@ -1,6 +1,6 @@
 ##
 ## PHPExcel
-##
+##
 ## Copyright (c) 2006 - 2013 PHPExcel
 ##
 ## This library is free software; you can redistribute it and/or
@@ -36,7 +36,7 @@ currencySymbol	= €
 
 
 ##
-##	Excel Error Codes	(For future use)
+##	Excel Error Codes	(For future use)
 ##
 NULL	= #NULL!
 DIV0	= #DIV/0!

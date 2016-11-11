@@ -73,3 +73,7 @@ http://example.com/Examples/02types.php
 
 Note: It may be necessary to modify the include/require statements at the beginning of
 each of the test scripts if your "Classes" folder from above is named differently.
+
+Note: If you get an error like:-
+Fatal error: Uncaught exception 'PHPExcel_Writer_Exception' with message 'Could not close zip file /var/www/html/phpexcel/Examples/02types.xlsx.'
+There may be two reasons for this, Firstly you might not have write permissions in the folder, the zip is being created. Try "sudo chmod -R 777 /var/www/" (your path to the project). If this doesn;t work, there might be some other app having an opened zip file, close the file and try again.

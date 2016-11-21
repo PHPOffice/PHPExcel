@@ -2102,7 +2102,7 @@ class PHPExcel_Calculation
         if ($workbook !== null) {
             $instance = $workbook->getCalculationEngine();
             if (isset($instance)) {
-                return $instance;  
+                return $instance;
             }
         }
 
@@ -3590,8 +3590,8 @@ class PHPExcel_Calculation
 
                             $oData = array_merge(explode(':', $operand1Data['reference']), explode(':', $operand2Data['reference']));
                             $oCol = $oRow = array();
-                            foreach ($oData as $oDatum) {
-                                $oCR = PHPExcel_Cell::coordinateFromString($oDatum);
+                            foreach ($oData as $index => $oDatum) {
+                                $oCR = PHPExcel_Cell::coordinateFromString($oDatum, $index);
                                 $oCol[] = PHPExcel_Cell::columnIndexFromString($oCR[0]) - 1;
                                 $oRow[] = $oCR[1];
                             }

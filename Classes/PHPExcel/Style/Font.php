@@ -179,6 +179,7 @@ class PHPExcel_Style_Font extends PHPExcel_Style_Supervisor implements PHPExcel_
     public function applyFromArray($pStyles = null)
     {
         if (is_array($pStyles)) {
+	        $this->hashCode = null;
             if ($this->isSupervisor) {
                 $this->getActiveSheet()->getStyle($this->getSelectedCells())->applyFromArray($this->getStyleArray($pStyles));
             } else {
@@ -237,6 +238,7 @@ class PHPExcel_Style_Font extends PHPExcel_Style_Supervisor implements PHPExcel_
      */
     public function setName($pValue = 'Calibri')
     {
+	    $this->hashCode = null;
         if ($pValue == '') {
             $pValue = 'Calibri';
         }
@@ -270,6 +272,7 @@ class PHPExcel_Style_Font extends PHPExcel_Style_Supervisor implements PHPExcel_
      */
     public function setSize($pValue = 10)
     {
+	    $this->hashCode = null;
         if ($pValue == '') {
             $pValue = 10;
         }
@@ -303,6 +306,7 @@ class PHPExcel_Style_Font extends PHPExcel_Style_Supervisor implements PHPExcel_
      */
     public function setBold($pValue = false)
     {
+	    $this->hashCode = null;
         if ($pValue == '') {
             $pValue = false;
         }
@@ -336,6 +340,7 @@ class PHPExcel_Style_Font extends PHPExcel_Style_Supervisor implements PHPExcel_
      */
     public function setItalic($pValue = false)
     {
+	    $this->hashCode = null;
         if ($pValue == '') {
             $pValue = false;
         }
@@ -369,6 +374,7 @@ class PHPExcel_Style_Font extends PHPExcel_Style_Supervisor implements PHPExcel_
      */
     public function setSuperScript($pValue = false)
     {
+	    $this->hashCode = null;
         if ($pValue == '') {
             $pValue = false;
         }
@@ -403,6 +409,7 @@ class PHPExcel_Style_Font extends PHPExcel_Style_Supervisor implements PHPExcel_
      */
     public function setSubScript($pValue = false)
     {
+	    $this->hashCode = null;
         if ($pValue == '') {
             $pValue = false;
         }
@@ -439,6 +446,7 @@ class PHPExcel_Style_Font extends PHPExcel_Style_Supervisor implements PHPExcel_
      */
     public function setUnderline($pValue = self::UNDERLINE_NONE)
     {
+	    $this->hashCode = null;
         if (is_bool($pValue)) {
             $pValue = ($pValue) ? self::UNDERLINE_SINGLE : self::UNDERLINE_NONE;
         } elseif ($pValue == '') {
@@ -474,6 +482,7 @@ class PHPExcel_Style_Font extends PHPExcel_Style_Supervisor implements PHPExcel_
      */
     public function setStrikethrough($pValue = false)
     {
+	    $this->hashCode = null;
         if ($pValue == '') {
             $pValue = false;
         }
@@ -505,6 +514,7 @@ class PHPExcel_Style_Font extends PHPExcel_Style_Supervisor implements PHPExcel_
      */
     public function setColor(PHPExcel_Style_Color $pValue = null)
     {
+	    $this->hashCode = null;
         // make sure parameter is a real color and not a supervisor
         $color = $pValue->getIsSupervisor() ? $pValue->getSharedComponent() : $pValue;
 
@@ -527,17 +537,20 @@ class PHPExcel_Style_Font extends PHPExcel_Style_Supervisor implements PHPExcel_
         if ($this->isSupervisor) {
             return $this->getSharedComponent()->getHashCode();
         }
-        return md5(
-            $this->name .
-            $this->size .
-            ($this->bold ? 't' : 'f') .
-            ($this->italic ? 't' : 'f') .
-            ($this->superScript ? 't' : 'f') .
-            ($this->subScript ? 't' : 'f') .
-            $this->underline .
-            ($this->strikethrough ? 't' : 'f') .
-            $this->color->getHashCode() .
-            __CLASS__
-        );
+	    if (!$this->hashCode) {
+		    $this->hashCode = md5(
+			    $this->name .
+			    $this->size .
+			    ($this->bold ? 't' : 'f') .
+			    ($this->italic ? 't' : 'f') .
+			    ($this->superScript ? 't' : 'f') .
+			    ($this->subScript ? 't' : 'f') .
+			    $this->underline .
+			    ($this->strikethrough ? 't' : 'f') .
+			    $this->color->getHashCode() .
+			    __CLASS__
+		    );
+	    }
+	    return $this->hashCode;
     }
 }

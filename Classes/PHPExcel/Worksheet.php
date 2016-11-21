@@ -717,8 +717,11 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
 
         // There is only something to do if there are some auto-size columns
         if (!empty($autoSizes)) {
+            /** @var PHPExcel_Writer_Abstract $writer */
+            $writer = $this->getParent()->getWriter();
             // build list of cells references that participate in a merge
             $isMergeCell = array();
+
             foreach ($this->getMergeCells() as $cells) {
                 foreach (PHPExcel_Cell::extractAllCellReferencesInRange($cells) as $cellReference) {
                     $isMergeCell[$cellReference] = true;
@@ -732,9 +735,19 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
                     // Determine width if cell does not participate in a merge
                     if (!isset($isMergeCell[$this->cellCollection->getCurrentAddress()])) {
                         // Calculated value
+                        $cellValue = $cell->getValue();
+                        if ($writer->getPreCalculateFormulas()) {
+                            $cellValue = $cell->getCalculatedValue();
+                        }
+
+                        // skip calc width for empty cell
+                        if ($cellValue == '') {
+                            continue;
+                        }
+
                         // To formatted string
                         $cellValue = PHPExcel_Style_NumberFormat::toFormattedString(
-                            $cell->getCalculatedValue(),
+                            $cellValue,
                             $this->getParent()->getCellXfByIndex($cell->getXfIndex())->getNumberFormat()->getFormatCode()
                         );
 
@@ -753,7 +766,7 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
 
             // adjust column widths
             foreach ($autoSizes as $columnIndex => $width) {
-                if ($width == -1) {
+                if ($width === -1) {
                     $width = $this->getDefaultColumnDimension()->getWidth();
                 }
                 $this->getColumnDimension($columnIndex)->setWidth($width);
@@ -1144,8 +1157,9 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
      */
     public function getCell($pCoordinate = 'A1', $createIfNotExists = true)
     {
+        $pCoordinate = strtoupper($pCoordinate);
         // Check cell collection
-        if ($this->cellCollection->isDataSet(strtoupper($pCoordinate))) {
+        if ($this->cellCollection->isDataSet($pCoordinate)) {
             return $this->cellCollection->getCacheData($pCoordinate);
         }
 
@@ -1164,9 +1178,6 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
                 return $namedRange->getWorksheet()->getCell($pCoordinate, $createIfNotExists);
             }
         }
-
-        // Uppercase coordinate
-        $pCoordinate = strtoupper($pCoordinate);
 
         if (strpos($pCoordinate, ':') !== false || strpos($pCoordinate, ',') !== false) {
             throw new PHPExcel_Exception('Cell coordinate can not be a range of cells.');
@@ -1392,8 +1403,8 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
         $this->parent->getDefaultStyle()->applyFromArray(array(
             'font' => array(
                 'name' => $pValue->getFont()->getName(),
-                'size' => $pValue->getFont()->getSize(),
-            ),
+                'size' => $pValue->getFont()->getSize()
+            )
         ));
         return $this;
     }

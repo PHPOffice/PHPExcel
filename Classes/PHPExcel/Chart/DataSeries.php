@@ -143,18 +143,20 @@ class PHPExcel_Chart_DataSeries
         $this->plotOrder = $plotOrder;
         $keys = array_keys($plotValues);
         $this->plotValues = $plotValues;
-        if ((count($plotLabel) == 0) || (is_null($plotLabel[$keys[0]]))) {
-            $plotLabel[$keys[0]] = new PHPExcel_Chart_DataSeriesValues();
-        }
+        if (isset($keys[0])) {
+            if ((count($plotLabel) == 0) || (isset($plotLabel[$keys[0]]) || is_null($plotLabel[$keys[0]]))) {
+                $plotLabel[$keys[0]] = new PHPExcel_Chart_DataSeriesValues();
+            }
 
-        $this->plotLabel = $plotLabel;
-        if ((count($plotCategory) == 0) || (is_null($plotCategory[$keys[0]]))) {
-            $plotCategory[$keys[0]] = new PHPExcel_Chart_DataSeriesValues();
+            if ((count($plotCategory) == 0) || (isset($plotCategory[$keys[0]]) && is_null($plotCategory[$keys[0]]))) {
+                $plotCategory[$keys[0]] = new PHPExcel_Chart_DataSeriesValues();
+            }
         }
+        $this->plotLabel = $plotLabel;
         $this->plotCategory = $plotCategory;
         $this->smoothLine = $smoothLine;
         $this->plotStyle = $plotStyle;
-        
+
         if (is_null($plotDirection)) {
             $plotDirection = self::DIRECTION_COL;
         }

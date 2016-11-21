@@ -138,6 +138,7 @@ class PHPExcel_IOFactory
 
                 $instance = new $className($phpExcel);
                 if ($instance !== null) {
+                    $phpExcel->setWriter($instance);
                     return $instance;
                 }
             }

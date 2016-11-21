@@ -138,6 +138,9 @@ class PHPExcel
     */
     private $ribbonBinObjects;
 
+    /** @var PHPExcel_Writer_Abstract */
+    private $writer = null;
+
     /**
     * The workbook has macros ?
     *
@@ -255,6 +258,22 @@ class PHPExcel
         }
 
         return $ReturnData;
+    }
+
+    /**
+     * @return PHPExcel_Writer_Abstract
+     */
+    public function getWriter()
+    {
+        return $this->writer;
+    }
+
+    /**
+     * @param $writer
+     */
+    public function setWriter($writer)
+    {
+        $this->writer = $writer;
     }
 
     /**

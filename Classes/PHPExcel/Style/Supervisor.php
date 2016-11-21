@@ -41,6 +41,8 @@ abstract class PHPExcel_Style_Supervisor
      */
     protected $parent;
 
+    protected $hashCode = null;
+
     /**
      * Create a new PHPExcel_Style_Alignment
      *

@@ -264,7 +264,7 @@ class PHPExcel_Style_NumberFormat extends PHPExcel_Style_Supervisor implements P
         //      40: "#,##0.00_);[Red](#,##0.00)"
         //      47: "mm:ss.0"
         //      KOR fmt 55: "yyyy/mm/dd"
- 
+
         // Built-in format codes
         if (is_null(self::$builtInFormats)) {
             self::$builtInFormats = array();
@@ -325,16 +325,16 @@ class PHPExcel_Style_NumberFormat extends PHPExcel_Style_Supervisor implements P
         }
     }
 
-    /**
-     * Get built-in format code
-     *
-     * @param    int        $pIndex
-     * @return    string
-     */
-    public static function builtInFormatCode($pIndex)
-    {
-        // Clean parameter
-        $pIndex = intval($pIndex);
+	/**
+	 * Get built-in format code
+	 *
+	 * @param	int		$pIndex
+	 * @return	string
+	 */
+	public static function builtInFormatCode($pIndex)
+	{
+		// Clean parameter
+		$pIndex = (int)$pIndex;
 
         // Ensure built-in format codes are available
         self::fillBuiltInFormatCodes();
@@ -677,7 +677,7 @@ class PHPExcel_Style_NumberFormat extends PHPExcel_Style_Supervisor implements P
                     $format = preg_replace('/#,+/', '#', $format);
                 }
 
-                if (preg_match('/#?.*\?\/\?/', $format, $m)) {
+                if (preg_match('/#?.*\?\/\?/', $format)) {
                     //echo 'Format mask is fractional '.$format.' <br />';
                     if ($value != (int)$value) {
                         self::formatAsFraction($value, $format);
@@ -687,13 +687,12 @@ class PHPExcel_Style_NumberFormat extends PHPExcel_Style_Supervisor implements P
                     // Handle the number itself
 
                     // scale number
-                    $value = $value / $scale;
+                    $value /= $scale;
 
                     // Strip #
                     $format = preg_replace('/\\#/', '0', $format);
 
-                    $n = "/\[[^\]]+\]/";
-                    $m = preg_replace($n, '', $format);
+                    $m = preg_replace("/\[[^\]]+\]/", '', $format);
                     $number_regex = "/(0+)(\.?)(0*)/";
                     if (preg_match($number_regex, $m, $matches)) {
                         $left = $matches[1];
@@ -701,7 +700,6 @@ class PHPExcel_Style_NumberFormat extends PHPExcel_Style_Supervisor implements P
                         $right = $matches[3];
 
                         // minimun width of formatted number (including dot)
-                        $minWidth = strlen($left) + strlen($dec) + strlen($right);
                         if ($useThousands) {
                             $value = number_format(
                                 $value,
@@ -717,6 +715,7 @@ class PHPExcel_Style_NumberFormat extends PHPExcel_Style_Supervisor implements P
                             } elseif (preg_match('/0([^\d\.]+)0/', $format)) {
                                 $value = self::complexNumberFormatMask($value, $format);
                             } else {
+                                $minWidth = strlen($left) + strlen($dec) + strlen($right);
                                 $sprintf_pattern = "%0$minWidth." . strlen($right) . "f";
                                 $value = sprintf($sprintf_pattern, $value);
                                 $value = preg_replace($number_regex, $value, $format);

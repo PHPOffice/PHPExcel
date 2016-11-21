@@ -212,7 +212,7 @@ class PHPExcel_Chart_DataSeriesValues
      */
     public function isMultiLevelSeries()
     {
-        if (count($this->dataValues) > 0) {
+        if (count($this->dataValues) > 0 && isset($this->dataValues[0])) {
             return is_array($this->dataValues[0]);
         }
         return null;
@@ -287,6 +287,12 @@ class PHPExcel_Chart_DataSeriesValues
     public function refresh(PHPExcel_Worksheet $worksheet, $flatten = true)
     {
         if ($this->dataSource !== null) {
+	        /** @var PHPExcel_Writer_Abstract $writer */
+	        $writer = $worksheet->getParent()->getWriter();
+	        if (!$writer->getPreCalculateFormulas()) {
+		        return;
+	        }
+
             $calcEngine = PHPExcel_Calculation::getInstance($worksheet->getParent());
             $newDataValues = PHPExcel_Calculation::unwrapResult(
                 $calcEngine->_calculateFormulaValue(

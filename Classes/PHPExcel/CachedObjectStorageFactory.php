@@ -180,7 +180,7 @@ class PHPExcel_CachedObjectStorageFactory
 
         self::$storageMethodParameters[$method] = self::$storageMethodDefaultParameters[$method];
         foreach ($arguments as $k => $v) {
-            if (array_key_exists($k, self::$storageMethodParameters[$method])) {
+            if (isset(self::$storageMethodParameters[$method][$k])) {
                 self::$storageMethodParameters[$method][$k] = $v;
             }
         }

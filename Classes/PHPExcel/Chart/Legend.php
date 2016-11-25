@@ -124,7 +124,7 @@ class PHPExcel_Chart_Legend
      */
     public function setPositionXL($positionXL = self::xlLegendPositionRight)
     {
-        if (!array_key_exists($positionXL, self::$positionXLref)) {
+        if (!isset(self::$positionXLref[$positionXL])) {
             return false;
         }
 

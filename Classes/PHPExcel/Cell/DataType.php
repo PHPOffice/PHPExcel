@@ -106,7 +106,7 @@ class PHPExcel_Cell_DataType
     {
         $pValue = (string) $pValue;
 
-        if (!array_key_exists($pValue, self::$errorCodes)) {
+        if (!isset(self::$errorCodes[$pValue])) {
             $pValue = '#NULL!';
         }
 

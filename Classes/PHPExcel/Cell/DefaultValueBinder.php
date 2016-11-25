@@ -93,8 +93,11 @@ class PHPExcel_Cell_DefaultValueBinder implements PHPExcel_Cell_IValueBinder
                 return PHPExcel_Cell_DataType::TYPE_STRING;
             }
             return PHPExcel_Cell_DataType::TYPE_NUMERIC;
-        } elseif (is_string($pValue) && array_key_exists($pValue, PHPExcel_Cell_DataType::getErrorCodes())) {
-            return PHPExcel_Cell_DataType::TYPE_ERROR;
+        } elseif (is_string($pValue)) {
+            $array = PHPExcel_Cell_DataType::getErrorCodes();
+            if (is_array($array) && isset($array[$pValue])) {
+                return PHPExcel_Cell_DataType::TYPE_ERROR;
+            }
         }
 
         return PHPExcel_Cell_DataType::TYPE_STRING;

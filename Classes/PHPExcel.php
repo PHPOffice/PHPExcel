@@ -248,7 +248,7 @@ class PHPExcel
                 break;
             case 'target':
             case 'data':
-                if (is_array($this->ribbonXMLData) && array_key_exists($What, $this->ribbonXMLData)) {
+                if (is_array($this->ribbonXMLData) && isset($this->ribbonXMLData[$What])) {
                     $ReturnData = $this->ribbonXMLData[$What];
                 }
                 break;
@@ -292,17 +292,17 @@ class PHPExcel
                 break;
             case 'names':
             case 'data':
-                if (is_array($this->ribbonBinObjects) && array_key_exists($What, $this->ribbonBinObjects)) {
+                if (is_array($this->ribbonBinObjects) && isset($this->ribbonBinObjects[$What])) {
                     $ReturnData=$this->ribbonBinObjects[$What];
                 }
                 break;
             case 'types':
                 if (is_array($this->ribbonBinObjects) &&
-                    array_key_exists('data', $this->ribbonBinObjects) && is_array($this->ribbonBinObjects['data'])) {
-                    $tmpTypes=array_keys($this->ribbonBinObjects['data']);
+                    isset($this->ribbonBinObjects['data']) && is_array($this->ribbonBinObjects['data'])) {
+                    $tmpTypes = array_keys($this->ribbonBinObjects['data']);
                     $ReturnData = array_unique(array_map(array($this, 'getExtensionOnly'), $tmpTypes));
                 } else {
-                    $ReturnData=array(); // the caller want an array... not null if empty
+                    $ReturnData = array(); // the caller want an array... not null if empty
                 }
                 break;
         }

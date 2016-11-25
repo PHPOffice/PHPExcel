@@ -182,31 +182,31 @@ class PHPExcel_Style_Font extends PHPExcel_Style_Supervisor implements PHPExcel_
             if ($this->isSupervisor) {
                 $this->getActiveSheet()->getStyle($this->getSelectedCells())->applyFromArray($this->getStyleArray($pStyles));
             } else {
-                if (array_key_exists('name', $pStyles)) {
+                if (isset($pStyles['name'])) {
                     $this->setName($pStyles['name']);
                 }
-                if (array_key_exists('bold', $pStyles)) {
+                if (isset($pStyles['bold'])) {
                     $this->setBold($pStyles['bold']);
                 }
-                if (array_key_exists('italic', $pStyles)) {
+                if (isset($pStyles['italic'])) {
                     $this->setItalic($pStyles['italic']);
                 }
-                if (array_key_exists('superScript', $pStyles)) {
+                if (isset($pStyles['superScript'])) {
                     $this->setSuperScript($pStyles['superScript']);
                 }
-                if (array_key_exists('subScript', $pStyles)) {
+                if (isset($pStyles['subScript'])) {
                     $this->setSubScript($pStyles['subScript']);
                 }
-                if (array_key_exists('underline', $pStyles)) {
+                if (isset($pStyles['underline'])) {
                     $this->setUnderline($pStyles['underline']);
                 }
-                if (array_key_exists('strike', $pStyles)) {
+                if (isset($pStyles['strike'])) {
                     $this->setStrikethrough($pStyles['strike']);
                 }
-                if (array_key_exists('color', $pStyles)) {
+                if (isset($pStyles['color'])) {
                     $this->getColor()->applyFromArray($pStyles['color']);
                 }
-                if (array_key_exists('size', $pStyles)) {
+                if (isset($pStyles['size'])) {
                     $this->setSize($pStyles['size']);
                 }
             }

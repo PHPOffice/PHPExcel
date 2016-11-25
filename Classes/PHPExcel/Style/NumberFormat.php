@@ -159,7 +159,7 @@ class PHPExcel_Style_NumberFormat extends PHPExcel_Style_Supervisor implements P
             if ($this->isSupervisor) {
                 $this->getActiveSheet()->getStyle($this->getSelectedCells())->applyFromArray($this->getStyleArray($pStyles));
             } else {
-                if (array_key_exists('code', $pStyles)) {
+                if (isset($pStyles['code'])) {
                     $this->setFormatCode($pStyles['code']);
                 }
             }

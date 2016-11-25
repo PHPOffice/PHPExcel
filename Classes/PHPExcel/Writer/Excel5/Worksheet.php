@@ -853,7 +853,8 @@ class PHPExcel_Writer_Excel5_Worksheet extends PHPExcel_Writer_Excel5_BIFFwriter
                 // Numeric value
                 $num = pack('d', $calculatedValue);
             } elseif (is_string($calculatedValue)) {
-                if (array_key_exists($calculatedValue, PHPExcel_Cell_DataType::getErrorCodes())) {
+                $array = PHPExcel_Cell_DataType::getErrorCodes();
+                if (is_array($array) && isset($array[$calculatedValue])) {
                     // Error value
                     $num = pack('CCCvCv', 0x02, 0x00, self::mapErrorCode($calculatedValue), 0x00, 0x00, 0xFFFF);
                 } elseif ($calculatedValue === '') {

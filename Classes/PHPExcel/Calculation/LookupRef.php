@@ -765,13 +765,13 @@ class PHPExcel_Calculation_LookupRef
             return PHPExcel_Calculation_Functions::VALUE();
         }
 
-        // index_number must be less than or equal to the number of columns in lookup_array
+        // index_number must be less than or equal to the number of rows in lookup_array
         if ((!is_array($lookup_array)) || (empty($lookup_array))) {
             return PHPExcel_Calculation_Functions::REF();
         } else {
             $f = array_keys($lookup_array);
             $firstRow = array_pop($f);
-            if ((!is_array($lookup_array[$firstRow])) || ($index_number > count($lookup_array[$firstRow]))) {
+            if ((!is_array($lookup_array[$firstRow])) || ($index_number > count($lookup_array))) {
                 return PHPExcel_Calculation_Functions::REF();
             } else {
                 $columnKeys = array_keys($lookup_array[$firstRow]);

@@ -112,7 +112,7 @@ class PHPExcel_Shared_ZipStreamWrapper
      */
     public function url_stat()
     {
-        return $this->statName($this->fileNameInArchive);
+        return $this->statName();
     }
 
     /**

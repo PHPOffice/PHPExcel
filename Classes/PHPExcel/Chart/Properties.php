@@ -356,8 +356,8 @@ abstract class PHPExcel_Chart_Properties
             foreach ($elements as $keys) {
                 $reference = & $reference[$keys];
             }
-            return $reference;
         }
-        return $this;
+
+        return $reference;
     }
 }

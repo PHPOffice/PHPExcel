@@ -239,10 +239,9 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
             return false;
         } elseif ($value == '1') {
             return true;
-        } else {
-            return (bool)$c->v;
         }
-        return $value;
+
+        return (bool)$c->v;
     }
 
     private static function castToError($c)

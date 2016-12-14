@@ -70,6 +70,8 @@ $objPHPExcel->getActiveSheet()->setTitle('Simple');
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
 $objPHPExcel->setActiveSheetIndex(0);
 
+// Clean-up buffer
+ob_end_clean();
 
 // Redirect output to a client’s web browser (Excel5)
 header('Content-Type: application/vnd.ms-excel');

@@ -545,7 +545,7 @@ class PHPExcel_Writer_Excel2007_Worksheet extends PHPExcel_Writer_Excel2007_Writ
     private function writeDataValidations(PHPExcel_Shared_XMLWriter $objWriter = null, PHPExcel_Worksheet $pSheet = null)
     {
         // Datavalidation collection
-        $dataValidationCollection = $pSheet->getDataValidationCollection();
+        $dataValidationCollection = $this->_optimizeDataValidations( $pSheet->getDataValidationCollection() );
 
         // Write data validations?
         if (!empty($dataValidationCollection)) {
@@ -1215,5 +1215,42 @@ class PHPExcel_Writer_Excel2007_Worksheet extends PHPExcel_Writer_Excel2007_Writ
             $objWriter->writeAttribute('r:id', 'rId_headerfooter_vml1');
             $objWriter->endElement();
         }
+    }
+
+    /**
+     * Optimize Data Validations
+     *
+     * @param   Array       $dataValidations    
+     * @throws  PHPExcel_Writer_Exception
+     */
+    private function _optimizeDataValidations ( $dataValidations ) {
+
+        $optimizedDataValidations = array();
+        $currentDataValidationFormulas = false;
+        $currentDataValidation = null;
+        $currentDataValidationStart = '';
+        $currentDataValidationEnd = '';
+        
+        foreach ($dataValidations as $cellCoordinate => $dataValidation) {
+        
+            if( $dataValidation->getFormula1().$dataValidation->getFormula2() === $currentDataValidationFormulas ){
+                $currentDataValidationEnd = $cellCoordinate;
+            }else{
+                    if( $currentDataValidationStart != $currentDataValidationEnd ){
+                        $currentDataValidationStart = $currentDataValidationStart.':'.$currentDataValidationEnd;
+                    }
+                    //Add new dataValidations style
+                    if ( !is_null( $currentDataValidation )  ) {
+                        $optimizedDataValidations[$currentDataValidationStart] = $currentDataValidation;
+                    }
+
+                    //Start with new element
+                    $currentDataValidationStart = $cellCoordinate;
+                    $currentDataValidation = $dataValidation;
+                    $currentDataValidationFormulas =  $dataValidation->getFormula1().$dataValidation->getFormula2();
+            }
+            
+        }
+        return $optimizedDataValidations;
     }
 }

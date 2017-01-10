@@ -1189,14 +1189,15 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
                                         // Extract all cell references in $range
                                         foreach (PHPExcel_Cell::extractAllCellReferencesInRange($stRange) as $reference) {
                                             // Create validation
+                                            // debbug("Valor recogido y comprobado: ".var_dump( ( ( String ) $dataValidation["showInputMessage"]  ) !== 0 ) );
                                             $docValidation = $docSheet->getCell($reference)->getDataValidation();
                                             $docValidation->setType((string) $dataValidation["type"]);
-                                            $docValidation->setErrorStyle((string) $dataValidation["errorStyle"]);
-                                            $docValidation->setOperator((string) $dataValidation["operator"]);
-                                            $docValidation->setAllowBlank($dataValidation["allowBlank"] != 0);
-                                            $docValidation->setShowDropDown($dataValidation["showDropDown"] == 0);
-                                            $docValidation->setShowInputMessage($dataValidation["showInputMessage"] != 0);
-                                            $docValidation->setShowErrorMessage($dataValidation["showErrorMessage"] != 0);
+                                            $docValidation->setErrorStyle( (string) $dataValidation["errorStyle"]);
+                                            $docValidation->setOperator( (string) $dataValidation["operator"]);
+                                            $docValidation->setAllowBlank( ( String ) $dataValidation["allowBlank"] !== 0);
+                                            $docValidation->setShowDropDown( ( String ) $dataValidation["showDropDown"] == 0);
+                                            $docValidation->setShowInputMessage( ( ( String ) $dataValidation["showInputMessage"] ) !== 0);
+                                            $docValidation->setShowErrorMessage( ( String ) $dataValidation["showErrorMessage"] !== 0);
                                             $docValidation->setErrorTitle((string) $dataValidation["errorTitle"]);
                                             $docValidation->setError((string) $dataValidation["error"]);
                                             $docValidation->setPromptTitle((string) $dataValidation["promptTitle"]);

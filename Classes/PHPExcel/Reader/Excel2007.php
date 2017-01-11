@@ -1189,7 +1189,6 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
                                         // Extract all cell references in $range
                                         foreach (PHPExcel_Cell::extractAllCellReferencesInRange($stRange) as $reference) {
                                             // Create validation
-                                            // debbug("Valor recogido y comprobado: ".var_dump( ( ( String ) $dataValidation["showInputMessage"]  ) !== 0 ) );
                                             $docValidation = $docSheet->getCell($reference)->getDataValidation();
                                             $docValidation->setType((string) $dataValidation["type"]);
                                             $docValidation->setErrorStyle( (string) $dataValidation["errorStyle"]);

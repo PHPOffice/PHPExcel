@@ -116,8 +116,8 @@ class PHPExcel_Shared_XMLWriter extends XMLWriter
         }
         
         if(is_float($text)) {
-			$text = PHPExcel_Shared_String::FormatNumber($text);
-		}
+	    $text = PHPExcel_Shared_String::FormatNumber($text);
+	}
 
         if (method_exists($this, 'writeRaw')) {
             return $this->writeRaw(htmlspecialchars($text));

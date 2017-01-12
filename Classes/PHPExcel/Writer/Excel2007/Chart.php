@@ -1503,12 +1503,12 @@ class PHPExcel_Writer_Excel2007_Chart extends PHPExcel_Writer_Excel2007_WriterPa
         $objWriter->endElement();
 
         $objWriter->startElement('c:pageMargins');
-        $objWriter->writeAttribute('footer', 0.3);
-        $objWriter->writeAttribute('header', 0.3);
-        $objWriter->writeAttribute('r', 0.7);
-        $objWriter->writeAttribute('l', 0.7);
-        $objWriter->writeAttribute('t', 0.75);
-        $objWriter->writeAttribute('b', 0.75);
+        $objWriter->writeAttribute('footer', PHPExcel_Shared_String::FormatNumber(0.3));
+        $objWriter->writeAttribute('header', PHPExcel_Shared_String::FormatNumber(0.3));
+        $objWriter->writeAttribute('r', PHPExcel_Shared_String::FormatNumber(0.7));
+        $objWriter->writeAttribute('l', PHPExcel_Shared_String::FormatNumber(0.7));
+        $objWriter->writeAttribute('t', PHPExcel_Shared_String::FormatNumber(0.75));
+        $objWriter->writeAttribute('b', PHPExcel_Shared_String::FormatNumber(0.75));
         $objWriter->endElement();
 
         $objWriter->startElement('c:pageSetup');

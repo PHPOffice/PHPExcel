@@ -19,13 +19,13 @@ class LogicalTest extends PHPUnit_Framework_TestCase
     public function testTRUE()
     {
         $result = PHPExcel_Calculation_Logical::TRUE();
-        $this->assertEquals(true, $result);
+        $this->assertTrue($result);
     }
 
     public function testFALSE()
     {
         $result = PHPExcel_Calculation_Logical::FALSE();
-        $this->assertEquals(false, $result);
+        $this->assertFalse($result);
     }
 
     /**

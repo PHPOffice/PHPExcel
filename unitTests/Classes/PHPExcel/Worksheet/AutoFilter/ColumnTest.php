@@ -132,7 +132,7 @@ class AutofilterColumnTest extends PHPUnit_Framework_TestCase
 
         $result = $this->_testAutoFilterColumnObject->getAttributes();
         $this->assertTrue(is_array($result));
-        $this->assertEquals(count($attributeSet), count($result));
+        $this->assertCount(count($attributeSet), $result);
     }
 
     public function testSetAttribute()

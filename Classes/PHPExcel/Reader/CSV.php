@@ -83,6 +83,13 @@ class PHPExcel_Reader_CSV extends PHPExcel_Reader_Abstract implements PHPExcel_R
      */
     private $contiguousRow = -1;
 
+    /**
+	 * Col Data Type 
+	 *
+	 * @access private
+	 * @array PHPExcel_Cell_DataType
+	*/
+	private $_colDataType = array();
 
     /**
      * Create a new PHPExcel_Reader_CSV
@@ -290,7 +297,11 @@ class PHPExcel_Reader_CSV extends PHPExcel_Reader_Abstract implements PHPExcel_R
                     }
 
                     // Set cell value
-                    $sheet->getCell($columnLetter . $currentRow)->setValue($rowDatum);
+                    if (isset($this->_colDataType[$columnLetter])) {
+						$sheet->setCellValueExplicit($columnLetter . $currentRow, $rowDatum, $this->_colDataType[$columnLetter]);
+					} else {
+						$sheet->getCell($columnLetter . $currentRow)->setValue($rowDatum);
+					}
                 }
                 ++$columnLetter;
             }
@@ -403,4 +414,29 @@ class PHPExcel_Reader_CSV extends PHPExcel_Reader_Abstract implements PHPExcel_R
     {
         return $this->contiguous;
     }
+    
+    /**
+	 * Get col data Type
+	 *
+	 * @param string
+	 * @return mixed
+	 */
+	public function getColDataType($colLetter) {
+		if (isset($this->_colDataType[$colLetter]))
+			return $this->_colDataType[$colLetter];
+		else
+			return FALSE;
+	}
+
+	/**
+	 * Set col data Type
+	 *
+	 * @param string, PHPExcel_Cell_DataType
+	 * @return PHPExcel_Reader_CSV
+	 */
+	public function setColDataType($colLetter = 'A', $dateType = PHPExcel_Cell_DataType::TYPE_STRING) {
+		$this->_colDataType[$colLetter] = $dateType;
+		return $this;
+	}
+
 }

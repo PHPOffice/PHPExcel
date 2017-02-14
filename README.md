@@ -33,6 +33,9 @@ Develop: [![Build Status](https://travis-ci.org/PHPOffice/PHPExcel.png?branch=de
  * PHP extension php_xml enabled
  * PHP extension php_gd2 enabled (optional, but required for exact column width autocalculation)
 
+*Note:* PHP 5.6.29 has [a bug](https://bugs.php.net/bug.php?id=735300) that
+prevents SQLite3 caching to work correctly. Use a newer (or older) versions of
+PHP if you need SQLite3 caching.
 
 ## Want to contribute?
 

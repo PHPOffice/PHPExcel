@@ -26,7 +26,8 @@
         "php": "^5.2|^7.0",
         "ext-mbstring": "*",
         "ext-xml": "*",
-        "ext-xmlwriter": "*"
+        "ext-xmlwriter": "*",
+        "ext-mbstring": "*"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "2.*"

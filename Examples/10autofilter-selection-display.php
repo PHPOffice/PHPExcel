@@ -90,10 +90,10 @@ foreach($years as $year) {
 					$income = NULL;
 				} elseif ($incomeOrExpenditure == 1) {
 					$expenditure = rand(-500,-1000) * (1 + rand(-0.25,+0.25));
-					$income = rand(500,1000) * (1 + rand(-0.25,+0.25));;
+					$income = rand(500,1000) * (1 + rand(-0.25,+0.25));
 				} else {
 					$expenditure = NULL;
-					$income = rand(500,1000) * (1 + rand(-0.25,+0.25));;
+					$income = rand(500,1000) * (1 + rand(-0.25,+0.25));
 				}
 				$dataArray = array(	$year,
 									$period,

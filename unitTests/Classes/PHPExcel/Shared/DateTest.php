@@ -74,6 +74,16 @@ class DateTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expectedResult, $result, null, 1E-5);
     }
 
+    public function testDateTimeImmutableShouldBeConsideredAsDateTime()
+    {
+        $excelDate = new PHPExcel_Shared_Date();
+
+        $immutableDateTime = new DateTimeImmutable();
+        $retValue = $excelDate->PHPToExcel($immutableDateTime);
+
+        $this->assertNotEquals(false, $retValue);
+    }
+
     public function providerDateTimePHPToExcel1900()
     {
         return new testDataFileIterator('rawTestData/Shared/DateTimePHPToExcel1900.data');

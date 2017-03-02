@@ -349,7 +349,7 @@ class PHPExcel_ReferenceHelper
         if (!empty($aRowDimensions)) {
             foreach ($aRowDimensions as $objRowDimension) {
                 $newReference = $this->updateCellReference('A' . $objRowDimension->getRowIndex(), $pBefore, $pNumCols, $pNumRows);
-                list(, $newReference) = PHPExcel_Cell::coordinateFromString($newReference);
+                list($unusedParamA, $newReference) = PHPExcel_Cell::coordinateFromString($newReference);
                 if ($objRowDimension->getRowIndex() != $newReference) {
                     $objRowDimension->setRowIndex($newReference);
                 }

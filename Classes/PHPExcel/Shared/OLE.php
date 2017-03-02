@@ -226,7 +226,7 @@ class PHPExcel_Shared_OLE
      */
     private static function _readInt1($fh)
     {
-        list(, $tmp) = unpack("c", fread($fh, 1));
+        list($unusedParamA, $tmp) = unpack("c", fread($fh, 1));
         return $tmp;
     }
 
@@ -238,7 +238,7 @@ class PHPExcel_Shared_OLE
      */
     private static function _readInt2($fh)
     {
-        list(, $tmp) = unpack("v", fread($fh, 2));
+        list($unusedParamA, $tmp) = unpack("v", fread($fh, 2));
         return $tmp;
     }
 
@@ -250,7 +250,7 @@ class PHPExcel_Shared_OLE
      */
     private static function _readInt4($fh)
     {
-        list(, $tmp) = unpack("V", fread($fh, 4));
+        list($unusedParamA, $tmp) = unpack("V", fread($fh, 4));
         return $tmp;
     }
 
@@ -509,8 +509,8 @@ class PHPExcel_Shared_OLE
 
         // factor used for separating numbers into 4 bytes parts
         $factor = pow(2, 32);
-        list(, $high_part) = unpack('V', substr($string, 4, 4));
-        list(, $low_part) = unpack('V', substr($string, 0, 4));
+        list($unusedParamA, $high_part) = unpack('V', substr($string, 4, 4));
+        list($unusedParamB, $low_part) = unpack('V', substr($string, 0, 4));
 
         $big_date = ($high_part * $factor) + $low_part;
         // translate to seconds

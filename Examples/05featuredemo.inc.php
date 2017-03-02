@@ -352,7 +352,7 @@ $objPHPExcel->getActiveSheet()->setCellValue('A6', $sLloremIpsum);
 
 // Set the worksheet tab color
 echo date('H:i:s') , " Set the worksheet tab color" , EOL;
-$objPHPExcel->getActiveSheet()->getTabColor()->setARGB('FF0094FF');;
+$objPHPExcel->getActiveSheet()->getTabColor()->setARGB('FF0094FF');
 
 // Set alignments
 echo date('H:i:s') , " Set alignments" , EOL;

@@ -179,7 +179,7 @@ class PHPExcel_CachedObjectStorage_PHPTemp extends PHPExcel_CachedObjectStorage_
      */
     public function __construct(PHPExcel_Worksheet $parent, $arguments)
     {
-        $this->memoryCacheSize = (isset($arguments['memoryCacheSize'])) ? $arguments['memoryCacheSize'] : '1MB';
+        $this->memoryCacheSize = (isset($arguments['memoryCacheSize'])) ? $arguments['memoryCacheSize'] : '1024';
 
         parent::__construct($parent);
         if (is_null($this->fileHandle)) {

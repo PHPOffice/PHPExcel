@@ -1535,7 +1535,41 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
                                                         'toOffsetY'         => $toOffsetY,
                                                         'worksheetTitle'    => $docSheet->getTitle()
                                                     );
-                                                }
+                                                } elseif ($twoCellAnchor->grpSp) {
+						    // Group shares - support only pictures
+						    foreach ($twoCellAnchor->grpSp as $groupShape) {
+                                            	        if ($groupShape->pic->blipFill) {
+                                                		$blip = $groupShape->pic->blipFill->children("http://schemas.openxmlformats.org/drawingml/2006/main")->blip;
+                                                		$xfrm = $groupShape->pic->spPr->children("http://schemas.openxmlformats.org/drawingml/2006/main")->xfrm;
+                                                		$outerShdw = $groupShape->pic->spPr->children("http://schemas.openxmlformats.org/drawingml/2006/main")->effectLst->outerShdw;
+                                                		$objDrawing = new PHPExcel_Worksheet_Drawing;
+                                                		$objDrawing->setName((string) self::getArrayItem($groupShape->pic->nvPicPr->cNvPr->attributes(), "name"));
+                                                		$objDrawing->setDescription((string) self::getArrayItem($groupShape->pic->nvPicPr->cNvPr->attributes(), "descr"));
+                                                		$objDrawing->setPath("zip://".PHPExcel_Shared_File::realpath($pFilename)."#" . $images[(string) self::getArrayItem($blip->attributes("http://schemas.openxmlformats.org/officeDocument/2006/relationships"), "embed")], false);
+                                                		$objDrawing->setCoordinates(PHPExcel_Cell::stringFromColumnIndex((string) $twoCellAnchor->from->col) . ($twoCellAnchor->from->row + 1));
+                                                		$objDrawing->setOffsetX(PHPExcel_Shared_Drawing::EMUToPixels($twoCellAnchor->from->colOff));
+                                                		$objDrawing->setOffsetY(PHPExcel_Shared_Drawing::EMUToPixels($twoCellAnchor->from->rowOff));
+                                                		$objDrawing->setResizeProportional(false);
+
+                                                		if ($xfrm) {
+                                                    		    $objDrawing->setWidth(PHPExcel_Shared_Drawing::EMUToPixels(self::getArrayItem($xfrm->ext->attributes(), "cx")));
+                                                    		    $objDrawing->setHeight(PHPExcel_Shared_Drawing::EMUToPixels(self::getArrayItem($xfrm->ext->attributes(), "cy")));
+                                                    		    $objDrawing->setRotation(PHPExcel_Shared_Drawing::angleToDegrees(self::getArrayItem($xfrm->attributes(), "rot")));
+                                                		}
+                                                		if ($outerShdw) {
+                                                    		    $shadow = $objDrawing->getShadow();
+                                                    		    $shadow->setVisible(true);
+                                                    		    $shadow->setBlurRadius(PHPExcel_Shared_Drawing::EMUTopixels(self::getArrayItem($outerShdw->attributes(), "blurRad")));
+                                                    		    $shadow->setDistance(PHPExcel_Shared_Drawing::EMUTopixels(self::getArrayItem($outerShdw->attributes(), "dist")));
+                                                    		    $shadow->setDirection(PHPExcel_Shared_Drawing::angleToDegrees(self::getArrayItem($outerShdw->attributes(), "dir")));
+                                                    		    $shadow->setAlignment((string) self::getArrayItem($outerShdw->attributes(), "algn"));
+                                                    		    $shadow->getColor()->setRGB(self::getArrayItem($outerShdw->srgbClr->attributes(), "val"));
+                                                    		    $shadow->setAlpha(self::getArrayItem($outerShdw->srgbClr->alpha->attributes(), "val") / 1000);
+                                                		}
+                                                		$objDrawing->setWorksheet($docSheet);
+							}
+						    }
+						}
                                             }
                                         }
                                     }

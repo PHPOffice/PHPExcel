@@ -29,15 +29,24 @@
         "ext-xmlwriter": "*"
     },
     "require-dev": {
-        "squizlabs/php_codesniffer": "2.*"
+        "squizlabs/php_codesniffer": "^2.0"
     },
-    "recommend": {
+    "suggest": {
         "ext-zip": "*",
-        "ext-gd": "*"
+        "ext-gd2": "*",
+        "mpdf/mpdf": "In order to export to PDF through mPDF library",
+        "tecnickcom/tcpdf": "In order to export to PDF through TCPDF library",
+        "dompdf/dompdf": "In order to export to PDF through DOMPDF library",
+        "pclzip/pclzip": "In order to allow handle Zip files as alternative of `ext-zip`"
     },
     "autoload": {
         "psr-0": {
             "PHPExcel": "Classes/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.8-dev"
         }
     }
 }

@@ -101,6 +101,7 @@ class PHPExcel_Reader_SYLK extends PHPExcel_Reader_Abstract implements PHPExcel_
      * Set input encoding
      *
      * @param string $pValue Input encoding
+     * @return $this
      */
     public function setInputEncoding($pValue = 'ANSI')
     {
@@ -122,6 +123,7 @@ class PHPExcel_Reader_SYLK extends PHPExcel_Reader_Abstract implements PHPExcel_
      * Return worksheet info (Name, Last Column Letter, Last Column Index, Total Rows, Total Columns)
      *
      * @param   string     $pFilename
+     * @return array
      * @throws   PHPExcel_Reader_Exception
      */
     public function listWorksheetInfo($pFilename)

@@ -152,8 +152,9 @@ class PHPExcel_CachedObjectStorage_SQLite3 extends PHPExcel_CachedObjectStorage_
     /**
      *    Is a value set for an indexed cell?
      *
-     * @param    string        $pCoord        Coordinate address of the cell to check
-     * @return    boolean
+     * @param    string $pCoord Coordinate address of the cell to check
+     * @return bool
+     * @throws PHPExcel_Exception
      */
     public function isDataSet($pCoord)
     {
@@ -198,9 +199,10 @@ class PHPExcel_CachedObjectStorage_SQLite3 extends PHPExcel_CachedObjectStorage_
     /**
      * Move a cell object from one address to another
      *
-     * @param    string        $fromAddress    Current address of the cell to move
-     * @param    string        $toAddress        Destination address of the cell to move
-     * @return    boolean
+     * @param    string $fromAddress Current address of the cell to move
+     * @param    string $toAddress Destination address of the cell to move
+     * @return bool
+     * @throws PHPExcel_Exception
      */
     public function moveCell($fromAddress, $toAddress)
     {
@@ -226,8 +228,8 @@ class PHPExcel_CachedObjectStorage_SQLite3 extends PHPExcel_CachedObjectStorage_
 
     /**
      * Get a list of all cell addresses currently held in cache
-     *
-     * @return    string[]
+     * @return string[]
+     * @throws PHPExcel_Exception
      */
     public function getCellList()
     {
@@ -252,8 +254,8 @@ class PHPExcel_CachedObjectStorage_SQLite3 extends PHPExcel_CachedObjectStorage_
     /**
      * Clone the cell collection
      *
-     * @param    PHPExcel_Worksheet    $parent        The new worksheet
-     * @return    void
+     * @param    PHPExcel_Worksheet $parent The new worksheet
+     * @throws PHPExcel_Exception
      */
     public function copyCellCollection(PHPExcel_Worksheet $parent)
     {
@@ -293,7 +295,8 @@ class PHPExcel_CachedObjectStorage_SQLite3 extends PHPExcel_CachedObjectStorage_
     /**
      * Initialise this new cell collection
      *
-     * @param    PHPExcel_Worksheet    $parent        The worksheet for this cell collection
+     * @param    PHPExcel_Worksheet $parent The worksheet for this cell collection
+     * @throws PHPExcel_Exception
      */
     public function __construct(PHPExcel_Worksheet $parent)
     {

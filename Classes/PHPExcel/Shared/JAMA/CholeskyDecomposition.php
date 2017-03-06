@@ -43,6 +43,7 @@ class CholeskyDecomposition
      *
      *    Class constructor - decomposes symmetric positive definite matrix
      *    @param mixed Matrix square symmetric positive definite matrix
+     *    @throws
      */
     public function __construct($A = null)
     {
@@ -103,6 +104,7 @@ class CholeskyDecomposition
      *
      *    @param $B Row-equal matrix
      *    @return Matrix L * L' * X = B
+     *    @throws
      */
     public function solve($B = null)
     {

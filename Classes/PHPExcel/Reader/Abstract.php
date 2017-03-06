@@ -224,7 +224,6 @@ abstract class PHPExcel_Reader_Abstract implements PHPExcel_Reader_IReader
      *
      * @param string $pFilename
      * @throws    PHPExcel_Reader_Exception
-     * @return resource
      */
     protected function openFile($pFilename)
     {
@@ -265,6 +264,7 @@ abstract class PHPExcel_Reader_Abstract implements PHPExcel_Reader_IReader
      * Scan theXML for use of <!ENTITY to prevent XXE/XEE attacks
      *
      * @param     string         $xml
+     * @return mixed
      * @throws PHPExcel_Reader_Exception
      */
     public function securityScan($xml)
@@ -279,8 +279,8 @@ abstract class PHPExcel_Reader_Abstract implements PHPExcel_Reader_IReader
     /**
      * Scan theXML for use of <!ENTITY to prevent XXE/XEE attacks
      *
-     * @param     string         $filestream
-     * @throws PHPExcel_Reader_Exception
+     * @param string $filestream
+     * @return mixed
      */
     public function securityScanFile($filestream)
     {

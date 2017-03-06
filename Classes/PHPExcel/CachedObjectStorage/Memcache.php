@@ -102,7 +102,7 @@ class PHPExcel_CachedObjectStorage_Memcache extends PHPExcel_CachedObjectStorage
      *
      * @param    string        $pCoord        Coordinate address of the cell to check
      * @return    boolean
-     * @return    boolean
+     * @throws
      */
     public function isDataSet($pCoord)
     {
@@ -195,6 +195,7 @@ class PHPExcel_CachedObjectStorage_Memcache extends PHPExcel_CachedObjectStorage
      *
      * @param    PHPExcel_Worksheet    $parent        The new worksheet
      * @return    void
+     * @throws
      */
     public function copyCellCollection(PHPExcel_Worksheet $parent)
     {
@@ -246,6 +247,7 @@ class PHPExcel_CachedObjectStorage_Memcache extends PHPExcel_CachedObjectStorage
      *
      * @param    PHPExcel_Worksheet    $parent        The worksheet for this cell collection
      * @param    array of mixed        $arguments    Additional initialisation arguments
+     * @throws
      */
     public function __construct(PHPExcel_Worksheet $parent, $arguments)
     {

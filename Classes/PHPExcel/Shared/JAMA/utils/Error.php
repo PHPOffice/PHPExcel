@@ -65,7 +65,8 @@ $error['EN'][ROW_LENGTH_EXCEPTION] = "All rows must have the same length.";
 
 /**
  *    Custom error handler
- *    @param int $num Error number
+ *    @param int $errorNumber Error number
+ *    @return string
  */
 function JAMAError($errorNumber = null)
 {

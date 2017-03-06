@@ -698,7 +698,7 @@ class PHPExcel_Writer_HTML extends PHPExcel_Writer_Abstract implements PHPExcel_
                 if ($chartCoordinates['cell'] == $coordinates) {
                     $chartFileName = PHPExcel_Shared_File::sys_get_temp_dir().'/'.uniqid().'.png';
                     if (!$chart->render($chartFileName)) {
-                        return;
+                        return '';
                     }
 
                     $html .= PHP_EOL;

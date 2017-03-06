@@ -111,6 +111,7 @@ class PHPExcel_Chart_DataSeriesValues
      *                                    PHPExcel_Chart_DataSeriesValues::DATASERIES_TYPE_NUMBER
      *                                        Normally used for chart data values
      * @return    PHPExcel_Chart_DataSeriesValues
+     * @throws
      */
     public function setDataType($dataType = self::DATASERIES_TYPE_NUMBER)
     {

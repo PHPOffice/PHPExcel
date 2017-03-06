@@ -91,7 +91,7 @@ class PHPExcel_Cell
     /**
      *    Send notification to the cache controller
      *
-     *    @return void
+     *    @return $this
      **/
     public function notifyCacheController()
     {
@@ -785,6 +785,7 @@ class PHPExcel_Cell
      *    Column index from string
      *
      *    @param    string $pString
+     *    @throws
      *    @return    int Column index (base 1 !!!)
      */
     public static function columnIndexFromString($pString = 'A')

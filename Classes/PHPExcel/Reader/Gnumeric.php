@@ -96,6 +96,7 @@ class PHPExcel_Reader_Gnumeric extends PHPExcel_Reader_Abstract implements PHPEx
      * Reads names of the worksheets from a file, without parsing the whole file to a PHPExcel object
      *
      * @param     string         $pFilename
+     * @return array
      * @throws     PHPExcel_Reader_Exception
      */
     public function listWorksheetNames($pFilename)
@@ -127,7 +128,8 @@ class PHPExcel_Reader_Gnumeric extends PHPExcel_Reader_Abstract implements PHPEx
      * Return worksheet info (Name, Last Column Letter, Last Column Index, Total Rows, Total Columns)
      *
      * @param   string     $pFilename
-     * @throws   PHPExcel_Reader_Exception
+     * @return  array
+     * @throws  PHPExcel_Reader_Exception
      */
     public function listWorksheetInfo($pFilename)
     {

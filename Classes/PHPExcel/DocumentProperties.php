@@ -426,6 +426,7 @@ class PHPExcel_DocumentProperties
             return $this->customProperties[$propertyName]['value'];
         }
 
+        return '';
     }
 
     /**
@@ -440,6 +441,7 @@ class PHPExcel_DocumentProperties
             return $this->customProperties[$propertyName]['type'];
         }
 
+        return '';
     }
 
     /**

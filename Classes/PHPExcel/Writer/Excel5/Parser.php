@@ -503,6 +503,7 @@ class PHPExcel_Writer_Excel5_Parser
      * @access private
      * @param mixed $token The token to convert.
      * @return mixed the converted token on success
+     * @throws
      */
     private function convert($token)
     {
@@ -564,6 +565,7 @@ class PHPExcel_Writer_Excel5_Parser
      *
      * @access private
      * @param mixed $num an integer or double for conversion to its ptg value
+     * @return string
      */
     private function convertNumber($num)
     {
@@ -584,6 +586,7 @@ class PHPExcel_Writer_Excel5_Parser
      * @access private
      * @param string $string A string for conversion to its ptg value.
      * @return mixed the converted token on success
+     * @throws PHPExcel_Writer_Exception
      */
     private function convertString($string)
     {
@@ -626,6 +629,8 @@ class PHPExcel_Writer_Excel5_Parser
      * @access private
      * @param string    $range    An Excel range in the A1:A2
      * @param int        $class
+     * @return string
+     * @throws PHPExcel_Writer_Exception
      */
     private function convertRange2d($range, $class = 0)
     {
@@ -799,6 +804,7 @@ class PHPExcel_Writer_Excel5_Parser
      * @access    private
      * @param    string    $ext_ref    The name of the external reference
      * @return    string                The reference index in packed() format
+     * @throws
      */
     private function packExtRef($ext_ref)
     {
@@ -844,6 +850,7 @@ class PHPExcel_Writer_Excel5_Parser
      * @access private
      * @param string $ext_ref The name of the external reference
      * @return mixed The reference index in packed() format on success
+     * @throws
      */
     private function getRefIndex($ext_ref)
     {
@@ -935,6 +942,7 @@ class PHPExcel_Writer_Excel5_Parser
      * @access private
      * @param string $cell The Excel cell reference to be packed
      * @return array Array containing the row and column in packed() format
+     * @throws
      */
     private function cellToPackedRowcol($cell)
     {
@@ -964,6 +972,7 @@ class PHPExcel_Writer_Excel5_Parser
      * @access private
      * @param string $range The Excel range to be packed
      * @return array Array containing (row1,col1,row2,col2) in packed() format
+     * @throws
      */
     private function rangeToPackedRange($range)
     {
@@ -1335,6 +1344,7 @@ class PHPExcel_Writer_Excel5_Parser
      *
      * @access private
      * @return mixed The parsed ptg'd tree on success
+     * @throws PHPExcel_Writer_Exception
      */
     private function fact()
     {
@@ -1407,6 +1417,7 @@ class PHPExcel_Writer_Excel5_Parser
      *
      * @access private
      * @return mixed The parsed ptg'd tree on success
+     * @throws PHPExcel_Writer_Exception
      */
     private function func()
     {

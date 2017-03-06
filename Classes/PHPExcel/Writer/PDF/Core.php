@@ -233,10 +233,12 @@ abstract class PHPExcel_Writer_PDF_Core extends PHPExcel_Writer_HTML
      *      'arialunicid0-japanese'
      *
      *  @param    string    $fontName
+     *  @return $this
      */
     public function setFont($fontName)
     {
         $this->font = $fontName;
+
         return $this;
     }
 
@@ -299,7 +301,7 @@ abstract class PHPExcel_Writer_PDF_Core extends PHPExcel_Writer_HTML
      *
      *  @param     string        $pValue        Temporary storage directory
      *  @throws    PHPExcel_Writer_Exception    when directory does not exist
-     *  @return    PHPExcel_Writer_PDF
+     *  @return    $this
      */
     public function setTempDir($pValue = '')
     {
@@ -308,6 +310,7 @@ abstract class PHPExcel_Writer_PDF_Core extends PHPExcel_Writer_HTML
         } else {
             throw new PHPExcel_Writer_Exception("Directory does not exist: $pValue");
         }
+
         return $this;
     }
 
@@ -315,6 +318,7 @@ abstract class PHPExcel_Writer_PDF_Core extends PHPExcel_Writer_HTML
      *  Save PHPExcel to PDF file, pre-save
      *
      *  @param     string     $pFilename   Name of the file to save as
+     *  @return resource
      *  @throws    PHPExcel_Writer_Exception
      */
     protected function prepareForSave($pFilename = null)

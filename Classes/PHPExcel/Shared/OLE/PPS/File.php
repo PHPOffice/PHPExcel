@@ -69,6 +69,6 @@ class PHPExcel_Shared_OLE_PPS_File extends PHPExcel_Shared_OLE_PPS
      */
     public function getStream()
     {
-        $this->ole->getStream($this);
+        return $this->ole->getStream($this);
     }
 }

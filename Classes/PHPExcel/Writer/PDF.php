@@ -66,9 +66,10 @@ class PHPExcel_Writer_PDF implements PHPExcel_Writer_IWriter
     /**
      *  Magic method to handle direct calls to the configured PDF renderer wrapper class.
      *
-     *  @param   string   $name        Renderer library method name
-     *  @param   mixed[]  $arguments   Array of arguments to pass to the renderer method
-     *  @return  mixed    Returned data from the PDF renderer wrapper method
+     * @param   string $name Renderer library method name
+     * @param   mixed[] $arguments Array of arguments to pass to the renderer method
+     * @return mixed Returned data from the PDF renderer wrapper method
+     * @throws PHPExcel_Writer_Exception
      */
     public function __call($name, $arguments)
     {

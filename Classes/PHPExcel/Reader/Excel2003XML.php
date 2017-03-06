@@ -115,7 +115,8 @@ class PHPExcel_Reader_Excel2003XML extends PHPExcel_Reader_Abstract implements P
      * Reads names of the worksheets from a file, without parsing the whole file to a PHPExcel object
      *
      * @param     string         $pFilename
-     * @throws     PHPExcel_Reader_Exception
+     * @return array
+     * @throws PHPExcel_Reader_Exception
      */
     public function listWorksheetNames($pFilename)
     {
@@ -146,7 +147,8 @@ class PHPExcel_Reader_Excel2003XML extends PHPExcel_Reader_Abstract implements P
      * Return worksheet info (Name, Last Column Letter, Last Column Index, Total Rows, Total Columns)
      *
      * @param   string     $pFilename
-     * @throws   PHPExcel_Reader_Exception
+     * @return array
+     * @throws PHPExcel_Reader_Exception
      */
     public function listWorksheetInfo($pFilename)
     {

@@ -106,10 +106,12 @@ class PHPExcel_Reader_CSV extends PHPExcel_Reader_Abstract implements PHPExcel_R
      * Set input encoding
      *
      * @param string $pValue Input encoding
+     * @return $this
      */
     public function setInputEncoding($pValue = 'UTF-8')
     {
         $this->inputEncoding = $pValue;
+
         return $this;
     }
 
@@ -172,13 +174,15 @@ class PHPExcel_Reader_CSV extends PHPExcel_Reader_Abstract implements PHPExcel_R
             $this->delimiter = substr($line, 4, 1);
             return;
         }
-        return $this->skipBOM();
+
+        $this->skipBOM();
     }
 
     /**
      * Return worksheet info (Name, Last Column Letter, Last Column Index, Total Rows, Total Columns)
      *
      * @param     string         $pFilename
+     * @return    array
      * @throws    PHPExcel_Reader_Exception
      */
     public function listWorksheetInfo($pFilename)
@@ -194,8 +198,6 @@ class PHPExcel_Reader_CSV extends PHPExcel_Reader_Abstract implements PHPExcel_R
         // Skip BOM, if any
         $this->skipBOM();
         $this->checkSeparator();
-
-        $escapeEnclosures = array( "\\" . $this->enclosure, $this->enclosure . $this->enclosure );
 
         $worksheetInfo = array();
         $worksheetInfo[0]['worksheetName'] = 'Worksheet';
@@ -383,6 +385,7 @@ class PHPExcel_Reader_CSV extends PHPExcel_Reader_Abstract implements PHPExcel_R
      * Set Contiguous
      *
      * @param boolean $contiguous
+     * @return $this
      */
     public function setContiguous($contiguous = false)
     {

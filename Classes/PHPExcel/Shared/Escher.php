@@ -44,7 +44,7 @@ class PHPExcel_Shared_Escher
     /**
      * Get Drawing Group Container
      *
-     * @return PHPExcel_Shared_Escher_DgContainer
+     * @return PHPExcel_Shared_Escher_DggContainer
      */
     public function getDggContainer()
     {
@@ -55,10 +55,13 @@ class PHPExcel_Shared_Escher
      * Set Drawing Group Container
      *
      * @param PHPExcel_Shared_Escher_DggContainer $dggContainer
+     * @return $this
      */
     public function setDggContainer($dggContainer)
     {
-        return $this->dggContainer = $dggContainer;
+        $this->dggContainer = $dggContainer;
+
+        return $this;
     }
 
     /**
@@ -75,9 +78,12 @@ class PHPExcel_Shared_Escher
      * Set Drawing Container
      *
      * @param PHPExcel_Shared_Escher_DgContainer $dgContainer
+     * @return $this
      */
     public function setDgContainer($dgContainer)
     {
-        return $this->dgContainer = $dgContainer;
+        $this->dgContainer = $dgContainer;
+
+        return $this;
     }
 }

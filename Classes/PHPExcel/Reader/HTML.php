@@ -160,6 +160,7 @@ class PHPExcel_Reader_HTML extends PHPExcel_Reader_Abstract implements PHPExcel_
      * Set input encoding
      *
      * @param string $pValue Input encoding
+     * @return $this
      */
     public function setInputEncoding($pValue = 'ANSI')
     {
@@ -536,6 +537,7 @@ class PHPExcel_Reader_HTML extends PHPExcel_Reader_Abstract implements PHPExcel_
      * Scan theXML for use of <!ENTITY to prevent XXE/XEE attacks
      *
      * @param     string         $xml
+     * @return string
      * @throws PHPExcel_Reader_Exception
      */
     public function securityScan($xml)

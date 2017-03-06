@@ -51,7 +51,11 @@ class PHPExcel_Reader_Excel2007_Chart
         return null;
     }
 
-
+    /**
+     * @param $color
+     * @param bool $background
+     * @return string
+     */
     private static function readColor($color, $background = false)
     {
         if (isset($color["rgb"])) {
@@ -59,8 +63,15 @@ class PHPExcel_Reader_Excel2007_Chart
         } elseif (isset($color["indexed"])) {
             return PHPExcel_Style_Color::indexedColor($color["indexed"]-7, $background)->getARGB();
         }
+
+        return '';
     }
 
+    /**
+     * @param $chartElements
+     * @param $chartName
+     * @return PHPExcel_Chart
+     */
     public static function readChart($chartElements, $chartName)
     {
         $namespacesChartMeta = $chartElements->getNamespaces(true);

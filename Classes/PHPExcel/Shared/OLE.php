@@ -92,7 +92,8 @@ class PHPExcel_Shared_OLE
      * @acces public
      * @param string $file
      * @return mixed true on success, PEAR_Error on failure
-    */
+     * @throws
+     */
     public function read($file)
     {
         $fh = fopen($file, "r");
@@ -181,6 +182,7 @@ class PHPExcel_Shared_OLE
     /**
      * @param  int  block id
      * @param  int  byte offset from beginning of file
+     * @return int
      * @access public
      */
     public function _getBlockOffset($blockId)

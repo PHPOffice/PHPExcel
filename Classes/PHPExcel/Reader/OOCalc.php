@@ -107,7 +107,8 @@ class PHPExcel_Reader_OOCalc extends PHPExcel_Reader_Abstract implements PHPExce
     /**
      * Reads names of the worksheets from a file, without parsing the whole file to a PHPExcel object
      *
-     * @param     string         $pFilename
+     * @param      string         $pFilename
+     * @return     array
      * @throws     PHPExcel_Reader_Exception
      */
     public function listWorksheetNames($pFilename)
@@ -160,6 +161,7 @@ class PHPExcel_Reader_OOCalc extends PHPExcel_Reader_Abstract implements PHPExce
      * Return worksheet info (Name, Last Column Letter, Last Column Index, Total Rows, Total Columns)
      *
      * @param   string     $pFilename
+     * @return array
      * @throws   PHPExcel_Reader_Exception
      */
     public function listWorksheetInfo($pFilename)

@@ -2409,10 +2409,11 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
      * @param mixed $nullValue Value in source array that stands for blank cell
      * @param string $startCell Insert array starting from this cell address as the top left coordinate
      * @param boolean $strictNullComparison Apply strict comparison when testing for null values in the array
+     * @param boolean $setExplicit Set values explicitly
      * @throws PHPExcel_Exception
      * @return PHPExcel_Worksheet
      */
-    public function fromArray($source = null, $nullValue = null, $startCell = 'A1', $strictNullComparison = false)
+    public function fromArray($source = null, $nullValue = null, $startCell = 'A1', $strictNullComparison = false, $setExplicit = false)
     {
         if (is_array($source)) {
             //    Convert a 1-D array to 2-D (for ease of looping)
@@ -2422,6 +2423,7 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
 
             // start coordinate
             list ($startColumn, $startRow) = PHPExcel_Cell::coordinateFromString($startCell);
+            $setFunction = $setExplicit ? 'setValueExplicit' : 'setValue';
 
             // Loop through $source
             foreach ($source as $rowData) {
@@ -2430,12 +2432,12 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
                     if ($strictNullComparison) {
                         if ($cellValue !== $nullValue) {
                             // Set cell value
-                            $this->getCell($currentColumn . $startRow)->setValue($cellValue);
+                            $this->getCell($currentColumn . $startRow)->$setFunction($cellValue);
                         }
                     } else {
                         if ($cellValue != $nullValue) {
                             // Set cell value
-                            $this->getCell($currentColumn . $startRow)->setValue($cellValue);
+                            $this->getCell($currentColumn . $startRow)->$setFunction($cellValue);
                         }
                     }
                     ++$currentColumn;

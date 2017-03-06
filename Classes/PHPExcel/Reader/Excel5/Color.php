@@ -17,16 +17,12 @@ class PHPExcel_Reader_Excel5_Color
         } elseif (isset($palette) && isset($palette[$color - 8])) {
             // palette color, color index 0x08 maps to pallete index 0
             return $palette[$color - 8];
-        } else {
+        } elseif ($version == PHPExcel_Reader_Excel5::XLS_BIFF8) {
             // default color table
-            if ($version == PHPExcel_Reader_Excel5::XLS_BIFF8) {
-                return PHPExcel_Reader_Excel5_Color_BIFF8::lookup($color);
-            } else {
-                // BIFF5
-                return PHPExcel_Reader_Excel5_Color_BIFF5::lookup($color);
-            }
+            return PHPExcel_Reader_Excel5_Color_BIFF8::lookup($color);
         }
-
-        return $color;
+    
+        // BIFF5
+        return PHPExcel_Reader_Excel5_Color_BIFF5::lookup($color);
     }
 }

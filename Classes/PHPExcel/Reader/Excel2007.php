@@ -1547,7 +1547,11 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
                                 foreach ($xmlWorkbook->definedNames->definedName as $definedName) {
                                     // Extract range
                                     $extractedRange = (string)$definedName;
-                                    $extractedRange = preg_replace('/\'(\w+)\'\!/', '', $extractedRange);
+
+                                    // Fixed issue #740 : Apostrophes near the end of the sheet name.
+                                    // In most cases, it changes nothing. It damages sheets using apostrophes in their names.
+                                    // $extractedRange = preg_replace('/\'(\w+)\'\!/', '', $extractedRange);
+
                                     if (($spos = strpos($extractedRange, '!')) !== false) {
                                         $extractedRange = substr($extractedRange, 0, $spos).str_replace('$', '', substr($extractedRange, $spos));
                                     } else {

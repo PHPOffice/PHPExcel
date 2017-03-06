@@ -1,5 +1,5 @@
 {
-    "name": "phpoffice/phpexcel",
+    "name": "computertinker/phpexcel",
     "description": "PHPExcel - OpenXML - Read, Create and Write Spreadsheet documents in PHP - Spreadsheet engine",
     "keywords": ["PHP","Excel","OpenXML","xlsx","xls","spreadsheet"],
     "homepage": "https://github.com/PHPOffice/PHPExcel",

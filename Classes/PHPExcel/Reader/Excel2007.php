@@ -1292,7 +1292,10 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
                                 foreach ($vmlComments as $relName => $relPath) {
                                     // Load VML comments file
                                     $relPath = PHPExcel_Shared_File::realpath(dirname("$dir/$fileWorksheet") . "/" . $relPath);
-                                    $vmlCommentsFile = simplexml_load_string($this->securityScan($this->getFromZipArchive($zip, $relPath)), 'SimpleXMLElement', PHPExcel_Settings::getLibXmlLoaderOptions());
+                                    $xml_string = $this->securityScan($this->_getFromZipArchive($zip, $relPath));
+									$xml_string = preg_replace('@( o:relid="[^"]*")(\s+o:relid="[^"]*")+@', '\1', $xml_string); // https://bz.apache.org/bugzilla/show_bug.cgi?id=53819
+                                    $vmlCommentsFile = simplexml_load_string($xml_string, 'SimpleXMLElement', PHPExcel_Settings::getLibXmlLoaderOptions());
+                                    unset($xml_string);
                                     $vmlCommentsFile->registerXPathNamespace('v', 'urn:schemas-microsoft-com:vml');
 
                                     $shapes = $vmlCommentsFile->xpath('//v:shape');

@@ -531,6 +531,9 @@ class PHPExcel_Reader_OOCalc extends PHPExcel_Reader_Abstract implements PHPExce
                                                 $spanSection .= $spanData;
                                             }
                                             array_push($dataArray, $spanSection);
+                                        } elseif (isset($pData->a)) {
+                                            //Reading the hyperlinks in p
+                                            array_push($dataArray, $pData->a);
                                         } else {
                                             array_push($dataArray, $pData);
                                         }

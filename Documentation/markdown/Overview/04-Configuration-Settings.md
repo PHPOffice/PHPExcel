@@ -134,7 +134,8 @@ if (!$validLocale) {
 }
 ```
 
-If Brazilian Portuguese language files aren't available, then Portuguese will be enabled instead: if Portuguese language files aren't available, then the setLocale() method will return an error, and American English (en_us) settings will be used throughout.
+- If Brazilian Portuguese language files aren't available, then Portuguese will be enabled instead
+- If Portuguese language files aren't available, then the setLocale() method will return an error, and American English (en_us) settings will be used throughout.
 
 More details of the features available once a locale has been set, including a list of the languages and locales currently supported, can be found in the section of this document entitled "Locale Settings for Formulae".
 

@@ -91,6 +91,7 @@ class PHPExcel_Reader_Excel2003XML extends PHPExcel_Reader_Abstract implements P
         // Read sample data (first 2 KB will do)
         $data = fread($fileHandle, 2048);
         fclose($fileHandle);
+        $data = strtr($data, "'", '"'); // fix headers with single quote
 
         $valid = true;
         foreach ($signature as $match) {

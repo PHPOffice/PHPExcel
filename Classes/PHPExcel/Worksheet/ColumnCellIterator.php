@@ -134,7 +134,7 @@ class PHPExcel_Worksheet_ColumnCellIterator extends PHPExcel_Worksheet_CellItera
     /**
      * Return the current cell in this worksheet column
      *
-     * @return PHPExcel_Worksheet_Row
+     * @return PHPExcel_Cell
      */
     public function current()
     {

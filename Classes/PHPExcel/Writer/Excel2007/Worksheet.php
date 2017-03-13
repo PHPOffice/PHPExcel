@@ -375,7 +375,7 @@ class PHPExcel_Writer_Excel2007_Worksheet extends PHPExcel_Writer_Excel2007_Writ
         if (count($pSheet->getColumnDimensions()) > 0) {
             $objWriter->startElement('cols');
 
-            $pSheet->calculateColumnWidths();
+            $pSheet->calculateColumnWidths(false, $this->getParentWriter()->getPreCalculateFormulas());
 
             // Loop through column dimensions
             foreach ($pSheet->getColumnDimensions() as $colDimension) {

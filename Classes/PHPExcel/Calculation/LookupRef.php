@@ -552,31 +552,48 @@ class PHPExcel_Calculation_LookupRef
         // **
         // find the match
         // **
+        
+        //    collects matchs key
+        $mymatchkey = NULL;
+        
         foreach ($lookup_array as $i => $lookupArrayValue) {
             if (($match_type == 0) && ($lookupArrayValue == $lookup_value)) {
                 //    exact match
-                return ++$i;
-            } elseif (($match_type == -1) && ($lookupArrayValue <= $lookup_value)) {
+                $mymatchkey = ++$i;
+            } elseif (($match_type == -1)) {
                 $i = array_search($i, $keySet);
                 // if match_type is -1 <=> find the smallest value that is greater than or equal to lookup_value
-                if ($i < 1) {
+                if ($i < 1 && ($lookupArrayValue < $lookup_value)) {
                     // 1st cell was already smaller than the lookup_value
                     break;
                 } else {
-                    // the previous cell was the match
-                    return $keySet[$i-1]+1;
+                    $mymatchkey = $keySet[$i]+1;
+                    if ($lookupArrayValue < $lookup_value) {
+                        // the previous cell was the match
+                        $mymatchkey = $keySet[$i-1]+1;
+                        break;
+                    }
                 }
-            } elseif (($match_type == 1) && ($lookupArrayValue >= $lookup_value)) {
+            } elseif (($match_type == 1)) {
                 $i = array_search($i, $keySet);
                 // if match_type is 1 <=> find the largest value that is less than or equal to lookup_value
-                if ($i < 1) {
+                if ($i < 1 && ($lookupArrayValue > $lookup_value)) {
                     // 1st cell was already bigger than the lookup_value
                     break;
                 } else {
-                    // the previous cell was the match
-                    return $keySet[$i-1]+1;
+                    $mymatchkey = $keySet[$i]+1;
+                    if ($lookupArrayValue > $lookup_value) {
+                        // the previous cell was the match
+                        $mymatchkey = $keySet[$i-1]+1;
+                        break;
+                    }
                 }
             }
+        }
+        
+        //    return matchs key iff found
+        if (!is_null($mymatchkey)) {
+            return $mymatchkey;
         }
 
         //    unsuccessful in finding a match, return #N/A error value

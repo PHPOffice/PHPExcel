@@ -556,7 +556,7 @@ class PHPExcel_Calculation_LookupRef
             if (($match_type == 0) && ($lookupArrayValue == $lookup_value)) {
                 //    exact match
                 return ++$i;
-            } elseif (($match_type == -1) && ($lookupArrayValue <= $lookup_value)) {
+            } elseif (($match_type == -1) && ($lookupArrayValue < $lookup_value)) {
                 $i = array_search($i, $keySet);
                 // if match_type is -1 <=> find the smallest value that is greater than or equal to lookup_value
                 if ($i < 1) {
@@ -566,7 +566,7 @@ class PHPExcel_Calculation_LookupRef
                     // the previous cell was the match
                     return $keySet[$i-1]+1;
                 }
-            } elseif (($match_type == 1) && ($lookupArrayValue >= $lookup_value)) {
+            } elseif (($match_type == 1) && ($lookupArrayValue > $lookup_value)) {
                 $i = array_search($i, $keySet);
                 // if match_type is 1 <=> find the largest value that is less than or equal to lookup_value
                 if ($i < 1) {

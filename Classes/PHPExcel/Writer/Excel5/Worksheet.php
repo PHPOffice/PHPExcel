@@ -192,6 +192,16 @@ class PHPExcel_Writer_Excel5_Worksheet extends PHPExcel_Writer_Excel5_BIFFwriter
     public $fontHashIndex;
 
     /**
+     * @var bool
+     */
+    private $_preCalculateFormulas;
+
+    /**
+     * @var int
+     */
+    private $_print_headers;
+
+    /**
      * Constructor
      *
      * @param int        &$str_total        Total number of strings
@@ -200,8 +210,7 @@ class PHPExcel_Writer_Excel5_Worksheet extends PHPExcel_Writer_Excel5_BIFFwriter
      * @param array        &$colors        Colour Table
      * @param mixed        $parser            The formula parser created for the Workbook
      * @param boolean    $preCalculateFormulas    Flag indicating whether formulas should be calculated or just written
-     * @param string    $phpSheet        The worksheet to write
-     * @param PHPExcel_Worksheet $phpSheet
+     * @param PHPExcel_Worksheet    $phpSheet        The worksheet to write
      */
     public function __construct(&$str_total, &$str_unique, &$str_table, &$colors, $parser, $preCalculateFormulas, $phpSheet)
     {

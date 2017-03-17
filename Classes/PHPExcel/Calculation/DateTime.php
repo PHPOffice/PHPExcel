@@ -668,7 +668,7 @@ class PHPExcel_Calculation_DateTime
         }
 
         // Validate parameters
-        if ($startDate >= $endDate) {
+        if ($startDate > $endDate) {
             return PHPExcel_Calculation_Functions::NaN();
         }
 

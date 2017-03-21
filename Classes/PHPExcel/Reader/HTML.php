@@ -457,6 +457,9 @@ class PHPExcel_Reader_HTML extends PHPExcel_Reader_Abstract implements PHPExcel_
                         $this->tableLevel = 0;
                         $this->processDomElement($child, $sheet, $row, $column, $cellContent);
                         break;
+                    case 'script':
+                        // ignore script tags
+                        break;
                     default:
                         $this->processDomElement($child, $sheet, $row, $column, $cellContent);
                 }

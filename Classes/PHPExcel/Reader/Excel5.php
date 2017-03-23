@@ -1060,35 +1060,37 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
                             // get index to BSE entry (1-based)
                             $BSEindex = $spContainer->getOPT(0x0104);
                             $BSECollection = $escherWorkbook->getDggContainer()->getBstoreContainer()->getBSECollection();
-                            $BSE = $BSECollection[$BSEindex - 1];
-                            $blipType = $BSE->getBlipType();
+                            if (isset($BSECollection[$BSEindex - 1])) {
+                                $BSE = $BSECollection[$BSEindex - 1];
+                                $blipType = $BSE->getBlipType();
 
-                            // need check because some blip types are not supported by Escher reader such as EMF
-                            if ($blip = $BSE->getBlip()) {
-                                $ih = imagecreatefromstring($blip->getData());
-                                $drawing = new PHPExcel_Worksheet_MemoryDrawing();
-                                $drawing->setImageResource($ih);
+                                // need check because some blip types are not supported by Escher reader such as EMF
+                                if ($blip = $BSE->getBlip()) {
+                                    $ih = imagecreatefromstring($blip->getData());
+                                    $drawing = new PHPExcel_Worksheet_MemoryDrawing();
+                                    $drawing->setImageResource($ih);
 
-                                // width, height, offsetX, offsetY
-                                $drawing->setResizeProportional(false);
-                                $drawing->setWidth($width);
-                                $drawing->setHeight($height);
-                                $drawing->setOffsetX($offsetX);
-                                $drawing->setOffsetY($offsetY);
+                                    // width, height, offsetX, offsetY
+                                    $drawing->setResizeProportional(false);
+                                    $drawing->setWidth($width);
+                                    $drawing->setHeight($height);
+                                    $drawing->setOffsetX($offsetX);
+                                    $drawing->setOffsetY($offsetY);
 
-                                switch ($blipType) {
-                                    case PHPExcel_Shared_Escher_DggContainer_BstoreContainer_BSE::BLIPTYPE_JPEG:
-                                        $drawing->setRenderingFunction(PHPExcel_Worksheet_MemoryDrawing::RENDERING_JPEG);
-                                        $drawing->setMimeType(PHPExcel_Worksheet_MemoryDrawing::MIMETYPE_JPEG);
-                                        break;
-                                    case PHPExcel_Shared_Escher_DggContainer_BstoreContainer_BSE::BLIPTYPE_PNG:
-                                        $drawing->setRenderingFunction(PHPExcel_Worksheet_MemoryDrawing::RENDERING_PNG);
-                                        $drawing->setMimeType(PHPExcel_Worksheet_MemoryDrawing::MIMETYPE_PNG);
-                                        break;
+                                    switch ($blipType) {
+                                        case PHPExcel_Shared_Escher_DggContainer_BstoreContainer_BSE::BLIPTYPE_JPEG:
+                                            $drawing->setRenderingFunction(PHPExcel_Worksheet_MemoryDrawing::RENDERING_JPEG);
+                                            $drawing->setMimeType(PHPExcel_Worksheet_MemoryDrawing::MIMETYPE_JPEG);
+                                            break;
+                                        case PHPExcel_Shared_Escher_DggContainer_BstoreContainer_BSE::BLIPTYPE_PNG:
+                                            $drawing->setRenderingFunction(PHPExcel_Worksheet_MemoryDrawing::RENDERING_PNG);
+                                            $drawing->setMimeType(PHPExcel_Worksheet_MemoryDrawing::MIMETYPE_PNG);
+                                            break;
+                                    }
+
+                                    $drawing->setWorksheet($this->phpSheet);
+                                    $drawing->setCoordinates($spContainer->getStartCoordinates());
                                 }
-
-                                $drawing->setWorksheet($this->phpSheet);
-                                $drawing->setCoordinates($spContainer->getStartCoordinates());
                             }
                             break;
                         default:

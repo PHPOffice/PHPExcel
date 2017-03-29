@@ -1729,17 +1729,17 @@ class PclZip
 
         if ($last == 'g') {
             //$v_memory_limit = $v_memory_limit*1024*1024*1024;
-            $v_memory_limit = $v_memory_limit*1073741824;
+            $v_memory_limit = intval($v_memory_limit)*1073741824;
         }
         if ($last == 'm') {
             //$v_memory_limit = $v_memory_limit*1024*1024;
-            $v_memory_limit = $v_memory_limit*1048576;
+            $v_memory_limit = intval($v_memory_limit)*1048576;
         }
         if ($last == 'k') {
-            $v_memory_limit = $v_memory_limit*1024;
+            $v_memory_limit = intval($v_memory_limit)*1024;
         }
 
-        $p_options[PCLZIP_OPT_TEMP_FILE_THRESHOLD] = floor($v_memory_limit*PCLZIP_TEMPORARY_FILE_RATIO);
+        $p_options[PCLZIP_OPT_TEMP_FILE_THRESHOLD] = floor(intval($v_memory_limit)*PCLZIP_TEMPORARY_FILE_RATIO);
 
         // ----- Sanity check : No threshold if value lower than 1M
         if ($p_options[PCLZIP_OPT_TEMP_FILE_THRESHOLD] < 1048576) {

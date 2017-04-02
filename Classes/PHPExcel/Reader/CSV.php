@@ -266,10 +266,6 @@ class PHPExcel_Reader_CSV extends PHPExcel_Reader_Abstract implements PHPExcel_R
         }
         $sheet = $objPHPExcel->setActiveSheetIndex($this->sheetIndex);
 
-        $escapeEnclosures = array( "\\" . $this->enclosure,
-                                   $this->enclosure . $this->enclosure
-                                 );
-
         // Set our starting row based on whether we're in contiguous mode or not
         $currentRow = 1;
         if ($this->contiguous) {
@@ -281,9 +277,6 @@ class PHPExcel_Reader_CSV extends PHPExcel_Reader_Abstract implements PHPExcel_R
             $columnLetter = 'A';
             foreach ($rowData as $rowDatum) {
                 if ($rowDatum != '' && $this->readFilter->readCell($columnLetter, $currentRow)) {
-                    // Unescape enclosures
-                    $rowDatum = str_replace($escapeEnclosures, $this->enclosure, $rowDatum);
-
                     // Convert encoding if necessary
                     if ($this->inputEncoding !== 'UTF-8') {
                         $rowDatum = PHPExcel_Shared_String::ConvertEncoding($rowDatum, 'UTF-8', $this->inputEncoding);

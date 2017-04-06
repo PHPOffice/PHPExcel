@@ -514,6 +514,10 @@ class PHPExcel_Style_NumberFormat extends PHPExcel_Style_Supervisor implements P
         $decimalDivisor = pow(10, $decimalLength);
 
         $GCD = PHPExcel_Calculation_MathTrig::GCD($decimalPart, $decimalDivisor);
+        
+        if (!is_numeric($GCD) || $GCD == 0) {
+		    return;
+	    }
 
         $adjustedDecimalPart = $decimalPart/$GCD;
         $adjustedDecimalDivisor = $decimalDivisor/$GCD;

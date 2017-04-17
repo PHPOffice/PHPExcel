@@ -405,7 +405,7 @@ $objPHPExcel->getActiveSheet()->setBreak( 'D10' , PHPExcel_Worksheet::BREAK_COLU
 
 To show/hide gridlines when printing, use the following code:
 
-$objPHPExcel->getActiveSheet()->setShowGridlines(true);
+$objPHPExcel->getActiveSheet()->setPrintGridlines(true);
 
 #### Setting rows/columns to repeat at top/left
 

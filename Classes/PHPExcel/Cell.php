@@ -240,7 +240,7 @@ class PHPExcel_Cell
                 $this->value = (string) $pValue;
                 break;
             case PHPExcel_Cell_DataType::TYPE_BOOL:
-                $this->value = (bool) $pValue;
+                $this->value = ($pValue == 1) ? 'true' : 'false';
                 break;
             case PHPExcel_Cell_DataType::TYPE_ERROR:
                 $this->value = PHPExcel_Cell_DataType::checkErrorCode($pValue);

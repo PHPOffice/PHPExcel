@@ -640,7 +640,7 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
 
         // initialize
         $this->pos                 = 0;
-        $this->codepage            = 'CP1252';
+        $this->codepage            = $this->defaultCodepage;
         $this->formats             = array();
         $this->objFonts            = array();
         $this->palette             = array();

@@ -69,6 +69,18 @@ abstract class PHPExcel_Reader_Abstract implements PHPExcel_Reader_IReader
     protected $readFilter;
 
     protected $fileHandle = null;
+    
+    protected $defaultCodepage = 'CP1252';
+
+    /**
+     * @param string $pValue
+     * @return $this
+     */
+    public function setCodepage($pValue)
+    {
+        $this->defaultCodepage = $pValue;
+        return $this;
+    }
 
 
     /**

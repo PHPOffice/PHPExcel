@@ -369,7 +369,7 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExce
                     $spContainer->setOPT(0x03BF, 0x000A0000); // Group Shape -> fPrint
 
                     // set coordinates and offsets, client anchor
-                    $endCoordinates = PHPExcel_Cell::stringFromColumnIndex(PHPExcel_Cell::stringFromColumnIndex($iInc - 1));
+                    $endCoordinates = PHPExcel_Cell::stringFromColumnIndex($iInc - 1);
                     $endCoordinates .= $rangeBounds[0][1] + 1;
 
                     $spContainer->setStartCoordinates($cDrawing);

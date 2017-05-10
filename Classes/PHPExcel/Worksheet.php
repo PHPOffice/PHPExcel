@@ -465,7 +465,7 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
      * @param boolean $pSorted Also sort the cell collection?
      * @return PHPExcel_Cell[]
      */
-    public function getCellCollection($pSorted = true)
+    public function getCellCollection($pSorted = false)
     {
         if ($pSorted) {
             // Re-order cell collection

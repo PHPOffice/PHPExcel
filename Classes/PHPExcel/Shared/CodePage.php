@@ -150,6 +150,8 @@ class PHPExcel_Shared_CodePage
                 return 'UTF-7';    //    Unicode (UTF-7)
             case 65001:
                 return 'UTF-8';    //    Unicode (UTF-8)
+            default:
+                return 'UTF-8';
         }
         throw new PHPExcel_Exception('Unknown codepage: ' . $codePage);
     }

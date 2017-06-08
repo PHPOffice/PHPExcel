@@ -1,7 +1,7 @@
 **************************************************************************************
 * PHPExcel
 *
-* Copyright (c) 2006 - 2012 PHPExcel
+* Copyright (c) 2006 - 2014 PHPExcel
 *
 * This library is free software; you can redistribute it and/or
 * modify it under the terms of the GNU Lesser General Public
@@ -17,61 +17,151 @@
 * License along with this library; if not, write to the Free Software
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 *
-* @copyright  Copyright (c) 2006 - 2012 PHPExcel (http://www.codeplex.com/PHPExcel)
+* @copyright  Copyright (c) 2006 - 2014 PHPExcel (http://www.codeplex.com/PHPExcel)
 * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
 * @version    ##VERSION##, ##DATE##
 **************************************************************************************
 
 
---------------------------------------------------------------------------------
-BREAKING CHANGE! As part of the planned changes for handling array formulae in
-workbooks, there are some changes that will affect the PHPExcel_Cell object 
-methods.
-
-The following methods are now deprecated, and will be removed in version 1.7.9:
-    getCalculatedValue()      The getValue() method will return calculated
-                                  values for cells containing formulae instead.
-    setCalculatedValue()      The cell value will always contain the result of a
-                                  any formula calculation.
-    setFormulaAttributes()    Will now be determined by the arguments to the
-                                  setFormula() method.
-    getFormulaAttributes()    This will be replaced by the getArrayFormulaRange()
-                                  method.
-
-The following methods will be added in version 1.7.9
-    getFormula()              Use to retrieve a cell formula, will return the cell
-                                  value if the cell doesn't contain a formula, or
-                                  is not part of an array formula range.
-    setFormula()              Use to set a cell formula. It will still be possible
-                                  to set formulae using the setValue() and 
-                                  setValueExplicit() methods.
-    calculate()               Use to execute a formula calculation to update the
-                                  cell value.
-    isFormula()               Use to determine if a cell contains a formula, or is
-                                  part of an array formula range or not.
-    isArrayFormula()          Use to determine if a cell contains an array formula, 
-                                 or is part of an array formula range or not.
-    getArrayFormulaRange()    Use to retrieve an array formula range.
-
-The following methods will be changed in version 1.7.9
-    setValue()                The logic behind this will be modified to store
-                                  formula values in the new cell property structure,
-                                  but it will still perform the same function.
-    setValueExplicit()        The logic behind this will be modified to store
-                                  formula values in the new cell property structure,
-                                  but it will still perform the same function.
-    getValue()                Will no longer return a formula if the cell contains 
-                                  a formula, but will return the calculated value
-                                  instead. For cells that don't contain a formula,
-                                  it will still return the stored value.
-    getDataType()             Will return the datatype of the calculated value for
-                                  cells that contain formulae.
-    setDataType()             Error handling will be added to prevent setting a
-                                  cell datatype to an inappropriate value.
---------------------------------------------------------------------------------
+Planned for 1.8.2
+- Bugfix:   (MBaker)                            - Fix to getCell() method when cell reference includes a worksheet reference
+- Bugfix:   (ncrypthic)       Work Item GH-570  - Ignore inlineStr type if formula element exists
+- Bugfix:   (hernst42)        Work Item GH-709  - Fixed missing renames of writeRelationShip (from _writeRelationShip)
+- General:  (umpirsky)        Work Item GH-548  - Optimize vlookup() sort
+- Bugfix:   (MBaker)          Work Item GH-554  - Whitespace after toRichTextObject()
+- Feature:  (MBaker)                            - Initial implementation of SUMIFS() function
+- Feature:  (MBaker)                            - Additional codepages
+- Feature:  (Tomino2112)      Work Item GH-808  - MemoryDrawing not working in HTML writer
+- General:  (rentalhost)      Work Item GH-575  - Excel 2007 Reader freezes because of conditional formatting
+- Bugfix:   (vitalyrepin)     Pull Request 869  - c:max and c:min elements shall NOT be inside c:orientation elements
+- General:  (sim642)          Pull Request 489  - Implement actual timezone adjustment into PHPExcel_Shared_Date::PHPToExcel
 
 
-Fixed in develop branch:
+2015-04-30 (v1.8.1):
+- Bugfix:   (goncons)         Work Item GH-397  - Fix for Writing an Open Document cell with non-numeric formula
+- Bugfix:   (sarciszewski)    Work Item GH-329  - Avoid potential divide by zero in basedrawing
+- Bugfix:   (ymaerschalck)    Work Item GH-405  - XML External Entity (XXE) Processing, different behaviour between simplexml_load_string() and simplexml_load_file().
+- Bugfix:   (MBaker)                            - Fix to ensure that current cell is maintained when executing formula calculations
+- Bugfix:   (MBaker)          Work Item GH-350  - Keep/set the value on Reader _loadSheetsOnly as NULL, courtesy of Restless-ET 
+- Bugfix:   (MBaker)          Work Item CP18105 - Loading an Excel 2007 spreadsheet throws an "Autofilter must be set on a range of cells" exception
+- Bugfix:   (MBaker)          Work Item GH-388  - Fix to autoloader registration for backward compatibility with PHP 5.2.0 not accepting the prepend flag
+- Bugfix:   (MBaker)          Work Item GH-384  - DOM loadHTMLFile() failing with options flags when using PHP < 5.4.0
+- Bugfix:   (MBaker)                            - Fix for percentage operator in formulae for BIFF Writer
+- Bugfix:   (MBaker)                            - Fix to getStyle() call for cell object
+- Bugfix:   (MBaker)                            - Discard Autofilters in Excel2007 Reader when filter range isn't a valid range
+- Bugfix:   (frozenstupidity) Work Item GH-423  - Fix invalid NA return in VLOOKUP
+- Bugfix:   (wiseloren)       Work Item CP21454 - "No Impact" conditional formatting fix for NumberFormat
+- Bugfix:   (bobwitlox)       Work Item GH-467  - Bug in Excel2003XML reader, parsing merged cells
+- Bugfix:   (MBaker)          Work Item GH-302  - Fix for CEIL() and FLOOR() when number argument is zero
+- Bugfix:   (MBaker)                            - Remove cells cleanly when calling RemoveRow() or RemoveColumn()
+- General:  (MBaker)                            - Small performance improvement for autosize columns
+- General:  (frost-nzcr4)     Work Item GH-379  - Change the getter/setter for zeroHeight to camel case
+- General:  (MBaker)          Work Item GH-394  - DefaultValueBinder is too much aggressive when converting string to numeric
+- General:  (MBaker)                            - Default precalculate formulas to false for writers
+- General:  (MBaker)                            - Set default Cyclic Reference behaviour to 1 to eliminate exception when using a single cyclic iteration in formulae
+- General:  (MBaker)          Work Item GH-396  - Some Excel writer libraries erroneously use Codepage 21010 for UTF-16LE
+- Feature:  (WiktrzGE)        Work Item GH-404  - Methods to manage most of the existing options for Chart Axis, Major Grid-lines and Minor Grid-lines
+- Feature:  (frost-nzcr4)     Work Item GH-403  - ODS read/write comments in the cell
+- Feature:  (CQD)             Work Item GH-389  - Additional Mac CJK codepage definitions
+- Feature:  (bolovincev)      Work Item GH-269  - Update Worksheet.php getStyleByColumnAndRow() to allow a range of cells rather than just a single cell
+- Feature:  (MBaker)                            - New methods added for testing cell status within merge groups
+- Feature:  (cifren/MBaker)   Work Item GH-205  - Handling merge cells in HTML Reader
+- Feature:  (MBaker)                            - Helper to convert basic HTML markup to a Rich Text object
+- Feature:  (MBaker)                            - Improved Iterators
+                                                    New Column Iterator
+                                                    Support for row and column ranges
+                                                    Improved handling for next/prev
+- Security: (MBaker)                            - XML filescan in XML-based Readers to prevent XML Entity Expansion (XEE)
+                                                    (see http://projects.webappsec.org/w/page/13247002/XML%20Entity%20Expansion for an explanation of XEE injection) attacks
+                                                  Reference CVE-2015-3542 - Identification of problem courtesy of Dawid Golunski (Pentest Ltd.)
+
+2014-03-02 (v1.8.0):
+- Bugfix:   (MBaker)          Work item CP19830 - Undefined variable: fileHandle in CSV Reader
+- Bugfix:   (MBaker)          Work item CP19968 - Out of memory in style/supervisor.php
+- Bugfix:   (MBaker)                            - Style error with merged cells in PDF Writer
+- Bugfix:   (MBaker)                            - Problem with cloning worksheets
+- Bugfix:   (tavoarcila)      Work Item GH-259  - Bug fix reading Open Office files
+- Bugfix:   (MBaker)          Work item CP20397 - Serious bug in absolute cell reference used in shared formula
+                                                  Would also have affected insert/delete column/row
+- Bugfix:   (RomanSyroeshko)  Work Item GH-267  - CHOOSE() returns "#VALUE!" if the 1st entry is chosen
+- Bugfix:   (Gemorroj)        Work Item GH-268  - When duplicating styles, styles shifted by one column to the right
+                                                  Fix also applied to duplicating conditional styles
+- Bugfix:   (IndrekHaav)      Work Item GH-212  - Fix for formulae that reference a sheet whose name begins with a digit:
+                                                  these were erroneously identified as numeric values, causing the parser to throw an undefined variable error.
+- Bugfix:   (IndrekHaav)      Work Item CP16208 - Fixed undefined variable error due to $styleArray being used before it's initialised
+- Bugfix:   (PowerKiKi)       Work Item GH-273  - ISTEXT() return wrong result if referencing an empty but formatted cell
+- Bugfix:   (PowerKiKi)       Work Item GH-270/GH-31  - Binary comparison of strings are case insensitive
+- Bugfix:   (MBaker)          Work Item GH-275  - Insert New Row/Column Before is not correctly updating formula references
+- Bugfix:   (MBaker)          Work Item GH-257  - Passing an array of cells to _generateRow() in the HTML/PDF Writer causes caching problems with last cell in the range
+- Bugfix:   (MBaker)          Work Item GH-193  - Fix to empty worksheet garbage collection when using cell caching
+- Bugfix:   (Jazzo)           Work Item GH-248  - Excel2007 does not correctly mark rows as hidden
+- Bugfix:   (Roy Shahbazian)  Work Item GH-299  - Fixed typo in Chart/Layout set/getYMode()
+- Bugfix:   (EliuFlorez)      Work item GH-279  - Fatal error: Call to a member function cellExists() line: 3327 in calculation.php if referenced worksheet doesn't exist
+- Bugfix:   (MBaker)          Work Item GH-290  - AdvancedValueBinder "Division by zero"-error
+- Bugfix:   (MBaker)          Work Item CP20604 - Adding Sheet to Workbook Bug
+- Bugfix:   (MBaker)          Work item CP20703 - Calculation engine incorrectly evaluates empty cells as #VALUE
+- Bugfix:   (MBaker)          Work item CP20760 - Formula references to cell on another sheet in ODS files
+- Bugfix:   (MBaker)          Work item GH321,GH158,CP17824 - LibreOffice created XLSX files results in an empty file.
+- Feature:  (amerov)                            - Implementation of the Excel HLOOKUP() function
+- Feature:  (MBaker)                            - Added "Quote Prefix" to style settings (Excel2007 Reader and Writer only)
+- Feature:  (MBaker)                            - Added Horizontal FILL alignment for Excel5 and Excel2007 Readers/Writers, and Horizontal DISTRIBUTED alignment for Excel2007 Reader/Writer
+- Feature:  (trvrnrth)        Work Item GH-261  - Add support for reading protected (RC4 encrypted) .xls files
+- Feature:  (LWol)            Work Item GH-252  - Adding support for macros, Ribbon in Excel 2007
+- General:  (cdhutch)         Work item CP20055 - Remove array_shift in ReferenceHelper::insertNewBefore improves column or row delete speed
+- General:  (MBaker)                            - Improve stock chart handling and rendering, with help from Swashata Ghosh
+- General:  (MBaker)                            - Fix to calculation properties for Excel2007 so that the opening application will only recalculate on load if it's actually required
+- General:  (MBaker)                            - Modified Excel2007 Writer to default preCalculateFormulas to false
+                                                  Note that autosize columns will still recalculate affected formulae internally
+- General:  (dresenhista)     Work Item GH-242  - Functionality to getHighestRow() for a specified column, and getHighestColumn() for a specified row
+- General:  (adamriyadi)      Work Item GH-247  - Modify PHPExcel_Reader_Excel2007 to use zipClass from PHPExcel_Settings::getZipClass()
+                                                  This allows the use of PCLZip when reading for people that don't have access to ZipArchive
+- General:  (infojunkie)      Work Item GH-276  - Convert properties to string in OOCalc reader
+- Security: (maartenba)       Work Item GH-322  - Disable libxml external entity loading by default.
+                                                  This is to prevent XML External Entity Processing (XXE) injection attacks (see http://websec.io/2012/08/27/Preventing-XEE-in-PHP.html for an explanation of XXE injection).
+                                                  Reference CVE-2014-2054
+
+
+2013-06-02 (v1.7.9):
+- Feature:  (MBaker)    Include charts option for HTML Writer
+- Feature:  (MBaker)    Added composer file
+- Feature:  (MBaker)    Added getStyle() method to Cell object
+- Bugfix:   (Asker)     Work item 18777  - Error in PHPEXCEL/Calculation.php script on line 2976 (stack pop check)
+- Bugfix:   (MBaker)    Work item 18794  - CSV files without a file extension being identified as HTML
+- Bugfix:   (AndreKR)   Work item GH-66  - Wrong check for maximum number of rows in Excel5 Writer
+- Bugfix:   (MBaker)    Work item GH-67  - Cache directory for DiscISAM cache storage cannot be set
+- Bugfix:   (MBaker)    Work item 17976  - Fix to Excel2007 Reader for hyperlinks with an anchor fragment (following a #), otherwise they were treated as sheet references
+- Bugfix:   (MBaker)    Work item 18963  - getSheetNames() fails on numeric (floating point style) names with trailing zeroes
+- Bugfix:   (MBaker)    Work item GH-130 - Single cell print area
+- General:  (kea)       Work item GH-69  - Improved AdvancedValueBinder for currency
+- General:  (MBaker)    Work items 17936 and 17840 - Fix for environments where there is no access to /tmp but to upload_tmp_dir
+                        Provided an option to set the sys_get_temp_dir() call to use the upload_tmp_dir; though by default the standard temp directory will still be used
+- General:  (amironov ) Work item GH-84  - Search style by identity in PHPExcel_Worksheet::duplicateStyle()
+- General:  (karak)     Work item GH-85  - Fill SheetView IO in Excel5
+- General:  (cfhay)     Work item 18958  - Memory and Speed improvements in PHPExcel_Reader_Excel5
+- General:  (MBaker)    Work item GH-78  - Modify listWorksheetNames() and listWorksheetInfo to use XMLReader with streamed XML rather than SimpleXML
+- General:  (dbonsch)                      Restructuring of PHPExcel Exceptions
+- General:  (MBaker)    Work items 16926 and 15145 - Refactor Calculation Engine from singleton to a Multiton
+                        Ensures that calculation cache is maintained independently for different workbooks
+- General:  (MBaker)                       Modify cell's getCalculatedValue() method to return the content of RichText objects rather than the RichText object itself
+- Bugfix:   (techhead)  Work item GH-70  - Fixed formula/formatting bug when removing rows
+- Bugfix:   (alexgann)  Work item GH-63  - Fix to cellExists for non-existent namedRanges
+- Bugfix:   (MBaker)    Work item 18844  - cache_in_memory_gzip "eats" last worksheet line, cache_in_memory doesn't
+- Feature:  (Progi1984) Work item GH-22  - Sheet View in Excel5 Writer
+- Bugfix:   (amironov)  Work item GH-82  - PHPExcel_Worksheet::getCellCollection() may not return last cached cell
+- Bugfix:   (teso)      Work item 18551  - Rich Text containing UTF-8 characters creating unreadable content with Excel5 Writer
+- Bugfix:   (MBaker)    Work item GH-104 - echo statements in HTML.php
+- Feature:  (Progi1984) Work item GH-8/CP11704 : Conditional formatting in Excel 5 Writer
+- Bugfix:   (MBaker)    Work item GH-113 - canRead() Error for GoogleDocs ODS files: in ODS files from Google Docs there is no mimetype file
+- Bugfix:   (MBaker)    Work item GH-80  - "Sheet index is out of bounds." Exception
+- Bugfix:   (ccorliss)  Work item GH-105 - Fixed number format fatal error
+- Bugfix:   (MBaker)                     - Add DROP TABLE in destructor for SQLite and SQLite3 cache controllers
+- Bugfix:   (alexgann)  Work item GH-154 - Fix merged-cell borders on HTML/PDF output
+- Bugfix:   (Shanto)    Work item GH-161 - Fix: Hyperlinks break when removing rows
+- Bugfix:   (neclimdul) Work item GH-166 - Fix Extra Table Row From Images and Charts
+
+
+2012-10-12 (v1.7.8):
+- Special:  (kkamkou)    Phar builder script to add phar file as a distribution option
 - Feature:  (MBaker)     Refactor PDF Writer to allow use with a choice of PDF Rendering library
                          rather than restricting to tcPDF
                          Current options are tcPDF, mPDF, DomPDF
@@ -79,6 +169,19 @@ Fixed in develop branch:
 - Feature:  (MBaker)     Initial version of HTML Reader
 - Feature:  (Progi1984) & (blazzy) Work items 9605 - Implement support for AutoFilter in PHPExcel_Writer_Excel5
 - Feature:  (MBaker)     Modified ERF and ERFC Engineering functions to accept Excel 2010's modified acceptance of negative arguments
+- Feature:  (k1LoW)      Support SheetView `view` attribute (Excel2007)
+- Feature:  (MBaker)     Excel compatibility option added for writing CSV files
+                         While Excel 2010 can read CSV files with a simple UTF-8 BOM, Excel2007 and earlier require UTF-16LE encoded tab-separated files.
+                         The new setExcelCompatibility(TRUE) option for the CSV Writer will generate files with this formatting for easy import into Excel2007 and below.
+- Feature:  (MBaker)     Language implementations for Turkish (tr)
+- Feature:  (MBaker)     Added fraction tests to advanced value binder
+- Feature:  (MBaker)     Allow call to font setUnderline() for underline format to specify a simple boolean for UNDERLINE_NONE or UNDERLINE_SINGLE
+- General:  (alexgann)   Add Currency detection to the Advanced Value Binder
+- General:  (MBaker)     Work item 18404 - setCellValueExplicitByColumnAndRow() do not return PHPExcel_Worksheet
+- General:  (MBaker)     Work item 18324 - Reader factory doesn't read anymore XLTX and XLT files
+- General:  (MBaker)     Magic __toString() method added to Cell object to return raw data value as a string
+- General:  (alexgann)   Add cell indent to html rendering
+- General:  (Raghav1981) ZeroHeight for rows in sheet format
 - Bugfix:   (cyberconte) Patch 12318 - OOCalc cells containing <text:span> inside the <text:p> tag
 - Bugfix:   (schir1964)  Fix to listWorksheetInfo() method for OOCalc Reader
 - Bugfix:   (MBaker)     Support for "e" (epoch) date format mask
@@ -87,7 +190,27 @@ Fixed in develop branch:
 - Bugfix:   (MBaker)     Work items 15905 and 18183 - Allow "no impact" to formats on Conditional Formatting
 - Bugfix:   (wackonline) OOCalc Reader fix for NULL cells
 - Bugfix:   (seltzlab)   Fix to excel2007 Chart Writer when a $plotSeriesValues is empty
+- Bugfix:   (MBaker)     Various fixes to Chart handling
 - Bugfix:   (MBaker)     Work item 18370 - Error loading xlsx file with column breaks
+- Bugfix:   (MBaker)     OOCalc Reader now handles percentage and currency data types
+- Bugfix:   (MBaker)     Work Item 18415 - mb_stripos empty delimiter
+- Bugfix:   (takaakik)   Work Item 15455 - getNestingLevel() Error on Excel5 Read
+- Bugfix:   (MBaker)     Fix to Excel5 Reader when cell annotations are defined before their referenced text objects
+- Bugfix:   (MBaker)     OOCalc Reader modified to process number-rows-repeated
+- Bugfix:   (MBaker)     Work item 18377 - Chart Title compatibility on Excel 2007
+- Bugfix:   (MBaker)     Work item 18146 - Chart Refresh returning cell reference rather than values
+- Bugfix:   (MBaker)     Work item 18145 - Autoshape being identified in twoCellAnchor when includeCharts is TRUE triggering load error
+- Bugfix:   (MBaker)     Work item 18325 - v-type texts for series labels now recognised and parsed correctly
+- Bugfix:   (wolf5x)     Work item 18492 - load file failed if the file has no extensionType
+- Bugfix:   (dverspui)   Pattern fill colours in Excel2007 Style Writer
+- Bugfix:   (MBaker)     Excel2007 Writer order of font style elements to conform with Excel2003 using compatibility pack
+- Bugfix:   (MBaker)     Work item 18425 - Problems with $_activeSheetIndex when decreased below 0.
+- Bugfix:   (MBaker)     Work item 18597 - PHPExcel_CachedObjectStorage_SQLite3::cacheMethodIsAvailable() uses class_exists - autoloader throws error
+- Bugfix:   (MBaker)     Work item 18598 - Cannot access private property PHPExcel_CachedObjectStorageFactory::$_cacheStorageMethod
+- Bugfix:   (MBaker)     Work item 18397 - Data titles for charts
+                         PHPExcel_Chart_Layout now has methods for getting/setting switches for displaying/hiding chart data labels
+- Bugfix:   (MBaker)     Discard single cell merge ranges when reading (stupid that Excel allows them in the first place)
+- Bugfix:   (MBaker)     Discard hidden autoFilter named ranges
 
 
 2012-05-19 (v1.7.7):
@@ -106,7 +229,7 @@ Fixed in develop branch:
 - General:  (MBaker)    Reduce cell caching overhead using dirty flag to ensure that cells are only rewritten to the cache if they have actually been changed
 - General:  (MBaker)    Improved memory usage in CSV Writer
 - General:  (MBaker)    Improved speed and memory usage in Excel5 Writer
-- General:  (MBaker)    Experimental - 
+- General:  (MBaker)    Experimental -
                         Added getHighestDataColumn(), getHighestDataRow(), getHighestRowAndColumn() and calculateWorksheetDataDimension() methods for the worksheet that return the highest row and column that have cell records
 - General:  (MBaker)    Change iterators to implement Iterator rather than extend CachingIterator, as a fix for PHP 5.4. changes in SPL
 - Bugfix:   (MBaker)    Work item 15459 - Invalid cell coordinate in Autofilter for Excel2007 Writer

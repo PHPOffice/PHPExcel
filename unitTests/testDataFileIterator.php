@@ -2,7 +2,6 @@
 
 class testDataFileIterator implements Iterator
 {
-
     protected $file;
     protected $key = 0;
     protected $current;
@@ -54,11 +53,11 @@ class testDataFileIterator implements Iterator
         } while (($testDataRow > '') && ($testDataRow{0} === '#'));
 
         //    Discard any comments at the end of the line
-        list($testData) = explode('//',$testDataRow);
+        list($testData) = explode('//', $testDataRow);
 
         //    Split data into an array of individual values and a result
-        $dataSet = str_getcsv($testData,',',"'");
-        foreach($dataSet as &$dataValue) {
+        $dataSet = $this->_getcsv($testData, ',', "'");
+        foreach ($dataSet as &$dataValue) {
             $dataValue = $this->_parseDataValue($dataValue);
         }
         unset($dataValue);
@@ -66,23 +65,43 @@ class testDataFileIterator implements Iterator
         return $dataSet;
     }
 
-    private function _parseDataValue($dataValue) {
+    private function _getcsv($input, $delimiter, $enclosure)
+    {
+        if (function_exists('str_getcsv')) {
+            return str_getcsv($input, $delimiter, $enclosure);
+        }
+
+        $temp = fopen('php://memory', 'rw');
+        fwrite($temp, $input);
+        rewind($temp);
+        $data = fgetcsv($temp, strlen($input), $delimiter, $enclosure);
+        fclose($temp);
+
+        if ($data === false) {
+            $data = array(null);
+        }
+
+        return $data;
+    }
+
+    private function _parseDataValue($dataValue)
+    {
         //    discard any white space
         $dataValue = trim($dataValue);
         //    test for the required datatype and convert accordingly
         if (!is_numeric($dataValue)) {
-            if($dataValue == '') {
-                $dataValue = NULL;
-            } elseif($dataValue == '""') {
+            if ($dataValue == '') {
+                $dataValue = null;
+            } elseif ($dataValue == '""') {
                 $dataValue = '';
-            } elseif(($dataValue[0] == '"') && ($dataValue[strlen($dataValue)-1] == '"')) {
-                $dataValue = substr($dataValue,1,-1);
-            } elseif(($dataValue[0] == '{') && ($dataValue[strlen($dataValue)-1] == '}')) {
-                $dataValue = explode(';',substr($dataValue,1,-1));
-                foreach($dataValue as &$dataRow) {
-                    if (strpos($dataRow,'|') !== FALSE) {
-                        $dataRow = explode('|',$dataRow);
-                        foreach($dataRow as &$dataCell) {
+            } elseif (($dataValue[0] == '"') && ($dataValue[strlen($dataValue)-1] == '"')) {
+                $dataValue = substr($dataValue, 1, -1);
+            } elseif (($dataValue[0] == '{') && ($dataValue[strlen($dataValue)-1] == '}')) {
+                $dataValue = explode(';', substr($dataValue, 1, -1));
+                foreach ($dataValue as &$dataRow) {
+                    if (strpos($dataRow, '|') !== false) {
+                        $dataRow = explode('|', $dataRow);
+                        foreach ($dataRow as &$dataCell) {
                             $dataCell = $this->_parseDataValue($dataCell);
                         }
                         unset($dataCell);
@@ -93,20 +112,25 @@ class testDataFileIterator implements Iterator
                 unset($dataRow);
             } else {
                 switch (strtoupper($dataValue)) {
-                    case 'NULL' :  $dataValue = NULL; break;
-                    case 'TRUE' :  $dataValue = TRUE; break;
-                    case 'FALSE' : $dataValue = FALSE; break;
+                    case 'NULL':
+                        $dataValue = null;
+                        break;
+                    case 'TRUE':
+                        $dataValue = true;
+                        break;
+                    case 'FALSE':
+                        $dataValue = false;
+                        break;
                 }
             }
         } else {
-            if (strpos($dataValue,'.') !== FALSE) {
+            if (strpos($dataValue, '.') !== false) {
                 $dataValue = (float) $dataValue;
             } else {
                 $dataValue = (int) $dataValue;
             }
         }
 
-		return $dataValue;
+        return $dataValue;
     }
-
 }

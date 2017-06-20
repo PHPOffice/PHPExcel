@@ -836,6 +836,8 @@ class PHPExcel_Cell
         //    caching using a static within the method is faster than a class static,
         //        though it's additional memory overhead
         static $_indexCache = array();
+        
+        $pColumnIndex = (int) $pColumnIndex; // fix for issue #1237 
 
         if (!isset($_indexCache[$pColumnIndex])) {
             // Determine column string

@@ -7,6 +7,8 @@ Develop: [![Build Status](https://travis-ci.org/PHPOffice/PHPExcel.png?branch=de
 
 [![Join the chat at https://gitter.im/PHPOffice/PHPExcel](https://img.shields.io/badge/GITTER-join%20chat-green.svg)](https://gitter.im/PHPOffice/PHPExcel)
 
+[Documentation](http://phpoffice.github.io/phpexcel_features.html)
+
 ## File Formats supported
 
 ### Reading

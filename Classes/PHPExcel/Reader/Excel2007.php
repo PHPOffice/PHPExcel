@@ -321,13 +321,18 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
 		{
 			$fileName = substr($fileName, strpos($fileName, '//') + 1);
 		}
-		$fileName = PHPExcel_Shared_File::realpath($fileName);
+		$fileName      = PHPExcel_Shared_File::realpath($fileName);
+		$caseSensitive = is_a($archive, PHPExcel_Settings::ZIPARCHIVE);
 
 		// Apache POI fixes
-		$contents = $archive->getFromName($fileName);
+		$contents = $caseSensitive
+			? $archive->getFromName($fileName, 0, 1) // ZipArchive::FL_NOCASE
+			: $archive->getFromName($fileName);
 		if ($contents === false)
 		{
-			$contents = $archive->getFromName(substr($fileName, 1));
+			$contents = $caseSensitive
+				? $archive->getFromName(substr($fileName, 1), 0, 1) // ZipArchive::FL_NOCASE
+				: $archive->getFromName(substr($fileName, 1));
 		}
 
 		return $contents;

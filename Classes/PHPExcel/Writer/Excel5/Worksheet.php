@@ -2860,7 +2860,7 @@ class PHPExcel_Writer_Excel5_Worksheet extends PHPExcel_Writer_Excel5_BIFFwriter
 				$options |= $type << 0;
 
 				// error style
-				$errorStyle = $dataValidation->getType();
+				$errorStyle = $dataValidation->getErrorStyle();
 				switch ($errorStyle) {
 					case PHPExcel_Cell_DataValidation::STYLE_STOP:			$errorStyle = 0x00;		break;
 					case PHPExcel_Cell_DataValidation::STYLE_WARNING:		$errorStyle = 0x01;		break;

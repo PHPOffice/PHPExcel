@@ -320,7 +320,7 @@ class PHPExcel_Style_Borders extends PHPExcel_Style_Supervisor implements PHPExc
     /**
      * Get Outline (pseudo-border). Only applies to supervisor.
      *
-     * @return boolean
+     * @return PHPExcel_Style_Border
      * @throws PHPExcel_Exception
      */
     public function getOutline()
@@ -334,7 +334,7 @@ class PHPExcel_Style_Borders extends PHPExcel_Style_Supervisor implements PHPExc
     /**
      * Get Inside (pseudo-border). Only applies to supervisor.
      *
-     * @return boolean
+     * @return PHPExcel_Style_Border
      * @throws PHPExcel_Exception
      */
     public function getInside()

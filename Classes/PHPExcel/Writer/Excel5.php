@@ -209,7 +209,8 @@ class PHPExcel_Writer_Excel5 extends PHPExcel_Writer_Abstract implements PHPExce
             $arrRootData[] = $OLE_DocumentSummaryInformation;
         }
 
-        $root = new PHPExcel_Shared_OLE_PPS_Root(time(), time(), $arrRootData);
+        $time = $this->phpExcel->getProperties()->getModified();
+        $root = new PHPExcel_Shared_OLE_PPS_Root($time, $time, $arrRootData);
         // save the OLE file
         $res = $root->save($pFilename);
 

@@ -599,6 +599,7 @@ class PHPExcel_Worksheet_AutoFilter
         $this->workSheet->getRowDimension($rangeStart[1])->setVisible(true);
 
         $columnFilterTests = array();
+        $ruleType = '';
         foreach ($this->columns as $columnID => $filterColumn) {
             $rules = $filterColumn->getRules();
             switch ($filterColumn->getFilterType()) {

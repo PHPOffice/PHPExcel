@@ -839,6 +839,7 @@ class PHPExcel_Cell
 
         if (!isset($_indexCache[$pColumnIndex])) {
             // Determine column string
+            $pColumnIndex = (int)$pColumnIndex;
             if ($pColumnIndex < 26) {
                 $_indexCache[$pColumnIndex] = chr(65 + $pColumnIndex);
             } elseif ($pColumnIndex < 702) {

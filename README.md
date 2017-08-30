@@ -32,10 +32,29 @@ Develop: [![Build Status](https://travis-ci.org/PHPOffice/PHPExcel.png?branch=de
  * PHP extension php_zip enabled (required if you need PHPExcel to handle .xlsx .ods or .gnumeric files)
  * PHP extension php_xml enabled
  * PHP extension php_gd2 enabled (optional, but required for exact column width autocalculation)
-
 *Note:* PHP 5.6.29 has [a bug](https://bugs.php.net/bug.php?id=73530) that
 prevents SQLite3 caching to work correctly. Use a newer (or older) versions of
 PHP if you need SQLite3 caching.
+## Installation
+
+PHPExcel is installed via [Composer](https://getcomposer.org/).
+
+1.  via cli (command line interface) 
+
+    `composer require phpoffice/phpexcel`
+
+1.  via composer.json, you just need to [add dependency](https://getcomposer.org/doc/04-schema.md) on PHPExcel into your package.
+
+Example:
+
+```json
+{
+    "require": {
+       "phpoffice/excel": "^1.8"
+    }
+}
+```
+
 
 ## Want to contribute?
 

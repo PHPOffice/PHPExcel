@@ -644,8 +644,11 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
                             $fileWorksheet = $worksheets[(string) self::getArrayItem($eleSheet->attributes("http://schemas.openxmlformats.org/officeDocument/2006/relationships"), "id")];
                             $xmlString = $this->securityScan($this->getFromZipArchive($zip, "$dir/$fileWorksheet"));
                             if (!xml_parse($parser = xml_parser_create(), $xmlString)) {
-                                throw new PHPExcel_Reader_Exception(xml_error_string(xml_get_error_code($parser)));
+                                $errorString = xml_error_string(xml_get_error_code($parser));
+                                xml_parser_free($parser);
+                                throw new PHPExcel_Reader_Exception($errorString);
                             }
+                            xml_parser_free($parser);
 
                             $xmlSheet = simplexml_load_string($xmlString, 'SimpleXMLElement', PHPExcel_Settings::getLibXmlLoaderOptions());  //~ http://schemas.openxmlformats.org/spreadsheetml/2006/main");
 

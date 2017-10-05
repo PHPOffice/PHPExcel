@@ -1,6 +1,6 @@
 {
     "name": "phpoffice/phpexcel",
-    "description": "PHPExcel - OpenXML - Read, Create and Write Spreadsheet documents in PHP - Spreadsheet engine - This fork sets a default value for zoom scale rather than returning an error",
+    "description": "PHPExcel - OpenXML - Read, Create and Write Spreadsheet documents in PHP",
     "keywords": ["PHP","Excel","OpenXML","xlsx","xls","spreadsheet"],
     "homepage": "https://github.com/PHPOffice/PHPExcel",
     "type": "library",

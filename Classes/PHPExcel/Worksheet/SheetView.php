@@ -99,7 +99,7 @@ class PHPExcel_Worksheet_SheetView
         if (($pValue >= 1) || is_null($pValue)) {
             $this->zoomScale = $pValue;
         } else {
-            throw new PHPExcel_Exception("Scale must be greater than or equal to 1.");
+            $this->zoomScale = 100;
         }
         return $this;
     }
@@ -128,7 +128,7 @@ class PHPExcel_Worksheet_SheetView
         if (($pValue >= 1) || is_null($pValue)) {
             $this->zoomScaleNormal = $pValue;
         } else {
-            throw new PHPExcel_Exception("Scale must be greater than or equal to 1.");
+            $this->zoomScaleNormal = 100;
         }
         return $this;
     }

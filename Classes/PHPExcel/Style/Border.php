@@ -251,6 +251,10 @@ class PHPExcel_Style_Border extends PHPExcel_Style_Supervisor implements PHPExce
      */
     public function setColor(PHPExcel_Style_Color $pValue = null)
     {
+        if(!$pValue){
+            return $this;
+        }
+        
         // make sure parameter is a real color and not a supervisor
         $color = $pValue->getIsSupervisor() ? $pValue->getSharedComponent() : $pValue;
 

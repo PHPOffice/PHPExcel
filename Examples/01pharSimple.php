@@ -34,7 +34,7 @@ date_default_timezone_set('Europe/London');
 define('EOL',(PHP_SAPI == 'cli') ? PHP_EOL : '<br />');
 
 /** Include PHPExcel */
-require_once '../Build/PHPExcel.phar';
+require_once '../Classes/PHPExcel.php';
 
 
 // Create new PHPExcel object

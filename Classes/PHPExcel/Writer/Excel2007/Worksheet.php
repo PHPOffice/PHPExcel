@@ -768,7 +768,7 @@ class PHPExcel_Writer_Excel2007_Worksheet extends PHPExcel_Writer_Excel2007_Writ
             $objWriter->writeAttribute('ref', str_replace('$', '', $range));
 
             $columns = $pSheet->getAutoFilter()->getColumns();
-            if (count($columns > 0)) {
+            if (count($columns) > 0) {
                 foreach ($columns as $columnID => $column) {
                     $rules = $column->getRules();
                     if (count($rules) > 0) {

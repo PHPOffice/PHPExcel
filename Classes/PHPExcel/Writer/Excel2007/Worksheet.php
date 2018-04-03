@@ -1131,10 +1131,10 @@ class PHPExcel_Writer_Excel2007_Worksheet extends PHPExcel_Writer_Excel2007_Writ
                                 if (!is_array($calculatedValue) && substr($calculatedValue, 0, 1) != '#') {
                                     $objWriter->writeElement('v', PHPExcel_Shared_String::FormatNumber($calculatedValue));
                                 } else {
-                                    $objWriter->writeElement('v', '0');
+                                    //$objWriter->writeElement('v', '0');
                                 }
                             } else {
-                                $objWriter->writeElement('v', '0');
+                                //$objWriter->writeElement('v', '0');
                             }
                         }
                         break;

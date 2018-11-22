@@ -70,7 +70,7 @@ abstract class PHPExcel_Worksheet_CellIterator
      * Validate start/end values for "IterateOnlyExistingCells" mode, and adjust if necessary
      *
      * @throws PHPExcel_Exception
-     */
+	 */
     abstract protected function adjustForExistingOnlyRange();
 
     /**

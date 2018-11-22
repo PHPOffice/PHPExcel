@@ -23,7 +23,8 @@
 **************************************************************************************
 
 
-Planned for 1.8.2
+2018-11-22 (v1.8.2):
+- Security  (MBaker)                            - Fix and improve XXE security scanning for XML-based Readers
 - Bugfix:   (MBaker)                            - Fix to getCell() method when cell reference includes a worksheet reference
 - Bugfix:   (ncrypthic)       Work Item GH-570  - Ignore inlineStr type if formula element exists
 - Bugfix:   (hernst42)        Work Item GH-709  - Fixed missing renames of writeRelationShip (from _writeRelationShip)

@@ -33,6 +33,7 @@ class PHPExcel_CachedObjectStorageFactory
     const cache_igbinary                = 'Igbinary';
     const cache_to_discISAM             = 'DiscISAM';
     const cache_to_apc                  = 'APC';
+    const cache_to_apcu                 = 'APCu';
     const cache_to_memcache             = 'Memcache';
     const cache_to_phpTemp              = 'PHPTemp';
     const cache_to_wincache             = 'Wincache';
@@ -66,6 +67,7 @@ class PHPExcel_CachedObjectStorageFactory
         self::cache_to_phpTemp,
         self::cache_to_discISAM,
         self::cache_to_apc,
+        self::cache_to_apcu,
         self::cache_to_memcache,
         self::cache_to_wincache,
         self::cache_to_sqlite,
@@ -91,6 +93,8 @@ class PHPExcel_CachedObjectStorageFactory
         self::cache_to_discISAM             => array( 'dir'             => null
                                                     ),
         self::cache_to_apc                  => array( 'cacheTime'       => 600
+                                                    ),
+        self::cache_to_apcu                 => array( 'cacheTime'       => 600
                                                     ),
         self::cache_to_memcache             => array( 'memcacheServer'  => 'localhost',
                                                       'memcachePort'    => 11211,

@@ -27,6 +27,21 @@
  */
 class PHPExcel_Chart
 {
+    const DISPLAY_BLANKS_AS_GAP      = 'gap';
+    const DISPLAY_BLANKS_AS_ZERO     = 'zero';
+    const DISPLAY_BLANKS_AS_SPAN     = 'span';
+    
+    /**
+     * DisplayBlanksAs possible values
+     *
+     * @var array
+     */
+    private static $displayBlanksAsValues = array(
+        self::DISPLAY_BLANKS_AS_GAP,
+        self::DISPLAY_BLANKS_AS_ZERO,
+        self::DISPLAY_BLANKS_AS_SPAN,
+    );
+	
     /**
      * Chart Name
      *
@@ -88,7 +103,7 @@ class PHPExcel_Chart
      *
      * @var string
      */
-    private $displayBlanksAs = '0';
+    private $displayBlanksAs = self::DISPLAY_BLANKS_AS_GAP;
 
     /**
      * Chart Asix Y as
@@ -169,7 +184,7 @@ class PHPExcel_Chart
     /**
      * Create a new PHPExcel_Chart
      */
-    public function __construct($name, PHPExcel_Chart_Title $title = null, PHPExcel_Chart_Legend $legend = null, PHPExcel_Chart_PlotArea $plotArea = null, $plotVisibleOnly = true, $displayBlanksAs = '0', PHPExcel_Chart_Title $xAxisLabel = null, PHPExcel_Chart_Title $yAxisLabel = null, PHPExcel_Chart_Axis $xAxis = null, PHPExcel_Chart_Axis $yAxis = null, PHPExcel_Chart_GridLines $majorGridlines = null, PHPExcel_Chart_GridLines $minorGridlines = null)
+    public function __construct($name, PHPExcel_Chart_Title $title = null, PHPExcel_Chart_Legend $legend = null, PHPExcel_Chart_PlotArea $plotArea = null, $plotVisibleOnly = true, $displayBlanksAs = self::DISPLAY_BLANKS_AS_GAP, PHPExcel_Chart_Title $xAxisLabel = null, PHPExcel_Chart_Title $yAxisLabel = null, PHPExcel_Chart_Axis $xAxis = null, PHPExcel_Chart_Axis $yAxis = null, PHPExcel_Chart_GridLines $majorGridlines = null, PHPExcel_Chart_GridLines $minorGridlines = null)
     {
         $this->name = $name;
         $this->title = $title;
@@ -178,7 +193,7 @@ class PHPExcel_Chart
         $this->yAxisLabel = $yAxisLabel;
         $this->plotArea = $plotArea;
         $this->plotVisibleOnly = $plotVisibleOnly;
-        $this->displayBlanksAs = $displayBlanksAs;
+        $this->displayBlanksAs = (in_array($displayBlanksAs,self::$displayBlanksAsValues)) ? $displayBlanksAs : self::DISPLAY_BLANKS_AS_GAP;
         $this->xAxis = $xAxis;
         $this->yAxis = $yAxis;
         $this->majorGridlines = $majorGridlines;
@@ -360,9 +375,9 @@ class PHPExcel_Chart
      * @param string $displayBlanksAs
      * @return PHPExcel_Chart
      */
-    public function setDisplayBlanksAs($displayBlanksAs = '0')
+    public function setDisplayBlanksAs($displayBlanksAs = self::DISPLAY_BLANKS_AS_GAP)
     {
-        $this->displayBlanksAs = $displayBlanksAs;
+        $this->displayBlanksAs = (in_array($displayBlanksAs,self::$displayBlanksAsValues)) ? $displayBlanksAs : self::DISPLAY_BLANKS_AS_GAP;
     }
 
 

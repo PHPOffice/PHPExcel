@@ -33,11 +33,13 @@
  * @package    PHPExcel_Writer_OpenDocument
  * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
  * @author     Alexander Pervakov <frost-nzcr4@jagmort.com>
+ * @author     Paolo Agostinetto <paolo@redokun.com>
  */
 class PHPExcel_Writer_OpenDocument_Content extends PHPExcel_Writer_OpenDocument_WriterPart
 {
     const NUMBER_COLS_REPEATED_MAX = 1024;
     const NUMBER_ROWS_REPEATED_MAX = 1048576;
+    const CELL_STYLE_PREFIX = 'ce';
 
     /**
      * Write content.xml to XML format
@@ -100,7 +102,11 @@ class PHPExcel_Writer_OpenDocument_Content extends PHPExcel_Writer_OpenDocument_
 
             $objWriter->writeElement('office:scripts');
             $objWriter->writeElement('office:font-face-decls');
-            $objWriter->writeElement('office:automatic-styles');
+
+            // Styles XF
+            $objWriter->startElement('office:automatic-styles');
+            $this->writeXfStyles($objWriter, $pPHPExcel);
+            $objWriter->endElement();
 
             $objWriter->startElement('office:body');
                 $objWriter->startElement('office:spreadsheet');
@@ -186,11 +192,19 @@ class PHPExcel_Writer_OpenDocument_Content extends PHPExcel_Writer_OpenDocument_
         $prev_column = -1;
         $cells = $row->getCellIterator();
         while ($cells->valid()) {
+
+            /** @var PHPExcel_Cell $cell */
             $cell = $cells->current();
             $column = PHPExcel_Cell::columnIndexFromString($cell->getColumn()) - 1;
 
             $this->writeCellSpan($objWriter, $column, $prev_column);
             $objWriter->startElement('table:table-cell');
+
+            // Style XF
+            $style = $cell->getXfIndex();
+            if($style !== null){
+                $objWriter->writeAttribute('table:style-name', self::CELL_STYLE_PREFIX.$style);
+            }
 
             switch ($cell->getDataType()) {
                 case PHPExcel_Cell_DataType::TYPE_BOOL:
@@ -267,6 +281,94 @@ class PHPExcel_Writer_OpenDocument_Content extends PHPExcel_Writer_OpenDocument_
             $objWriter->startElement('table:table-cell');
                 $objWriter->writeAttribute('table:number-columns-repeated', $diff);
             $objWriter->endElement();
+        }
+    }
+
+    /**
+     * Write XF cell styles
+     *
+     * @param PHPExcel_Shared_XMLWriter $objWriter
+     * @param PHPExcel $pPHPExcel
+     * @throws PHPExcel_Exception
+     */
+    private function writeXfStyles(PHPExcel_Shared_XMLWriter $objWriter, PHPExcel $pPHPExcel)
+    {
+        foreach($pPHPExcel->getCellXfCollection() as $style) {
+
+            $objWriter->startElement('style:style');
+            $objWriter->writeAttribute('style:name', self::CELL_STYLE_PREFIX .$style->getIndex());
+            $objWriter->writeAttribute('style:family', 'table-cell');
+            $objWriter->writeAttribute('style:parent-style-name', 'Default');
+
+            /*
+             * style:text-properties
+             */
+
+            // Font
+            $objWriter->startElement('style:text-properties');
+
+            $font = $style->getFont();
+
+            if($font->getBold()) {
+                $objWriter->writeAttribute('fo:font-weight', 'bold');
+                $objWriter->writeAttribute('style:font-weight-complex', 'bold');
+                $objWriter->writeAttribute('style:font-weight-asian', 'bold');
+            }
+
+            if($font->getItalic()) {
+                $objWriter->writeAttribute('fo:font-style', 'italic');
+            }
+
+            if($color = $font->getColor()) {
+                $objWriter->writeAttribute('fo:color', sprintf('#%s', $color->getRGB()));
+            }
+
+            if($size = $font->getSize()) {
+                $objWriter->writeAttribute('fo:font-size', sprintf('%.1fpt', $size));
+            }
+
+            if($font->getUnderline() == \PHPExcel_Style_Font::UNDERLINE_SINGLE) {
+                $objWriter->writeAttribute('style:text-underline-style', 'solid');
+                $objWriter->writeAttribute('style:text-underline-width', 'auto');
+                $objWriter->writeAttribute('style:text-underline-color', 'font-color');
+            }
+
+            $objWriter->endElement(); // Close style:text-properties
+
+            /*
+             * style:table-cell-properties
+             */
+
+            $objWriter->startElement('style:table-cell-properties');
+            $objWriter->writeAttribute('style:rotation-align', 'none');
+
+            // Fill
+            if($fill = $style->getFill()) {
+                switch($fill->getFillType()) {
+
+                    case \PHPExcel_Style_Fill::FILL_SOLID:
+                        $objWriter->writeAttribute('fo:background-color', sprintf('#%s',
+                            strtolower($fill->getStartColor()->getRGB())
+                        ));
+                        break;
+
+                    case \PHPExcel_Style_Fill::FILL_GRADIENT_LINEAR:
+                    case \PHPExcel_Style_Fill::FILL_GRADIENT_PATH:
+                        /// TODO :: To be implemented
+                        break;
+
+                    case \PHPExcel_Style_Fill::FILL_NONE:
+                    default:
+                }
+            }
+
+            $objWriter->endElement(); // Close style:table-cell-properties
+
+            /*
+             * End
+             */
+
+            $objWriter->endElement(); // Close style:style
         }
     }
 }

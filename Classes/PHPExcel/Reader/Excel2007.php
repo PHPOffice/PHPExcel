@@ -642,7 +642,16 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
                             //        reverse
                             $docSheet->setTitle((string) $eleSheet["name"], false);
                             $fileWorksheet = $worksheets[(string) self::getArrayItem($eleSheet->attributes("http://schemas.openxmlformats.org/officeDocument/2006/relationships"), "id")];
-                            $xmlSheet = simplexml_load_string($this->securityScan($this->getFromZipArchive($zip, "$dir/$fileWorksheet")), 'SimpleXMLElement', PHPExcel_Settings::getLibXmlLoaderOptions());  //~ http://schemas.openxmlformats.org/spreadsheetml/2006/main");
+                            $xmlString = $this->securityScan($this->getFromZipArchive($zip, "$dir/$fileWorksheet"));
+                            if (!xml_parse($parser = xml_parser_create(), $xmlString)) {
+                                $errorString = xml_error_string(xml_get_error_code($parser));
+                                xml_parser_free($parser);
+                                throw new PHPExcel_Reader_Exception($errorString);
+                            }
+                            xml_parser_free($parser);
+
+                            $xmlSheet = simplexml_load_string($xmlString, 'SimpleXMLElement', PHPExcel_Settings::getLibXmlLoaderOptions());  //~ http://schemas.openxmlformats.org/spreadsheetml/2006/main");
+
 
                             $sharedFormulas = array();
 

@@ -258,13 +258,7 @@ class PHPExcel_Writer_Excel2007_Chart extends PHPExcel_Writer_Excel2007_WriterPa
 
             $this->writeDataLabels($objWriter, $layout);
 
-            if ($chartType === PHPExcel_Chart_DataSeries::TYPE_LINECHART) {
-                //    Line only, Line3D can't be smoothed
-
-                $objWriter->startElement('c:smooth');
-                $objWriter->writeAttribute('val', (integer) $plotGroup->getSmoothLine());
-                $objWriter->endElement();
-            } elseif (($chartType === PHPExcel_Chart_DataSeries::TYPE_BARCHART) ||($chartType === PHPExcel_Chart_DataSeries::TYPE_BARCHART_3D)) {
+            if (($chartType === PHPExcel_Chart_DataSeries::TYPE_BARCHART) ||($chartType === PHPExcel_Chart_DataSeries::TYPE_BARCHART_3D)) {
                 $objWriter->startElement('c:gapWidth');
                 $objWriter->writeAttribute('val', 150);
                 $objWriter->endElement();
@@ -1134,6 +1128,13 @@ class PHPExcel_Writer_Excel2007_Chart extends PHPExcel_Writer_Excel2007_WriterPa
                 }
                 $objWriter->endElement();
                 $objWriter->endElement();
+                if ($groupType == PHPExcel_Chart_DataSeries::TYPE_LINECHART) {
+                    //    Line only, Line3D can't be smoothed
+
+                    $objWriter->startElement('c:smooth');
+                    $objWriter->writeAttribute('val', (integer)$plotGroup->getSmoothLine());
+                    $objWriter->endElement();
+                }
             }
 
             $plotSeriesValues = $plotGroup->getPlotValuesByIndex($plotSeriesRef);

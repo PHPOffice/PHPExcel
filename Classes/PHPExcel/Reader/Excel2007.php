@@ -544,33 +544,35 @@ class PHPExcel_Reader_Excel2007 extends PHPExcel_Reader_Abstract implements PHPE
                             self::readStyle($objStyle, $style);
                             $excel->addCellXf($objStyle);
                         }
-
-                        foreach ($xmlStyles->cellStyleXfs->xf as $xf) {
-                            $numFmt = PHPExcel_Style_NumberFormat::FORMAT_GENERAL;
-                            if ($numFmts && $xf["numFmtId"]) {
-                                $tmpNumFmt = self::getArrayItem($numFmts->xpath("sml:numFmt[@numFmtId=$xf[numFmtId]]"));
-                                if (isset($tmpNumFmt["formatCode"])) {
-                                    $numFmt = (string) $tmpNumFmt["formatCode"];
-                                } elseif ((int)$xf["numFmtId"] < 165) {
-                                    $numFmt = PHPExcel_Style_NumberFormat::builtInFormatCode((int)$xf["numFmtId"]);
+                        
+                        if ( is_array($xmlStyles->cellStyleXfs->xf) || is_object($xmlStyles->cellStyleXfs->xf) ) { 
+                            foreach ($xmlStyles->cellStyleXfs->xf as $xf) {
+                                $numFmt = PHPExcel_Style_NumberFormat::FORMAT_GENERAL;
+                                if ($numFmts && $xf["numFmtId"]) {
+                                    $tmpNumFmt = self::getArrayItem($numFmts->xpath("sml:numFmt[@numFmtId=$xf[numFmtId]]"));
+                                    if (isset($tmpNumFmt["formatCode"])) {
+                                        $numFmt = (string) $tmpNumFmt["formatCode"];
+                                    } elseif ((int)$xf["numFmtId"] < 165) {
+                                        $numFmt = PHPExcel_Style_NumberFormat::builtInFormatCode((int)$xf["numFmtId"]);
+                                    }
                                 }
+    
+                                $cellStyle = (object) array(
+                                    "numFmt" => $numFmt,
+                                    "font" => $xmlStyles->fonts->font[intval($xf["fontId"])],
+                                    "fill" => $xmlStyles->fills->fill[intval($xf["fillId"])],
+                                    "border" => $xmlStyles->borders->border[intval($xf["borderId"])],
+                                    "alignment" => $xf->alignment,
+                                    "protection" => $xf->protection,
+                                    "quotePrefix" => $quotePrefix,
+                                );
+                                $cellStyles[] = $cellStyle;
+    
+                                // add style to cellStyleXf collection
+                                $objStyle = new PHPExcel_Style;
+                                self::readStyle($objStyle, $cellStyle);
+                                $excel->addCellStyleXf($objStyle);
                             }
-
-                            $cellStyle = (object) array(
-                                "numFmt" => $numFmt,
-                                "font" => $xmlStyles->fonts->font[intval($xf["fontId"])],
-                                "fill" => $xmlStyles->fills->fill[intval($xf["fillId"])],
-                                "border" => $xmlStyles->borders->border[intval($xf["borderId"])],
-                                "alignment" => $xf->alignment,
-                                "protection" => $xf->protection,
-                                "quotePrefix" => $quotePrefix,
-                            );
-                            $cellStyles[] = $cellStyle;
-
-                            // add style to cellStyleXf collection
-                            $objStyle = new PHPExcel_Style;
-                            self::readStyle($objStyle, $cellStyle);
-                            $excel->addCellStyleXf($objStyle);
                         }
                     }
 

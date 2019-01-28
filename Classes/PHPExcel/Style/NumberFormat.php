@@ -36,6 +36,7 @@ class PHPExcel_Style_NumberFormat extends PHPExcel_Style_Supervisor implements P
     const FORMAT_NUMBER_00               = '0.00';
     const FORMAT_NUMBER_COMMA_SEPARATED1 = '#,##0.00';
     const FORMAT_NUMBER_COMMA_SEPARATED2 = '#,##0.00_-';
+    const FORMAT_NUMBER_SCIENTIFIC       = '0.00E+00';
 
     const FORMAT_PERCENTAGE              = '0%';
     const FORMAT_PERCENTAGE_00           = '0.00%';
@@ -66,6 +67,12 @@ class PHPExcel_Style_NumberFormat extends PHPExcel_Style_Supervisor implements P
     const FORMAT_CURRENCY_USD_SIMPLE     = '"$"#,##0.00_-';
     const FORMAT_CURRENCY_USD            = '$#,##0_-';
     const FORMAT_CURRENCY_EUR_SIMPLE     = '[$EUR ]#,##0.00_-';
+
+    const FORMAT_LOG_YESNO               = '"Yes";;"No"';
+    const FORMAT_LOG_YN                  = '"Y";;"N"';
+    const FORMAT_LOG_TRUEFALSE           = '"True";;"False"';
+    const FORMAT_LOG_TF                  = '"T";;"F"';
+    const FORMAT_LOG_ONOFF               = '"On";;"Off"';
 
     /**
      * Excel built-in number formats
@@ -592,6 +599,16 @@ class PHPExcel_Style_NumberFormat extends PHPExcel_Style_Supervisor implements P
         // Convert any other escaped characters to quoted strings, e.g. (\T to "T")
         $format = preg_replace('/(\\\(.))(?=(?:[^"]|"[^"]*")*$)/u', '"${2}"', $format);
 
+        $isLogical = false;
+        if ($format == PHPExcel_Style_NumberFormat::FORMAT_LOG_YESNO ||
+            $format == PHPExcel_Style_NumberFormat::FORMAT_LOG_YN ||
+            $format == PHPExcel_Style_NumberFormat::FORMAT_LOG_TRUEFALSE ||
+            $format == PHPExcel_Style_NumberFormat::FORMAT_LOG_TF ||
+            $format == PHPExcel_Style_NumberFormat::FORMAT_LOG_ONOFF) {
+          
+            $isLogical = true;
+        }
+
         // Get the sections, there can be up to four sections, separated with a semi-colon (but only if not a quoted literal)
         $sections = preg_split('/(;)(?=(?:[^"]|"[^"]*")*$)/u', $format);
 
@@ -641,8 +658,11 @@ class PHPExcel_Style_NumberFormat extends PHPExcel_Style_Supervisor implements P
 
         // Let's begin inspecting the format and converting the value to a formatted string
 
+        if ($isLogical == true) {
+           $value = str_replace('"', '', $format);
+        }
         //  Check for date/time characters (not inside quotes)
-        if (preg_match('/(\[\$[A-Z]*-[0-9A-F]*\])*[hmsdy](?=(?:[^"]|"[^"]*")*$)/miu', $format, $matches)) {
+        else if (preg_match('/(\[\$[A-Z]*-[0-9A-F]*\])*[hmsdy](?=(?:[^"]|"[^"]*")*$)/miu', $format, $matches)) {
             // datetime format
             self::formatAsDate($value, $format);
         } elseif (preg_match('/%$/', $format)) {

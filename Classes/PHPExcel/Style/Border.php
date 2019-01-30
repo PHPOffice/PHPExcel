@@ -151,7 +151,7 @@ class PHPExcel_Style_Border extends PHPExcel_Style_Supervisor implements PHPExce
             case 'right':
             case 'top':
             case 'vertical':
-                $key = strtolower('vertical');
+                $key = strtolower($this->parentPropertyName);
                 break;
         }
         return $this->parent->getStyleArray(array($key => $array));

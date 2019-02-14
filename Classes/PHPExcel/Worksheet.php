@@ -1024,6 +1024,16 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
     }
 
     /**
+     * Set highest worksheet column
+     *
+     * @param   string     $column
+     */
+    public function setHighestColumn($column)
+    {
+      $this->cachedHighestColumn = $column;
+    }
+
+    /**
      * Get highest worksheet column that contains data
      *
      * @param   string     $row        Return the highest data column for the specified row,
@@ -1048,6 +1058,16 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
             return $this->cachedHighestRow;
         }
         return $this->getHighestDataRow($column);
+    }
+
+    /**
+     * Set highest worksheet row
+     *
+     * @param   string     $row
+     */
+    public function setHighestRow($row)
+    {
+       $this->cachedHighestRow = $row;
     }
 
     /**

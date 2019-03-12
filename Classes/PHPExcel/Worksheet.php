@@ -447,7 +447,7 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
     private static function checkSheetTitle($pValue)
     {
         // Some of the printable ASCII characters are invalid:  * : / \ ? [ ]
-        if (str_replace(self::$invalidCharacters, '', $pValue) !== $pValue) {
+        if (str_replace(self::$invalidCharacters, '', $pValue) !== (string) $pValue) {
             throw new PHPExcel_Exception('Invalid character found in sheet title');
         }
 

@@ -599,6 +599,16 @@ class PHPExcel_Calculation_LookupRef
      */
     public static function INDEX($arrayValues, $rowNum = 0, $columnNum = 0)
     {
+        
+        if(is_array($rowNum)){
+			foreach($rowNum as $k=>$v){
+				foreach($v as $k2=>$v2){
+					$rowNum = $v2;
+					break 2;
+				}
+			}
+		}
+		        
         if (($rowNum < 0) || ($columnNum < 0)) {
             return PHPExcel_Calculation_Functions::VALUE();
         }

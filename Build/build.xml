@@ -164,7 +164,7 @@
                 to Excel 2007 files and read from Excel 2007 files.
             </description>
             <notes>This package ONLY contains the class files, not the documentation and example code. Please refer to
-                http://www.codeplex.com/PHPExcel for those files.
+                https://github.com/PHPOffice/PHPExcel for those files.
             </notes>
             <lead user="maartenba" name="Maarten Balliauw" email="maarten@phpexcel.net"/>
             <license uri="http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt">LGPL</license>

@@ -3559,12 +3559,16 @@ class PHPExcel_Calculation
                     case ':':            //    Range
                         $sheet1 = $sheet2 = '';
                         if (strpos($operand1Data['reference'], '!') !== false) {
-                            list($sheet1, $operand1Data['reference']) = explode('!', $operand1Data['reference']);
+                            $parts = explode('!', $operand1Data['reference']);
+                            $operand1Data['reference'] = array_pop($parts);
+                            $sheet1 = implode('!', $parts);
                         } else {
                             $sheet1 = ($pCellParent !== null) ? $pCellWorksheet->getTitle() : '';
                         }
                         if (strpos($operand2Data['reference'], '!') !== false) {
-                            list($sheet2, $operand2Data['reference']) = explode('!', $operand2Data['reference']);
+                            $parts = explode('!', $operand2Data['reference']);
+                            $operand2Data['reference'] = array_pop($parts);
+                            $sheet2 = implode('!', $parts);
                         } else {
                             $sheet2 = $sheet1;
                         }

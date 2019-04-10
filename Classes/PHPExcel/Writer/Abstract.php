@@ -27,6 +27,7 @@
  */
 abstract class PHPExcel_Writer_Abstract implements PHPExcel_Writer_IWriter
 {
+
     /**
      * Write charts that are defined in the workbook?
      * Identifies whether the Writer should write definitions for any charts that exist in the PHPExcel object;
@@ -56,7 +57,7 @@ abstract class PHPExcel_Writer_Abstract implements PHPExcel_Writer_IWriter
      *
      * @var string
      */
-    protected $_diskCachingDirectory    = './';
+    protected $_diskCachingDirectory = './';
 
     /**
      * Write charts in workbook?
@@ -141,6 +142,8 @@ abstract class PHPExcel_Writer_Abstract implements PHPExcel_Writer_IWriter
             } else {
                 throw new PHPExcel_Writer_Exception("Directory does not exist: $pDirectory");
             }
+        } else {
+            $this->_diskCachingDirectory = PHPExcel_Shared_File::sys_get_temp_dir();
         }
         return $this;
     }
@@ -154,4 +157,5 @@ abstract class PHPExcel_Writer_Abstract implements PHPExcel_Writer_IWriter
     {
         return $this->_diskCachingDirectory;
     }
+
 }

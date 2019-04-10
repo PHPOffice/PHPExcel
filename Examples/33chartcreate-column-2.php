@@ -125,7 +125,7 @@ $chart = new PHPExcel_Chart(
 	$legend,		// legend
 	$plotArea,		// plotArea
 	true,			// plotVisibleOnly
-	0,				// displayBlanksAs
+    'gap',			// displayBlanksAs: gap, span, zero
 	$xAxisLabel,	// xAxisLabel
 	$yAxisLabel		// yAxisLabel
 );

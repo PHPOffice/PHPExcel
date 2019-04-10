@@ -30,14 +30,31 @@ class PHPExcel_Style_Color extends PHPExcel_Style_Supervisor implements PHPExcel
     /* Colors */
     const COLOR_BLACK      = 'FF000000';
     const COLOR_WHITE      = 'FFFFFFFF';
+    const COLOR_GRAY       = 'FF808080';
+
     const COLOR_RED        = 'FFFF0000';
     const COLOR_DARKRED    = 'FF800000';
-    const COLOR_BLUE       = 'FF0000FF';
-    const COLOR_DARKBLUE   = 'FF000080';
+
     const COLOR_GREEN      = 'FF00FF00';
     const COLOR_DARKGREEN  = 'FF008000';
+
+    const COLOR_BLUE       = 'FF0000FF';
+    const COLOR_DARKBLUE   = 'FF000080';
+
     const COLOR_YELLOW     = 'FFFFFF00';
-    const COLOR_DARKYELLOW = 'FF808000';
+    const COLOR_ORANGE     = 'FFFF8000';
+    const COLOR_LIME       = 'FF80FF00';
+    const COLOR_DARKYELLOW = 'FF808000';  /* AKA Olive */
+
+    const COLOR_CYAN       = 'FF00FFFF';  /* AKA Aqua */
+    const COLOR_GREENTEAL  = 'FF00FF80';
+    const COLOR_BLUETEAL   = 'FF0080FF';
+    const COLOR_TEAL       = 'FF008080';
+
+    const COLOR_FUCHSIA    = 'FFFF00FF';  /* AKA Magenta */
+    const COLOR_REDPURPLE  = 'FFFF0080';
+    const COLOR_BLUEPURPLE = 'FF8000FF';
+    const COLOR_PURPLE     = 'FF800080';
 
     /**
      * Indexed colors array

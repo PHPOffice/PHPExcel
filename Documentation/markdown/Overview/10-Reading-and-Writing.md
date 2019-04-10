@@ -711,4 +711,4 @@ $objWriter->save('write.xls');
 Notice that it is ok to load an xlsx file and generate an xls file.
 
   [21]: http://pear.php.net/package/Spreadsheet_Excel_Writer
-  [22]: http://www.codeplex.com/PHPExcel/Wiki/View.aspx?title=Credits&referringTitle=Home
+  [22]: https://github.com/PHPOffice/PHPExcel/Wiki/View.aspx?title=Credits&referringTitle=Home

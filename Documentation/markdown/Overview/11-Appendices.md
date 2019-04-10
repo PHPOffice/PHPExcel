@@ -2,7 +2,7 @@
 
 ## Credits
 
-Please refer to the internet page [http://www.codeplex.com/PHPExcel/Wiki/View.aspx?title=Credits&referringTitle=Home][22] for up-to-date credits.
+Please refer to the internet page [https://github.com/PHPOffice/PHPExcel/Wiki/View.aspx?title=Credits&referringTitle=Home][22] for up-to-date credits.
 
 ## Valid array keys for style applyFromArray()
 
@@ -97,4 +97,4 @@ __PHPExcel_Style_Protection__
     hidden    | setHidden()
 
 
-  [22]: http://www.codeplex.com/PHPExcel/Wiki/View.aspx?title=Credits&referringTitle=Home
+  [22]: https://github.com/PHPOffice/PHPExcel/Wiki/View.aspx?title=Credits&referringTitle=Home
